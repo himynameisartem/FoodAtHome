@@ -1,0 +1,328 @@
+//
+//  RefregiratorVC.swift
+//  FoodAtHome
+//
+//  Created by Артем Кудрявцев on 23.05.2022.
+//
+
+import UIKit
+import Popover
+
+class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    
+    var navView = UIView()
+    var navTitle = UILabel()
+    var refregiratorImage = UIImageView()
+    var foodOnTheShelf: UICollectionView = {
+        let layuot = UICollectionViewFlowLayout()
+        layuot.scrollDirection = .vertical
+        layuot.minimumLineSpacing = 30
+        layuot.minimumInteritemSpacing = 0
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layuot)
+        return cv
+    }()
+    
+    //MARK: - View did load
+    
+    override func viewDidAppear(_ animated: Bool) {
+        foodOnTheShelf.reloadData()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.addSubview(refregiratorImage)
+        view.addSubview(foodOnTheShelf)
+        foodOnTheShelf.delegate = self
+        foodOnTheShelf.dataSource = self
+        makeRefregiratorImage()
+        makeFoodOnTheShelf()
+        foodOnTheShelf.register(FoodCell.self, forCellWithReuseIdentifier: "foodCell")
+        foodOnTheShelf.register(AddCell.self, forCellWithReuseIdentifier: "addCell")
+        createNavigationItem()
+        
+    }
+    
+    //MARK: - Create Views
+    
+    func createNavigationItem() {
+        
+        navView.frame(forAlignmentRect: CGRect(x: 0, y: 0, width: 300, height: 100))
+        navView.addSubview(navTitle)
+        navTitle.text = "FoodAtHome"
+        navTitle.font = .boldSystemFont(ofSize: 30)
+        navTitle.textColor = UIColor(red: 236 / 255, green: 153 / 255, blue: 75 / 255, alpha: 1)
+        navTitle.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            
+            navTitle.topAnchor.constraint(equalTo: navView.topAnchor),
+            navTitle.leadingAnchor.constraint(equalTo: navView.leadingAnchor),
+            navTitle.trailingAnchor.constraint(equalTo: navView.trailingAnchor),
+            navTitle.bottomAnchor.constraint(equalTo: navView.bottomAnchor)
+            
+        ])
+        
+        navigationItem.titleView = navView
+        
+        
+    }
+    
+    func makeRefregiratorImage() {
+        
+        refregiratorImage.translatesAutoresizingMaskIntoConstraints = false
+        refregiratorImage.backgroundColor = UIColor(red: 240 / 255, green: 240 / 255, blue: 240 / 255, alpha: 1)
+        
+        NSLayoutConstraint.activate([
+            
+            refregiratorImage.topAnchor.constraint(equalTo: view.topAnchor),
+            refregiratorImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            refregiratorImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            refregiratorImage.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            
+        ])
+    }
+    
+    func makeFoodOnTheShelf() {
+        
+        foodOnTheShelf.translatesAutoresizingMaskIntoConstraints = false
+        foodOnTheShelf.backgroundColor = .clear
+        foodOnTheShelf.layer.cornerRadius = 10
+        foodOnTheShelf.showsHorizontalScrollIndicator = false
+        
+        NSLayoutConstraint.activate([
+            
+            foodOnTheShelf.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            foodOnTheShelf.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            foodOnTheShelf.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            foodOnTheShelf.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+            
+        ])
+    }
+    
+    //MARK: - Collection View Delegate
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return test.count + 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        if indexPath.row != test.count {
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "foodCell", for: indexPath) as! FoodCell
+            
+            cell.addSubview(cell.foodImage)
+            cell.addSubview(cell.foodName)
+            cell.foodName.translatesAutoresizingMaskIntoConstraints = false
+            cell.foodImage.translatesAutoresizingMaskIntoConstraints = false
+            cell.foodImage.contentMode = .scaleAspectFit
+            cell.foodImage.backgroundColor = .white
+            cell.backgroundColor = .white
+            
+            DispatchQueue.main.async {
+                cell.foodImage.layer.cornerRadius = 10
+                cell.foodImage.clipsToBounds = true
+                cell.layer.cornerRadius = 10
+            }
+            
+            cell.layer.borderWidth = 1.5
+            cell.layer.borderColor = CGColor(red: 136 / 255, green: 136 / 255, blue: 136 / 255, alpha: 0.3)
+            
+            cell.foodImage.image = UIImage(named: test[indexPath.row].name)
+            cell.foodName.text = test[indexPath.row].name
+            cell.foodName.font = .systemFont(ofSize: 10)
+            cell.foodName.textAlignment = .center
+            cell.foodName.numberOfLines = 0
+            
+            NSLayoutConstraint.activate([
+                
+                cell.foodImage.topAnchor.constraint(equalTo: cell.topAnchor, constant: 0),
+                cell.foodImage.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 0),
+                cell.foodImage.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: 0),
+                cell.foodName.topAnchor.constraint(equalTo: cell.foodImage.bottomAnchor, constant: 0),
+                cell.foodName.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5),
+                cell.foodName.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -5),
+                cell.foodName.bottomAnchor.constraint(equalTo: cell.bottomAnchor, constant: 0),
+                cell.foodName.heightAnchor.constraint(equalToConstant: 40)
+                
+                
+            ])
+            return cell
+        }
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCell", for: indexPath) as! AddCell
+
+        cell.addSubview(cell.foodImage)
+        cell.foodImage.translatesAutoresizingMaskIntoConstraints = false
+        cell.foodImage.image = UIImage(systemName: "plus.viewfinder")
+        cell.foodImage.tintColor = UIColor(red: 136 / 255, green: 136 / 255, blue: 136 / 255, alpha: 1)
+        cell.foodImage.alpha = 0.5
+        
+        NSLayoutConstraint.activate([
+            
+            cell.foodImage.topAnchor.constraint(equalTo: cell.topAnchor, constant: 15),
+            cell.foodImage.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 0),
+            cell.foodImage.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: 0),
+            cell.foodImage.bottomAnchor.constraint(equalTo: cell.bottomAnchor, constant: -15)
+            
+        ])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if view.frame.height < 700 && view.frame.height > 568 {
+            return CGSize(width: 80, height: 110)
+        }
+        if view.frame.height == 568 {
+            return CGSize(width: 66, height: 90)
+        }
+        return CGSize(width: 90, height: 120)
+    }
+    
+    //MARK: Did Select
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row != test.count {
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "foodCell", for: indexPath) as! FoodCell
+            let startPoint = CGPoint(x: cell.frame.midX + 15 , y: cell.frame.maxY * 1.9 )
+            
+            let aView = UIView(frame: CGRect(x: 0, y: 0, width: 220, height: 98))
+            let name = UILabel()
+            
+            let mainStack: UIStackView = {
+                let stack = UIStackView()
+                stack.axis = .horizontal
+                stack.spacing = 0
+                stack.distribution = .fillEqually
+                return stack
+            }()
+            
+            let leftStack: UIStackView = {
+                let stack = UIStackView()
+                stack.axis = .vertical
+                stack.spacing = 2
+                stack.distribution = .fillEqually
+                return stack
+            }()
+            
+            let rightStack: UIStackView = {
+                let stack = UIStackView()
+                stack.axis = .vertical
+                stack.spacing = 2
+                stack.distribution = .fillEqually
+                stack.alignment = .trailing
+                return stack
+            }()
+            
+            let weight = UILabel()
+            let productionDateTitle = UILabel()
+            let expirationDateTitle = UILabel()
+            let consumeUpTitle = UILabel()
+            
+            let weightData = UILabel()
+            let productionDate = UILabel()
+            let expirationDate = UILabel()
+            let consumeUp = UILabel()
+            
+            aView.addSubview(name)
+            aView.addSubview(mainStack)
+            
+            mainStack.addArrangedSubview(leftStack)
+            mainStack.addArrangedSubview(rightStack)
+            
+            leftStack.addArrangedSubview(weight)
+            leftStack.addArrangedSubview(productionDateTitle)
+            leftStack.addArrangedSubview(expirationDateTitle)
+            leftStack.addArrangedSubview(consumeUpTitle)
+            
+            rightStack.addArrangedSubview(weightData)
+            rightStack.addArrangedSubview(productionDate)
+            rightStack.addArrangedSubview(expirationDate)
+            rightStack.addArrangedSubview(consumeUp)
+            
+            mainStack.translatesAutoresizingMaskIntoConstraints = false
+            
+            name.numberOfLines = 2
+            name.text = test[indexPath.row].name
+            name.translatesAutoresizingMaskIntoConstraints = false
+            name.font = .boldSystemFont(ofSize: 12)
+            name.textAlignment = .center
+            
+            weight.translatesAutoresizingMaskIntoConstraints = false
+            weight.font = .systemFont(ofSize: 10)
+            weight.text = "Вес: "
+            
+            productionDateTitle.translatesAutoresizingMaskIntoConstraints = false
+            productionDateTitle.font = .systemFont(ofSize: 10)
+            productionDateTitle.text = "Дата изготовления: "
+            
+            expirationDateTitle.translatesAutoresizingMaskIntoConstraints = false
+            expirationDateTitle.font = .systemFont(ofSize: 10)
+            expirationDateTitle.text = "Срок годности: "
+            
+            consumeUpTitle.translatesAutoresizingMaskIntoConstraints = false
+            consumeUpTitle.font = .systemFont(ofSize: 10)
+            consumeUpTitle.text = "Употребить до: "
+            
+            weightData.translatesAutoresizingMaskIntoConstraints = false
+            weightData.font = .systemFont(ofSize: 10)
+            weightData.text = test[indexPath.row].weight + " " + test[indexPath.row].unit
+            
+            productionDate.translatesAutoresizingMaskIntoConstraints = false
+            productionDate.font = .systemFont(ofSize: 10)
+            productionDate.text = "-"
+            
+            expirationDate.translatesAutoresizingMaskIntoConstraints = false
+            expirationDate.font = .systemFont(ofSize: 10)
+            expirationDate.text = "-"
+            
+            consumeUp.translatesAutoresizingMaskIntoConstraints = false
+            consumeUp.font = .systemFont(ofSize: 10)
+            consumeUp.text = "-"
+            
+            NSLayoutConstraint.activate([
+                
+                name.topAnchor.constraint(equalTo: aView.topAnchor, constant: 15),
+                name.leadingAnchor.constraint(equalTo: aView.leadingAnchor, constant: 5),
+                name.trailingAnchor.constraint(equalTo: aView.trailingAnchor, constant: -5),
+                name.heightAnchor.constraint(equalToConstant: 30),
+                
+                mainStack.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 5),
+                mainStack.leadingAnchor.constraint(equalTo: aView.leadingAnchor, constant: 5),
+                mainStack.trailingAnchor.constraint(equalTo: aView.trailingAnchor, constant: -5),
+                
+            ])
+            
+            let popover = Popover()
+            popover.show(aView, point: startPoint)
+            
+        } else {
+            let listVC = FoodListVC()
+            listVC.modalPresentationStyle = .fullScreen
+            self.viewDidAppear(true)
+            navigationController?.pushViewController(listVC, animated: true)
+        }
+    }
+    
+    //MARK: - Context Menu
+    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        if indexPath.row != test.count {
+            let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+                let edit = UIAction(title: "Изменить", image: UIImage(systemName: "pencil"), identifier: nil, discoverabilityTitle: nil, attributes: .disabled, state: .off) { _ in
+                }
+                let delete = UIAction(title: "Удалить", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
+                    test.remove(at: indexPath.row)
+                    self.viewDidAppear(true)
+                }
+                return UIMenu(title: "", image: nil, identifier: nil, options: UIMenu.Options.displayInline, children: [edit, delete])
+            }
+            return config
+        }
+        return nil
+    }
+}
+
+
