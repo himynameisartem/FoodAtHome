@@ -22,6 +22,12 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
         return cv
     }()
     
+    let formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy"
+        return formatter
+    }()
+    
     //MARK: - View did load
     
     override func viewDidAppear(_ animated: Bool) {
@@ -40,6 +46,10 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
         foodOnTheShelf.register(FoodCell.self, forCellWithReuseIdentifier: "foodCell")
         foodOnTheShelf.register(AddCell.self, forCellWithReuseIdentifier: "addCell")
         createNavigationItem()
+        
+        navigationItem.backButtonTitle = "Назад"
+        navigationController?.navigationBar.tintColor = .black
+
         
     }
     
@@ -188,7 +198,7 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "foodCell", for: indexPath) as! FoodCell
             let startPoint = CGPoint(x: cell.frame.midX + 15 , y: cell.frame.maxY * 1.9 )
             
-            let aView = UIView(frame: CGRect(x: 0, y: 0, width: 220, height: 98))
+            let aView = UIView(frame: CGRect(x: 0, y: 0, width: 220, height: 85))
             let name = UILabel()
             
             let mainStack: UIStackView = {
@@ -219,12 +229,10 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
             let weight = UILabel()
             let productionDateTitle = UILabel()
             let expirationDateTitle = UILabel()
-            let consumeUpTitle = UILabel()
             
             let weightData = UILabel()
             let productionDate = UILabel()
             let expirationDate = UILabel()
-            let consumeUp = UILabel()
             
             aView.addSubview(name)
             aView.addSubview(mainStack)
@@ -235,12 +243,10 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
             leftStack.addArrangedSubview(weight)
             leftStack.addArrangedSubview(productionDateTitle)
             leftStack.addArrangedSubview(expirationDateTitle)
-            leftStack.addArrangedSubview(consumeUpTitle)
             
             rightStack.addArrangedSubview(weightData)
             rightStack.addArrangedSubview(productionDate)
             rightStack.addArrangedSubview(expirationDate)
-            rightStack.addArrangedSubview(consumeUp)
             
             mainStack.translatesAutoresizingMaskIntoConstraints = false
             
@@ -260,11 +266,7 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             expirationDateTitle.translatesAutoresizingMaskIntoConstraints = false
             expirationDateTitle.font = .systemFont(ofSize: 10)
-            expirationDateTitle.text = "Срок годности: "
-            
-            consumeUpTitle.translatesAutoresizingMaskIntoConstraints = false
-            consumeUpTitle.font = .systemFont(ofSize: 10)
-            consumeUpTitle.text = "Употребить до: "
+            expirationDateTitle.text = "Годен до: "
             
             weightData.translatesAutoresizingMaskIntoConstraints = false
             weightData.font = .systemFont(ofSize: 10)
@@ -272,15 +274,19 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             productionDate.translatesAutoresizingMaskIntoConstraints = false
             productionDate.font = .systemFont(ofSize: 10)
-            productionDate.text = "-"
+            if let productDate = test[indexPath.row].productionDate {
+                productionDate.text = formatter.string(from: productDate)
+            } else {
+                productionDate.text = "-"
+            }
             
             expirationDate.translatesAutoresizingMaskIntoConstraints = false
             expirationDate.font = .systemFont(ofSize: 10)
-            expirationDate.text = "-"
-            
-            consumeUp.translatesAutoresizingMaskIntoConstraints = false
-            consumeUp.font = .systemFont(ofSize: 10)
-            consumeUp.text = "-"
+            if let expDate = test[indexPath.row].expirationDate {
+                expirationDate.text = formatter.string(from: expDate)
+            } else {
+                expirationDate.text = "-"
+            }
             
             NSLayoutConstraint.activate([
                 

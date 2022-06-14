@@ -10,9 +10,17 @@ import UIKit
 class DetailFoodListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let pickerArray = ["кг.", "г.", "л.", "мл.", "уп."]
+    let monthsInterval = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36"]
+    let daysInterval = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"]
+    
     let picker: UIPickerView = {
         let picker = UIPickerView()
         picker.translatesAutoresizingMaskIntoConstraints = false
+        return picker
+    }()
+    
+    let consumePicker: UIPickerView = {
+        let picker = UIPickerView()
         return picker
     }()
     
@@ -20,6 +28,8 @@ class DetailFoodListVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     var products = [Food]()
     let alert = AlertView()
     var unit = String()
+    var months = String()
+    var days = String()
     
     //MARK: - View Did Load
     
@@ -28,6 +38,7 @@ class DetailFoodListVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         
         picker.delegate = self
         picker.dataSource = self
+        consumePicker.delegate = self
         foodList.delegate = self
         foodList.dataSource = self
         view.addSubview(foodList)
@@ -74,7 +85,7 @@ class DetailFoodListVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        alert.showAlert(viewController: self, image:  UIImage(named: products[indexPath.row].name)!, food: products[indexPath.row], picker: picker, unit: unit)
+        alert.showAlert(viewController: self, image:  UIImage(named: products[indexPath.row].name)!, food: products[indexPath.row], picker: picker, consumePicker: consumePicker, unit: unit)
         
     }
 }
@@ -83,19 +94,41 @@ class DetailFoodListVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
 extension DetailFoodListVC: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        1
+        if pickerView == picker {
+            return 1 }
+        return 2
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        pickerArray.count
+        if pickerView == picker {
+            return pickerArray.count
+        }
+        if component == 0{
+            return monthsInterval.count
+        }
+        return daysInterval.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        pickerArray[row]
+        if pickerView == picker {
+            return pickerArray[row]
+        }
+        if component == 0 {
+            return monthsInterval[row] + "м"
+        }
+        return daysInterval[row] + "д"
+        
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        alert.unit = pickerArray[row]
-        print(pickerArray[row])
+        if pickerView == picker {
+            alert.unit = pickerArray[row]
+        }
+        if component == 0 {
+            alert.months = monthsInterval[row]
+        }
+        if component == 1 {
+        alert.day = daysInterval[row]
+        }
     }
 }

@@ -25,6 +25,7 @@ class FoodListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         navigationController?.navigationBar.prefersLargeTitles = false
         view.backgroundColor = .white
         makeConstraints()
+        navigationItem.backButtonTitle = "Назад"
     }
     
     func makeConstraints() {
