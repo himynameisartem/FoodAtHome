@@ -8,7 +8,21 @@
 import UIKit
 import Popover
 
-class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    let tap: UITapGestureRecognizer = {
+        let tap = UITapGestureRecognizer()
+        return tap
+    }()
+    
+    let backgroundImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "wallpapers")
+        view.contentMode = .scaleAspectFill
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.alpha = 0.2
+        return view
+    }()
     
     var navView = UIView()
     var navTitle = UILabel()
@@ -28,7 +42,7 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
         return formatter
     }()
     
-    //MARK: - View did load
+    //MARK: - ViewDidLoad
     
     override func viewDidAppear(_ animated: Bool) {
         foodOnTheShelf.reloadData()
@@ -38,11 +52,12 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
         super.viewDidLoad()
         
         view.addSubview(refregiratorImage)
-        view.addSubview(foodOnTheShelf)
+        
         foodOnTheShelf.delegate = self
         foodOnTheShelf.dataSource = self
-        makeRefregiratorImage()
+        view.addSubview(backgroundImageView)
         makeFoodOnTheShelf()
+        makeRefregiratorImage()
         foodOnTheShelf.register(FoodCell.self, forCellWithReuseIdentifier: "foodCell")
         foodOnTheShelf.register(AddCell.self, forCellWithReuseIdentifier: "addCell")
         createNavigationItem()
@@ -57,19 +72,22 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func createNavigationItem() {
         
-        navView.frame(forAlignmentRect: CGRect(x: 0, y: 0, width: 300, height: 100))
+        navView.frame(forAlignmentRect: CGRect(x: 0, y: 0, width: 300, height: 140))
         navView.addSubview(navTitle)
-        navTitle.text = "FoodAtHome"
-        navTitle.font = .boldSystemFont(ofSize: 30)
-        navTitle.textColor = UIColor(red: 236 / 255, green: 153 / 255, blue: 75 / 255, alpha: 1)
+        navView.contentMode = .center
+        navTitle.contentMode = .center
+        navTitle.textAlignment = .center
+        navTitle.text = "ЕдаДома"
+        navTitle.font = UIFont(name: "pobeda-bold", size: 60)
+        navTitle.textColor = .darkGray
         navTitle.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             
-            navTitle.topAnchor.constraint(equalTo: navView.topAnchor),
-            navTitle.leadingAnchor.constraint(equalTo: navView.leadingAnchor),
-            navTitle.trailingAnchor.constraint(equalTo: navView.trailingAnchor),
-            navTitle.bottomAnchor.constraint(equalTo: navView.bottomAnchor)
+            navTitle.topAnchor.constraint(equalTo: navView.topAnchor, constant: 5),
+            navTitle.leadingAnchor.constraint(equalTo: navView.leadingAnchor, constant: 5),
+            navTitle.trailingAnchor.constraint(equalTo: navView.trailingAnchor, constant: -5),
+            navTitle.bottomAnchor.constraint(equalTo: navView.bottomAnchor, constant: 15)
             
         ])
         
@@ -95,17 +113,24 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func makeFoodOnTheShelf() {
         
+        view.addSubview(foodOnTheShelf)
+
         foodOnTheShelf.translatesAutoresizingMaskIntoConstraints = false
         foodOnTheShelf.backgroundColor = .clear
         foodOnTheShelf.layer.cornerRadius = 10
-        foodOnTheShelf.showsHorizontalScrollIndicator = false
+        foodOnTheShelf.showsVerticalScrollIndicator = false
         
         NSLayoutConstraint.activate([
             
+            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
             foodOnTheShelf.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             foodOnTheShelf.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             foodOnTheShelf.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            foodOnTheShelf.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+            foodOnTheShelf.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             
         ])
     }
@@ -136,12 +161,12 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
                 cell.layer.cornerRadius = 10
             }
             
-            cell.layer.borderWidth = 1.5
-            cell.layer.borderColor = CGColor(red: 136 / 255, green: 136 / 255, blue: 136 / 255, alpha: 0.3)
+            cell.layer.borderWidth = 1.7
+            cell.layer.borderColor = CGColor(red: 136 / 255, green: 136 / 255, blue: 136 / 255, alpha: 1)
             
             cell.foodImage.image = UIImage(named: test[indexPath.row].name)
             cell.foodName.text = test[indexPath.row].name
-            cell.foodName.font = .systemFont(ofSize: 10)
+            cell.foodName.font = UIFont(name: "pobeda-bold", size: 12)
             cell.foodName.textAlignment = .center
             cell.foodName.numberOfLines = 0
             
@@ -167,7 +192,7 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
         cell.foodImage.translatesAutoresizingMaskIntoConstraints = false
         cell.foodImage.image = UIImage(systemName: "plus.viewfinder")
         cell.foodImage.tintColor = UIColor(red: 136 / 255, green: 136 / 255, blue: 136 / 255, alpha: 1)
-        cell.foodImage.alpha = 0.5
+        cell.foodImage.alpha = 1
         
         NSLayoutConstraint.activate([
             
@@ -185,7 +210,7 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
             return CGSize(width: 80, height: 110)
         }
         if view.frame.height == 568 {
-            return CGSize(width: 66, height: 90)
+            return CGSize(width: 65, height: 90)
         }
         return CGSize(width: 90, height: 120)
     }
@@ -196,10 +221,34 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
         if indexPath.row != test.count {
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "foodCell", for: indexPath) as! FoodCell
-            let startPoint = CGPoint(x: cell.frame.midX + 15 , y: cell.frame.maxY * 1.9 )
+            cell.addGestureRecognizer(tap)
+            let touch = tap.location(in: collectionView.cellForItem(at: indexPath))
             
-            let aView = UIView(frame: CGRect(x: 0, y: 0, width: 220, height: 85))
+            var touchType = CGFloat()
+            
+            let popover = Popover()
+            
+            
+            if touch.y * (-1) < view.frame.height - (view.frame.height / 3) {
+                touchType = touch.y * (-1) + cell.frame.height
+                
+            } else {
+                touchType = touch.y * (-1)
+                popover.popoverType = .up
+            }
+                        
+            let startPoint = CGPoint(x: cell.center.x + 20  , y: touchType )
+            let aView = UIView(frame: CGRect(x: 0, y: 0, width: 220, height: 100))
             let name = UILabel()
+            
+            popover.show(aView, point: startPoint)
+            
+            var daysInterval = DateComponents()
+            let currentDate = Date()
+            
+            if  let toDate = test[indexPath.row].expirationDate {
+             daysInterval = Calendar.current.dateComponents([.month, .day], from: currentDate, to: toDate)
+            }
             
             let mainStack: UIStackView = {
                 let stack = UIStackView()
@@ -229,10 +278,12 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
             let weight = UILabel()
             let productionDateTitle = UILabel()
             let expirationDateTitle = UILabel()
+            let daysLeftTitle = UILabel()
             
             let weightData = UILabel()
             let productionDate = UILabel()
             let expirationDate = UILabel()
+            let daysLeft = UILabel()
             
             aView.addSubview(name)
             aView.addSubview(mainStack)
@@ -243,17 +294,19 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
             leftStack.addArrangedSubview(weight)
             leftStack.addArrangedSubview(productionDateTitle)
             leftStack.addArrangedSubview(expirationDateTitle)
+            leftStack.addArrangedSubview(daysLeftTitle)
             
             rightStack.addArrangedSubview(weightData)
             rightStack.addArrangedSubview(productionDate)
             rightStack.addArrangedSubview(expirationDate)
+            rightStack.addArrangedSubview(daysLeft)
             
             mainStack.translatesAutoresizingMaskIntoConstraints = false
             
             name.numberOfLines = 2
             name.text = test[indexPath.row].name
             name.translatesAutoresizingMaskIntoConstraints = false
-            name.font = .boldSystemFont(ofSize: 12)
+            name.font = UIFont(name: "pobeda-bold", size: 12)
             name.textAlignment = .center
             
             weight.translatesAutoresizingMaskIntoConstraints = false
@@ -267,6 +320,10 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
             expirationDateTitle.translatesAutoresizingMaskIntoConstraints = false
             expirationDateTitle.font = .systemFont(ofSize: 10)
             expirationDateTitle.text = "Годен до: "
+            
+            daysLeftTitle.translatesAutoresizingMaskIntoConstraints = false
+            daysLeftTitle.font = .systemFont(ofSize: 10)
+            daysLeftTitle.text = "Осталось: "
             
             weightData.translatesAutoresizingMaskIntoConstraints = false
             weightData.font = .systemFont(ofSize: 10)
@@ -288,6 +345,13 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
                 expirationDate.text = "-"
             }
             
+            daysLeft.translatesAutoresizingMaskIntoConstraints = false
+            daysLeft.font = .systemFont(ofSize: 10)
+            daysLeft.text = "\(daysInterval.month ?? 0) мес. и \(daysInterval.day ?? 0) д."
+            
+           
+            if popover.popoverType == .down {
+            
             NSLayoutConstraint.activate([
                 
                 name.topAnchor.constraint(equalTo: aView.topAnchor, constant: 15),
@@ -298,11 +362,26 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
                 mainStack.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 5),
                 mainStack.leadingAnchor.constraint(equalTo: aView.leadingAnchor, constant: 5),
                 mainStack.trailingAnchor.constraint(equalTo: aView.trailingAnchor, constant: -5),
+                mainStack.bottomAnchor.constraint(equalTo: aView.bottomAnchor, constant: -5)
                 
             ])
+            } else {
+                
+                NSLayoutConstraint.activate([
+                
+                name.topAnchor.constraint(equalTo: aView.topAnchor, constant: 5),
+                name.leadingAnchor.constraint(equalTo: aView.leadingAnchor, constant: 5),
+                name.trailingAnchor.constraint(equalTo: aView.trailingAnchor, constant: -5),
+                name.heightAnchor.constraint(equalToConstant: 30),
+                
+                mainStack.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 5),
+                mainStack.leadingAnchor.constraint(equalTo: aView.leadingAnchor, constant: 5),
+                mainStack.trailingAnchor.constraint(equalTo: aView.trailingAnchor, constant: -5),
+                mainStack.bottomAnchor.constraint(equalTo: aView.bottomAnchor, constant: -15)
+                ])
+            }
+        
             
-            let popover = Popover()
-            popover.show(aView, point: startPoint)
             
         } else {
             let listVC = FoodListVC()

@@ -16,11 +16,11 @@ class AlertView {
     }
     
     var dateInterval = Date()
-    
     let formatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd.MM.yyyy"
-        formatter.timeZone = .current
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
+        formatter.locale = Locale(identifier: "ru_RU")
         return formatter
     }()
     
@@ -145,6 +145,8 @@ class AlertView {
         textField.layer.cornerRadius = 5
         textField.textAlignment = .center
         textField.placeholder = "дд/мм/гггг"
+        textField.isEnabled = false
+        textField.alpha = 0.2
         return textField
     }()
     
@@ -157,6 +159,8 @@ class AlertView {
         textField.layer.cornerRadius = 5
         textField.textAlignment = .center
         textField.placeholder = "дд/мм/гггг"
+        textField.isEnabled = false
+        textField.alpha = 0.2
         return textField
     }()
     
@@ -457,6 +461,8 @@ extension AlertView {
     }
 }
 
+//MARK: - Make Date
+
 extension AlertView {
     
     @objc func productionDoneAction(_ tf: UITextField) {
@@ -469,7 +475,11 @@ extension AlertView {
     }
     
     func getProductionDateFromPicker() {
-        isEnabled()
+        expirationDatePicker.isEnabled = true
+        expirationDateTF.isEnabled = true
+        expirationDateTF.alpha = 1
+        consumeDateTF.isEnabled = true
+        consumeDateTF.alpha = 1
         productionDateTF.text = formatter.string(from: productionDatePicker.date)
         productText = productionDateTF.text!
         productionDate = productionDatePicker.date
@@ -488,34 +498,47 @@ extension AlertView {
         expirationDatePicker.minimumDate = productionDate
         if productText != "" {
         expirationDateTF.text = formatter.string(from: expirationDatePicker.date)
-        }
-    }
-    
-    func isEnabled() {
-        if productText != "" {
-        expirationDatePicker.isEnabled = true
+            
+            let daysAndMonthInterval = Calendar.current.dateComponents([.day, .month], from: productionDate, to: expirationDatePicker.date)
+            let daysInterval = daysAndMonthInterval.day ?? 0
+            let monthInterval = daysAndMonthInterval.month ?? 0
+            day = String(daysInterval)
+            months = String(monthInterval)
+            
+            if (day.isEmpty || day == "0") && (months.isEmpty || months == "0") {
+                consumeDateTF.text = .none
+            } else if months.isEmpty || months == "0" {
+                consumeDateTF.text = day + "д"
+            } else if day.isEmpty || day == "0" {
+                consumeDateTF.text = months + "м"
+            }  else {
+                consumeDateTF.text = months + "м" + "  " + day + "д"
+            }
         }
     }
     
     @objc func consumeDoneAction() {
         
-        dateInterval = formatter.date(from: productionDateTF.text!)!
-        dateInterval = Date()
-        
+        var interval = Date()
+
         if (day.isEmpty || day == "0") && (months.isEmpty || months == "0") {
             consumeDateTF.text = .none
         } else if months.isEmpty || months == "0" {
             consumeDateTF.text = day + "д"
-            dateInterval.addTimeInterval((60 * 60 * 24) * (Double(day)!))
+            interval = Calendar.current.date(byAdding: .day, value: Int(day) ?? 0, to: productionDate, wrappingComponents: false)!
         } else if day.isEmpty || day == "0" {
             consumeDateTF.text = months + "м"
-            dateInterval.addTimeInterval((60 * 60 * 24) * (Double(months)! * 30))
+            interval = Calendar.current.date(byAdding: .month, value: Int(months) ?? 0, to: productionDate, wrappingComponents: false)!
         }  else {
             consumeDateTF.text = months + "м" + "  " + day + "д"
-            dateInterval.addTimeInterval((60 * 60 * 24) * ((Double(day)!) + (Double(months)! * 30)))
+            interval = Calendar.current.date(byAdding: .month, value: Int(months) ?? 0, to: productionDate, wrappingComponents: false)!
+            interval = Calendar.current.date(byAdding: .day, value: Int(day) ?? 0, to: interval, wrappingComponents: false)!
         }
+        
         targetVC.view.endEditing(true)
-        expirationDateTF.text = formatter.string(from: dateInterval)
-        print(dateInterval)
+        expirationDateTF.text = formatter.string(from: interval)
+        expirationDatePicker.date = formatter.date(from: expirationDateTF.text!)!
     }
 }
+
+

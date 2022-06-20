@@ -21,6 +21,7 @@ class DetailFoodListVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     let consumePicker: UIPickerView = {
         let picker = UIPickerView()
+        picker.isOpaque = false
         return picker
     }()
     
@@ -35,6 +36,7 @@ class DetailFoodListVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         
         picker.delegate = self
         picker.dataSource = self

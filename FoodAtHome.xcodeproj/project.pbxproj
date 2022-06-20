@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		31600184283D65CC0033B5B8 /* FoodListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31600183283D65CC0033B5B8 /* FoodListVC.swift */; };
 		31600188283FE9F50033B5B8 /* AddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31600187283FE9F50033B5B8 /* AddCell.swift */; };
+		3180FF832860D18C00060BD0 /* pobeda-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3180FF812860D18C00060BD0 /* pobeda-bold.ttf */; };
+		3180FF842860D18C00060BD0 /* pobeda-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3180FF822860D18C00060BD0 /* pobeda-regular.ttf */; };
 		318DDCFB2845319200F1242B /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318DDCFA2845319200F1242B /* AlertView.swift */; };
 		31A696C9284270860044954E /* DetailFoodListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A696C8284270860044954E /* DetailFoodListVC.swift */; };
 		31DA20C22839488900DCE421 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA20C12839488900DCE421 /* AppDelegate.swift */; };
@@ -24,6 +26,8 @@
 /* Begin PBXFileReference section */
 		31600183283D65CC0033B5B8 /* FoodListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListVC.swift; sourceTree = "<group>"; };
 		31600187283FE9F50033B5B8 /* AddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCell.swift; sourceTree = "<group>"; };
+		3180FF812860D18C00060BD0 /* pobeda-bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pobeda-bold.ttf"; sourceTree = "<group>"; };
+		3180FF822860D18C00060BD0 /* pobeda-regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pobeda-regular.ttf"; sourceTree = "<group>"; };
 		318DDCFA2845319200F1242B /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		31A696C8284270860044954E /* DetailFoodListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFoodListVC.swift; sourceTree = "<group>"; };
 		31DA20BE2839488900DCE421 /* FoodAtHome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodAtHome.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,6 +77,8 @@
 			isa = PBXGroup;
 			children = (
 				31DA20DD283BE45C00DCE421 /* RefregiratorVC.swift */,
+				31DA20DF283BE72900DCE421 /* FoodCell.swift */,
+				31600187283FE9F50033B5B8 /* AddCell.swift */,
 				31372FE12849C6E1009F1747 /* FoodList */,
 			);
 			path = Controllers;
@@ -101,8 +107,6 @@
 				31600183283D65CC0033B5B8 /* FoodListVC.swift */,
 				31A696C8284270860044954E /* DetailFoodListVC.swift */,
 				318DDCFA2845319200F1242B /* AlertView.swift */,
-				31DA20DF283BE72900DCE421 /* FoodCell.swift */,
-				31600187283FE9F50033B5B8 /* AddCell.swift */,
 			);
 			path = FoodList;
 			sourceTree = "<group>";
@@ -134,6 +138,8 @@
 				31372FE02849C6B3009F1747 /* Views */,
 				31372FDE2849C684009F1747 /* Controllers */,
 				31DA20CF2839488A00DCE421 /* Info.plist */,
+				3180FF812860D18C00060BD0 /* pobeda-bold.ttf */,
+				3180FF822860D18C00060BD0 /* pobeda-regular.ttf */,
 			);
 			path = FoodAtHome;
 			sourceTree = "<group>";
@@ -198,6 +204,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3180FF842860D18C00060BD0 /* pobeda-regular.ttf in Resources */,
+				3180FF832860D18C00060BD0 /* pobeda-bold.ttf in Resources */,
 				31DA20CE2839488A00DCE421 /* LaunchScreen.storyboard in Resources */,
 				31DA20CB2839488A00DCE421 /* Assets.xcassets in Resources */,
 			);
@@ -405,6 +413,7 @@
 				INFOPLIST_FILE = FoodAtHome/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
@@ -434,6 +443,7 @@
 				INFOPLIST_FILE = FoodAtHome/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
