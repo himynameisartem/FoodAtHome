@@ -10,6 +10,23 @@ import Popover
 
 class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    let picker: UIPickerView = {
+        let picker = UIPickerView()
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        return picker
+    }()
+    
+    let consumePicker: UIPickerView = {
+        let picker = UIPickerView()
+        picker.isOpaque = false
+        return picker
+    }()
+    
+    let alert = AlertView()
+    var unit = String()
+    var months = String()
+    var days = String()
+    
     let tap: UITapGestureRecognizer = {
         let tap = UITapGestureRecognizer()
         return tap
@@ -20,7 +37,8 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
         view.image = UIImage(named: "wallpapers")
         view.contentMode = .scaleAspectFill
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.alpha = 0.2
+        view.clipsToBounds = true
+        view.alpha = 0.1
         return view
     }()
     
@@ -46,10 +64,14 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidAppear(_ animated: Bool) {
         foodOnTheShelf.reloadData()
+        view.reloadInputViews()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        picker.delegate = self
+        consumePicker.delegate = self
         
         view.addSubview(refregiratorImage)
         
@@ -64,8 +86,8 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         navigationItem.backButtonTitle = "Назад"
         navigationController?.navigationBar.tintColor = .black
-
         
+        title = "khgjhv"
     }
     
     //MARK: - Create Views
@@ -78,16 +100,16 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
         navTitle.contentMode = .center
         navTitle.textAlignment = .center
         navTitle.text = "ЕдаДома"
-        navTitle.font = UIFont(name: "pobeda-bold", size: 60)
+        navTitle.font = UIFont(name: "pobeda-bold", size: 50)
         navTitle.textColor = .darkGray
         navTitle.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             
-            navTitle.topAnchor.constraint(equalTo: navView.topAnchor, constant: 5),
+            navTitle.topAnchor.constraint(equalTo: navView.topAnchor, constant: 0),
             navTitle.leadingAnchor.constraint(equalTo: navView.leadingAnchor, constant: 5),
             navTitle.trailingAnchor.constraint(equalTo: navView.trailingAnchor, constant: -5),
-            navTitle.bottomAnchor.constraint(equalTo: navView.bottomAnchor, constant: 15)
+            navTitle.bottomAnchor.constraint(equalTo: navView.bottomAnchor, constant: 0)
             
         ])
         
@@ -385,7 +407,7 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
             
         } else {
             let listVC = FoodListVC()
-            listVC.modalPresentationStyle = .fullScreen
+            listVC.modalPresentationStyle = .currentContext
             self.viewDidAppear(true)
             navigationController?.pushViewController(listVC, animated: true)
         }
@@ -396,8 +418,11 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         if indexPath.row != test.count {
             let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-                let edit = UIAction(title: "Изменить", image: UIImage(systemName: "pencil"), identifier: nil, discoverabilityTitle: nil, attributes: .disabled, state: .off) { _ in
+                let edit = UIAction(title: "Изменить", image: UIImage(systemName: "pencil"), identifier: nil, discoverabilityTitle: nil, state: .off) { _ in
+                    
+                    self.alert.showAlert(viewController: self, image:  UIImage(named: test[indexPath.row].name)!, food: test[indexPath.row], picker: self.picker, consumePicker: self.consumePicker, unit: self.unit, currentWeigt: test[indexPath.row].weight, currentProductDate: test[indexPath.row].productionDate, currentExperationDate: test[indexPath.row].expirationDate, searchController: nil)
                 }
+                
                 let delete = UIAction(title: "Удалить", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
                     test.remove(at: indexPath.row)
                     self.viewDidAppear(true)
@@ -409,5 +434,49 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
         return nil
     }
 }
+
+//MARK: - Extension UIPickerView
+
+extension RefregiratorVC: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        if pickerView == picker {
+            return 1 }
+        return 2
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView == picker {
+            return pickerArray.count
+        }
+        if component == 0{
+            return monthsInterval.count
+        }
+        return daysInterval.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if pickerView == picker {
+            return pickerArray[row]
+        }
+        if component == 0 {
+            return monthsInterval[row] + "м"
+        }
+        return daysInterval[row] + "д"
+        
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == picker {
+            alert.unit = pickerArray[row]
+        }
+        if component == 0 {
+            alert.months = monthsInterval[row]
+        }
+        if component == 1 {
+        alert.day = daysInterval[row]
+        }
+    }
+}
+
 
 

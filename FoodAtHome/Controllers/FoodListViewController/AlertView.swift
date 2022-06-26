@@ -64,9 +64,14 @@ class AlertView {
     var unitButton = UIPickerView()
     var productionDate = Date()
     
+    var currentWeight = String()
+    var currenProductDate: Date?
+    var currentExperationDate: Date?
+    var currentConsumeDate: Date?
+    
     //MARK: Blur View
     
-    private let blurView: UIVisualEffectView = {
+     let blurView: UIVisualEffectView = {
         let view = UIVisualEffectView()
         let blurEffect = UIBlurEffect(style: .dark)
         view.effect = blurEffect
@@ -77,7 +82,7 @@ class AlertView {
     //MARK: Alert View
     
     
-    private let alertView: UIView = {
+     let alertView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 10
@@ -86,7 +91,7 @@ class AlertView {
     
     //MARK: Image View
     
-    private let imageView: UIImageView = {
+     let imageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFit
@@ -137,7 +142,7 @@ class AlertView {
     }()
     
     //MARK: Expiration Date TF
-
+    
     let expirationDateTF: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -158,7 +163,7 @@ class AlertView {
         textField.backgroundColor = .systemGray6
         textField.layer.cornerRadius = 5
         textField.textAlignment = .center
-        textField.placeholder = "дд/мм/гггг"
+        textField.placeholder = "0м. 0д."
         textField.isEnabled = false
         textField.alpha = 0.2
         return textField
@@ -182,16 +187,44 @@ class AlertView {
         date.isEnabled = false
         return date
     }()
+    var daysInterval = DateComponents()
+    let currentDate = Date()
+    
+    var search = UISearchController()
     
     //MARK: - Show Alert
     
-    func showAlert(viewController: UIViewController, image: UIImage, food: Food, picker: UIPickerView, consumePicker: UIPickerView, unit: String) {
+    func showAlert(viewController: UIViewController, image: UIImage, food: Food, picker: UIPickerView, consumePicker: UIPickerView, unit: String, currentWeigt: String?, currentProductDate: Date?, currentExperationDate: Date?, searchController: UISearchController?) {
         
         guard let targetView = viewController.view else { return }
         blurView.frame = targetView.bounds
         targetView.addSubview(blurView)
         viewController.navigationItem.hidesBackButton = true
         viewController.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        
+        if searchController != nil {
+            search = searchController!
+            search.searchBar.isHidden = true
+        }
+        
+        weightTextField.text = currentWeigt == "0.0" ? "" : currentWeigt
+        productionDateTF.text = currentProductDate != nil ? formatter.string(from: currentProductDate!) : ""
+        expirationDateTF.text = currentExperationDate != nil ? formatter.string(from: currentExperationDate!) : ""
+        
+        if currentProductDate != nil {
+            if  let toDate = currentExperationDate {
+                daysInterval = Calendar.current.dateComponents([.month, .day], from: currentProductDate!, to: toDate)
+                consumeDateTF.text = "\(daysInterval.month ?? 0) мес. и \(daysInterval.day ?? 0) д."
+            }
+        }
+        
+        
+        if currentProductDate != nil {
+            expirationDateTF.isEnabled = true
+            expirationDateTF.alpha = 1
+            consumeDateTF.isEnabled = true
+            consumeDateTF.alpha = 1
+        }
         
         newFood = food
         targetVC = viewController
@@ -273,7 +306,7 @@ class AlertView {
         consumeToolBar.setItems([flexSpace, consumeDoneButton], animated: true)
         consumeDateTF.inputAccessoryView = consumeToolBar
         consumeDateTF.inputView = consumePicker
-
+        
         tap.addTarget(self, action: #selector(tapped))
         backgroundTap.addTarget(self, action: #selector(tapped))
         blurView.addGestureRecognizer(backgroundTap)
@@ -350,14 +383,28 @@ class AlertView {
     @objc func exitButtonTapped() {
         
         UIView.animate(withDuration: 0.3) {
+            
             self.alertView.frame = CGRect(x: 25, y: -900, width: self.targetVC.view.frame.width - 50, height: self.targetVC.view.frame.height / 1.5)
+            
         } completion: { done in
+            
             if done {
+                
                 UIView.animate(withDuration: 0.3) {
                     self.blurView.alpha = 0
+                    
                 } completion: { done in
+                    
                     if done {
+                        
+                        self.search.searchBar.isHidden = false
+                        self.search.searchBar.text = ""
+                        
                         self.weightTextField.text = ""
+                        self.productionDateTF.text = ""
+                        self.expirationDateTF.text = ""
+                        self.consumeDateTF.text = ""
+                        
                         self.unitButton.selectedRow(inComponent: 0)
                         self.targetVC.navigationItem.hidesBackButton = false
                         self.blurView.removeFromSuperview()
@@ -366,6 +413,7 @@ class AlertView {
                         self.weightTextField.removeFromSuperview()
                         self.unitButton.removeFromSuperview()
                         self.weightTitle.removeFromSuperview()
+                        
                     }
                 }
             }
@@ -391,9 +439,24 @@ class AlertView {
             if unit.isEmpty {
                 unit = "кг."
             }
-            
             newFood?.unit = unit
-            test.append(newFood!)
+            
+            if !test.isEmpty {
+                var check = false
+                for i in test {
+                    if newFood?.name == i.name {
+                        check = true
+                    }
+                }
+                if check == false {
+                    test.append(newFood!)
+                }
+                
+            } else {
+                test.append(self.newFood!)
+            }
+            
+            
             
             UIView.animate(withDuration: 0.3) {
                 self.alertView.frame = CGRect(x: 25, y: 900, width: self.targetVC.view.frame.width - 50, height: self.targetVC.view.frame.height / 1.5)
@@ -404,20 +467,30 @@ class AlertView {
                         self.targetVC.navigationController?.popToRootViewController(animated: true)
                     } completion: { done in
                         if done {
+                            self.weightTextField.text = ""
+                            self.productionDateTF.text = ""
+                            self.expirationDateTF.text = ""
+                            self.consumeDateTF.text = ""
+                            self.unitButton.selectedRow(inComponent: 0)
+                            self.targetVC.navigationItem.hidesBackButton = false
                             self.blurView.removeFromSuperview()
                             self.alertView.removeFromSuperview()
                             self.imageView.removeFromSuperview()
                             self.weightTextField.removeFromSuperview()
                             self.unitButton.removeFromSuperview()
+                            self.weightTitle.removeFromSuperview()
                         }
                     }
                 }
             }
+            
         } else {
+            
             let alert = UIAlertController(title: "Введите вес продукта", message: nil, preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .cancel)
             alert.addAction(action)
             targetVC.present(alert, animated: true)
+            
         }
     }
 }
@@ -452,8 +525,8 @@ extension AlertView {
         var imgHeight = CGFloat()
         
         switch height.view.frame.height {
-            case 568 : imgHeight = 140
-            case 667 : imgHeight =  180
+        case 568 : imgHeight = 140
+        case 667 : imgHeight =  180
         default:
             imgHeight = 200
         }
@@ -497,7 +570,7 @@ extension AlertView {
     func getExpirationDateFromPicker() {
         expirationDatePicker.minimumDate = productionDate
         if productText != "" {
-        expirationDateTF.text = formatter.string(from: expirationDatePicker.date)
+            expirationDateTF.text = formatter.string(from: expirationDatePicker.date)
             
             let daysAndMonthInterval = Calendar.current.dateComponents([.day, .month], from: productionDate, to: expirationDatePicker.date)
             let daysInterval = daysAndMonthInterval.day ?? 0
@@ -520,7 +593,7 @@ extension AlertView {
     @objc func consumeDoneAction() {
         
         var interval = Date()
-
+        
         if (day.isEmpty || day == "0") && (months.isEmpty || months == "0") {
             consumeDateTF.text = .none
         } else if months.isEmpty || months == "0" {
@@ -539,6 +612,7 @@ extension AlertView {
         expirationDateTF.text = formatter.string(from: interval)
         expirationDatePicker.date = formatter.date(from: expirationDateTF.text!)!
     }
+    
 }
 
 

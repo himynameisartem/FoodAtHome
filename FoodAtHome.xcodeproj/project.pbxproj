@@ -11,6 +11,7 @@
 		31600188283FE9F50033B5B8 /* AddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31600187283FE9F50033B5B8 /* AddCell.swift */; };
 		3180FF832860D18C00060BD0 /* pobeda-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3180FF812860D18C00060BD0 /* pobeda-bold.ttf */; };
 		3180FF842860D18C00060BD0 /* pobeda-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3180FF822860D18C00060BD0 /* pobeda-regular.ttf */; };
+		3180FF8728620BA100060BD0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3180FF8628620BA100060BD0 /* Constants.swift */; };
 		318DDCFB2845319200F1242B /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318DDCFA2845319200F1242B /* AlertView.swift */; };
 		31A696C9284270860044954E /* DetailFoodListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A696C8284270860044954E /* DetailFoodListVC.swift */; };
 		31DA20C22839488900DCE421 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA20C12839488900DCE421 /* AppDelegate.swift */; };
@@ -28,6 +29,7 @@
 		31600187283FE9F50033B5B8 /* AddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCell.swift; sourceTree = "<group>"; };
 		3180FF812860D18C00060BD0 /* pobeda-bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pobeda-bold.ttf"; sourceTree = "<group>"; };
 		3180FF822860D18C00060BD0 /* pobeda-regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pobeda-regular.ttf"; sourceTree = "<group>"; };
+		3180FF8628620BA100060BD0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		318DDCFA2845319200F1242B /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		31A696C8284270860044954E /* DetailFoodListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFoodListVC.swift; sourceTree = "<group>"; };
 		31DA20BE2839488900DCE421 /* FoodAtHome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodAtHome.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,10 +78,8 @@
 		31372FDE2849C684009F1747 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				31DA20DD283BE45C00DCE421 /* RefregiratorVC.swift */,
-				31DA20DF283BE72900DCE421 /* FoodCell.swift */,
-				31600187283FE9F50033B5B8 /* AddCell.swift */,
-				31372FE12849C6E1009F1747 /* FoodList */,
+				3180FF8528620A1800060BD0 /* RefregiratorViewController */,
+				31372FE12849C6E1009F1747 /* FoodListViewController */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -89,6 +89,7 @@
 			children = (
 				31DA20D52839553600DCE421 /* FoodModel.swift */,
 				31DA20D728396B0400DCE421 /* FoodData.swift */,
+				3180FF8628620BA100060BD0 /* Constants.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -101,14 +102,24 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		31372FE12849C6E1009F1747 /* FoodList */ = {
+		31372FE12849C6E1009F1747 /* FoodListViewController */ = {
 			isa = PBXGroup;
 			children = (
 				31600183283D65CC0033B5B8 /* FoodListVC.swift */,
 				31A696C8284270860044954E /* DetailFoodListVC.swift */,
 				318DDCFA2845319200F1242B /* AlertView.swift */,
 			);
-			path = FoodList;
+			path = FoodListViewController;
+			sourceTree = "<group>";
+		};
+		3180FF8528620A1800060BD0 /* RefregiratorViewController */ = {
+			isa = PBXGroup;
+			children = (
+				31DA20DD283BE45C00DCE421 /* RefregiratorVC.swift */,
+				31DA20DF283BE72900DCE421 /* FoodCell.swift */,
+				31600187283FE9F50033B5B8 /* AddCell.swift */,
+			);
+			path = RefregiratorViewController;
 			sourceTree = "<group>";
 		};
 		31DA20B52839488900DCE421 = {
@@ -133,10 +144,10 @@
 			isa = PBXGroup;
 			children = (
 				31DA20C12839488900DCE421 /* AppDelegate.swift */,
-				31DA20CA2839488A00DCE421 /* Assets.xcassets */,
 				31372FDF2849C6A4009F1747 /* Models */,
 				31372FE02849C6B3009F1747 /* Views */,
 				31372FDE2849C684009F1747 /* Controllers */,
+				31DA20CA2839488A00DCE421 /* Assets.xcassets */,
 				31DA20CF2839488A00DCE421 /* Info.plist */,
 				3180FF812860D18C00060BD0 /* pobeda-bold.ttf */,
 				3180FF822860D18C00060BD0 /* pobeda-regular.ttf */,
@@ -265,6 +276,7 @@
 				318DDCFB2845319200F1242B /* AlertView.swift in Sources */,
 				31DA20DE283BE45C00DCE421 /* RefregiratorVC.swift in Sources */,
 				31DA20C22839488900DCE421 /* AppDelegate.swift in Sources */,
+				3180FF8728620BA100060BD0 /* Constants.swift in Sources */,
 				31A696C9284270860044954E /* DetailFoodListVC.swift in Sources */,
 				31DA20E0283BE72900DCE421 /* FoodCell.swift in Sources */,
 				31DA20D828396B0400DCE421 /* FoodData.swift in Sources */,

@@ -7,29 +7,9 @@
 
 import Foundation
 
-var test = [Vegetables(name: "Анчо", type: .vegetables),
-            Vegetables(name: "Артишок", type: .vegetables),
-            Vegetables(name: "Африканский огурец мелотрия", type: .vegetables),
-            Vegetables(name: "Баклажан", type: .vegetables),
-            FruitsAndBerries(name: "Абрикос", type: .fruitsAndBerries),
-            FruitsAndBerries(name: "Авара", type: .fruitsAndBerries),
-            FruitsAndBerries(name: "Авокадо", type: .fruitsAndBerries),
-            FruitsAndBerries(name: "Адамово яблоко (Маклюра)", type: .fruitsAndBerries),
-            FruitsAndBerries(name: "Азимина", type: .fruitsAndBerries),
-            FruitsAndBerries(name: "Айва", type: .fruitsAndBerries),
-            FruitsAndBerries(name: "Аки", type: .fruitsAndBerries),
-            FruitsAndBerries(name: "Актинидия", type: .fruitsAndBerries),
-            Mushrooms(name: "Белые грибы маринованные", type: .mushrooms),
-            Mushrooms(name: "Белый гриб сушеный", type: .mushrooms),
-            Mushrooms(name: "Белый гриб", type: .mushrooms),
-            Mushrooms(name: "Белый степной гриб (Еринги)", type: .mushrooms),
-            Mushrooms(name: "Белый трюфель", type: .mushrooms),
-            Mushrooms(name: "Березовый гриб чага", type: .mushrooms),
-            Mushrooms(name: "Вешенки", type: .mushrooms),
-            Mushrooms(name: "Гигрофор", type: .mushrooms),
-            Mushrooms(name: "Гриб говорушка", type: .mushrooms),
-            Mushrooms(name: "Гриб дождевик", type: .mushrooms),
-            Mushrooms(name: "Гриб ежовик", type: .mushrooms)]
+var test = [Food]()
+
+
 
 let vegitables = [Vegetables(name: "Анчо", type: .vegetables),
                   Vegetables(name: "Артишок", type: .vegetables),
@@ -152,7 +132,6 @@ let vegitables = [Vegetables(name: "Анчо", type: .vegetables),
                   Vegetables(name: "Морковь пассерованная", type: .vegetables),
                   Vegetables(name: "Морковь по-корейски", type: .vegetables),
                   Vegetables(name: "Морковь", type: .vegetables),
-                  Vegetables(name: "Овощи", type: .vegetables),
                   Vegetables(name: "Огурец китайский", type: .vegetables),
                   Vegetables(name: "Огурец", type: .vegetables),
                   Vegetables(name: "Оливки", type: .vegetables),
@@ -487,7 +466,7 @@ let mushrooms = [Mushrooms(name: "Белые грибы маринованные
                  Mushrooms(name: "Белый гриб", type: .mushrooms),
                  Mushrooms(name: "Белый степной гриб (Еринги)", type: .mushrooms),
                  Mushrooms(name: "Белый трюфель", type: .mushrooms),
-                 Mushrooms(name: "Березовый гриб чага", type: .mushrooms),
+                 Mushrooms(name: "Березовый гриб чага", type: .mushrooms),
                  Mushrooms(name: "Вешенки", type: .mushrooms),
                  Mushrooms(name: "Гигрофор", type: .mushrooms),
                  Mushrooms(name: "Гриб говорушка", type: .mushrooms),
@@ -508,7 +487,6 @@ let mushrooms = [Mushrooms(name: "Белые грибы маринованные
                  Mushrooms(name: "Грибы рядовки", type: .mushrooms),
                  Mushrooms(name: "Грибы сушеные", type: .mushrooms),
                  Mushrooms(name: "Грибы эноки", type: .mushrooms),
-                 Mushrooms(name: "Грибы", type: .mushrooms),
                  Mushrooms(name: "Груздь", type: .mushrooms),
                  Mushrooms(name: "Древесный гриб муэр", type: .mushrooms),
                  Mushrooms(name: "Дубовик обыкновенный", type: .mushrooms),
@@ -559,7 +537,7 @@ let mushrooms = [Mushrooms(name: "Белые грибы маринованные
 ]
 
 
-
+var allFood = vegitables + fruitsAndBerries + mushrooms 
 
 
 
