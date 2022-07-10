@@ -257,7 +257,7 @@ class AlertView {
             button.translatesAutoresizingMaskIntoConstraints = false
             button.layer.cornerRadius = 10
             button.setTitle("Добавить", for: .normal)
-            button.backgroundColor = UIColor(cgColor: CGColor(red: 236 / 255, green: 153 / 255, blue: 75 / 255, alpha: 1))
+            button.backgroundColor = .addButtonSelectColor
             return button
         }()
         
@@ -405,10 +405,10 @@ class AlertView {
                         self.expirationDateTF.text = ""
                         self.consumeDateTF.text = ""
                         
+                        self.alertView.removeFromSuperview()
                         self.unitButton.selectedRow(inComponent: 0)
                         self.targetVC.navigationItem.hidesBackButton = false
                         self.blurView.removeFromSuperview()
-                        self.alertView.removeFromSuperview()
                         self.imageView.removeFromSuperview()
                         self.weightTextField.removeFromSuperview()
                         self.unitButton.removeFromSuperview()

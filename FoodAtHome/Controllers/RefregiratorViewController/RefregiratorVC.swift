@@ -10,6 +10,8 @@ import Popover
 
 class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+   
+    
     let picker: UIPickerView = {
         let picker = UIPickerView()
         picker.translatesAutoresizingMaskIntoConstraints = false
@@ -70,11 +72,12 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         picker.delegate = self
         consumePicker.delegate = self
         
         view.addSubview(refregiratorImage)
-        
+                
         foodOnTheShelf.delegate = self
         foodOnTheShelf.dataSource = self
         view.addSubview(backgroundImageView)
@@ -87,8 +90,9 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
         navigationItem.backButtonTitle = "Назад"
         navigationController?.navigationBar.tintColor = .black
         
-        title = "khgjhv"
     }
+    
+    
     
     //MARK: - Create Views
     
@@ -406,8 +410,9 @@ class RefregiratorVC: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             
         } else {
-            let listVC = FoodListVC()
+            let listVC = FoodListViewController()
             listVC.modalPresentationStyle = .currentContext
+            listVC.products = vegitables
             self.viewDidAppear(true)
             navigationController?.pushViewController(listVC, animated: true)
         }
