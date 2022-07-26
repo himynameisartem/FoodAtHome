@@ -21,6 +21,7 @@ class Food {
     var productionDate: Date? = nil
     var expirationDate: Date? = nil
     var consumeUp: Date? = nil
+    var calories = "0"
 
     
     init(name: String, type: FoodType) {

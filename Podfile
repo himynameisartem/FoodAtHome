@@ -8,5 +8,6 @@ target 'FoodAtHome' do
   # Pods for FoodAtHome
 
 pod "Popover"
+pod 'ContextMenuSwift'
 
 end

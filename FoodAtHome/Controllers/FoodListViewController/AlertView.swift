@@ -201,7 +201,14 @@ class AlertView {
         targetView.addSubview(blurView)
         viewController.navigationItem.hidesBackButton = true
         viewController.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        viewController.navigationItem.rightBarButtonItem?.isEnabled = false
+        viewController.navigationItem.rightBarButtonItem?.tintColor = .clear
         
+        fontLabel(label: weightTitle, viewHeight: viewController.view.frame.height)
+        fontLabel(label: productionDateTitle, viewHeight: viewController.view.frame.height)
+        fontLabel(label: expirationDateTitle, viewHeight: viewController.view.frame.height)
+        fontLabel(label: consumeUpTitle, viewHeight: viewController.view.frame.height)
+                
         if searchController != nil {
             search = searchController!
             search.searchBar.isHidden = true
@@ -228,11 +235,11 @@ class AlertView {
         
         newFood = food
         targetVC = viewController
-        
+                
         let height = targetView.frame.height
         
         alertView.frame = CGRect(x: 25, y: -900, width: targetView.frame.width - 50, height:
-                                    height < 668 ? height / 1.3 : height / 1.7)
+                                    viewHeight(viewHeight: targetView.frame.height))
         targetView.addSubview(alertView)
         
         imageView.image = image
@@ -257,6 +264,7 @@ class AlertView {
             button.translatesAutoresizingMaskIntoConstraints = false
             button.layer.cornerRadius = 10
             button.setTitle("Добавить", for: .normal)
+            button.titleLabel?.font = UIFont(name: "Inter", size: 20)
             button.backgroundColor = .addButtonSelectColor
             return button
         }()
@@ -295,6 +303,7 @@ class AlertView {
         let expirationDoneButton = UIBarButtonItem(title: "Готово", style: .done, target: self, action: #selector(expirationDoneAction))
         expirationDoneButton.tintColor = .black
         expirationToolBar.setItems([flexSpace, expirationDoneButton], animated: true)
+        expirationDatePicker.minimumDate = currentDate
         expirationDateTF.inputAccessoryView = expirationToolBar
         expirationDatePicker.addTarget(self, action: #selector(expirationDateChanged), for: .valueChanged)
         expirationDateTF.inputView = expirationDatePicker
@@ -324,10 +333,6 @@ class AlertView {
             exitButton.heightAnchor.constraint(equalToConstant: 40),
             exitButton.widthAnchor.constraint(equalToConstant: 40),
             
-            addButton.bottomAnchor.constraint(equalTo: alertView.bottomAnchor, constant: -20),
-            addButton.leadingAnchor.constraint(equalTo: alertView.leadingAnchor, constant: 50),
-            addButton.trailingAnchor.constraint(equalTo: alertView.trailingAnchor, constant: -50),
-            addButton.heightAnchor.constraint(equalToConstant: 50),
             
             weightTitle.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
             weightTitle.leadingAnchor.constraint(equalTo: alertView.leadingAnchor, constant: 20),
@@ -341,30 +346,35 @@ class AlertView {
             consumeUpTitle.topAnchor.constraint(equalTo: expirationDateTitle.bottomAnchor, constant: 30),
             consumeUpTitle.leadingAnchor.constraint(equalTo: alertView.leadingAnchor, constant: 20),
             
-            unitButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -10),
+            unitButton.centerYAnchor.constraint(equalTo: weightTextField.centerYAnchor),
             unitButton.trailingAnchor.constraint(equalTo: alertView.trailingAnchor, constant: -10),
-            unitButton.widthAnchor.constraint(equalToConstant: 80),
+            unitButton.widthAnchor.constraint(equalToConstant: tfSize(viewHeight: viewController.view.frame.height, constraint: 80)),
             unitButton.heightAnchor.constraint(equalToConstant: 80),
             
-            weightTextField.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 18),
+            weightTextField.centerYAnchor.constraint(equalTo: weightTitle.centerYAnchor),
             weightTextField.trailingAnchor.constraint(equalTo: unitButton.leadingAnchor, constant: -10),
-            weightTextField.widthAnchor.constraint(equalToConstant: 40),
+            weightTextField.widthAnchor.constraint(equalToConstant: tfSize(viewHeight: viewController.view.frame.height, constraint: 40)),
             weightTextField.heightAnchor.constraint(equalToConstant: 25),
             
-            productionDateTF.topAnchor.constraint(equalTo: weightTitle.bottomAnchor, constant: 28),
+            productionDateTF.centerYAnchor.constraint(equalTo: productionDateTitle.centerYAnchor),
             productionDateTF.trailingAnchor.constraint(equalTo: alertView.trailingAnchor, constant: -20),
-            productionDateTF.widthAnchor.constraint(equalToConstant: 120),
+            productionDateTF.widthAnchor.constraint(equalToConstant: tfSize(viewHeight: viewController.view.frame.height, constraint: 120)),
             productionDateTF.heightAnchor.constraint(equalToConstant: 25),
             
-            expirationDateTF.topAnchor.constraint(equalTo: productionDateTitle.bottomAnchor, constant: 28),
+            expirationDateTF.centerYAnchor.constraint(equalTo: expirationDateTitle.centerYAnchor),
             expirationDateTF.trailingAnchor.constraint(equalTo: alertView.trailingAnchor, constant: -20),
-            expirationDateTF.widthAnchor.constraint(equalToConstant: 120),
+            expirationDateTF.widthAnchor.constraint(equalToConstant: tfSize(viewHeight: viewController.view.frame.height, constraint: 120)),
             expirationDateTF.heightAnchor.constraint(equalToConstant: 25),
             
-            consumeDateTF.topAnchor.constraint(equalTo: expirationDateTF.bottomAnchor, constant: 28),
+            consumeDateTF.centerYAnchor.constraint(equalTo: consumeUpTitle.centerYAnchor),
             consumeDateTF.trailingAnchor.constraint(equalTo: alertView.trailingAnchor, constant: -20),
-            consumeDateTF.widthAnchor.constraint(equalToConstant: 120),
+            consumeDateTF.widthAnchor.constraint(equalToConstant: tfSize(viewHeight: viewController.view.frame.height, constraint: 120)),
             consumeDateTF.heightAnchor.constraint(equalToConstant: 25),
+
+            addButton.topAnchor.constraint(equalTo: consumeUpTitle.bottomAnchor, constant: 50),
+            addButton.leadingAnchor.constraint(equalTo: alertView.leadingAnchor, constant: 50),
+            addButton.trailingAnchor.constraint(equalTo: alertView.trailingAnchor, constant: -50),
+            addButton.heightAnchor.constraint(equalToConstant: 50),
         ])
         
         UIView.animate(withDuration: 0.3) {
@@ -408,6 +418,8 @@ class AlertView {
                         self.alertView.removeFromSuperview()
                         self.unitButton.selectedRow(inComponent: 0)
                         self.targetVC.navigationItem.hidesBackButton = false
+                        self.targetVC.navigationItem.rightBarButtonItem?.isEnabled = true
+                        self.targetVC.navigationItem.rightBarButtonItem?.tintColor = .black
                         self.blurView.removeFromSuperview()
                         self.imageView.removeFromSuperview()
                         self.weightTextField.removeFromSuperview()
@@ -425,6 +437,7 @@ class AlertView {
     @objc func addButtonTapped() {
         
         if weightTextField.text != "" && !weightTextField.text!.isEmpty {
+            
             
             if productionDateTF.text != ""{
                 newFood?.productionDate = formatter.date(from: productionDateTF.text!)
@@ -451,11 +464,9 @@ class AlertView {
                 if check == false {
                     test.append(newFood!)
                 }
-                
             } else {
                 test.append(self.newFood!)
             }
-            
             
             
             UIView.animate(withDuration: 0.3) {
@@ -464,7 +475,13 @@ class AlertView {
                 if done {
                     UIView.animate(withDuration: 0.3) {
                         self.blurView.alpha = 0
-                        self.targetVC.navigationController?.popToRootViewController(animated: true)
+                        
+                        if self.targetVC.title == "categoryList" {
+                            self.targetVC.viewDidAppear(true)
+                        } else {
+                            self.targetVC.navigationController?.popToRootViewController(animated: true)
+                        }
+                        
                     } completion: { done in
                         if done {
                             self.weightTextField.text = ""
@@ -613,6 +630,57 @@ extension AlertView {
         expirationDatePicker.date = formatter.date(from: expirationDateTF.text!)!
     }
     
-}
+    //MARK: - Size Items and Font
+        
+    func fontLabel(label: UILabel, viewHeight: Double) {
+        switch viewHeight {
+        case iPhoneScreensHeight.iPhone_5s_SE.rawValue:
+            label.font = UIFont(name:  "Inter-Light", size: 13)
+        case iPhoneScreensHeight.iPhone_6S_6SPlus_7_8_SE2nd.rawValue:
+            label.font = UIFont(name:  "Inter-Light", size: 16)
+        case iPhoneScreensHeight.iPhone_7Plus_8Plus.rawValue:
+            label.font = UIFont(name:  "Inter-Light", size: 16)
+        case iPhoneScreensHeight.iPhone_X_XS_12mini_13mini.rawValue:
+            label.font = UIFont(name:  "Inter-Light", size: 16)
+        case iPhoneScreensHeight.iPhone_12_12Pro_13_13Pro.rawValue:
+            return label.font = UIFont(name:  "Inter-Light", size: 16)
+        case iPhoneScreensHeight.iPhone_XSMax_XR_11_11Pro_11ProMax.rawValue:
+            label.font = UIFont(name:  "Inter-Light", size: 18)
+        case iPhoneScreensHeight.iPhone_12ProMax_13ProMax.rawValue:
+            label.font = UIFont(name:  "Inter-Light", size: 18)
+        default:
+            label.font = UIFont(name:  "Inter-Light", size: 16)
+        }
+    }
+    
+    func viewHeight(viewHeight: Double) -> CGFloat {
+        switch viewHeight {
+        case iPhoneScreensHeight.iPhone_5s_SE.rawValue:
+            return 445
+        case iPhoneScreensHeight.iPhone_6S_6SPlus_7_8_SE2nd.rawValue:
+            return 495
+        case iPhoneScreensHeight.iPhone_7Plus_8Plus.rawValue:
+            return 527
+        case iPhoneScreensHeight.iPhone_X_XS_12mini_13mini.rawValue:
+            return 520
+        case iPhoneScreensHeight.iPhone_12_12Pro_13_13Pro.rawValue:
+            return 520
+        case iPhoneScreensHeight.iPhone_XSMax_XR_11_11Pro_11ProMax.rawValue:
+            return 527
+        case iPhoneScreensHeight.iPhone_12ProMax_13ProMax.rawValue:
+            return 527
+        default:
+            return 100
+        }
+    }
 
+    func tfSize(viewHeight: Double, constraint: Double) -> CGFloat {
+        if viewHeight == iPhoneScreensHeight.iPhone_5s_SE.rawValue {
+            return constraint / 1.2
+        } else {
+            return constraint
+        }
+    }
+    
+}
 

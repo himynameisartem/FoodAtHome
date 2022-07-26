@@ -30,6 +30,8 @@ class FoodListViewController: UIViewController, UITableViewDelegate, UITableView
     
     //MARK: Constants
     
+    var time = true
+    var cellWhidth = CGFloat()
     var foodList = UITableView()
     var products = [Food]()
     let alert = AlertView()
@@ -80,13 +82,13 @@ class FoodListViewController: UIViewController, UITableViewDelegate, UITableView
         searcController.searchBar.setValue("Отмена", forKey: "cancelButtonText")
         definesPresentationContext = true
         
-        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.9438247681, green: 0.9557064176, blue: 0.9554974437, alpha: 1)
         
         horizontalMenu.cellDelegate = self
         view.addSubview(horizontalMenu)
         
         view.addSubview(foodList)
-        foodList.register(SearchCell.self, forCellReuseIdentifier: "detailFood")
+        foodList.register(DetailFoodCell.self, forCellReuseIdentifier: "detailFood")
         foodList.separatorStyle = .none
         makeConstraints()
         
@@ -94,54 +96,46 @@ class FoodListViewController: UIViewController, UITableViewDelegate, UITableView
         
         navigationItem.rightBarButtonItem = searchButton
         navigationItem.rightBarButtonItem?.target = self
+        
+        tabBarController?.tabBar.isHidden = true
+                
     }
     
     @objc func tappedSearch() {
         
+        UIView.setAnimationsEnabled(true)
         
-        if navigationItem.searchController == searcController {
-            searcController.isActive = false
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15, execute: { [weak self] in
-                self?.navigationItem.searchController = nil
-            })
-            
-            UIView.animate(withDuration: 0.3, delay: 0.3, options: .curveEaseIn) {
-                self.horizontalMenuConstraint.constant += 50
-                self.view.layoutIfNeeded()
-            }
-            
-        } else {
-            self.searcController.hidesNavigationBarDuringPresentation = false
-            self.navigationItem.searchController = self.searcController
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1, execute: { [weak self] in
-                self?.searcController.isActive = true
-                self?.searcController.searchBar.becomeFirstResponder()
-            })
-            
-            UIView.animate(withDuration: 0.1, delay: 0.3, options: .curveEaseIn) {
-                self.horizontalMenuConstraint.constant -= 50
-                self.view.layoutIfNeeded()
-            }
+        searcController.hidesNavigationBarDuringPresentation = false
+        
+        navigationItem.titleView = self.searcController.searchBar
+        searcController.searchBar.becomeFirstResponder()
+        navigationItem.rightBarButtonItem = .none
+        navigationItem.hidesBackButton = true
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1, execute: { [weak self] in
+            self?.searcController.isActive = true
+        })
+        UIView.animate(withDuration: 0.3, delay: 0.3, options: .curveEaseIn) {
+            self.horizontalMenuConstraint.constant -= 50
+            self.view.layoutIfNeeded()
         }
     }
     
     func makeConstraints() {
-        
+        foodList.backgroundColor = #colorLiteral(red: 0.9438247681, green: 0.9557064176, blue: 0.9554974437, alpha: 1)
         foodList.translatesAutoresizingMaskIntoConstraints = false
-        
-        horizontalMenuConstraint = NSLayoutConstraint(item: horizontalMenu, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 40)
+        horizontalMenuConstraint = NSLayoutConstraint(item: horizontalMenu, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 50)
         view.addConstraint(horizontalMenuConstraint)
         
         NSLayoutConstraint.activate([
             
-            horizontalMenu.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
+            horizontalMenu.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             horizontalMenu.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             horizontalMenu.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            horizontalMenu.heightAnchor.constraint(equalToConstant: 40),
             
             foodList.topAnchor.constraint(equalTo: horizontalMenu.bottomAnchor, constant: 5),
-            foodList.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            foodList.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            foodList.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -0.5),
+            foodList.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.5),
             foodList.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             
         ])
@@ -160,7 +154,7 @@ class FoodListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "detailFood", for: indexPath) as! SearchCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "detailFood", for: indexPath) as! DetailFoodCell
         cell.selectionStyle = .none
         
         var food = [Food]()
@@ -173,22 +167,30 @@ class FoodListViewController: UIViewController, UITableViewDelegate, UITableView
         
         cell.addSubview(cell.shadowView)
         cell.shadowView.addSubview(cell.containerView)
-        cell.containerView.addSubview(cell.title)
+        cell.containerView.addSubview(cell.stack)
+        cell.stack.addArrangedSubview(cell.title)
+        cell.stack.addArrangedSubview(cell.colories)
         cell.containerView.addSubview(cell.image)
         cell.addSubview(cell.addButton)
         cell.image.addSubview(cell.imageBackgroundColor)
         
         cell.title.text = food[indexPath.row].name
+        cell.title.font = UIFont(name: "Inter-Light", size: titleFontSize(viewHeight: view.frame.height))
+        
+        cell.colories.text = ("\(food[indexPath.row].calories) кКал. / 100г.")
+        cell.colories.font = UIFont(name: "Inter-ExtraLight", size: titleFontSize(viewHeight: view.frame.height) - 5)
+        cell.colories.alpha = 0.7
+        
         cell.image.image = UIImage(named: food[indexPath.row].name)
         cell.backgroundColor = .clear
         cell.addButton.addTarget(self, action: #selector(tapped), for: .allEvents)
         cell.addButton.tag = indexPath.row
-                
+        
         NSLayoutConstraint.activate([
             
             cell.shadowView.topAnchor.constraint(equalTo: cell.topAnchor, constant: 10),
             cell.shadowView.centerXAnchor.constraint(equalTo: cell.centerXAnchor),
-            cell.shadowView.widthAnchor.constraint(equalToConstant: 250),
+            cell.shadowView.widthAnchor.constraint(equalToConstant: cellWhidth(viewHeight: view.frame.height)),
             cell.shadowView.bottomAnchor.constraint(equalTo: cell.bottomAnchor, constant: -10),
             
             cell.containerView.topAnchor.constraint(equalTo: cell.shadowView.topAnchor),
@@ -196,22 +198,26 @@ class FoodListViewController: UIViewController, UITableViewDelegate, UITableView
             cell.containerView.trailingAnchor.constraint(equalTo: cell.shadowView.trailingAnchor),
             cell.containerView.bottomAnchor.constraint(equalTo: cell.shadowView.bottomAnchor),
             
-            cell.image.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 45),
+            cell.image.leadingAnchor.constraint(equalTo: cell.leadingAnchor,
+                                                constant: imageConstraint(viewHeight: view.frame.height)),
             cell.image.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
-            cell.image.heightAnchor.constraint(equalToConstant: 65),
-            cell.image.widthAnchor.constraint(equalToConstant: 65),
+            cell.image.heightAnchor.constraint(equalToConstant: cellHeight(viewHeight: view.frame.height) - 35),
+            cell.image.widthAnchor.constraint(equalToConstant: cellHeight(viewHeight: view.frame.height) - 35),
             
-            cell.imageBackgroundColor.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 45),
+            cell.imageBackgroundColor.leadingAnchor.constraint(equalTo: cell.leadingAnchor,
+                                                               constant: imageConstraint(viewHeight: view.frame.height)),
             cell.imageBackgroundColor.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
             cell.imageBackgroundColor.heightAnchor.constraint(equalToConstant: 65),
             cell.imageBackgroundColor.widthAnchor.constraint(equalToConstant: 65),
             
-            cell.title.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
-            cell.title.leadingAnchor.constraint(equalTo: cell.image.trailingAnchor, constant: 20),
-            cell.title.trailingAnchor.constraint(equalTo: cell.containerView.trailingAnchor, constant: -10),
+            cell.stack.topAnchor.constraint(equalTo: cell.shadowView.topAnchor, constant: 8),
+            cell.stack.leadingAnchor.constraint(equalTo: cell.image.trailingAnchor, constant: 20),
+            cell.stack.trailingAnchor.constraint(equalTo: cell.shadowView.trailingAnchor, constant: -10),
+            cell.stack.bottomAnchor.constraint(equalTo: cell.shadowView.bottomAnchor, constant: -8),
             
             cell.addButton.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
-            cell.addButton.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -20),
+            cell.addButton.centerXAnchor.constraint(equalTo: cell.trailingAnchor,
+                                                    constant: -((view.frame.width - cellWhidth(viewHeight: view.frame.height)) / 4)),
             cell.addButton.widthAnchor.constraint(equalToConstant: 40),
             cell.addButton.heightAnchor.constraint(equalToConstant: 40)
             
@@ -220,15 +226,29 @@ class FoodListViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        if time {
+            cell.transform = CGAffineTransform(translationX: 0, y: cell.contentView.frame.height)
+            UIView.animate(withDuration: 0.3, delay: 0.05 * Double(indexPath.row)) {
+                cell.transform = CGAffineTransform(translationX: cell.contentView.frame.width, y: cell.contentView.frame.height)
+            } completion: { done in
+                if done {
+                    self.time = false
+                }
+            }
+        }
+}
+    
     @objc func tapped(sender: UIButton) {
-
+        
         let index = IndexPath(row: sender.tag, section: 0)
         
         if sender.isTracking {
             sender.backgroundColor = .addButtonSelectColor
         }
         else {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15, execute: { 
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15, execute: {
                 sender.backgroundColor = .white
             })
             
@@ -244,30 +264,42 @@ class FoodListViewController: UIViewController, UITableViewDelegate, UITableView
         
         alert.showAlert(viewController: self, image:  UIImage(named: food[index.row].name)!, food: food[index.row], picker: picker, consumePicker: consumePicker, unit: unit, currentWeigt: nil, currentProductDate: nil, currentExperationDate: nil, searchController: searcController)
         
-                searcController.searchBar.resignFirstResponder()
+        searcController.searchBar.resignFirstResponder()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return cellHeight(viewHeight: view.frame.height)
+    }
+    
+    //MARK: - scrollViewDidScroll
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > 0 {
+            foodList.layer.borderWidth = 0.3
+            foodList.layer.borderColor = #colorLiteral(red: 0.34122473, green: 0.34122473, blue: 0.34122473, alpha: 0.3141556291)
+        } else {
+            foodList.layer.borderWidth = 0.0
+        }
     }
 }
-    
+
+//MARK: - SelectCollectionViewItemProtocol
 
 extension FoodListViewController: SelectCollectionViewItemProtocol {
     func itemName(name: String) {
         
-        if name == "ОВОЩИ" {
+        if name == "Овощи" {
             products = vegitables
-        } else if  name == "ФРУКТЫ И ЯГОДЫ" {
+        } else if  name == "Фрукты и ягоды" {
             products = fruitsAndBerries
-        } else if  name == "ГРИБЫ" {
+        } else if  name == "Грибы" {
             products = mushrooms
         }
         
+        time = true
+        foodList.contentOffset = CGPoint(x: 0.0, y: 0.0)
         foodList.reloadData()
     }
-    
-    
 }
 
 //MARK: - Extension UIPickerView
@@ -325,23 +357,31 @@ extension FoodListViewController: UISearchResultsUpdating, UISearchBarDelegate, 
         filteredFoodList = allFood.filter({ (food: Food) in
             return food.name.lowercased().contains(searchText.lowercased())
         })
+        
+        if isFiltering {
+            foodList.contentOffset = CGPoint(x: 0.0, y: 0.0)
+        }
+        
         self.foodList.reloadData()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         
-        UIView.animate(withDuration: 0.3, delay: 0.3, options: .curveEaseIn) {
+        navigationItem.hidesBackButton = false
+        self.navigationItem.titleView = .none
+        navigationItem.rightBarButtonItem = searchButton
+        
+        UIView.animate(withDuration: 0.3, delay: 0.1, options: .curveEaseIn) {
             self.horizontalMenuConstraint.constant += 50
             self.view.layoutIfNeeded()
         }
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15, execute: { [weak self] in
-            self?.navigationItem.searchController = nil
-        })
+        foodList.contentOffset = CGPoint(x: 0.0, y: 0.0)
     }
 }
 
-class SearchCell: UITableViewCell {
+//MARK: - Detail Food Cell
+
+class DetailFoodCell: UITableViewCell {
     
     let addButton: UIButton = {
         let button = UIButton()
@@ -395,14 +435,140 @@ class SearchCell: UITableViewCell {
         return view
     }()
     
+    let stack: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .vertical
+        stack.distribution = .equalSpacing
+        return stack
+    }()
+    
     let title: UILabel = {
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.font = UIFont(name: "pobeda-bold", size: 24)
-        title.numberOfLines = 0
+        title.numberOfLines = 2
         return title
     }()
     
-   
+    let colories: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    
 }
 
+//MARK: - Size Items and Font
+
+
+extension FoodListViewController {
+    
+    func cellWhidth(viewHeight: Double) -> CGFloat {
+        switch viewHeight {
+        case iPhoneScreensHeight.iPhone_5s_SE.rawValue:
+            return 190
+        case iPhoneScreensHeight.iPhone_6S_6SPlus_7_8_SE2nd.rawValue:
+            return 220
+        case iPhoneScreensHeight.iPhone_7Plus_8Plus.rawValue:
+            return 250
+        case iPhoneScreensHeight.iPhone_X_XS_12mini_13mini.rawValue:
+            return 230
+        case iPhoneScreensHeight.iPhone_12_12Pro_13_13Pro.rawValue:
+            return 230
+        case iPhoneScreensHeight.iPhone_XSMax_XR_11_11Pro_11ProMax.rawValue:
+            return 260
+        case iPhoneScreensHeight.iPhone_12ProMax_13ProMax.rawValue:
+            return 260
+        default:
+            return 250
+        }
+    }
+    
+    func cellHeight(viewHeight: Double) -> CGFloat {
+        switch viewHeight {
+        case iPhoneScreensHeight.iPhone_5s_SE.rawValue:
+            return 90
+        case iPhoneScreensHeight.iPhone_6S_6SPlus_7_8_SE2nd.rawValue:
+            return 90
+        case iPhoneScreensHeight.iPhone_7Plus_8Plus.rawValue:
+            return 100
+        case iPhoneScreensHeight.iPhone_X_XS_12mini_13mini.rawValue:
+            return 100
+        case iPhoneScreensHeight.iPhone_12_12Pro_13_13Pro.rawValue:
+            return 95
+        case iPhoneScreensHeight.iPhone_XSMax_XR_11_11Pro_11ProMax.rawValue:
+            return 100
+        case iPhoneScreensHeight.iPhone_12ProMax_13ProMax.rawValue:
+            return 100
+        default:
+            return 100
+        }
+    }
+    
+    func addButtonConstraint(viewHeight: Double) -> CGFloat {
+        switch viewHeight {
+        case iPhoneScreensHeight.iPhone_5s_SE.rawValue:
+            return -12
+        case iPhoneScreensHeight.iPhone_6S_6SPlus_7_8_SE2nd.rawValue:
+            return -20
+        case iPhoneScreensHeight.iPhone_7Plus_8Plus.rawValue:
+            return -20
+        case iPhoneScreensHeight.iPhone_X_XS_12mini_13mini.rawValue:
+            return -20
+        case iPhoneScreensHeight.iPhone_12_12Pro_13_13Pro.rawValue:
+            return -20
+        case iPhoneScreensHeight.iPhone_XSMax_XR_11_11Pro_11ProMax.rawValue:
+            return -15
+        case iPhoneScreensHeight.iPhone_12ProMax_13ProMax.rawValue:
+            return -20
+        default:
+            return -20
+        }
+    }
+    
+    func imageConstraint(viewHeight: Double) -> CGFloat {
+        switch viewHeight {
+        case iPhoneScreensHeight.iPhone_5s_SE.rawValue:
+            return 30
+        case iPhoneScreensHeight.iPhone_6S_6SPlus_7_8_SE2nd.rawValue:
+            return 45
+        case iPhoneScreensHeight.iPhone_7Plus_8Plus.rawValue:
+            return 45
+        case iPhoneScreensHeight.iPhone_X_XS_12mini_13mini.rawValue:
+            return 40
+        case iPhoneScreensHeight.iPhone_12_12Pro_13_13Pro.rawValue:
+            return 45
+        case iPhoneScreensHeight.iPhone_XSMax_XR_11_11Pro_11ProMax.rawValue:
+            return 40
+        case iPhoneScreensHeight.iPhone_12ProMax_13ProMax.rawValue:
+            return 45
+        default:
+            return 45
+        }
+    }
+    
+
+    func titleFontSize(viewHeight: Double) -> CGFloat {
+        switch viewHeight {
+        case iPhoneScreensHeight.iPhone_5s_SE.rawValue:
+            return 12
+        case iPhoneScreensHeight.iPhone_6S_6SPlus_7_8_SE2nd.rawValue:
+            return 14
+        case iPhoneScreensHeight.iPhone_7Plus_8Plus.rawValue:
+            return 16
+        case iPhoneScreensHeight.iPhone_X_XS_12mini_13mini.rawValue:
+            return 14
+        case iPhoneScreensHeight.iPhone_12_12Pro_13_13Pro.rawValue:
+            return 16
+        case iPhoneScreensHeight.iPhone_XSMax_XR_11_11Pro_11ProMax.rawValue:
+            return 16
+        case iPhoneScreensHeight.iPhone_12ProMax_13ProMax.rawValue:
+            return 16
+        default:
+            return 16
+        }
+    }
+
+    
+}

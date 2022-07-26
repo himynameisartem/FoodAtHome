@@ -16,9 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         let navController = UINavigationController()
-        let vc = RefregiratorVC()
+        let vc = TabBarViewController()
+        vc.selectedIndex = 1
         navController.viewControllers = [vc]
-        window?.rootViewController = navController
+        window?.rootViewController = vc
         window?.makeKeyAndVisible()
         
         return true

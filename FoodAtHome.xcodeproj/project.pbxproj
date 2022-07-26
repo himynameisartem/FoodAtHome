@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		31600188283FE9F50033B5B8 /* AddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31600187283FE9F50033B5B8 /* AddCell.swift */; };
+		31600188283FE9F50033B5B8 /* AddCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31600187283FE9F50033B5B8 /* AddCollectionViewCell.swift */; };
+		316066E6288EC0F500EDB06F /* CategoryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316066E5288EC0F500EDB06F /* CategoryListTableViewCell.swift */; };
+		316066E9288ECCF500EDB06F /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316066E8288ECCF500EDB06F /* TabBarViewController.swift */; };
 		317F50E6286DB4C90049B64B /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317F50E5286DB4C90049B64B /* UIColorExtension.swift */; };
 		3180FF832860D18C00060BD0 /* pobeda-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3180FF812860D18C00060BD0 /* pobeda-bold.ttf */; };
 		3180FF842860D18C00060BD0 /* pobeda-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3180FF822860D18C00060BD0 /* pobeda-regular.ttf */; };
@@ -17,18 +19,27 @@
 		31B1DFF12874C626006D7C64 /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1DFF02874C626006D7C64 /* ListVC.swift */; };
 		31B1DFF52874CB7E006D7C64 /* ShareVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1DFF42874CB7E006D7C64 /* ShareVC.swift */; };
 		31B1DFF7287958C1006D7C64 /* HorizontalMenuCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1DFF6287958C1006D7C64 /* HorizontalMenuCollectionView.swift */; };
+		31C6B926288323A80066829C /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C6B925288323A80066829C /* CategoryCollectionViewCell.swift */; };
+		31C6B9292883F5570066829C /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C6B9282883F5570066829C /* CategoryListViewController.swift */; };
 		31DA20C22839488900DCE421 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA20C12839488900DCE421 /* AppDelegate.swift */; };
 		31DA20CB2839488A00DCE421 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31DA20CA2839488A00DCE421 /* Assets.xcassets */; };
 		31DA20CE2839488A00DCE421 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31DA20CC2839488A00DCE421 /* LaunchScreen.storyboard */; };
 		31DA20D62839553600DCE421 /* FoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA20D52839553600DCE421 /* FoodModel.swift */; };
 		31DA20D828396B0400DCE421 /* FoodData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA20D728396B0400DCE421 /* FoodData.swift */; };
-		31DA20DE283BE45C00DCE421 /* RefregiratorVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA20DD283BE45C00DCE421 /* RefregiratorVC.swift */; };
-		31DA20E0283BE72900DCE421 /* FoodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA20DF283BE72900DCE421 /* FoodCell.swift */; };
+		31DA20DE283BE45C00DCE421 /* RefregiratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA20DD283BE45C00DCE421 /* RefregiratorViewController.swift */; };
+		31DA20E0283BE72900DCE421 /* FoodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA20DF283BE72900DCE421 /* FoodCollectionViewCell.swift */; };
+		31DF397C287BD61600624AFD /* Inter.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31DF397B287BD5E900624AFD /* Inter.ttf */; };
+		31DF397E287BD65900624AFD /* Inter-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 31DF397D287BD64000624AFD /* Inter-ExtraLight.otf */; };
+		31DF3980287BD7F900624AFD /* Inter-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 31DF397F287BD7F700624AFD /* Inter-Bold.otf */; };
+		31DF3982287BD88A00624AFD /* Inter-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 31DF3981287BD87C00624AFD /* Inter-SemiBold.otf */; };
+		31DF3984287BD96400624AFD /* Inter-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 31DF3983287BD96200624AFD /* Inter-Light.otf */; };
 		DBAF083645135680F717CAAA /* Pods_FoodAtHome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3636034430645426DF694936 /* Pods_FoodAtHome.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		31600187283FE9F50033B5B8 /* AddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCell.swift; sourceTree = "<group>"; };
+		31600187283FE9F50033B5B8 /* AddCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCollectionViewCell.swift; sourceTree = "<group>"; };
+		316066E5288EC0F500EDB06F /* CategoryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListTableViewCell.swift; sourceTree = "<group>"; };
+		316066E8288ECCF500EDB06F /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		317F50E5286DB4C90049B64B /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		3180FF812860D18C00060BD0 /* pobeda-bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pobeda-bold.ttf"; sourceTree = "<group>"; };
 		3180FF822860D18C00060BD0 /* pobeda-regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pobeda-regular.ttf"; sourceTree = "<group>"; };
@@ -38,6 +49,8 @@
 		31B1DFF02874C626006D7C64 /* ListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
 		31B1DFF42874CB7E006D7C64 /* ShareVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareVC.swift; sourceTree = "<group>"; };
 		31B1DFF6287958C1006D7C64 /* HorizontalMenuCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalMenuCollectionView.swift; sourceTree = "<group>"; };
+		31C6B925288323A80066829C /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		31C6B9282883F5570066829C /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
 		31DA20BE2839488900DCE421 /* FoodAtHome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodAtHome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31DA20C12839488900DCE421 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		31DA20CA2839488A00DCE421 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -45,8 +58,13 @@
 		31DA20CF2839488A00DCE421 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		31DA20D52839553600DCE421 /* FoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodModel.swift; sourceTree = "<group>"; };
 		31DA20D728396B0400DCE421 /* FoodData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodData.swift; sourceTree = "<group>"; };
-		31DA20DD283BE45C00DCE421 /* RefregiratorVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefregiratorVC.swift; sourceTree = "<group>"; };
-		31DA20DF283BE72900DCE421 /* FoodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCell.swift; sourceTree = "<group>"; };
+		31DA20DD283BE45C00DCE421 /* RefregiratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefregiratorViewController.swift; sourceTree = "<group>"; };
+		31DA20DF283BE72900DCE421 /* FoodCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCollectionViewCell.swift; sourceTree = "<group>"; };
+		31DF397B287BD5E900624AFD /* Inter.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Inter.ttf; sourceTree = "<group>"; };
+		31DF397D287BD64000624AFD /* Inter-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraLight.otf"; sourceTree = "<group>"; };
+		31DF397F287BD7F700624AFD /* Inter-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.otf"; sourceTree = "<group>"; };
+		31DF3981287BD87C00624AFD /* Inter-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.otf"; sourceTree = "<group>"; };
+		31DF3983287BD96200624AFD /* Inter-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Light.otf"; sourceTree = "<group>"; };
 		3636034430645426DF694936 /* Pods_FoodAtHome.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FoodAtHome.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		61D6D49D71DA0A80957369B1 /* Pods-FoodAtHome.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodAtHome.release.xcconfig"; path = "Target Support Files/Pods-FoodAtHome/Pods-FoodAtHome.release.xcconfig"; sourceTree = "<group>"; };
 		6C5AFD95DB956BA98EBC4383 /* Pods-FoodAtHome.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodAtHome.debug.xcconfig"; path = "Target Support Files/Pods-FoodAtHome/Pods-FoodAtHome.debug.xcconfig"; sourceTree = "<group>"; };
@@ -84,7 +102,11 @@
 		31372FDE2849C684009F1747 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				31B1DFF02874C626006D7C64 /* ListVC.swift */,
+				31B1DFF42874CB7E006D7C64 /* ShareVC.swift */,
+				316066E7288ECCDC00EDB06F /* TabBarViewController */,
 				3180FF8528620A1800060BD0 /* RefregiratorViewController */,
+				31C6B9272883F5190066829C /* CategoryListViewController */,
 				31372FE12849C6E1009F1747 /* FoodListViewController */,
 			);
 			path = Controllers;
@@ -119,16 +141,32 @@
 			path = FoodListViewController;
 			sourceTree = "<group>";
 		};
+		316066E7288ECCDC00EDB06F /* TabBarViewController */ = {
+			isa = PBXGroup;
+			children = (
+				316066E8288ECCF500EDB06F /* TabBarViewController.swift */,
+			);
+			path = TabBarViewController;
+			sourceTree = "<group>";
+		};
 		3180FF8528620A1800060BD0 /* RefregiratorViewController */ = {
 			isa = PBXGroup;
 			children = (
-				31DA20DD283BE45C00DCE421 /* RefregiratorVC.swift */,
-				31B1DFF02874C626006D7C64 /* ListVC.swift */,
-				31B1DFF42874CB7E006D7C64 /* ShareVC.swift */,
-				31DA20DF283BE72900DCE421 /* FoodCell.swift */,
-				31600187283FE9F50033B5B8 /* AddCell.swift */,
+				31DA20DD283BE45C00DCE421 /* RefregiratorViewController.swift */,
+				31DA20DF283BE72900DCE421 /* FoodCollectionViewCell.swift */,
+				31C6B925288323A80066829C /* CategoryCollectionViewCell.swift */,
+				31600187283FE9F50033B5B8 /* AddCollectionViewCell.swift */,
 			);
 			path = RefregiratorViewController;
+			sourceTree = "<group>";
+		};
+		31C6B9272883F5190066829C /* CategoryListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				31C6B9282883F5570066829C /* CategoryListViewController.swift */,
+				316066E5288EC0F500EDB06F /* CategoryListTableViewCell.swift */,
+			);
+			path = CategoryListViewController;
 			sourceTree = "<group>";
 		};
 		31DA20B52839488900DCE421 = {
@@ -158,6 +196,11 @@
 				31372FDE2849C684009F1747 /* Controllers */,
 				31DA20CA2839488A00DCE421 /* Assets.xcassets */,
 				31DA20CF2839488A00DCE421 /* Info.plist */,
+				31DF397B287BD5E900624AFD /* Inter.ttf */,
+				31DF397D287BD64000624AFD /* Inter-ExtraLight.otf */,
+				31DF3983287BD96200624AFD /* Inter-Light.otf */,
+				31DF3981287BD87C00624AFD /* Inter-SemiBold.otf */,
+				31DF397F287BD7F700624AFD /* Inter-Bold.otf */,
 				3180FF812860D18C00060BD0 /* pobeda-bold.ttf */,
 				3180FF822860D18C00060BD0 /* pobeda-regular.ttf */,
 			);
@@ -224,10 +267,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31DF397E287BD65900624AFD /* Inter-ExtraLight.otf in Resources */,
+				31DF3984287BD96400624AFD /* Inter-Light.otf in Resources */,
+				31DF3980287BD7F900624AFD /* Inter-Bold.otf in Resources */,
 				3180FF842860D18C00060BD0 /* pobeda-regular.ttf in Resources */,
+				31DF397C287BD61600624AFD /* Inter.ttf in Resources */,
 				3180FF832860D18C00060BD0 /* pobeda-bold.ttf in Resources */,
 				31DA20CE2839488A00DCE421 /* LaunchScreen.storyboard in Resources */,
 				31DA20CB2839488A00DCE421 /* Assets.xcassets in Resources */,
+				31DF3982287BD88A00624AFD /* Inter-SemiBold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,16 +330,20 @@
 			files = (
 				31B1DFF12874C626006D7C64 /* ListVC.swift in Sources */,
 				317F50E6286DB4C90049B64B /* UIColorExtension.swift in Sources */,
-				31600188283FE9F50033B5B8 /* AddCell.swift in Sources */,
+				31600188283FE9F50033B5B8 /* AddCollectionViewCell.swift in Sources */,
 				318DDCFB2845319200F1242B /* AlertView.swift in Sources */,
-				31DA20DE283BE45C00DCE421 /* RefregiratorVC.swift in Sources */,
+				31DA20DE283BE45C00DCE421 /* RefregiratorViewController.swift in Sources */,
+				31C6B9292883F5570066829C /* CategoryListViewController.swift in Sources */,
 				31DA20C22839488900DCE421 /* AppDelegate.swift in Sources */,
+				316066E6288EC0F500EDB06F /* CategoryListTableViewCell.swift in Sources */,
 				3180FF8728620BA100060BD0 /* Constants.swift in Sources */,
+				316066E9288ECCF500EDB06F /* TabBarViewController.swift in Sources */,
 				31B1DFF52874CB7E006D7C64 /* ShareVC.swift in Sources */,
 				31B1DFF7287958C1006D7C64 /* HorizontalMenuCollectionView.swift in Sources */,
 				31A696C9284270860044954E /* FoodListViewController.swift in Sources */,
-				31DA20E0283BE72900DCE421 /* FoodCell.swift in Sources */,
+				31DA20E0283BE72900DCE421 /* FoodCollectionViewCell.swift in Sources */,
 				31DA20D828396B0400DCE421 /* FoodData.swift in Sources */,
+				31C6B926288323A80066829C /* CategoryCollectionViewCell.swift in Sources */,
 				31DA20D62839553600DCE421 /* FoodModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

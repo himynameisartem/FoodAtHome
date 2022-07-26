@@ -32,6 +32,7 @@ class HorizontalMenuCollectionView: UICollectionView {
     
     private func configure() {
         categoryLayout.minimumInteritemSpacing = 20
+        contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         categoryLayout.scrollDirection = .horizontal
         
         showsHorizontalScrollIndicator = false
@@ -85,7 +86,7 @@ extension HorizontalMenuCollectionView: UICollectionViewDelegate {
 extension HorizontalMenuCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let categoryFont = UIFont(name: "Avenir Next", size: 18)
+        let categoryFont = UIFont(name: "Inter-SemiBold", size: 24)
         let categoryAttributes = [NSAttributedString.Key.font : categoryFont as Any]
         let categoryWidth = foodListArray[indexPath.item].size(withAttributes: categoryAttributes).width
         
@@ -98,11 +99,19 @@ extension HorizontalMenuCollectionView: UICollectionViewDelegateFlowLayout {
 
 class HorizontalMenuCollectionViewCell: UICollectionViewCell {
     
+    let selectedCellImage: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.image = UIImage(named: "SelectedCell")
+        image.isHidden = true
+        return image
+    }()
+    
     let categoryName: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Avenir Next", size: 18)
-        label.textAlignment = .left
+        label.font = UIFont(name: "Inter-ExtraLight", size: 24)
+        label.textAlignment = .center
         return label
     }()
     
@@ -116,8 +125,8 @@ class HorizontalMenuCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            backgroundColor = self.isSelected ? .gray : .none
-//            categoryName.textColor = self.isSelected ? .black : .gray
+            categoryName.font = self.isSelected ? UIFont(name: "Inter-SemiBold", size: 24) : UIFont(name: "Inter-ExtraLight", size: 24)
+            selectedCellImage.isHidden = self.isSelected ? false : true
         }
     }
     
@@ -128,7 +137,14 @@ class HorizontalMenuCollectionViewCell: UICollectionViewCell {
     private func setupViews() {
         
         backgroundColor = .none
-        addSubview(categoryName)
+        addSubview(selectedCellImage)
+        
+        if self.isSelected {
+            selectedCellImage.addSubview(categoryName)
+        } else {
+            addSubview(categoryName)
+            
+        }
     }
     
     private func makeConstraints() {
@@ -136,7 +152,11 @@ class HorizontalMenuCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
         
             categoryName.centerXAnchor.constraint(equalTo: centerXAnchor),
-            categoryName.centerYAnchor.constraint(equalTo: centerYAnchor)
+            categoryName.centerYAnchor.constraint(equalTo: centerYAnchor),
+            selectedCellImage.topAnchor.constraint(equalTo: topAnchor),
+            selectedCellImage.leadingAnchor.constraint(equalTo: leadingAnchor),
+            selectedCellImage.trailingAnchor.constraint(equalTo: trailingAnchor),
+            selectedCellImage.bottomAnchor.constraint(equalTo: bottomAnchor)
             
         ])
         
