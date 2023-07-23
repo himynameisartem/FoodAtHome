@@ -7,5 +7,6 @@ target 'FoodAtHome' do
 
   # Pods for FoodAtHome
 
+ pod 'RealmSwift'
 
 end
