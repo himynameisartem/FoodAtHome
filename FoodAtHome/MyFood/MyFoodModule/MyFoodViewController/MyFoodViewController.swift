@@ -59,9 +59,6 @@ class MyFoodViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         configurator.configure(with: self)
         presenter.viewDidLoad()
-        
-//        picker.delegate = self
-//        consumePicker.delegate = self
     }
 }
 
