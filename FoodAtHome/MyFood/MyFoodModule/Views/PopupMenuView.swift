@@ -24,6 +24,8 @@ class PopupMenu: UIView, ShowPopupMenuProtocol {
     private let menuHeight: CGFloat = 110
     private var x: CGFloat!
     private var y: CGFloat!
+    private var arrowY: CGFloat!
+    private var arrowStartPointY: CGFloat!
     
     private var nameLabel: UILabel!
     
@@ -57,19 +59,23 @@ class PopupMenu: UIView, ShowPopupMenuProtocol {
             self.dimmingView.alpha = 0.5
             self.containerView.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
             self.arrowView.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
-            self.arrowView.center = CGPoint(x: sourceCell.center.x + 15, y: self.y - self.menuHeight / 2 + 5)
+            self.arrowView.center = CGPoint(x: sourceCell.center.x + 15, y: self.arrowY)
         } completion: { done in
             if done {
                 UIView.animate(withDuration: 0.2) {
                     self.containerView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
                     self.arrowView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-                    self.arrowView.layer.position.y = self.y - self.menuHeight / 2 + 10
+                    if self.arrowView.image == UIImage(systemName: "arrowtriangle.up.fill") {
+                        self.arrowView.layer.position.y = self.arrowY + 5
+                    } else {
+                        self.arrowView.layer.position.y = self.arrowY - 5
+                    }
                 } completion: { done  in
                     if done {
                         UIView.animate(withDuration: 0.2) {
                             self.containerView.transform = CGAffineTransform(scaleX: 1, y: 1)
                             self.arrowView.transform = CGAffineTransform(scaleX: 1, y: 1)
-                            self.arrowView.layer.position.y = self.y - self.menuHeight / 2 + 5
+                            self.arrowView.layer.position.y = self.arrowY
                             sourceCell.removeGestureRecognizer(self.gestureForCellSize)
                         }
                     }
@@ -90,7 +96,7 @@ class PopupMenu: UIView, ShowPopupMenuProtocol {
                 UIView.animate(withDuration: 0.2) {
                     self.containerView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
                     self.arrowView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-                    self.arrowView.center = CGPoint(x: self.x , y: self.y + 40)
+                    self.arrowView.center = CGPoint(x: self.x , y: self.arrowStartPointY)
                     self.dimmingView.alpha = 0
                 } completion: { done in
                     if done {
@@ -130,7 +136,6 @@ extension PopupMenu {
         containerView.layer.cornerRadius = 8
         
         arrowView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        arrowView.image = UIImage(systemName: "arrowtriangle.up.fill")
         arrowView.tintColor = .white
         
         menuView = UIView()
@@ -179,31 +184,32 @@ extension PopupMenu {
         
         gestureForCellSize = UITapGestureRecognizer()
         sourceCell.addGestureRecognizer(gestureForCellSize)
-        
         let touch = gestureForCellSize.location(in: sourceCell)
-        let touchPoint: CGFloat
-        let centerX: Double
+        let cellHeight = (view.frame.width / 4 - 15) * 1.5
         
         if sourceCell.center.x < containerView.frame.width / 2 {
-            let x = (containerView.frame.width / 2)
-            centerX = x + 5
+            x = containerView.frame.width / 2 + 5
         } else if sourceCell.center.x > view.frame.width - (containerView.frame.width / 2) {
-            centerX = view.frame.width - containerView.frame.width / 2 - 5
+            x = view.frame.width - containerView.frame.width / 2 - 5
         } else {
-            centerX = sourceCell.center.x + 20
+            x = sourceCell.center.x + 20
         }
+        
         
         if touch.y * (-1) < view.frame.height - (view.frame.height / 3) {
-            touchPoint = touch.y * (-1) + sourceCell.frame.height
+            y = touch.y * (-1) + cellHeight + containerView.frame.height / 2 - 5
+            arrowY = y - menuHeight / 2 + 5
+            arrowView.image = UIImage(systemName: "arrowtriangle.up.fill")
+            arrowStartPointY = y + 40
         } else {
-            touchPoint = touch.y * (-1)
+            y = touch.y * (-1) - containerView.frame.height / 2 - 15
+            arrowY = y + menuHeight / 2 + 15
+            arrowView.image = UIImage(systemName: "arrowtriangle.down.fill")
+            arrowStartPointY = y - 40
         }
-        
-        x = centerX
-        y = touchPoint + sourceCell.frame.height / 2
-        
+                  
         containerView.center = CGPoint(x: x, y: y)
-        arrowView.center = CGPoint(x: x, y: y + 40)
+        arrowView.center = CGPoint(x: x, y: arrowStartPointY)
         arrowView.transform = CGAffineTransform(scaleX: 0, y: 0)
         containerView.transform = CGAffineTransform(scaleX: 0, y: 0)
         

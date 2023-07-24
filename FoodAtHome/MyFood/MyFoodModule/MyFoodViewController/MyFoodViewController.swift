@@ -22,35 +22,6 @@ class MyFoodViewController: UIViewController, UICollectionViewDelegate, UICollec
     private var navView: UIView!
     private var navTitle: UILabel!
     
-    let alert = AlertView()
-    var unit = String()
-    var months = String()
-    var days = String()
-    
-    
-    let picker: UIPickerView = {
-        let picker = UIPickerView()
-        picker.translatesAutoresizingMaskIntoConstraints = false
-        return picker
-    }()
-    
-    let consumePicker: UIPickerView = {
-        let picker = UIPickerView()
-        picker.isOpaque = false
-        return picker
-    }()
-    
-    override func viewWillAppear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden = false
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        print("viewDidAppear")
-        presenter.viewDidLoad()
-        view.reloadInputViews()
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -108,7 +79,7 @@ extension MyFoodViewController {
         layuotMyFoodCollectionView.minimumInteritemSpacing = 0
         myFoodCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layuotMyFoodCollectionView)
         myFoodCollectionView.backgroundColor = .clear
-        myFoodCollectionView.contentInset = UIEdgeInsets(top: 15, left: 15, bottom: 10, right: 15)
+        myFoodCollectionView.contentInset = UIEdgeInsets(top: 15, left: 15, bottom: 40, right: 15)
         myFoodCollectionView.translatesAutoresizingMaskIntoConstraints = false
         myFoodCollectionView.backgroundColor = .none
         myFoodCollectionView.layer.cornerRadius = 10
@@ -161,19 +132,20 @@ extension MyFoodViewController {
         
         if collectionView == myFoodCollectionView {
             if indexPath.row != presenter.myFoodCount {
-                
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "foodCell", for: indexPath) as! FoodCollectionViewCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "foodCell",
+                                                              for: indexPath) as! FoodCollectionViewCell
                 guard let myFood = presenter.food(atIndex: indexPath) else { return cell }
                 cell.configure(food: myFood)
                 return cell
             }
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCell", for: indexPath) as! AddCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCell",
+                                                          for: indexPath) as! AddCollectionViewCell
             cell.addButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
             return cell
-            
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "categoryCell", for: indexPath) as! CategoryCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "categoryCell",
+                                                          for: indexPath) as! CategoryCollectionViewCell
             cell.configure(at: indexPath)
             return cell
         }
@@ -182,14 +154,8 @@ extension MyFoodViewController {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         if collectionView == myFoodCollectionView {
+            return CGSize(width: (view.frame.width / 4) - 15, height: (view.frame.width / 4 - 15) * 1.5)
             
-            if view.frame.height < 700 && view.frame.height > 568 {
-                return CGSize(width: 80, height: 110)
-            }
-            if view.frame.height == 568 {
-                return CGSize(width: 65, height: 90)
-            }
-            return CGSize(width: 90, height: 120)
         } else {
             return CGSize(width: 180, height: 120)
         }
@@ -214,42 +180,35 @@ extension MyFoodViewController {
             presenter.showCategoryFood(at: indexPath)
         }
     }
-    
     //MARK: - Context Menu
     
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         
         if collectionView == myFoodCollectionView {
-            
             let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-                
                 let item = self.presenter.myFood[indexPath.row]
-                
-                let edit = UIAction(title: "Изменить", image: UIImage(systemName: "pencil"), identifier: nil, discoverabilityTitle: nil, state: .off) { _ in
-                    
+                let edit = UIAction(title: "Изменить",
+                                    image: UIImage(systemName: "pencil"),
+                                    identifier: nil,
+                                    discoverabilityTitle: nil,
+                                    state: .off) { _ in
                     self.presenter.showChangeFoodMenu(for: self)
                     self.presenter.configureChangeFoodMenu(food: item)
-                    //                    self.alert.showAlert(viewController: self,
-                    //                                         image:  UIImage(named: item.name)!,
-                    //                                         food: item,
-                    //                                         picker: self.picker,
-                    //                                         consumePicker: self.consumePicker,
-                    //                                         unit: self.unit,
-                    //                                         currentWeigt: item.weight,
-                    //                                         currentProductDate: item.productionDate,
-                    //                                         currentExperationDate: item.expirationDate,
-                    //                                         searchController: nil)
                 }
-                
-                let delete = UIAction(title: "Удалить", image: UIImage(systemName: "trash"), attributes: .destructive) { _ in
-                    
+                let delete = UIAction(title: "Удалить",
+                                      image: UIImage(systemName: "trash"),
+                                      attributes: .destructive) { _ in
                     try! self.localRealm.write {
                         self.localRealm.delete(item)
                     }
-                    
-                    self.viewDidAppear(true)
+                    self.presenter.viewDidLoad()
+                    self.myFoodCollectionView.reloadData()
                 }
-                return UIMenu(title: "", image: nil, identifier: nil, options: UIMenu.Options.displayInline , children: [edit, delete])
+                return UIMenu(title: "",
+                              image: nil,
+                              identifier: nil,
+                              options: UIMenu.Options.displayInline ,
+                              children: [edit, delete])
             }
             return config
         }
@@ -291,18 +250,6 @@ extension MyFoodViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             return daysInterval[row] + "д"
         }
     }
-    
-    //    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    //        if pickerView == picker {
-    //            alert.unit = pickerArray[row]
-    //        }
-    //        if component == 0 {
-    //            alert.months = monthsInterval[row]
-    //        }
-    //        if component == 1 {
-    //            alert.day = daysInterval[row]
-    //        }
-    //    }
 }
 
 
@@ -342,11 +289,8 @@ extension MyFoodViewController: AddAndChangeFoodDelegate {
             localRealm.add(food)
         }
         
-//        presenter.viewDidLoad()
-//        self.myFoodCollectionView.reloadData()
-        
-        self.viewDidAppear(true)
-        
+        presenter.viewDidLoad()
+        self.myFoodCollectionView.reloadData()
     }
 
 }

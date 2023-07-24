@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		310AC9E42A6D7A2F0055E013 /* PickerPropertiesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310AC9E32A6D7A2F0055E013 /* PickerPropertiesManager.swift */; };
 		31600188283FE9F50033B5B8 /* AddCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31600187283FE9F50033B5B8 /* AddCollectionViewCell.swift */; };
 		316066E6288EC0F500EDB06F /* CategoryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316066E5288EC0F500EDB06F /* CategoryListTableViewCell.swift */; };
 		316066E9288ECCF500EDB06F /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316066E8288ECCF500EDB06F /* TabBarViewController.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		310AC9E32A6D7A2F0055E013 /* PickerPropertiesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerPropertiesManager.swift; sourceTree = "<group>"; };
 		31600187283FE9F50033B5B8 /* AddCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCollectionViewCell.swift; sourceTree = "<group>"; };
 		316066E5288EC0F500EDB06F /* CategoryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListTableViewCell.swift; sourceTree = "<group>"; };
 		316066E8288ECCF500EDB06F /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				318701A02A4E019C0079848C /* FoodManager.swift */,
 				31D456A82A5D315200FDFDFB /* DateManager.swift */,
 				31D456B12A5D753A00FDFDFB /* CategoryFoodManager.swift */,
+				310AC9E32A6D7A2F0055E013 /* PickerPropertiesManager.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -359,6 +362,8 @@
 			isa = PBXGroup;
 			children = (
 				31DA20C02839488900DCE421 /* FoodAtHome */,
+				31372FDF2849C6A4009F1747 /* Models */,
+				31372FDE2849C684009F1747 /* Controllers */,
 				31DA20BF2839488900DCE421 /* Products */,
 				2BF38B1D33C4955E3DD1E527 /* Pods */,
 				1B5DE49824AF097CDD1D1075 /* Frameworks */,
@@ -377,8 +382,6 @@
 			isa = PBXGroup;
 			children = (
 				3187018F2A4C94CA0079848C /* MyFood */,
-				31372FDE2849C684009F1747 /* Controllers */,
-				31372FDF2849C6A4009F1747 /* Models */,
 				3187019F2A4E018A0079848C /* System */,
 				31B4BA9B2A4C89D500CD0977 /* Support */,
 			);
@@ -536,6 +539,7 @@
 				318701A32A4E060F0079848C /* MyFoodConfigurator.swift in Sources */,
 				31C6B926288323A80066829C /* CategoryCollectionViewCell.swift in Sources */,
 				318701A12A4E019C0079848C /* FoodManager.swift in Sources */,
+				310AC9E42A6D7A2F0055E013 /* PickerPropertiesManager.swift in Sources */,
 				31DA20D62839553600DCE421 /* FoodModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
