@@ -9,67 +9,15 @@ import UIKit
 
 class CategoryCollectionViewCell: UICollectionViewCell {
     
-    private let shadowView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.layer.shadowColor = UIColor.gray.cgColor
-        view.layer.shadowRadius = 8
-        view.layer.shadowOpacity = 1
-        view.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-        view.layer.cornerRadius = 10
-        return view
-    }()
-    
-    private let blurView: UIVisualEffectView = {
-        let view = UIVisualEffectView()
-        let blurEffect = UIBlurEffect(style: .dark)
-        view.alpha = 0.5
-        view.effect = blurEffect
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.clipsToBounds = true
-       return view
-   }()
-    
-    private let backgroundImage: UIImageView =  {
-        let image = UIImageView()
-        image.layer.cornerRadius = 10
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.clipsToBounds = true
-        image.contentMode = .scaleAspectFill
-        return image
-    }()
-    
-    private let categoryView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 10
-        return view
-    }()
-    
-    private let categoryImage: UIImageView =  {
-        let image = UIImageView()
-        image.layer.cornerRadius = 10
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.clipsToBounds = true
-        image.contentMode = .scaleAspectFill
-        return image
-    }()
-    
-    private let categoryName: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Inter-Light", size: 16)
-        label.textColor = .white
-        label.contentMode = .center
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        return label
-    }()
+    private var shadowView: UIView!
+    private var blurView: UIVisualEffectView!
+    private var backgroundImage: UIImageView!
+    private var categoryView: UIView!
+    private var categoryImage: UIImageView!
+    private var categoryName: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupUI()
         setupConstraints()
     }
@@ -79,12 +27,55 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(at indexPath: IndexPath) {
-        categoryImage.image = UIImage(named: foodListArray[indexPath.row])
-        categoryName.text = foodListArray[indexPath.row]
-        backgroundImage.image = UIImage(named: "backgroundImage")
+        categoryImage.image = UIImage(named: foodCatigoriesList[indexPath.row])
+        categoryName.text = foodCatigoriesList[indexPath.row]
     }
     
     private func setupUI() {
+        
+        
+        shadowView = UIView()
+        shadowView.translatesAutoresizingMaskIntoConstraints = false
+        shadowView.backgroundColor = .white
+        shadowView.layer.shadowColor = UIColor.gray.cgColor
+        shadowView.layer.shadowRadius = 8
+        shadowView.layer.shadowOpacity = 1
+        shadowView.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+        shadowView.layer.cornerRadius = 10
+        
+        let blurEffect = UIBlurEffect(style: .dark)
+        blurView = UIVisualEffectView()
+        blurView.alpha = 0.5
+        blurView.effect = blurEffect
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        blurView.clipsToBounds = true
+        
+        backgroundImage = UIImageView(image: UIImage(named: "backgroundImage"))
+        backgroundImage.layer.cornerRadius = 10
+        backgroundImage.translatesAutoresizingMaskIntoConstraints = false
+        backgroundImage.clipsToBounds = true
+        backgroundImage.contentMode = .scaleAspectFill
+        
+        categoryView = UIView()
+        categoryView.translatesAutoresizingMaskIntoConstraints = false
+        categoryView.layer.cornerRadius = 10
+        
+        categoryImage = UIImageView()
+        categoryImage.layer.cornerRadius = 10
+        categoryImage.translatesAutoresizingMaskIntoConstraints = false
+        categoryImage.clipsToBounds = true
+        categoryImage.contentMode = .scaleAspectFill
+        
+        categoryName = UILabel()
+        categoryName.translatesAutoresizingMaskIntoConstraints = false
+        categoryName.font = UIFont(name: "Inter-Light", size: 16)
+        categoryName.textColor = .white
+        categoryName.contentMode = .center
+        categoryName.textAlignment = .center
+        categoryName.numberOfLines = 0
+        categoryName.minimumScaleFactor = 0.8
+        categoryName.adjustsFontSizeToFitWidth = true
+        
         contentView.addSubview(shadowView)
         shadowView.addSubview(categoryView)
         categoryView.addSubview(backgroundImage)
@@ -117,10 +108,10 @@ class CategoryCollectionViewCell: UICollectionViewCell {
                 categoryImage.trailingAnchor.constraint(equalTo: categoryView.trailingAnchor),
                 categoryImage.bottomAnchor.constraint(equalTo: categoryView.bottomAnchor),
                 
-                blurView.topAnchor.constraint(equalTo: shadowView.topAnchor, constant: 60),
                 blurView.leadingAnchor.constraint(equalTo: shadowView.leadingAnchor),
                 blurView.trailingAnchor.constraint(equalTo: shadowView.trailingAnchor),
                 blurView.bottomAnchor.constraint(equalTo: shadowView.bottomAnchor, constant: -0),
+                blurView.heightAnchor.constraint(equalToConstant: frame.height / 2.6),
                 
                 categoryName.topAnchor.constraint(equalTo: blurView.topAnchor),
                 categoryName.leadingAnchor.constraint(equalTo: blurView.leadingAnchor, constant: 5),

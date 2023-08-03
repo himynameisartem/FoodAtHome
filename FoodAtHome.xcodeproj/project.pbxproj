@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		310AC9E42A6D7A2F0055E013 /* PickerPropertiesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310AC9E32A6D7A2F0055E013 /* PickerPropertiesManager.swift */; };
+		314CA48C2A73C5A0002D4680 /* FoodListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA48B2A73C5A0002D4680 /* FoodListPresenter.swift */; };
+		314CA48E2A73C5AE002D4680 /* FoodListPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA48D2A73C5AE002D4680 /* FoodListPresenterProtocol.swift */; };
+		314CA4912A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4902A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift */; };
+		314CA4932A7A50D0002D4680 /* FoodListViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4922A7A50D0002D4680 /* FoodListViewProtocol.swift */; };
+		314CA4952A7A52AD002D4680 /* FoodListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4942A7A52AD002D4680 /* FoodListInteractor.swift */; };
+		314CA4972A7A52B8002D4680 /* FoddListInteractorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4962A7A52B8002D4680 /* FoddListInteractorProtocol.swift */; };
+		314CA4992A7A52E5002D4680 /* FoodListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4982A7A52E5002D4680 /* FoodListRouter.swift */; };
+		314CA49B2A7A52EE002D4680 /* FoodListRouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA49A2A7A52EE002D4680 /* FoodListRouterProtocol.swift */; };
+		314CA49D2A7A543F002D4680 /* FoodListConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA49C2A7A543F002D4680 /* FoodListConfigurator.swift */; };
+		314CA49F2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA49E2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift */; };
+		314CA4A12A7A58C5002D4680 /* FoodListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4A02A7A58C5002D4680 /* FoodListManager.swift */; };
 		31600188283FE9F50033B5B8 /* AddCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31600187283FE9F50033B5B8 /* AddCollectionViewCell.swift */; };
 		316066E6288EC0F500EDB06F /* CategoryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316066E5288EC0F500EDB06F /* CategoryListTableViewCell.swift */; };
 		316066E9288ECCF500EDB06F /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316066E8288ECCF500EDB06F /* TabBarViewController.swift */; };
@@ -27,7 +38,6 @@
 		31A696C9284270860044954E /* FoodListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A696C8284270860044954E /* FoodListViewController.swift */; };
 		31B1DFF12874C626006D7C64 /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1DFF02874C626006D7C64 /* ListVC.swift */; };
 		31B1DFF52874CB7E006D7C64 /* ShareVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1DFF42874CB7E006D7C64 /* ShareVC.swift */; };
-		31B1DFF7287958C1006D7C64 /* HorizontalMenuCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1DFF6287958C1006D7C64 /* HorizontalMenuCollectionView.swift */; };
 		31C6B926288323A80066829C /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C6B925288323A80066829C /* CategoryCollectionViewCell.swift */; };
 		31C6B9292883F5570066829C /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C6B9282883F5570066829C /* CategoryListViewController.swift */; };
 		31D456A92A5D315200FDFDFB /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D456A82A5D315200FDFDFB /* DateManager.swift */; };
@@ -53,6 +63,17 @@
 
 /* Begin PBXFileReference section */
 		310AC9E32A6D7A2F0055E013 /* PickerPropertiesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerPropertiesManager.swift; sourceTree = "<group>"; };
+		314CA48B2A73C5A0002D4680 /* FoodListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListPresenter.swift; sourceTree = "<group>"; };
+		314CA48D2A73C5AE002D4680 /* FoodListPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListPresenterProtocol.swift; sourceTree = "<group>"; };
+		314CA4902A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizntalMenuCollectionViewCell.swift; sourceTree = "<group>"; };
+		314CA4922A7A50D0002D4680 /* FoodListViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListViewProtocol.swift; sourceTree = "<group>"; };
+		314CA4942A7A52AD002D4680 /* FoodListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListInteractor.swift; sourceTree = "<group>"; };
+		314CA4962A7A52B8002D4680 /* FoddListInteractorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoddListInteractorProtocol.swift; sourceTree = "<group>"; };
+		314CA4982A7A52E5002D4680 /* FoodListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListRouter.swift; sourceTree = "<group>"; };
+		314CA49A2A7A52EE002D4680 /* FoodListRouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListRouterProtocol.swift; sourceTree = "<group>"; };
+		314CA49C2A7A543F002D4680 /* FoodListConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListConfigurator.swift; sourceTree = "<group>"; };
+		314CA49E2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListConfiguratorProtocol.swift; sourceTree = "<group>"; };
+		314CA4A02A7A58C5002D4680 /* FoodListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListManager.swift; sourceTree = "<group>"; };
 		31600187283FE9F50033B5B8 /* AddCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCollectionViewCell.swift; sourceTree = "<group>"; };
 		316066E5288EC0F500EDB06F /* CategoryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListTableViewCell.swift; sourceTree = "<group>"; };
 		316066E8288ECCF500EDB06F /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -72,7 +93,6 @@
 		31A696C8284270860044954E /* FoodListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListViewController.swift; sourceTree = "<group>"; };
 		31B1DFF02874C626006D7C64 /* ListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
 		31B1DFF42874CB7E006D7C64 /* ShareVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareVC.swift; sourceTree = "<group>"; };
-		31B1DFF6287958C1006D7C64 /* HorizontalMenuCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalMenuCollectionView.swift; sourceTree = "<group>"; };
 		31C6B925288323A80066829C /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		31C6B9282883F5570066829C /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
 		31D456A82A5D315200FDFDFB /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
@@ -167,11 +187,75 @@
 		31372FE12849C6E1009F1747 /* FoodListViewController */ = {
 			isa = PBXGroup;
 			children = (
-				31A696C8284270860044954E /* FoodListViewController.swift */,
-				31B1DFF6287958C1006D7C64 /* HorizontalMenuCollectionView.swift */,
 				318DDCFA2845319200F1242B /* AlertView.swift */,
 			);
 			path = FoodListViewController;
+			sourceTree = "<group>";
+		};
+		314CA4852A73C4F5002D4680 /* FoodListModule */ = {
+			isa = PBXGroup;
+			children = (
+				314CA4862A73C533002D4680 /* FoodListViewController */,
+				314CA4872A73C540002D4680 /* FoodListPresenter */,
+				314CA4882A73C54A002D4680 /* FoodListInteractor */,
+				314CA4892A73C556002D4680 /* FoodListRouter */,
+				314CA48A2A73C560002D4680 /* FoodListConfigurator */,
+				314CA48F2A7A366A002D4680 /* Views */,
+			);
+			path = FoodListModule;
+			sourceTree = "<group>";
+		};
+		314CA4862A73C533002D4680 /* FoodListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				314CA4922A7A50D0002D4680 /* FoodListViewProtocol.swift */,
+				31A696C8284270860044954E /* FoodListViewController.swift */,
+			);
+			path = FoodListViewController;
+			sourceTree = "<group>";
+		};
+		314CA4872A73C540002D4680 /* FoodListPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				314CA48D2A73C5AE002D4680 /* FoodListPresenterProtocol.swift */,
+				314CA48B2A73C5A0002D4680 /* FoodListPresenter.swift */,
+			);
+			path = FoodListPresenter;
+			sourceTree = "<group>";
+		};
+		314CA4882A73C54A002D4680 /* FoodListInteractor */ = {
+			isa = PBXGroup;
+			children = (
+				314CA4962A7A52B8002D4680 /* FoddListInteractorProtocol.swift */,
+				314CA4942A7A52AD002D4680 /* FoodListInteractor.swift */,
+			);
+			path = FoodListInteractor;
+			sourceTree = "<group>";
+		};
+		314CA4892A73C556002D4680 /* FoodListRouter */ = {
+			isa = PBXGroup;
+			children = (
+				314CA49A2A7A52EE002D4680 /* FoodListRouterProtocol.swift */,
+				314CA4982A7A52E5002D4680 /* FoodListRouter.swift */,
+			);
+			path = FoodListRouter;
+			sourceTree = "<group>";
+		};
+		314CA48A2A73C560002D4680 /* FoodListConfigurator */ = {
+			isa = PBXGroup;
+			children = (
+				314CA49C2A7A543F002D4680 /* FoodListConfigurator.swift */,
+				314CA49E2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift */,
+			);
+			path = FoodListConfigurator;
+			sourceTree = "<group>";
+		};
+		314CA48F2A7A366A002D4680 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				314CA4902A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		316066E7288ECCDC00EDB06F /* TabBarViewController */ = {
@@ -194,6 +278,7 @@
 			children = (
 				318701A82A503B0B0079848C /* MyFoodModule */,
 				31D456AA2A5D4CD900FDFDFB /* CategoryFoodModule */,
+				314CA4852A73C4F5002D4680 /* FoodListModule */,
 				31D456B32A5E88A900FDFDFB /* AddAndChangeFoodModule */,
 			);
 			path = MyFood;
@@ -248,6 +333,7 @@
 			isa = PBXGroup;
 			children = (
 				318701A02A4E019C0079848C /* FoodManager.swift */,
+				314CA4A02A7A58C5002D4680 /* FoodListManager.swift */,
 				31D456A82A5D315200FDFDFB /* DateManager.swift */,
 				31D456B12A5D753A00FDFDFB /* CategoryFoodManager.swift */,
 				310AC9E32A6D7A2F0055E013 /* PickerPropertiesManager.swift */,
@@ -511,33 +597,43 @@
 			files = (
 				31B1DFF12874C626006D7C64 /* ListVC.swift in Sources */,
 				317F50E6286DB4C90049B64B /* UIColorExtension.swift in Sources */,
+				314CA49B2A7A52EE002D4680 /* FoodListRouterProtocol.swift in Sources */,
 				3187019E2A4DE10C0079848C /* MyFoodInteractorProtocol.swift in Sources */,
 				31E983BC2A53FAF0006FD303 /* MyFoodRouter.swift in Sources */,
+				314CA49F2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift in Sources */,
 				318701A52A4E061A0079848C /* MyFoodConfiguratorProtocol.swift in Sources */,
 				318701AB2A503BA40079848C /* MyFoodViewProtocol.swift in Sources */,
 				31600188283FE9F50033B5B8 /* AddCollectionViewCell.swift in Sources */,
+				314CA4A12A7A58C5002D4680 /* FoodListManager.swift in Sources */,
 				31E983C02A540502006FD303 /* PopupMenuView.swift in Sources */,
 				31D456A92A5D315200FDFDFB /* DateManager.swift in Sources */,
 				318DDCFB2845319200F1242B /* AlertView.swift in Sources */,
+				314CA48E2A73C5AE002D4680 /* FoodListPresenterProtocol.swift in Sources */,
 				3187019C2A4DE1020079848C /* MyFoodInteractor.swift in Sources */,
+				314CA4992A7A52E5002D4680 /* FoodListRouter.swift in Sources */,
 				31E983BE2A53FAFA006FD303 /* MyFoodRouterProtocol.swift in Sources */,
 				31DA20DE283BE45C00DCE421 /* MyFoodViewController.swift in Sources */,
 				31C6B9292883F5570066829C /* CategoryListViewController.swift in Sources */,
 				31DA20C22839488900DCE421 /* AppDelegate.swift in Sources */,
 				3187019A2A4DD9D50079848C /* MyFoodPresenterProtocol.swift in Sources */,
+				314CA4932A7A50D0002D4680 /* FoodListViewProtocol.swift in Sources */,
+				314CA4912A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift in Sources */,
 				316066E6288EC0F500EDB06F /* CategoryListTableViewCell.swift in Sources */,
 				3180FF8728620BA100060BD0 /* Constants.swift in Sources */,
 				316066E9288ECCF500EDB06F /* TabBarViewController.swift in Sources */,
 				31D456B52A5E890B00FDFDFB /* AddAndChangeFoodView.swift in Sources */,
+				314CA48C2A73C5A0002D4680 /* FoodListPresenter.swift in Sources */,
 				31B1DFF52874CB7E006D7C64 /* ShareVC.swift in Sources */,
-				31B1DFF7287958C1006D7C64 /* HorizontalMenuCollectionView.swift in Sources */,
 				318701982A4DD9C00079848C /* MyFoodPresenter.swift in Sources */,
+				314CA49D2A7A543F002D4680 /* FoodListConfigurator.swift in Sources */,
+				314CA4952A7A52AD002D4680 /* FoodListInteractor.swift in Sources */,
 				31A696C9284270860044954E /* FoodListViewController.swift in Sources */,
 				31D456B22A5D753A00FDFDFB /* CategoryFoodManager.swift in Sources */,
 				31DA20E0283BE72900DCE421 /* FoodCollectionViewCell.swift in Sources */,
 				31DA20D828396B0400DCE421 /* FoodData.swift in Sources */,
 				318701A32A4E060F0079848C /* MyFoodConfigurator.swift in Sources */,
 				31C6B926288323A80066829C /* CategoryCollectionViewCell.swift in Sources */,
+				314CA4972A7A52B8002D4680 /* FoddListInteractorProtocol.swift in Sources */,
 				318701A12A4E019C0079848C /* FoodManager.swift in Sources */,
 				310AC9E42A6D7A2F0055E013 /* PickerPropertiesManager.swift in Sources */,
 				31DA20D62839553600DCE421 /* FoodModel.swift in Sources */,

@@ -111,22 +111,7 @@ class PopupMenu: UIView, ShowPopupMenuProtocol {
     }
 }
 
-extension PopupMenu {
-    
-    func configure(food: FoodRealm) {
-        nameLabel.text = food.name
-        weightLabel.text = "Вес:"
-        detailWeightLabel.text = "\(food.weight) \(food.unit)"
-        dateOfManufactureLabel.text = "Дата изготовления:"
-        detailDateOfManufactureLabel.text = DateManager.shared.dateFromString(with: food.productionDate)
-        sellByLabel.text = "Годен до:"
-        detailSellByLabel.text = DateManager.shared.dateFromString(with: food.expirationDate)
-        leftLabel.text = "Осталось:"
-        detailLeftLabel.text = DateManager.shared.intervalDate(from: food.productionDate, to: food.expirationDate, type: .left)
-        circle(from: circleView, from: food.productionDate, to: food.expirationDate)
-    }
-    
-}
+//MARK: - Setup UI
 
 extension PopupMenu {
     
@@ -207,7 +192,7 @@ extension PopupMenu {
             arrowView.image = UIImage(systemName: "arrowtriangle.down.fill")
             arrowStartPointY = y - 40
         }
-                  
+        
         containerView.center = CGPoint(x: x, y: y)
         arrowView.center = CGPoint(x: x, y: arrowStartPointY)
         arrowView.transform = CGAffineTransform(scaleX: 0, y: 0)
@@ -260,15 +245,11 @@ extension PopupMenu {
         shapeView.layer.addSublayer(backGroundLayer)
         shapeView.layer.addSublayer(foreGroundLayer)
         shapeView.isHidden = true
-                
+        
         if sellByLabel.text != "-" {
             shapeView.isHidden = false
         }
     }
-    
-}
-
-extension PopupMenu {
     
     private func setupConstraints(view: UIView) {
         NSLayoutConstraint.activate([
@@ -293,7 +274,22 @@ extension PopupMenu {
             
         ])
     }
+    
+    func configure(food: FoodRealm) {
+        nameLabel.text = food.name
+        weightLabel.text = "Вес:"
+        detailWeightLabel.text = "\(food.weight) \(food.unit)"
+        dateOfManufactureLabel.text = "Дата изготовления:"
+        detailDateOfManufactureLabel.text = DateManager.shared.dateFromString(with: food.productionDate)
+        sellByLabel.text = "Годен до:"
+        detailSellByLabel.text = DateManager.shared.dateFromString(with: food.expirationDate)
+        leftLabel.text = "Осталось:"
+        detailLeftLabel.text = DateManager.shared.intervalDate(from: food.productionDate, to: food.expirationDate, type: .left)
+        circle(from: circleView, from: food.productionDate, to: food.expirationDate)
+    }
 }
+
+//MARK: - Support Methods
 
 extension PopupMenu {
     func setupLabels(at labels: [UILabel]) {

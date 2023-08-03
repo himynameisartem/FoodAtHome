@@ -72,11 +72,8 @@ class DateManager {
     func pickerRows(from date1: Date?, to date2: Date?, daysOrMonths: DaysOrMonths) -> Int? {
         guard let date1 = date1, let date2 = date2 else { return 0 }
         var components = DateComponents()
-            
             components = calendar.dateComponents([.month, .day], from: date1, to: date2)
-
         if let months = components.month, let days = components.day {
-            
             if daysOrMonths == .days {
                 return days
             } else {

@@ -9,69 +9,58 @@ import UIKit
 
 class FoodListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    //MARK: HorizontalMenuCollectionView
-    
-    let horizontalMenu = HorizontalMenuCollectionView()
-    private var horizontalMenuConstraint = NSLayoutConstraint()
-    
-    //MARK: PickerView
-    
-    let picker: UIPickerView = {
-        let picker = UIPickerView()
-        picker.translatesAutoresizingMaskIntoConstraints = false
-        return picker
-    }()
-    
-    let consumePicker: UIPickerView = {
-        let picker = UIPickerView()
-        picker.isOpaque = false
-        return picker
-    }()
-    
-    //MARK: Constants
-    
-    var time = true
-    var cellWhidth = CGFloat()
-    var foodList = UITableView()
-    var products = [FoodRealm]()
-    let alert = AlertView()
-    var unit = String()
-    var months = String()
-    var days = String()
+    var foodList = [FoodRealm]()
     var filteredFoodList = [FoodRealm]()
     
-    //MARK: Search Controller
-    
-    let searchButton: UIBarButtonItem = {
-        let button = UIBarButtonItem()
-        button.image = UIImage(systemName: "magnifyingglass")
-        button.tintColor = .black
-        button.action = #selector(tappedSearch)
-        return button
-    }()
-    
-    var searcController = UISearchController(searchResultsController: nil)
+    var presenter: FoodListPresenterProtocol!
+    private let configurator: FoodListConfiguratorProtocol = FoodListConfigurator()
+            
+    private var categoriesListCollectionView: UICollectionView!
+    private var categoriesListCollectionViewConstraint = NSLayoutConstraint()
+    private var foodListTableView: UITableView!
+    private var searchButton: UIBarButtonItem!
+    private var searcController = UISearchController(searchResultsController: nil)
     
     var searchBarIsEmpty: Bool {
         guard let text = searcController.searchBar.text else { return false }
         return text.isEmpty
     }
-    
     var isFiltering: Bool {
         return searcController.isActive && !searchBarIsEmpty
     }
     
-    //MARK: - View Did Load
+    var time = true
+    var cellWhidth = CGFloat()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        picker.delegate = self
-        picker.dataSource = self
-        consumePicker.delegate = self
-        foodList.delegate = self
-        foodList.dataSource = self
-        foodList.backgroundColor = .clear
+        setupUI()
+        setupConstraints()
+        
+        configurator.configure(with: self)
+        presenter.viewDidLoad()
+        
+        vcCheck = true
+    }
+}
+
+//MARK: - SetupUI
+
+extension FoodListViewController {
+    
+    private func setupUI() {
+        
+        view.backgroundColor = #colorLiteral(red: 0.9438247681, green: 0.9557064176, blue: 0.9554974437, alpha: 1)
+        navigationController?.navigationBar.backgroundColor = .clear
+        tabBarController?.tabBar.isHidden = true
+        
+        searchButton = UIBarButtonItem()
+        searchButton.image = UIImage(systemName: "magnifyingglass")
+        searchButton.tintColor = .black
+        searchButton.action = #selector(tappedSearch)
+        navigationItem.rightBarButtonItem = searchButton
+        navigationItem.rightBarButtonItem?.target = self
         
         searcController.resignFirstResponder()
         searcController.delegate = self
@@ -82,32 +71,129 @@ class FoodListViewController: UIViewController, UITableViewDelegate, UITableView
         searcController.searchBar.setValue("Отмена", forKey: "cancelButtonText")
         definesPresentationContext = true
         
-        view.backgroundColor = #colorLiteral(red: 0.9438247681, green: 0.9557064176, blue: 0.9554974437, alpha: 1)
+        let layoutCategoriesCollectionView = UICollectionViewFlowLayout()
+        layoutCategoriesCollectionView.scrollDirection = .horizontal
+        layoutCategoriesCollectionView.minimumInteritemSpacing = 20
+        categoriesListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layoutCategoriesCollectionView)
+        categoriesListCollectionView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        categoriesListCollectionView.dataSource = self
+        categoriesListCollectionView.delegate = self
+        categoriesListCollectionView.backgroundColor = .none
+        categoriesListCollectionView.bounces = false
+        categoriesListCollectionView.showsHorizontalScrollIndicator = false
+        categoriesListCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        categoriesListCollectionView.selectItem(at: [0,0], animated: true, scrollPosition: [])
+        categoriesListCollectionView.register(HorizontalMenuCollectionViewCell.self, forCellWithReuseIdentifier: "HorizontalMenuCell")
+        view.addSubview(categoriesListCollectionView)
         
-        horizontalMenu.cellDelegate = self
-        view.addSubview(horizontalMenu)
+        foodListTableView = UITableView()
+        foodListTableView.register(DetailFoodCell.self, forCellReuseIdentifier: "detailFood")
+        foodListTableView.separatorStyle = .none
+        foodListTableView.delegate = self
+        foodListTableView.dataSource = self
+        foodListTableView.backgroundColor = .clear
+        foodListTableView.backgroundColor = #colorLiteral(red: 0.9438247681, green: 0.9557064176, blue: 0.9554974437, alpha: 1)
+        foodListTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(foodList)
-        foodList.register(DetailFoodCell.self, forCellReuseIdentifier: "detailFood")
-        foodList.separatorStyle = .none
-        makeConstraints()
+        view.addSubview(foodListTableView)
+    }
+    
+    func setupConstraints() {
         
-        navigationController?.navigationBar.backgroundColor = .clear
+        guard let item = categoriesListCollectionView else { return }
+        categoriesListCollectionViewConstraint = NSLayoutConstraint(item: item, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 50)
+        view.addConstraint(categoriesListCollectionViewConstraint)
         
-        navigationItem.rightBarButtonItem = searchButton
-        navigationItem.rightBarButtonItem?.target = self
-        
-        tabBarController?.tabBar.isHidden = true
-                
-        vcCheck = true
+        NSLayoutConstraint.activate([
+            
+            categoriesListCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            categoriesListCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            categoriesListCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            
+            foodListTableView.topAnchor.constraint(equalTo: categoriesListCollectionView.bottomAnchor, constant: 5),
+            foodListTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -0.5),
+            foodListTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.5),
+            foodListTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            
+        ])
     }
     
     @objc func tappedSearch() {
+        presenter.tappedSearch()
+    }
+}
+
+//MARK: - UICollectionView
+
+extension FoodListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        foodCatigoriesList.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HorizontalMenuCell", for: indexPath) as! HorizontalMenuCollectionViewCell
+                
+        cell.configure(at: indexPath)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         
+        foodList = presenter.selectedCategories(at: indexPath)
+        
+        time = true
+        foodListTableView.contentOffset = CGPoint(x: 0.0, y: 0.0)
+        foodListTableView.reloadData()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let categoryFont = UIFont(name: "Inter-SemiBold", size: 24)
+        let categoryAttributes = [NSAttributedString.Key.font : categoryFont as Any]
+        let categoryWidth = foodCatigoriesList[indexPath.item].size(withAttributes: categoryAttributes).width
+        
+        return CGSize(width: categoryWidth,
+                      height: collectionView.frame.height)
+    }
+}
+
+//MARK: - Results SearchController
+
+extension FoodListViewController: UISearchResultsUpdating, UISearchBarDelegate, UISearchControllerDelegate {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        presenter.updateSearchResults(for: searchController.searchBar.text!)
+
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        navigationItem.hidesBackButton = false
+        self.navigationItem.titleView = .none
+        navigationItem.rightBarButtonItem = searchButton
+        
+        UIView.animate(withDuration: 0.3, delay: 0.1, options: .curveEaseIn) {
+            self.categoriesListCollectionViewConstraint.constant += 50
+            self.view.layoutIfNeeded()
+        }
+        foodListTableView.contentOffset = CGPoint(x: 0.0, y: 0.0)
+    }
+}
+
+//MARK: - FoodListViewProtocol
+
+extension FoodListViewController: FoodListViewProtocol {
+    func reloadData() {
+        foodListTableView.reloadData()
+    }
+    
+    func dysplayFilteredFood(_ filteredFood: [FoodRealm]) {
+        self.filteredFoodList = filteredFood
+    }
+    
+    func showSearchBar() {
         UIView.setAnimationsEnabled(true)
-        
         searcController.hidesNavigationBarDuringPresentation = false
-        
         navigationItem.titleView = self.searcController.searchBar
         searcController.searchBar.becomeFirstResponder()
         navigationItem.rightBarButtonItem = .none
@@ -117,40 +203,28 @@ class FoodListViewController: UIViewController, UITableViewDelegate, UITableView
             self?.searcController.isActive = true
         })
         UIView.animate(withDuration: 0.3, delay: 0.3, options: .curveEaseIn) {
-            self.horizontalMenuConstraint.constant -= 50
+            self.categoriesListCollectionViewConstraint.constant -= 50
             self.view.layoutIfNeeded()
         }
     }
-    
-    func makeConstraints() {
-        foodList.backgroundColor = #colorLiteral(red: 0.9438247681, green: 0.9557064176, blue: 0.9554974437, alpha: 1)
-        foodList.translatesAutoresizingMaskIntoConstraints = false
-        horizontalMenuConstraint = NSLayoutConstraint(item: horizontalMenu, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 50)
-        view.addConstraint(horizontalMenuConstraint)
-        
-        NSLayoutConstraint.activate([
-            
-            horizontalMenu.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            horizontalMenu.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            horizontalMenu.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            
-            foodList.topAnchor.constraint(equalTo: horizontalMenu.bottomAnchor, constant: 5),
-            foodList.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -0.5),
-            foodList.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.5),
-            foodList.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            
-        ])
-    }
-    
-    //MARK: - Table View Delegate
+}
+
+
+
+
+
+
+
+//MARK: - UITableView
+
+extension FoodListViewController {
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if isFiltering {
             return filteredFoodList.count
         } else {
-            
-            return products.count
+            return foodList.count
         }
     }
     
@@ -163,7 +237,7 @@ class FoodListViewController: UIViewController, UITableViewDelegate, UITableView
         if isFiltering {
             food = filteredFoodList
         } else {
-            food = products
+            food = foodList
         }
         
         cell.addSubview(cell.shadowView)
@@ -252,7 +326,6 @@ class FoodListViewController: UIViewController, UITableViewDelegate, UITableView
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15, execute: {
                 sender.backgroundColor = .white
             })
-            
         }
         
         var food = [FoodRealm]()
@@ -260,10 +333,8 @@ class FoodListViewController: UIViewController, UITableViewDelegate, UITableView
         if isFiltering {
             food = filteredFoodList
         } else {
-            food = products
+            food = foodList
         }
-        
-        alert.showAlert(viewController: self, image:  UIImage(named: food[index.row].name)!, food: food[index.row], picker: picker, consumePicker: consumePicker, unit: unit, currentWeigt: nil, currentProductDate: nil, currentExperationDate: nil, searchController: searcController)
         
         searcController.searchBar.resignFirstResponder()
     }
@@ -276,109 +347,60 @@ class FoodListViewController: UIViewController, UITableViewDelegate, UITableView
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y > 0 {
-            foodList.layer.borderWidth = 0.3
-            foodList.layer.borderColor = #colorLiteral(red: 0.34122473, green: 0.34122473, blue: 0.34122473, alpha: 0.3141556291)
+            foodListTableView.layer.borderWidth = 0.3
+            foodListTableView.layer.borderColor = #colorLiteral(red: 0.34122473, green: 0.34122473, blue: 0.34122473, alpha: 0.3141556291)
         } else {
-            foodList.layer.borderWidth = 0.0
+            foodListTableView.layer.borderWidth = 0.0
         }
     }
 }
 
-//MARK: - SelectCollectionViewItemProtocol
 
-extension FoodListViewController: SelectCollectionViewItemProtocol {
-    func itemName(name: String) {
-        
-        if name == "Овощи" {
-            products = vegitables
-        } else if  name == "Фрукты и ягоды" {
-            products = fruitsAndBerries
-        } else if  name == "Грибы" {
-            products = mushrooms
-        }
-        
-        time = true
-        foodList.contentOffset = CGPoint(x: 0.0, y: 0.0)
-        foodList.reloadData()
-    }
-}
 
 //MARK: - Extension UIPickerView
 
 extension FoodListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        if pickerView == picker {
-            return 1 }
+//        if pickerView == picker {
+//            return 1 }
         return 2
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if pickerView == picker {
-            return pickerArray.count
-        }
-        if component == 0{
-            return monthsInterval.count
-        }
+//        if pickerView == picker {
+//            return pickerArray.count
+//        }
+//        if component == 0{
+//            return monthsInterval.count
+//        }
         return daysInterval.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if pickerView == picker {
-            return pickerArray[row]
-        }
-        if component == 0 {
-            return monthsInterval[row] + "м"
-        }
-        return daysInterval[row] + "д"
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        if pickerView == picker {
+//            return pickerArray[row]
+//        }
+//        if component == 0 {
+//            return monthsInterval[row] + "м"
+//        }
+//        return daysInterval[row] + "д"
         
-    }
+//    }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if pickerView == picker {
-            alert.unit = pickerArray[row]
-        }
-        if component == 0 {
-            alert.months = monthsInterval[row]
-        }
-        if component == 1 {
-            alert.day = daysInterval[row]
-        }
+//        if pickerView == picker {
+//            alert.unit = pickerArray[row]
+//        }
+//        if component == 0 {
+//            alert.months = monthsInterval[row]
+//        }
+//        if component == 1 {
+//            alert.day = daysInterval[row]
+//        }
     }
 }
 
-//MARK: - Update SearchController
 
-extension FoodListViewController: UISearchResultsUpdating, UISearchBarDelegate, UISearchControllerDelegate {
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text!)
-    }
-    
-    func filterContentForSearchText(_ searchText: String) {
-        filteredFoodList = allFood.filter({ (food: FoodRealm) in
-            return food.name.lowercased().contains(searchText.lowercased())
-        })
-        
-        if isFiltering {
-            foodList.contentOffset = CGPoint(x: 0.0, y: 0.0)
-        }
-        
-        self.foodList.reloadData()
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
-        navigationItem.hidesBackButton = false
-        self.navigationItem.titleView = .none
-        navigationItem.rightBarButtonItem = searchButton
-        
-        UIView.animate(withDuration: 0.3, delay: 0.1, options: .curveEaseIn) {
-            self.horizontalMenuConstraint.constant += 50
-            self.view.layoutIfNeeded()
-        }
-        foodList.contentOffset = CGPoint(x: 0.0, y: 0.0)
-    }
-}
 
 //MARK: - Detail Food Cell
 

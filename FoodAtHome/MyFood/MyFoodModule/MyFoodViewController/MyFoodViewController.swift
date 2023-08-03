@@ -8,10 +8,10 @@
 import UIKit
 import RealmSwift
 
-class MyFoodViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class MyFoodViewController: UIViewController {
     
     let localRealm = try! Realm()
-        
+    
     var presenter: MyFoodPresenterProtocol!
     private let configurator: MyFoodConfiguratorProtocol = MyFoodConfigurator()
     
@@ -24,7 +24,6 @@ class MyFoodViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
         setupConstraints()
         
@@ -33,15 +32,15 @@ class MyFoodViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
 }
 
+//MARK: - SetupUI
+
 extension MyFoodViewController {
     
     private func setupUI() {
         
         view.backgroundColor = .systemGray5
-        
         navigationItem.backButtonTitle = "Назад"
         navigationController?.navigationBar.tintColor = .black
-        
         wallpapers = UIImageView(image: UIImage(named: "wallpapers"))
         wallpapers.contentMode = .scaleAspectFit
         wallpapers.alpha = 0.2
@@ -55,7 +54,6 @@ extension MyFoodViewController {
         navTitle.font = UIFont(name: "Inter-Light", size: 18)
         navView.addSubview(navTitle)
         navigationItem.titleView = navView
-        
         
         let layoutCategoriesCollectionView = UICollectionViewFlowLayout()
         layoutCategoriesCollectionView.scrollDirection = .horizontal
@@ -89,14 +87,12 @@ extension MyFoodViewController {
         myFoodCollectionView.register(FoodCollectionViewCell.self, forCellWithReuseIdentifier: "foodCell")
         myFoodCollectionView.register(AddCollectionViewCell.self, forCellWithReuseIdentifier: "addCell")
         view.addSubview(myFoodCollectionView)
-        
         gestureForClosePopup.addTarget(self, action: #selector(closePopup))
     }
     
     private func setupConstraints() {
         
         NSLayoutConstraint.activate([
-            
             navTitle.topAnchor.constraint(equalTo: navView.topAnchor, constant: 5),
             navTitle.leadingAnchor.constraint(equalTo: navView.leadingAnchor),
             navTitle.trailingAnchor.constraint(equalTo: navView.trailingAnchor, constant: -(view.frame.width / 1.7)),
@@ -105,26 +101,25 @@ extension MyFoodViewController {
             categoriesCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             categoriesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             categoriesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            categoriesCollectionView.heightAnchor.constraint(equalToConstant: 140),
+            categoriesCollectionView.heightAnchor.constraint(equalToConstant: (view.frame.width / 3) + 5),
             
             myFoodCollectionView.topAnchor.constraint(equalTo: categoriesCollectionView.bottomAnchor),
             myFoodCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             myFoodCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0),
             myFoodCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            
         ])
     }
 }
 
-extension MyFoodViewController {
-    
+//MARK: - CollectionView DataSource
+
+extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == myFoodCollectionView{
             guard let count = presenter.myFoodCount else { return 1 }
             return count + 1
         } else {
-            return foodListArray.count
+            return foodCatigoriesList.count
         }
     }
     
@@ -152,22 +147,16 @@ extension MyFoodViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         if collectionView == myFoodCollectionView {
             return CGSize(width: (view.frame.width / 4) - 15, height: (view.frame.width / 4 - 15) * 1.5)
-            
         } else {
-            return CGSize(width: 180, height: 120)
+            return CGSize(width: view.frame.width / 2 - 15, height: (view.frame.width / 3 - 15))
         }
     }
     
-    //MARK: Did Select
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         if collectionView == myFoodCollectionView {
             if indexPath.row != presenter.myFoodCount {
-                
                 guard let cell = collectionView.cellForItem(at: indexPath) else { return }
                 guard let myFood = presenter.food(atIndex: indexPath) else { return }
                 
@@ -175,12 +164,10 @@ extension MyFoodViewController {
                 presenter.configurePopupMenu(food: myFood)
                 tabBarController?.view.addGestureRecognizer(gestureForClosePopup)
             }
-            
         } else {
             presenter.showCategoryFood(at: indexPath)
         }
     }
-    //MARK: - Context Menu
     
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         
@@ -217,10 +204,9 @@ extension MyFoodViewController {
 }
 
 
-//MARK: - UIPickerView
+//MARK: - PickerView DataSource
 
 extension MyFoodViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         if pickerView.tag == 0 {
             return 1
@@ -228,7 +214,7 @@ extension MyFoodViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             return 2
         }
     }
-
+    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView.tag == 0 {
             return pickerArray.count
@@ -239,7 +225,7 @@ extension MyFoodViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             return daysInterval.count
         }
     }
-
+    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView.tag == 0 {
             return pickerArray[row]
@@ -252,8 +238,6 @@ extension MyFoodViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
 }
 
-
-
 // MARK: - TapGestureAction
 
 extension MyFoodViewController {
@@ -263,18 +247,20 @@ extension MyFoodViewController {
         sender.backgroundColor = .addButtonSelectColor
         let listVC = FoodListViewController()
         listVC.modalPresentationStyle = .fullScreen
-        listVC.products = vegitables
+        listVC.foodList = vegitables
         self.viewDidAppear(true)
         navigationController?.pushViewController(listVC, animated: true)
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15, execute: {
             sender.backgroundColor = .white
-        })        
+        })
     }
 }
 
+//MARK: - MyFoodViewProtocol
+
 extension MyFoodViewController: MyFoodViewProtocol {
-    func reloadData() {            
+    func reloadData() {
         self.myFoodCollectionView.reloadData()
     }
     
@@ -282,6 +268,8 @@ extension MyFoodViewController: MyFoodViewProtocol {
         presenter.hidePopupMenu(from: self, and: gestureForClosePopup)
     }
 }
+
+//MARK: - AddAndChangeFoodDelegate
 
 extension MyFoodViewController: AddAndChangeFoodDelegate {
     func didAddNewFood(_ food: FoodRealm) {
@@ -292,5 +280,5 @@ extension MyFoodViewController: AddAndChangeFoodDelegate {
         presenter.viewDidLoad()
         self.myFoodCollectionView.reloadData()
     }
-
+    
 }

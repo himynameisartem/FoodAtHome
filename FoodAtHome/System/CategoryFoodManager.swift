@@ -19,67 +19,67 @@ class CategoryFoodManager {
             
             switch i.type {
             case "vegetables":
-                if foodListArray[indexPath.row] == "Овощи" {
+                if foodCatigoriesList[indexPath.row] == "Овощи" {
                     foodArray.append(i)
                 }
             case "fruitsAndBerries":
-                if foodListArray[indexPath.row] == "Фрукты и ягоды" {
+                if foodCatigoriesList[indexPath.row] == "Фрукты и ягоды" {
                     foodArray.append(i)
                 }
             case "mushrooms":
-                if foodListArray[indexPath.row] == "Грибы" {
+                if foodCatigoriesList[indexPath.row] == "Грибы" {
                     foodArray.append(i)
                 }
             case "eggsAndDairyProducts":
-                if foodListArray[indexPath.row] == "Яйца и молочные продукты" {
+                if foodCatigoriesList[indexPath.row] == "Яйца и молочные продукты" {
                     foodArray.append(i)
                 }
             case "meatProducts":
-                if foodListArray[indexPath.row] == "Мясные продукты" {
+                if foodCatigoriesList[indexPath.row] == "Мясные продукты" {
                     foodArray.append(i)
                 }
             case "fishAndSeafood":
-                if foodListArray[indexPath.row] == "Рыба и морепродукты" {
+                if foodCatigoriesList[indexPath.row] == "Рыба и морепродукты" {
                     foodArray.append(i)
                 }
             case "nutsAndDriedFruits":
-                if foodListArray[indexPath.row] == "Орехи и сухофрукты" {
+                if foodCatigoriesList[indexPath.row] == "Орехи и сухофрукты" {
                     foodArray.append(i)
                 }
             case "flourAndFlourProducts":
-                if foodListArray[indexPath.row] == "Мука и мучные изделия" {
+                if foodCatigoriesList[indexPath.row] == "Мука и мучные изделия" {
                     foodArray.append(i)
                 }
             case "cereals":
-                if foodListArray[indexPath.row] == "Крупы и каши" {
+                if foodCatigoriesList[indexPath.row] == "Крупы и каши" {
                     foodArray.append(i)
                 }
             case "confectioneryAndSweets":
-                if foodListArray[indexPath.row] == "Кондитерские изделия, сладости" {
+                if foodCatigoriesList[indexPath.row] == "Кондитерские изделия, сладости" {
                     foodArray.append(i)
                 }
             case "greensAndFlowers":
-                if foodListArray[indexPath.row] == "Зелень и цветы" {
+                if foodCatigoriesList[indexPath.row] == "Зелень и цветы" {
                     foodArray.append(i)
                 }
             case "spices":
-                if foodListArray[indexPath.row] == "Специи и пряности" {
+                if foodCatigoriesList[indexPath.row] == "Специи и пряности" {
                     foodArray.append(i)
                 }
             case "additives":
-                if foodListArray[indexPath.row] == "Сырье и добавки" {
+                if foodCatigoriesList[indexPath.row] == "Сырье и добавки" {
                     foodArray.append(i)
                 }
             case "babyFood":
-                if foodListArray[indexPath.row] == "Детское питание" {
+                if foodCatigoriesList[indexPath.row] == "Детское питание" {
                     foodArray.append(i)
                 }
             case "softDrinks":
-                if foodListArray[indexPath.row] == "Безалкогольные напитки" {
+                if foodCatigoriesList[indexPath.row] == "Безалкогольные напитки" {
                     foodArray.append(i)
                 }
             case "alcoholicDrinks":
-                if foodListArray[indexPath.row] == "Алкогольные напитки" {
+                if foodCatigoriesList[indexPath.row] == "Алкогольные напитки" {
                     foodArray.append(i)
                 }
             default:

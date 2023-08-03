@@ -9,5 +9,5 @@ import Foundation
 
 let pickerArray = ["кг.", "г.", "л.", "мл.", "уп.", "шт."]
 
-let monthsInterval = (1...120).map { String($0) }
-let daysInterval = (1...365).map { String($0) }
+let monthsInterval = (0...120).map { String($0) }
+let daysInterval = (0...365).map { String($0) }

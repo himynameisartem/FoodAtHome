@@ -69,25 +69,9 @@ class AddAndChangeFoodView: UIView {
             }
         }
     }
-    
-    func configure(food: FoodRealm) {
-        imageView.image = UIImage(named: food.name)
-        weightLabel.text = "Вес:              "
-        dateOfManufactureLabel.text = "Дата изготовления:"
-        sellByLabel.text = "Годен до:         "
-        leftLabel.text = "Срок годности:    "
-        weightTextField.text = food.weight
-        dateOfManufactureTextField.text = DateManager.shared.dateFromString(with: food.productionDate)
-        sellByTextField.text = DateManager.shared.dateFromString(with: food.expirationDate)
-        leftTextField.text = DateManager.shared.intervalDate(from: food.productionDate, to: food.expirationDate, type: .experation)
-        foodItem.name = food.name
-        foodItem.type = food.type
-        foodItem.weight = food.weight
-        foodItem.productionDate = food.productionDate
-        foodItem.expirationDate = food.expirationDate
-    }
-    
 }
+
+//MARK: - SetupUI
 
 extension AddAndChangeFoodView {
     private func setupUI(for view: UIView) {
@@ -205,6 +189,23 @@ extension AddAndChangeFoodView {
         ])
     }
     
+    func configure(food: FoodRealm) {
+        imageView.image = UIImage(named: food.name)
+        weightLabel.text = "Вес:              "
+        dateOfManufactureLabel.text = "Дата изготовления:"
+        sellByLabel.text = "Годен до:         "
+        leftLabel.text = "Срок годности:    "
+        weightTextField.text = food.weight
+        dateOfManufactureTextField.text = DateManager.shared.dateFromString(with: food.productionDate)
+        sellByTextField.text = DateManager.shared.dateFromString(with: food.expirationDate)
+        leftTextField.text = DateManager.shared.intervalDate(from: food.productionDate, to: food.expirationDate, type: .experation)
+        foodItem.name = food.name
+        foodItem.type = food.type
+        foodItem.weight = food.weight
+        foodItem.productionDate = food.productionDate
+        foodItem.expirationDate = food.expirationDate
+    }
+    
     private func closedView() {
         UIView.animate(withDuration: 0.3) {
             self.addView.layer.position.y = -900
@@ -216,6 +217,12 @@ extension AddAndChangeFoodView {
             }
         }
     }
+    
+}
+
+//MARK: - Setup Action
+
+extension AddAndChangeFoodView {
     
     @objc private func exitButtonTapped() {
         closedView()
@@ -231,6 +238,8 @@ extension AddAndChangeFoodView {
         
     }
 }
+
+//MARK: - TexField Delegate
 
 extension AddAndChangeFoodView: UITextFieldDelegate {
     
@@ -291,6 +300,8 @@ extension AddAndChangeFoodView: UITextFieldDelegate {
         foodItem.expirationDate = DateManager.shared.stringFromDate(with: sellByTextField.text ?? "-")
     }
 }
+
+//MARK: - Support Methods
 
 extension AddAndChangeFoodView {
     private func setupLabels(label: UILabel, stack: UIStackView) {

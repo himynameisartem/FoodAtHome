@@ -12,7 +12,6 @@ class CategoryListTableViewCell: UITableViewCell {
     let image: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-//        image.clipsToBounds = true
         image.layer.cornerRadius = 10
         return image
     }()
