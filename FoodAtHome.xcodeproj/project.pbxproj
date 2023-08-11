@@ -19,6 +19,7 @@
 		314CA49D2A7A543F002D4680 /* FoodListConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA49C2A7A543F002D4680 /* FoodListConfigurator.swift */; };
 		314CA49F2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA49E2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift */; };
 		314CA4A12A7A58C5002D4680 /* FoodListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4A02A7A58C5002D4680 /* FoodListManager.swift */; };
+		314CA4A32A7C35F3002D4680 /* FoodListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4A22A7C35F3002D4680 /* FoodListTableViewCell.swift */; };
 		31600188283FE9F50033B5B8 /* AddCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31600187283FE9F50033B5B8 /* AddCollectionViewCell.swift */; };
 		316066E6288EC0F500EDB06F /* CategoryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316066E5288EC0F500EDB06F /* CategoryListTableViewCell.swift */; };
 		316066E9288ECCF500EDB06F /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316066E8288ECCF500EDB06F /* TabBarViewController.swift */; };
@@ -74,6 +75,7 @@
 		314CA49C2A7A543F002D4680 /* FoodListConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListConfigurator.swift; sourceTree = "<group>"; };
 		314CA49E2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListConfiguratorProtocol.swift; sourceTree = "<group>"; };
 		314CA4A02A7A58C5002D4680 /* FoodListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListManager.swift; sourceTree = "<group>"; };
+		314CA4A22A7C35F3002D4680 /* FoodListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListTableViewCell.swift; sourceTree = "<group>"; };
 		31600187283FE9F50033B5B8 /* AddCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCollectionViewCell.swift; sourceTree = "<group>"; };
 		316066E5288EC0F500EDB06F /* CategoryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListTableViewCell.swift; sourceTree = "<group>"; };
 		316066E8288ECCF500EDB06F /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				314CA4902A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift */,
+				314CA4A22A7C35F3002D4680 /* FoodListTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -597,6 +600,7 @@
 			files = (
 				31B1DFF12874C626006D7C64 /* ListVC.swift in Sources */,
 				317F50E6286DB4C90049B64B /* UIColorExtension.swift in Sources */,
+				314CA4A32A7C35F3002D4680 /* FoodListTableViewCell.swift in Sources */,
 				314CA49B2A7A52EE002D4680 /* FoodListRouterProtocol.swift in Sources */,
 				3187019E2A4DE10C0079848C /* MyFoodInteractorProtocol.swift in Sources */,
 				31E983BC2A53FAF0006FD303 /* MyFoodRouter.swift in Sources */,

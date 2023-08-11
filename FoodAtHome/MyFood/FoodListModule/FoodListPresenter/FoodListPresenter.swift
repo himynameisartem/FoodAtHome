@@ -5,22 +5,23 @@
 //  Created by Артем Кудрявцев on 28.07.2023.
 //
 
-import Foundation
+import UIKit
 
 class FoodListPresenter {
     
     weak var view: FoodListViewProtocol!
     var interactor: FoodListInteractorProtocol!
     var router: FoodListRouterProtocol!
-    
+        
     init(view: FoodListViewProtocol!) {
         self.view = view
     }
 }
 
 extension FoodListPresenter: FoodListPresenterProtocol {
+    
     func viewDidLoad() {
-        
+
     }
     
     func tappedSearch() {
@@ -34,13 +35,17 @@ extension FoodListPresenter: FoodListPresenterProtocol {
     func selectedCategories(at indexPath: IndexPath) -> [FoodRealm] {
         FoodListManager.shared.choiseCategories(for: indexPath.row)
     }
+        
+    func showAddFoodView(_ food: FoodRealm) {
+        router.openAddFoodView(food)
+    }
+    
+    func backToRoot() {
+        router.backToRootViewController()
+    }
 }
 
 extension FoodListPresenter: FoodListInteractorOutputProtocol {
-    
-    func didFetchFood(_ foodList: [FoodRealm]) {
-        
-    }
 
     func didFilterFood(_ filteredFoodList: [FoodRealm]) {
         view.dysplayFilteredFood(filteredFoodList)

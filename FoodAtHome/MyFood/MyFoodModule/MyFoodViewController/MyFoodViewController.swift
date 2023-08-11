@@ -181,6 +181,7 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
                                     state: .off) { _ in
                     self.presenter.showChangeFoodMenu(for: self)
                     self.presenter.configureChangeFoodMenu(food: item)
+                    print(item)
                 }
                 let delete = UIAction(title: "Удалить",
                                       image: UIImage(systemName: "trash"),
@@ -202,7 +203,6 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return nil
     }
 }
-
 
 //MARK: - PickerView DataSource
 
@@ -280,5 +280,4 @@ extension MyFoodViewController: AddAndChangeFoodDelegate {
         presenter.viewDidLoad()
         self.myFoodCollectionView.reloadData()
     }
-    
 }

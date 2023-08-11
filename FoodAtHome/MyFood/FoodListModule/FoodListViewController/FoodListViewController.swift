@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import RealmSwift
 
-class FoodListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FoodListViewController: UIViewController {
+
+    let localRealm = try! Realm()
     
     var foodList = [FoodRealm]()
     var filteredFoodList = [FoodRealm]()
-    
+        
     var presenter: FoodListPresenterProtocol!
     private let configurator: FoodListConfiguratorProtocol = FoodListConfigurator()
             
@@ -37,7 +40,7 @@ class FoodListViewController: UIViewController, UITableViewDelegate, UITableView
         
         setupUI()
         setupConstraints()
-        
+                
         configurator.configure(with: self)
         presenter.viewDidLoad()
         
@@ -180,6 +183,111 @@ extension FoodListViewController: UISearchResultsUpdating, UISearchBarDelegate, 
     }
 }
 
+//MARK: - UITableView
+
+extension FoodListViewController: UITableViewDelegate, UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+                if isFiltering {
+                    return filteredFoodList.count
+                } else {
+                    return foodList.count
+                }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "detailFood", for: indexPath) as! DetailFoodCell
+        cell.selectionStyle = .none
+        var food = [FoodRealm]()
+        if isFiltering {
+            food = filteredFoodList
+        } else {
+            food = foodList
+        }
+
+        cell.addButton.tag = indexPath.row
+        cell.addButton.addTarget(self, action: #selector(tapped), for: .allEvents)
+        cell.configure(food[indexPath.row])
+        
+        
+        return cell
+    }
+    
+    @objc func tapped() {
+        print("sdfsdf")
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var food = [FoodRealm]()
+            if isFiltering {
+                food = filteredFoodList
+               } else {
+                   food = foodList
+               }
+
+        presenter.showAddFoodView(food[indexPath.row])
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        if time {
+            cell.transform = CGAffineTransform(translationX: 0, y: cell.contentView.frame.height)
+            UIView.animate(withDuration: 0.3, delay: 0.05 * Double(indexPath.row)) {
+                cell.transform = CGAffineTransform(translationX: cell.contentView.frame.width, y: cell.contentView.frame.height)
+            } completion: { done in
+                if done {
+                    self.time = false
+                }
+            }
+        }
+    }
+    
+        
+//    @objc func tapped(sender: UIButton) {
+//
+//        print("asdasd")
+//
+//        let index = IndexPath(row: sender.tag, section: 0)
+//        if sender.isTracking {
+//            sender.backgroundColor = .addButtonSelectColor
+//        }
+//        else {
+//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15, execute: {
+//                sender.backgroundColor = .white
+//            })
+//        }
+//
+//        var food = [FoodRealm]()
+//        if isFiltering {
+//            food = filteredFoodList
+//        } else {
+//            food = foodList
+//        }
+//
+//
+//
+//        searcController.searchBar.resignFirstResponder()
+//    }
+    
+  
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cellHeight(viewHeight: view.frame.height)
+    }
+    
+    //MARK: - scrollViewDidScroll
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > 0 {
+            foodListTableView.layer.borderWidth = 0.3
+            foodListTableView.layer.borderColor = #colorLiteral(red: 0.34122473, green: 0.34122473, blue: 0.34122473, alpha: 0.3141556291)
+        } else {
+            foodListTableView.layer.borderWidth = 0.0
+        }
+    }
+}
+
 //MARK: - FoodListViewProtocol
 
 extension FoodListViewController: FoodListViewProtocol {
@@ -209,151 +317,20 @@ extension FoodListViewController: FoodListViewProtocol {
     }
 }
 
-
-
-
-
-
-
-//MARK: - UITableView
-
-extension FoodListViewController {
-
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering {
-            return filteredFoodList.count
-        } else {
-            return foodList.count
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "detailFood", for: indexPath) as! DetailFoodCell
-        cell.selectionStyle = .none
-        
-        var food = [FoodRealm]()
-        
-        if isFiltering {
-            food = filteredFoodList
-        } else {
-            food = foodList
+extension FoodListViewController: AddAndChangeFoodDelegate {
+    func didAddNewFood(_ food: FoodRealm) {
+        try! localRealm.write {
+            localRealm.add(food)
         }
         
-        cell.addSubview(cell.shadowView)
-        cell.shadowView.addSubview(cell.containerView)
-        cell.containerView.addSubview(cell.stack)
-        cell.stack.addArrangedSubview(cell.title)
-        cell.stack.addArrangedSubview(cell.colories)
-        cell.containerView.addSubview(cell.image)
-        cell.addSubview(cell.addButton)
-        cell.image.addSubview(cell.imageBackgroundColor)
-        
-        cell.title.text = food[indexPath.row].name
-        cell.title.font = UIFont(name: "Inter-Light", size: titleFontSize(viewHeight: view.frame.height))
-        
-        cell.colories.text = ("\(food[indexPath.row].calories) кКал. / 100г.")
-        cell.colories.font = UIFont(name: "Inter-ExtraLight", size: titleFontSize(viewHeight: view.frame.height) - 5)
-        cell.colories.alpha = 0.7
-        
-        cell.image.image = UIImage(named: food[indexPath.row].name)
-        cell.backgroundColor = .clear
-        cell.addButton.addTarget(self, action: #selector(tapped), for: .allEvents)
-        cell.addButton.tag = indexPath.row
-        
-        NSLayoutConstraint.activate([
-            
-            cell.shadowView.topAnchor.constraint(equalTo: cell.topAnchor, constant: 10),
-            cell.shadowView.centerXAnchor.constraint(equalTo: cell.centerXAnchor),
-            cell.shadowView.widthAnchor.constraint(equalToConstant: cellWhidth(viewHeight: view.frame.height)),
-            cell.shadowView.bottomAnchor.constraint(equalTo: cell.bottomAnchor, constant: -10),
-            
-            cell.containerView.topAnchor.constraint(equalTo: cell.shadowView.topAnchor),
-            cell.containerView.leadingAnchor.constraint(equalTo: cell.shadowView.leadingAnchor),
-            cell.containerView.trailingAnchor.constraint(equalTo: cell.shadowView.trailingAnchor),
-            cell.containerView.bottomAnchor.constraint(equalTo: cell.shadowView.bottomAnchor),
-            
-            cell.image.leadingAnchor.constraint(equalTo: cell.leadingAnchor,
-                                                constant: imageConstraint(viewHeight: view.frame.height)),
-            cell.image.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
-            cell.image.heightAnchor.constraint(equalToConstant: cellHeight(viewHeight: view.frame.height) - 35),
-            cell.image.widthAnchor.constraint(equalToConstant: cellHeight(viewHeight: view.frame.height) - 35),
-            
-            cell.imageBackgroundColor.leadingAnchor.constraint(equalTo: cell.leadingAnchor,
-                                                               constant: imageConstraint(viewHeight: view.frame.height)),
-            cell.imageBackgroundColor.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
-            cell.imageBackgroundColor.heightAnchor.constraint(equalToConstant: 65),
-            cell.imageBackgroundColor.widthAnchor.constraint(equalToConstant: 65),
-            
-            cell.stack.topAnchor.constraint(equalTo: cell.shadowView.topAnchor, constant: 8),
-            cell.stack.leadingAnchor.constraint(equalTo: cell.image.trailingAnchor, constant: 20),
-            cell.stack.trailingAnchor.constraint(equalTo: cell.shadowView.trailingAnchor, constant: -10),
-            cell.stack.bottomAnchor.constraint(equalTo: cell.shadowView.bottomAnchor, constant: -8),
-            
-            cell.addButton.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
-            cell.addButton.centerXAnchor.constraint(equalTo: cell.trailingAnchor,
-                                                    constant: -((view.frame.width - cellWhidth(viewHeight: view.frame.height)) / 4)),
-            cell.addButton.widthAnchor.constraint(equalToConstant: 40),
-            cell.addButton.heightAnchor.constraint(equalToConstant: 40)
-            
-        ])
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        if time {
-            cell.transform = CGAffineTransform(translationX: 0, y: cell.contentView.frame.height)
-            UIView.animate(withDuration: 0.3, delay: 0.05 * Double(indexPath.row)) {
-                cell.transform = CGAffineTransform(translationX: cell.contentView.frame.width, y: cell.contentView.frame.height)
-            } completion: { done in
-                if done {
-                    self.time = false
-                }
-            }
-        }
-}
-    
-    @objc func tapped(sender: UIButton) {
-                
-        let index = IndexPath(row: sender.tag, section: 0)
-        
-        if sender.isTracking {
-            sender.backgroundColor = .addButtonSelectColor
-        }
-        else {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15, execute: {
-                sender.backgroundColor = .white
-            })
-        }
-        
-        var food = [FoodRealm]()
-        
-        if isFiltering {
-            food = filteredFoodList
-        } else {
-            food = foodList
-        }
-        
-        searcController.searchBar.resignFirstResponder()
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return cellHeight(viewHeight: view.frame.height)
-    }
-    
-    //MARK: - scrollViewDidScroll
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > 0 {
-            foodListTableView.layer.borderWidth = 0.3
-            foodListTableView.layer.borderColor = #colorLiteral(red: 0.34122473, green: 0.34122473, blue: 0.34122473, alpha: 0.3141556291)
-        } else {
-            foodListTableView.layer.borderWidth = 0.0
-        }
+        presenter.backToRoot()
+        presenter.viewDidLoad()
     }
 }
+
+
+
+
 
 
 
@@ -404,83 +381,6 @@ extension FoodListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
 //MARK: - Detail Food Cell
 
-class DetailFoodCell: UITableViewCell {
-    
-    let addButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = 20
-        button.tintColor = .black
-        button.setImage(UIImage(systemName: "plus"), for: .normal)
-        button.backgroundColor = .white
-        button.layer.shadowColor = UIColor.gray.cgColor
-        button.layer.shadowRadius = 8
-        button.layer.shadowOpacity = 0.5
-        button.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-        return button
-    }()
-    
-    let shadowView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.layer.shadowColor = UIColor.gray.cgColor
-        view.layer.shadowRadius = 8
-        view.layer.shadowOpacity = 0.5
-        view.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-        view.layer.cornerRadius = 10
-        return view
-    }()
-    
-    let containerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 10
-        return view
-    }()
-    
-    let image: UIImageView = {
-        let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.layer.cornerRadius = 10
-        image.clipsToBounds = true
-        return image
-    }()
-    
-    let imageBackgroundColor: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemGray2
-        view.alpha = 0.2
-        view.layer.cornerRadius = 10
-        view.clipsToBounds = true
-        return view
-    }()
-    
-    let stack: UIStackView = {
-        let stack = UIStackView()
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .vertical
-        stack.distribution = .equalSpacing
-        return stack
-    }()
-    
-    let title: UILabel = {
-        let title = UILabel()
-        title.translatesAutoresizingMaskIntoConstraints = false
-        title.numberOfLines = 2
-        return title
-    }()
-    
-    let colories: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    
-}
 
 //MARK: - Size Items and Font
 

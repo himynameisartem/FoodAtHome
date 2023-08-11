@@ -13,6 +13,5 @@ protocol FoodListInteractorProtocol: AnyObject {
 
 
 protocol FoodListInteractorOutputProtocol: AnyObject {
-    func didFetchFood(_ foodList: [FoodRealm])
     func didFilterFood(_ filteredFoodList: [FoodRealm])
 }

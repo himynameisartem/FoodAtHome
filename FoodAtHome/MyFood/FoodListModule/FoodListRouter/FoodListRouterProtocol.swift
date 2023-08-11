@@ -8,5 +8,6 @@
 import Foundation
 
 protocol FoodListRouterProtocol: AnyObject {
-    
+    func openAddFoodView(_ food: FoodRealm)
+    func backToRootViewController()
 }

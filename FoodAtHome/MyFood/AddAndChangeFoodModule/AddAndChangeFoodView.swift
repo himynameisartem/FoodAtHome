@@ -235,7 +235,6 @@ extension AddAndChangeFoodView {
         closedView()
         
         foodItem = FoodRealm()
-        
     }
 }
 
