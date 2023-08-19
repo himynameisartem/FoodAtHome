@@ -244,16 +244,13 @@ extension MyFoodViewController {
     
     @objc func tapped(sender: UIButton) {
         
-        sender.backgroundColor = .addButtonSelectColor
-        let listVC = FoodListViewController()
-        listVC.modalPresentationStyle = .fullScreen
-        listVC.foodList = vegitables
-        self.viewDidAppear(true)
-        navigationController?.pushViewController(listVC, animated: true)
+        sender.showAnimation(for: .withColor) {
+            let listVC = FoodListViewController()
+            listVC.modalPresentationStyle = .fullScreen
+            listVC.foodList = vegitables
+            self.navigationController?.pushViewController(listVC, animated: true)
+        }
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15, execute: {
-            sender.backgroundColor = .white
-        })
     }
 }
 

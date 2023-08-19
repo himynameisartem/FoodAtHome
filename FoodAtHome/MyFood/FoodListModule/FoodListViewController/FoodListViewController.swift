@@ -95,9 +95,7 @@ extension FoodListViewController {
         foodListTableView.delegate = self
         foodListTableView.dataSource = self
         foodListTableView.backgroundColor = .clear
-        foodListTableView.backgroundColor = #colorLiteral(red: 0.9438247681, green: 0.9557064176, blue: 0.9554974437, alpha: 1)
         foodListTableView.translatesAutoresizingMaskIntoConstraints = false
-        
         view.addSubview(foodListTableView)
     }
     
@@ -186,51 +184,50 @@ extension FoodListViewController: UISearchResultsUpdating, UISearchBarDelegate, 
 //MARK: - UITableView
 
 extension FoodListViewController: UITableViewDelegate, UITableViewDataSource {
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-                if isFiltering {
-                    return filteredFoodList.count
-                } else {
-                    return foodList.count
-                }
+        if isFiltering {
+            return filteredFoodList.count
+        } else {
+            return foodList.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "detailFood", for: indexPath) as! DetailFoodCell
         cell.selectionStyle = .none
+        
         var food = [FoodRealm]()
         if isFiltering {
             food = filteredFoodList
         } else {
             food = foodList
         }
-
-        cell.addButton.tag = indexPath.row
-        cell.addButton.addTarget(self, action: #selector(tapped), for: .allEvents)
-        cell.configure(food[indexPath.row])
         
+        cell.configure(food[indexPath.row])
+        cell.addSubview(cell.addButton)
+        cell.addButton.tag = indexPath.row
+        cell.addButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
         
         return cell
     }
     
-    @objc func tapped() {
-        print("sdfsdf")
+    @objc func tapped(sender: UIButton) {
+                var food = [FoodRealm]()
+                    if isFiltering {
+                        food = filteredFoodList
+                       } else {
+                           food = foodList
+                       }
+        
+        sender.showAnimation(for: .withColor) {
+            self.presenter.showAddFoodView(food[sender.tag])
+            self.searcController.searchBar.resignFirstResponder()
+        }
     }
-    
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var food = [FoodRealm]()
-            if isFiltering {
-                food = filteredFoodList
-               } else {
-                   food = foodList
-               }
 
-        presenter.showAddFoodView(food[indexPath.row])
-    }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
         if time {
             cell.transform = CGAffineTransform(translationX: 0, y: cell.contentView.frame.height)
             UIView.animate(withDuration: 0.3, delay: 0.05 * Double(indexPath.row)) {

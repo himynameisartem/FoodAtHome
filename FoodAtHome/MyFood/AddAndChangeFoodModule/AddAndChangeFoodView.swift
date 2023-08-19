@@ -224,15 +224,20 @@ extension AddAndChangeFoodView {
 
 extension AddAndChangeFoodView {
     
-    @objc private func exitButtonTapped() {
-        closedView()
+    @objc private func exitButtonTapped(sender: UIButton) {
+        sender.showAnimation(for: .withoutColor) {
+            self.closedView()
+        }
     }
     
-    @objc private func addButtonTapped() {
+    @objc private func addButtonTapped(sender: UIButton) {
         foodItem.unit = pickerArray[weightTypePickerView.selectedRow(inComponent: 0)]
         
         delegate.didAddNewFood(foodItem)
-        closedView()
+        
+        sender.showAnimation(for: .withoutColor) {
+            self.closedView()
+        }
         
         foodItem = FoodRealm()
     }

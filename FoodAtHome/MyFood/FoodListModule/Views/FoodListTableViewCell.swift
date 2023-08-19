@@ -22,6 +22,7 @@ class DetailFoodCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
         setupConstraint()
+        
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -76,12 +77,12 @@ class DetailFoodCell: UITableViewCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
         stack.distribution = .equalSpacing
-     
+
         title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
         title.numberOfLines = 2
         title.font = UIFont(name: "Inter-Light", size: 15)
-        
+
         colories = UILabel()
         colories.translatesAutoresizingMaskIntoConstraints = false
         colories.font = UIFont(name: "Inter-ExtraLight", size: 10)
@@ -92,6 +93,7 @@ class DetailFoodCell: UITableViewCell {
         containerView.addSubview(image)
         containerView.addSubview(addButton)
         image.addSubview(imageBackgroundColor)
+
     }
     
     private func setupConstraint() {
@@ -126,7 +128,7 @@ class DetailFoodCell: UITableViewCell {
             addButton.widthAnchor.constraint(equalToConstant: 40),
             addButton.heightAnchor.constraint(equalToConstant: 40),
             
-            shadowView.trailingAnchor.constraint(equalTo: addButton.leadingAnchor, constant: -20),
+            shadowView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -80),
             shadowView.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: -20),
         ])
 
