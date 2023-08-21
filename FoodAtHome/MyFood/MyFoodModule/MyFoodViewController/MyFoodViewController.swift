@@ -181,7 +181,6 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
                                     state: .off) { _ in
                     self.presenter.showChangeFoodMenu(for: self)
                     self.presenter.configureChangeFoodMenu(food: item)
-                    print(item)
                 }
                 let delete = UIAction(title: "Удалить",
                                       image: UIImage(systemName: "trash"),
@@ -226,15 +225,27 @@ extension MyFoodViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         }
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let pickerLabel = UILabel()
+
         if pickerView.tag == 0 {
-            return pickerArray[row]
+            pickerLabel.text = pickerArray[row]
         } else {
             if component == 0 {
-                return monthsInterval[row] + "м"
+                pickerLabel.text = monthsInterval[row] + "м"
+            } else {
+                pickerLabel.text = daysInterval[row] + "д"
             }
-            return daysInterval[row] + "д"
         }
+     
+        pickerLabel.textAlignment = .center
+        pickerLabel.font = UIFont(name: "Helvetica", size: 22)
+
+        for subview in pickerView.subviews {
+            subview.backgroundColor = .clear
+        }
+        
+         return pickerLabel
     }
 }
 
@@ -270,11 +281,10 @@ extension MyFoodViewController: MyFoodViewProtocol {
 
 extension MyFoodViewController: AddAndChangeFoodDelegate {
     func didAddNewFood(_ food: FoodRealm) {
-        try! localRealm.write {
-            localRealm.add(food)
-        }
         
+        presenter.changeFood(food)
         presenter.viewDidLoad()
         self.myFoodCollectionView.reloadData()
+        
     }
 }

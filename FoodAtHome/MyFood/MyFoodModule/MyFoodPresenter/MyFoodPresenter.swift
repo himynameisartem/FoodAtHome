@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MyFoodPresenter {
+    
+    let localRealm = try! Realm()
     
     weak var view: MyFoodViewProtocol!
     var interactor: MyFoodInteractorProtocol!
@@ -62,6 +65,21 @@ extension MyFoodPresenter: MyFoodPresenterProtocol {
     
     func configureChangeFoodMenu(food: FoodRealm) {
         addAndChangeFoodView.configure(food: food)
+    }
+    
+    func changeFood(_ food: FoodRealm) {
+        for i in myFood {
+            if food.name == i.name {
+                let index = myFood.firstIndex(of: i)!
+                try! localRealm.write({
+                    myFood[index].weight = food.weight
+                    myFood[index].unit = food.unit
+                    myFood[index].productionDate = food.productionDate
+                    myFood[index].expirationDate = food.expirationDate
+                    myFood[index].consumeUp = food.consumeUp
+                })
+            }
+        }
     }
 }
 

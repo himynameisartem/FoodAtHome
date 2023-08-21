@@ -40,6 +40,7 @@ class AddAndChangeFoodView: UIView {
     
     private var weightTextField: UITextField!
     private var weightTypePickerView: UIPickerView!
+    private var weaightTypeView: UIView!
     private var dateOfManufactureTextField: UITextField!
     private var sellByTextField: UITextField!
     private var leftTextField: UITextField!
@@ -54,7 +55,7 @@ class AddAndChangeFoodView: UIView {
         
         self.delegate = viewControllerFoodDelegate
         setupUI(for: view)
-        setuoConstraints()
+        setupConstraints()
         
         weightTypePickerView.delegate = viewControllerPickerDelegate
         leftDaysPickerView.delegate = viewControllerPickerDelegate
@@ -82,7 +83,7 @@ extension AddAndChangeFoodView {
         blurView.frame = view.bounds
         view.addSubview(blurView)
         
-        addView = UIView(frame: CGRect(x: 25, y: -900, width: view.frame.width - 50, height: view.frame.height / 1.4))
+        addView = UIView(frame: CGRect(x: 25, y: -900, width: view.frame.width - 40, height: view.frame.width * 1.4))
         addView.backgroundColor = .white
         addView.layer.cornerRadius = 10
         view.addSubview(addView)
@@ -106,7 +107,7 @@ extension AddAndChangeFoodView {
         addButton.layer.cornerRadius = 10
         addButton.setTitle("Добавить", for: .normal)
         addButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) , for: .normal)
-        addButton.backgroundColor = .purple
+        addButton.backgroundColor = .addButtonSelectColor
         addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         addView.addSubview(addButton)
         
@@ -115,57 +116,87 @@ extension AddAndChangeFoodView {
         mainStackView.axis = .horizontal
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.distribution = .fillEqually
+        mainStackView.spacing = 10
         addView.addSubview(mainStackView)
         
         labelsStackView = UIStackView()
         labelsStackView.axis = .vertical
         labelsStackView.distribution = .fillEqually
+        labelsStackView.spacing = 20
         mainStackView.addArrangedSubview(labelsStackView)
         
         optionsStackView = UIStackView()
         optionsStackView.axis = .vertical
         optionsStackView.distribution = .fillEqually
-        optionsStackView.contentMode = .center
+        optionsStackView.spacing = 20
         mainStackView.addArrangedSubview(optionsStackView)
         
         weightOptionsStack = UIStackView()
         weightOptionsStack.axis = .horizontal
-        weightOptionsStack.distribution = .fillEqually
+        weightOptionsStack.spacing = 10
         optionsStackView.addArrangedSubview(weightOptionsStack)
         
         weightLabel = UILabel()
-        setupLabels(label: weightLabel, stack: labelsStackView)
         dateOfManufactureLabel = UILabel()
-        setupLabels(label: dateOfManufactureLabel, stack: labelsStackView)
         sellByLabel = UILabel()
-        setupLabels(label: sellByLabel, stack: labelsStackView)
         leftLabel = UILabel()
-        setupLabels(label: leftLabel, stack: labelsStackView)
+        
+        
+        let labels = [weightLabel, dateOfManufactureLabel, sellByLabel, leftLabel]
+        for label in labels {
+            guard let label = label else { return }
+            label.font = UIFont(name: "Inter-Light", size: 15)
+            label.minimumScaleFactor = 0.5
+            label.adjustsFontSizeToFitWidth = true
+            labelsStackView.addArrangedSubview(label)
+        }
         
         weightTextField = UITextField()
         weightTextField.keyboardType = .decimalPad
         weightTextField.placeholder = "0.0"
-        setupTextField(textField: weightTextField, stack: weightOptionsStack)
-        weightTypePickerView = UIPickerView()
-        weightTypePickerView.tag = 0
-        weightOptionsStack.addArrangedSubview(weightTypePickerView)
+        weightTextField.translatesAutoresizingMaskIntoConstraints = false
         datePickerView = UIDatePicker()
         datePickerView.datePickerMode = .date
         datePickerView.preferredDatePickerStyle = .wheels
         dateOfManufactureTextField = UITextField()
         dateOfManufactureTextField.inputView = datePickerView
-        setupTextField(textField: dateOfManufactureTextField, stack: optionsStackView)
         sellByTextField = UITextField()
-        setupTextField(textField: sellByTextField, stack: optionsStackView)
         sellByTextField.inputView = datePickerView
         leftTextField = UITextField()
-        setupTextField(textField: leftTextField, stack: optionsStackView)
+        
+        let textFields = [weightTextField, dateOfManufactureTextField, sellByTextField, leftTextField]
+        for textField in textFields {
+            guard let textField = textField else { return }
+            textField.layer.cornerRadius = 8
+            textField.addDoneButtonToKeyboard(myAction: #selector(textField.resignFirstResponder))
+            textField.backgroundColor = .systemGray6
+            textField.tintColor = .black
+            textField.textAlignment = .center
+            textField.delegate = self
+            if textField == weightTextField {
+                weightOptionsStack.addArrangedSubview(textField)
+            } else {
+                optionsStackView.addArrangedSubview(textField)
+            }
+        }
+        
+        weaightTypeView = UIView()
+        weaightTypeView.backgroundColor = .systemGray6
+        weaightTypeView.layer.cornerRadius = 8
+        weaightTypeView.translatesAutoresizingMaskIntoConstraints = false
+        
+        weightTypePickerView = UIPickerView()
+        weightTypePickerView.tag = 0
+        weightTypePickerView.translatesAutoresizingMaskIntoConstraints = false
+        weightOptionsStack.addArrangedSubview(weaightTypeView)
+        weaightTypeView.addSubview(weightTypePickerView)
+        
         leftDaysPickerView = UIPickerView()
         leftDaysPickerView.tag = 1
         leftTextField.inputView = leftDaysPickerView
     }
     
-    private func setuoConstraints() {
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: addView.topAnchor, constant: 20),
             imageView.centerXAnchor.constraint(equalTo: addView.centerXAnchor),
@@ -179,22 +210,37 @@ extension AddAndChangeFoodView {
             
             addButton.bottomAnchor.constraint(equalTo: addView.bottomAnchor, constant: -20),
             addButton.centerXAnchor.constraint(equalTo: addView.centerXAnchor),
-            addButton.widthAnchor.constraint(equalToConstant: addView.frame.width / 1.5),
-            addButton.heightAnchor.constraint(equalToConstant: 50),
+            addButton.widthAnchor.constraint(equalToConstant: addView.frame.width / 1.6),
+            addButton.heightAnchor.constraint(equalToConstant: 45),
+            
+            weightTextField.leadingAnchor.constraint(equalTo: weightOptionsStack.leadingAnchor),
+            weightTextField.topAnchor.constraint(equalTo: weightOptionsStack.topAnchor),
+            weightTextField.bottomAnchor.constraint(equalTo: weightOptionsStack.bottomAnchor),
+            weightTextField.widthAnchor.constraint(equalToConstant: addView.frame.width / 6),
+            
+            weaightTypeView.trailingAnchor.constraint(equalTo: weightOptionsStack.trailingAnchor),
+            weaightTypeView.topAnchor.constraint(equalTo: weightOptionsStack.topAnchor),
+            weaightTypeView.bottomAnchor.constraint(equalTo: weightOptionsStack.bottomAnchor),
+            
+            weightTypePickerView.topAnchor.constraint(equalTo: weaightTypeView.topAnchor, constant: -20),
+            weightTypePickerView.leadingAnchor.constraint(equalTo: weaightTypeView.leadingAnchor),
+            weightTypePickerView.trailingAnchor.constraint(equalTo: weaightTypeView.trailingAnchor),
+            weightTypePickerView.bottomAnchor.constraint(equalTo: weaightTypeView.bottomAnchor, constant: 20),
             
             mainStackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
             mainStackView.leadingAnchor.constraint(equalTo: addView.leadingAnchor, constant: 20),
             mainStackView.trailingAnchor.constraint(equalTo: addView.trailingAnchor, constant: -20),
-            mainStackView.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: -120),
+            mainStackView.heightAnchor.constraint(lessThanOrEqualToConstant: 210),
+            mainStackView.bottomAnchor.constraint(lessThanOrEqualTo: addButton.topAnchor, constant: -20),
         ])
     }
     
     func configure(food: FoodRealm) {
         imageView.image = UIImage(named: food.name)
-        weightLabel.text = "Вес:              "
+        weightLabel.text = "Вес:                            "
         dateOfManufactureLabel.text = "Дата изготовления:"
-        sellByLabel.text = "Годен до:         "
-        leftLabel.text = "Срок годности:    "
+        sellByLabel.text = "Годен до:                  "
+        leftLabel.text = "Срок годности:        "
         weightTextField.text = food.weight
         dateOfManufactureTextField.text = DateManager.shared.dateFromString(with: food.productionDate)
         sellByTextField.text = DateManager.shared.dateFromString(with: food.expirationDate)
@@ -305,23 +351,3 @@ extension AddAndChangeFoodView: UITextFieldDelegate {
     }
 }
 
-//MARK: - Support Methods
-
-extension AddAndChangeFoodView {
-    private func setupLabels(label: UILabel, stack: UIStackView) {
-        label.font = UIFont(name: "Inter-Light", size: 15)
-        label.minimumScaleFactor = 0.5
-        label.adjustsFontSizeToFitWidth = true
-        stack.addArrangedSubview(label)
-    }
-    
-    private func setupTextField(textField: UITextField, stack: UIStackView) {
-        textField.layer.cornerRadius = 8
-        textField.addDoneButtonToKeyboard(myAction: #selector(textField.resignFirstResponder))
-        textField.backgroundColor = .systemGray6
-        textField.tintColor = .black
-        textField.textAlignment = .center
-        textField.delegate = self
-        stack.addArrangedSubview(textField)
-    }
-}
