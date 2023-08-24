@@ -20,6 +20,8 @@ class CategoryListViewController: UIViewController {
  
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tabBarController?.tabBar.isHidden = true
                 
         view.addSubview(categoryListTableView)
         categoryListTableView.frame = view.bounds
@@ -29,6 +31,10 @@ class CategoryListViewController: UIViewController {
         
         categoryListTableView.register(CategoryListTableViewCell.self, forCellReuseIdentifier: "categoryListCell")
         
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
     }
 }
 

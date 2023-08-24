@@ -11,14 +11,29 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
+    private var isBottom: Bool {
+        if #available(iOS 13.0, *), UIApplication.shared.windows[0].safeAreaInsets.bottom > 0 {
+            return true
+        }
+        return false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 25, right: 0)
-        
+        setupUI()
         generateTabBar()
         setTabBarAppearance()
     }
+}
+
+extension TabBarViewController {
+    
+    private func setupUI() {
+         if !isBottom {
+             additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 25, right: 0)
+         }
+     }
     
     private func generateTabBar() {
         

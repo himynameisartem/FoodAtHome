@@ -256,12 +256,8 @@ extension MyFoodViewController {
     @objc func tapped(sender: UIButton) {
         
         sender.showAnimation(for: .withColor) {
-            let listVC = FoodListViewController()
-            listVC.modalPresentationStyle = .fullScreen
-            listVC.foodList = vegitables
-            self.navigationController?.pushViewController(listVC, animated: true)
+            self.presenter.showFoodListViewController()
         }
-        
     }
 }
 

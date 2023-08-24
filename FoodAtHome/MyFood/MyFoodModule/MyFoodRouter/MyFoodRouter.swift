@@ -22,4 +22,11 @@ extension MyFoodRouter: MyFoodRouterProtocol {
         categoryFoodViewController.foodCategoryArray = CategoryFoodManager.shared.appendFoodOnType(at: indexPath, from: food)
         viewController.navigationController?.pushViewController(categoryFoodViewController, animated: true)
     }
+    
+    func openFoodListViewController() {
+        let listVC = FoodListViewController()
+        listVC.modalPresentationStyle = .fullScreen
+        listVC.foodList = vegitables
+        viewController.navigationController?.pushViewController(listVC, animated: true)
+    }
 }

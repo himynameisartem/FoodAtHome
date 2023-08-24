@@ -9,4 +9,5 @@ import UIKit
 
 protocol MyFoodRouterProtocol {
     func openCategoryFoodViewController(at indexPath: IndexPath, food: [FoodRealm])
+    func openFoodListViewController()
 }

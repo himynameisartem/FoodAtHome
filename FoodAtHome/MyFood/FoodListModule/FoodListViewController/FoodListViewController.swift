@@ -47,6 +47,10 @@ class FoodListViewController: UIViewController {
         
         vcCheck = true
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
+    }
 }
 
 //MARK: - SetupUI

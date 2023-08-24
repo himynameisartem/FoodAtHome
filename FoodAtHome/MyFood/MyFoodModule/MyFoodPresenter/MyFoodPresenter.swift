@@ -59,6 +59,10 @@ extension MyFoodPresenter: MyFoodPresenterProtocol {
         router.openCategoryFoodViewController(at: indexPath, food: myFood)
     }
     
+    func showFoodListViewController() {
+        router.openFoodListViewController()
+    }
+    
     func showChangeFoodMenu(for viewController: UIViewController) {
         addAndChangeFoodView.sohowAddAndChangeFoodView(for: viewController)
     }

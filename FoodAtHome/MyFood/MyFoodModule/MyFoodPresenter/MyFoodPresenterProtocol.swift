@@ -19,4 +19,5 @@ protocol MyFoodPresenterProtocol: AnyObject {
     func showChangeFoodMenu(for viewController: UIViewController)
     func configureChangeFoodMenu(food: FoodRealm)
     func changeFood(_ food: FoodRealm)
+    func showFoodListViewController()
 }
