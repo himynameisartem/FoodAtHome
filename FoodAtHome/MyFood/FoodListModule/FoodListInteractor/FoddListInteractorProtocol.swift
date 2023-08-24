@@ -8,10 +8,12 @@
 import Foundation
 
 protocol FoodListInteractorProtocol: AnyObject {
+    func fetchMyFood()
     func filterContentForSearchText(_ searchText: String)
 }
 
 
 protocol FoodListInteractorOutputProtocol: AnyObject {
+    func foodDidRecieve(_ food: [FoodRealm])
     func didFilterFood(_ filteredFoodList: [FoodRealm])
 }

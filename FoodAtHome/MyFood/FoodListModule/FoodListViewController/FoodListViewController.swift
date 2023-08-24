@@ -38,6 +38,7 @@ class FoodListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         setupUI()
         setupConstraints()
                 
@@ -316,63 +317,65 @@ extension FoodListViewController: FoodListViewProtocol {
 
 extension FoodListViewController: AddAndChangeFoodDelegate {
     func didAddNewFood(_ food: FoodRealm) {
-        try! localRealm.write {
-            localRealm.add(food)
-        }
+        
+        presenter.addAndChangeFood(food)
         
         presenter.backToRoot()
         presenter.viewDidLoad()
     }
 }
 
-
-
-
-
-
-
 //MARK: - Extension UIPickerView
 
 extension FoodListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-//        if pickerView == picker {
-//            return 1 }
-        return 2
+        if pickerView.tag == 0 {
+            return 1
+        } else {
+            return 2
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        if pickerView == picker {
-//            return pickerArray.count
-//        }
-//        if component == 0{
-//            return monthsInterval.count
-//        }
-        return daysInterval.count
+        if pickerView.tag == 0 {
+            return pickerArray.count
+        } else {
+            if component == 0 {
+                return monthsInterval.count
+            }
+            return daysInterval.count
+        }
     }
     
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        if pickerView == picker {
-//            return pickerArray[row]
-//        }
-//        if component == 0 {
-//            return monthsInterval[row] + "м"
-//        }
-//        return daysInterval[row] + "д"
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let pickerLabel = UILabel()
+
+        if pickerView.tag == 0 {
+            pickerLabel.text = pickerArray[row]
+        } else {
+            if component == 0 {
+                pickerLabel.text = monthsInterval[row] + "м"
+            } else {
+                pickerLabel.text = daysInterval[row] + "д"
+            }
+        }
+     
+        pickerLabel.textAlignment = .center
+        pickerLabel.font = UIFont(name: "Helvetica", size: 22)
+
+        for subview in pickerView.subviews {
+            subview.backgroundColor = .clear
+        }
         
-//    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        if pickerView == picker {
-//            alert.unit = pickerArray[row]
-//        }
-//        if component == 0 {
-//            alert.months = monthsInterval[row]
-//        }
-//        if component == 1 {
-//            alert.day = daysInterval[row]
-//        }
+         return pickerLabel
     }
 }
+
+
+
+
+
+
 
 
 

@@ -19,8 +19,30 @@ class FoodManager {
         return Array(results)
     }
     
-    func addFood(food: FoodRealm) {
+    func addFood(_ food: FoodRealm, myFood foodArray: [FoodRealm]) {
         
+        var foundMatch = false
+        
+        for i in foodArray {
+            if food.name == i.name {
+                let index = foodArray.firstIndex(of: i)!
+                try! localRealm.write({
+                    foodArray[index].weight = food.weight
+                    foodArray[index].unit = food.unit
+                    foodArray[index].productionDate = food.productionDate
+                    foodArray[index].expirationDate = food.expirationDate
+                    foodArray[index].consumeUp = food.consumeUp
+                })
+                foundMatch = true
+                break
+            }
+        }
+        
+        if !foundMatch {
+            try! localRealm.write({
+                localRealm.add(food)
+            })
+        }
     }
     
     func fetchMyShoppingList() {

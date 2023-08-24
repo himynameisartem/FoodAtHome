@@ -300,8 +300,8 @@
 		318701912A4C94DC0079848C /* MyFoodPresenter */ = {
 			isa = PBXGroup;
 			children = (
-				318701972A4DD9C00079848C /* MyFoodPresenter.swift */,
 				318701992A4DD9D50079848C /* MyFoodPresenterProtocol.swift */,
+				318701972A4DD9C00079848C /* MyFoodPresenter.swift */,
 			);
 			path = MyFoodPresenter;
 			sourceTree = "<group>";
@@ -309,8 +309,8 @@
 		318701922A4C94F00079848C /* MyFoodInteractor */ = {
 			isa = PBXGroup;
 			children = (
-				3187019B2A4DE1020079848C /* MyFoodInteractor.swift */,
 				3187019D2A4DE10C0079848C /* MyFoodInteractorProtocol.swift */,
+				3187019B2A4DE1020079848C /* MyFoodInteractor.swift */,
 			);
 			path = MyFoodInteractor;
 			sourceTree = "<group>";
@@ -318,8 +318,8 @@
 		318701932A4C94FE0079848C /* MyFoodRouter */ = {
 			isa = PBXGroup;
 			children = (
-				31E983BB2A53FAF0006FD303 /* MyFoodRouter.swift */,
 				31E983BD2A53FAFA006FD303 /* MyFoodRouterProtocol.swift */,
+				31E983BB2A53FAF0006FD303 /* MyFoodRouter.swift */,
 			);
 			path = MyFoodRouter;
 			sourceTree = "<group>";
@@ -327,8 +327,8 @@
 		318701942A4C950C0079848C /* MyFoodConfigurator */ = {
 			isa = PBXGroup;
 			children = (
-				318701A22A4E060F0079848C /* MyFoodConfigurator.swift */,
 				318701A42A4E061A0079848C /* MyFoodConfiguratorProtocol.swift */,
+				318701A22A4E060F0079848C /* MyFoodConfigurator.swift */,
 			);
 			path = MyFoodConfigurator;
 			sourceTree = "<group>";

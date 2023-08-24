@@ -25,4 +25,8 @@ extension FoodListInteractor: FoodListInteractorProtocol {
         }
         presenter.didFilterFood(filteredFoodList)
     }
+    
+    func fetchMyFood() {
+        presenter.foodDidRecieve(FoodManager.shared.fetchMyFood())
+    }
 }

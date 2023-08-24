@@ -6,12 +6,17 @@
 //
 
 import UIKit
+import RealmSwift
 
 class FoodListPresenter {
+    
+    let localRealm = try! Realm()
     
     weak var view: FoodListViewProtocol!
     var interactor: FoodListInteractorProtocol!
     var router: FoodListRouterProtocol!
+    
+    var myFood: [FoodRealm] = []
         
     init(view: FoodListViewProtocol!) {
         self.view = view
@@ -21,7 +26,7 @@ class FoodListPresenter {
 extension FoodListPresenter: FoodListPresenterProtocol {
     
     func viewDidLoad() {
-
+        interactor.fetchMyFood()
     }
     
     func tappedSearch() {
@@ -35,7 +40,7 @@ extension FoodListPresenter: FoodListPresenterProtocol {
     func selectedCategories(at indexPath: IndexPath) -> [FoodRealm] {
         FoodListManager.shared.choiseCategories(for: indexPath.row)
     }
-        
+    
     func showAddFoodView(_ food: FoodRealm) {
         router.openAddFoodView(food)
     }
@@ -43,9 +48,19 @@ extension FoodListPresenter: FoodListPresenterProtocol {
     func backToRoot() {
         router.backToRootViewController()
     }
+    
+    func addAndChangeFood(_ food: FoodRealm) {
+        FoodManager.shared.addFood(food, myFood: myFood)
+    }
 }
 
+
 extension FoodListPresenter: FoodListInteractorOutputProtocol {
+    func foodDidRecieve(_ food: [FoodRealm]) {
+        self.myFood = food
+        view.reloadData()
+    }
+    
 
     func didFilterFood(_ filteredFoodList: [FoodRealm]) {
         view.dysplayFilteredFood(filteredFoodList)

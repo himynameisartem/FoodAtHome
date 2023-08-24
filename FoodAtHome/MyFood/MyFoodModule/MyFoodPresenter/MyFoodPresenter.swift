@@ -68,18 +68,7 @@ extension MyFoodPresenter: MyFoodPresenterProtocol {
     }
     
     func changeFood(_ food: FoodRealm) {
-        for i in myFood {
-            if food.name == i.name {
-                let index = myFood.firstIndex(of: i)!
-                try! localRealm.write({
-                    myFood[index].weight = food.weight
-                    myFood[index].unit = food.unit
-                    myFood[index].productionDate = food.productionDate
-                    myFood[index].expirationDate = food.expirationDate
-                    myFood[index].consumeUp = food.consumeUp
-                })
-            }
-        }
+        FoodManager.shared.addFood(food, myFood: myFood)
     }
 }
 
