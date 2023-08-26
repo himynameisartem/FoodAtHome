@@ -1,0 +1,70 @@
+/* 
+  Localizable.strings
+  FoodAtHome
+
+  Created by Артем Кудрявцев on 26.08.2023.
+  
+*/
+
+//MARK: - System
+
+"Back" = "Назад";
+"Done" = "Готово";
+"Search" = "Поиск";
+"Cancel" = "Отмена";
+"Add" = "Добавить";
+"Edit" = "Изменить";
+"Delete" = "Удалить";
+
+"FOOD AT HOME" = "ЕДА ДОМА";
+
+"Shopping List" = "Покупки";
+"Food at Home" = "Еда Дома";
+"Share" = "Поделиться";
+
+"Delete All Products?" = "Удалить все продукты?";
+"This action will delete all your products, are you sure you want to continue?" = "Данное действие приведет к удалению всех ваших продуктов, вы действительно хотите продолжить?";
+"Yes" = "Да";
+"No" = "Нет";
+
+"Enter the weight of the product" = "Введите вес продукта";
+
+"You already have this product" = "У вас уже имеется данный продукт";
+"Do you want to replace it?" = "Хотите заменить его?";
+
+"Weight:                        " = "Вес:                            ";
+"Manufacturing Date:" = "Дата изготовления:";
+"Expires on:                " = "Годен до:                  ";
+"Shelf Life:                " = "Срок годности:        ";
+
+"Weight:" = "Вес:";
+"Manufacturing Date:" = "Дата изготовления:";
+"Expires on:" = "Годен до:";
+"Remaining:" = "Осталось:";
+
+"kg." = "кг.";
+"g." = "г.";
+"l." = "л.";
+"ml." = "мл.";
+"pk." = "уп.";
+"pcs." = "шт.";
+
+"d" = "д";
+"m" = "м";
+
+"Vegetables" = "Овощи";
+"Fruits and Berries" = "Фрукты и ягоды";
+"Mushrooms" = "Грибы";
+"Eggs and Dairy Products" = "Яйца и молочные продукты";
+"Meat Products" = "Мясные продукты";
+"Fish and Seafood" = "Рыба и морепродукты";
+"Nuts and Dried Fruits" = "Орехи и сухофрукты";
+"Flour and Bakery Products" = "Мука и мучные изделия";
+"Grains and Porridge" = "Крупы и каши";
+"Sweets and Confectionery" = "Кондитерские изделия, сладости";
+"Greens and Herbs" = "Зелень и цветы";
+"Spices and Seasonings" = "Специи и пряности";
+"Raw Materials and Additives" = "Сырье и добавки";
+"Baby Food" = "Детское питание";
+"Non-Alcoholic Beverages" = "Безалкогольные напитки";
+"Alcoholic Beverages" = "Алкогольные напитки";

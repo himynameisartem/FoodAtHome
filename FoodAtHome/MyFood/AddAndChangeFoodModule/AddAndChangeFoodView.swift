@@ -91,7 +91,6 @@ extension AddAndChangeFoodView {
         imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
-        imageView.backgroundColor = .red
         addView.addSubview(imageView)
         
         closeButton = UIButton()
@@ -105,7 +104,7 @@ extension AddAndChangeFoodView {
         addButton = UIButton()
         addButton.translatesAutoresizingMaskIntoConstraints = false
         addButton.layer.cornerRadius = 10
-        addButton.setTitle("Добавить", for: .normal)
+        addButton.setTitle("Add".localized(), for: .normal)
         addButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) , for: .normal)
         addButton.backgroundColor = .addButtonSelectColor
         addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
@@ -237,10 +236,10 @@ extension AddAndChangeFoodView {
     
     func configure(food: FoodRealm) {
         imageView.image = UIImage(named: food.name)
-        weightLabel.text = "Вес:                            "
-        dateOfManufactureLabel.text = "Дата изготовления:"
-        sellByLabel.text = "Годен до:                  "
-        leftLabel.text = "Срок годности:        "
+        weightLabel.text = "Weight:                        ".localized()
+        dateOfManufactureLabel.text = "Manufacturing Date:".localized()
+        sellByLabel.text = "Expires on:                ".localized()
+        leftLabel.text = "Shelf Life:                ".localized()
         weightTextField.text = food.weight
         dateOfManufactureTextField.text = DateManager.shared.dateFromString(with: food.productionDate)
         sellByTextField.text = DateManager.shared.dateFromString(with: food.expirationDate)
@@ -277,15 +276,15 @@ extension AddAndChangeFoodView {
     }
     
     @objc private func addButtonTapped(sender: UIButton) {
-        foodItem.unit = pickerArray[weightTypePickerView.selectedRow(inComponent: 0)]
-        
-        delegate.didAddNewFood(foodItem)
-        
         sender.showAnimation(for: .withoutColor) {
-            self.closedView()
+            self.foodItem.unit = pickerArray[self.weightTypePickerView.selectedRow(inComponent: 0)]
+            self.delegate.didAddNewFood(self.foodItem)
+            
+            if FoodManager.shared.menuStatus == .didClosedMenu {
+                self.closedView()
+                self.foodItem = FoodRealm()
+            }
         }
-        
-        foodItem = FoodRealm()
     }
 }
 

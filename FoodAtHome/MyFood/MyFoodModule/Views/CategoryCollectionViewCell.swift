@@ -28,7 +28,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     
     func configure(at indexPath: IndexPath) {
         categoryImage.image = UIImage(named: foodCatigoriesList[indexPath.row])
-        categoryName.text = foodCatigoriesList[indexPath.row]
+        categoryName.text = foodCatigoriesList[indexPath.row].localized()
     }
     
     private func setupUI() {

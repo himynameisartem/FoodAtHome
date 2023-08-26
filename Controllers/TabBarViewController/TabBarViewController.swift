@@ -42,13 +42,13 @@ extension TabBarViewController {
         
         viewControllers = [
                            generateViewController(viewController: ListVC(),
-                                                  title: "Покупки",
+                                                  title: "Shopping List".localized(),
                                                   image: UIImage(systemName: "list.bullet.rectangle.portrait.fill")),
                            generateViewController(viewController: navVC,
-                                                  title: "Еда Дома",
+                                                  title: "Food at Home".localized(),
                                                   image: UIImage(systemName: "house.fill")),
                            generateViewController(viewController: ShareVC(),
-                                                  title: "Поделиться",
+                                                  title: "Share".localized(),
                                                   image: UIImage(systemName: "square.and.arrow.up"))
         ]
     }

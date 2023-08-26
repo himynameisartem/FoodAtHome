@@ -42,12 +42,15 @@
 		31B1DFF52874CB7E006D7C64 /* ShareVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1DFF42874CB7E006D7C64 /* ShareVC.swift */; };
 		31C6B926288323A80066829C /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C6B925288323A80066829C /* CategoryCollectionViewCell.swift */; };
 		31C6B9292883F5570066829C /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C6B9282883F5570066829C /* CategoryListViewController.swift */; };
+		31D0C4202A9A1A0700EDF32B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31D0C4222A9A1A0700EDF32B /* Launch Screen.storyboard */; };
+		31D0C4252A9A1AC200EDF32B /* StringExtensionLocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D0C4242A9A1AC200EDF32B /* StringExtensionLocalized.swift */; };
+		31D0C4282A9A1BA400EDF32B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 31D0C42A2A9A1BA400EDF32B /* Localizable.strings */; };
+		31D0C42D2A9A767000EDF32B /* TextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D0C42C2A9A767000EDF32B /* TextFieldExtension.swift */; };
 		31D456A92A5D315200FDFDFB /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D456A82A5D315200FDFDFB /* DateManager.swift */; };
 		31D456B22A5D753A00FDFDFB /* CategoryFoodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D456B12A5D753A00FDFDFB /* CategoryFoodManager.swift */; };
 		31D456B52A5E890B00FDFDFB /* AddAndChangeFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D456B42A5E890B00FDFDFB /* AddAndChangeFoodView.swift */; };
 		31DA20C22839488900DCE421 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA20C12839488900DCE421 /* AppDelegate.swift */; };
 		31DA20CB2839488A00DCE421 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31DA20CA2839488A00DCE421 /* Assets.xcassets */; };
-		31DA20CE2839488A00DCE421 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31DA20CC2839488A00DCE421 /* LaunchScreen.storyboard */; };
 		31DA20D62839553600DCE421 /* FoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA20D52839553600DCE421 /* FoodModel.swift */; };
 		31DA20D828396B0400DCE421 /* FoodData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA20D728396B0400DCE421 /* FoodData.swift */; };
 		31DA20DE283BE45C00DCE421 /* MyFoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA20DD283BE45C00DCE421 /* MyFoodViewController.swift */; };
@@ -99,13 +102,17 @@
 		31B1DFF42874CB7E006D7C64 /* ShareVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareVC.swift; sourceTree = "<group>"; };
 		31C6B925288323A80066829C /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		31C6B9282883F5570066829C /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
+		31D0C4212A9A1A0700EDF32B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
+		31D0C4242A9A1AC200EDF32B /* StringExtensionLocalized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionLocalized.swift; sourceTree = "<group>"; };
+		31D0C4292A9A1BA400EDF32B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		31D0C42B2A9A1BA700EDF32B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		31D0C42C2A9A767000EDF32B /* TextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldExtension.swift; sourceTree = "<group>"; };
 		31D456A82A5D315200FDFDFB /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		31D456B12A5D753A00FDFDFB /* CategoryFoodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFoodManager.swift; sourceTree = "<group>"; };
 		31D456B42A5E890B00FDFDFB /* AddAndChangeFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAndChangeFoodView.swift; sourceTree = "<group>"; };
 		31DA20BE2839488900DCE421 /* FoodAtHome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodAtHome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31DA20C12839488900DCE421 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		31DA20CA2839488A00DCE421 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		31DA20CD2839488A00DCE421 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		31DA20CF2839488A00DCE421 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		31DA20D52839553600DCE421 /* FoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodModel.swift; sourceTree = "<group>"; };
 		31DA20D728396B0400DCE421 /* FoodData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodData.swift; sourceTree = "<group>"; };
@@ -343,6 +350,8 @@
 				310AC9E32A6D7A2F0055E013 /* PickerPropertiesManager.swift */,
 				314CA4A62A8666D1002D4680 /* SpringAnimationExtension.swift */,
 				317F50E5286DB4C90049B64B /* UIColorExtension.swift */,
+				31D0C4242A9A1AC200EDF32B /* StringExtensionLocalized.swift */,
+				31D0C42C2A9A767000EDF32B /* TextFieldExtension.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -363,17 +372,12 @@
 		31B4BA9B2A4C89D500CD0977 /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				31DA20CC2839488A00DCE421 /* LaunchScreen.storyboard */,
 				31DA20C12839488900DCE421 /* AppDelegate.swift */,
 				31DA20CF2839488A00DCE421 /* Info.plist */,
 				31DA20CA2839488A00DCE421 /* Assets.xcassets */,
-				31DF397B287BD5E900624AFD /* Inter.ttf */,
-				31DF397D287BD64000624AFD /* Inter-ExtraLight.otf */,
-				31DF3983287BD96200624AFD /* Inter-Light.otf */,
-				31DF3981287BD87C00624AFD /* Inter-SemiBold.otf */,
-				31DF397F287BD7F700624AFD /* Inter-Bold.otf */,
-				3180FF812860D18C00060BD0 /* pobeda-bold.ttf */,
-				3180FF822860D18C00060BD0 /* pobeda-regular.ttf */,
+				31D0C4222A9A1A0700EDF32B /* Launch Screen.storyboard */,
+				31D0C42A2A9A1BA400EDF32B /* Localizable.strings */,
+				31D0C3F92A9A093500EDF32B /* Font */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -383,6 +387,20 @@
 			children = (
 			);
 			path = CategoryListViewController;
+			sourceTree = "<group>";
+		};
+		31D0C3F92A9A093500EDF32B /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				31DF397B287BD5E900624AFD /* Inter.ttf */,
+				31DF397D287BD64000624AFD /* Inter-ExtraLight.otf */,
+				31DF3983287BD96200624AFD /* Inter-Light.otf */,
+				31DF3981287BD87C00624AFD /* Inter-SemiBold.otf */,
+				31DF397F287BD7F700624AFD /* Inter-Bold.otf */,
+				3180FF812860D18C00060BD0 /* pobeda-bold.ttf */,
+				3180FF822860D18C00060BD0 /* pobeda-regular.ttf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 		31D456AA2A5D4CD900FDFDFB /* CategoryFoodModule */ = {
@@ -523,6 +541,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ru,
 				Base,
 			);
 			mainGroup = 31DA20B52839488900DCE421;
@@ -543,10 +562,11 @@
 				31DF397E287BD65900624AFD /* Inter-ExtraLight.otf in Resources */,
 				31DF3984287BD96400624AFD /* Inter-Light.otf in Resources */,
 				31DF3980287BD7F900624AFD /* Inter-Bold.otf in Resources */,
+				31D0C4202A9A1A0700EDF32B /* Launch Screen.storyboard in Resources */,
 				3180FF842860D18C00060BD0 /* pobeda-regular.ttf in Resources */,
+				31D0C4282A9A1BA400EDF32B /* Localizable.strings in Resources */,
 				31DF397C287BD61600624AFD /* Inter.ttf in Resources */,
 				3180FF832860D18C00060BD0 /* pobeda-bold.ttf in Resources */,
-				31DA20CE2839488A00DCE421 /* LaunchScreen.storyboard in Resources */,
 				31DA20CB2839488A00DCE421 /* Assets.xcassets in Resources */,
 				31DF3982287BD88A00624AFD /* Inter-SemiBold.otf in Resources */,
 			);
@@ -606,6 +626,7 @@
 				314CA4A32A7C35F3002D4680 /* FoodListTableViewCell.swift in Sources */,
 				314CA49B2A7A52EE002D4680 /* FoodListRouterProtocol.swift in Sources */,
 				3187019E2A4DE10C0079848C /* MyFoodInteractorProtocol.swift in Sources */,
+				31D0C42D2A9A767000EDF32B /* TextFieldExtension.swift in Sources */,
 				31E983BC2A53FAF0006FD303 /* MyFoodRouter.swift in Sources */,
 				314CA49F2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift in Sources */,
 				318701A52A4E061A0079848C /* MyFoodConfiguratorProtocol.swift in Sources */,
@@ -615,6 +636,7 @@
 				31E983C02A540502006FD303 /* PopupMenuView.swift in Sources */,
 				31D456A92A5D315200FDFDFB /* DateManager.swift in Sources */,
 				314CA4A72A8666D1002D4680 /* SpringAnimationExtension.swift in Sources */,
+				31D0C4252A9A1AC200EDF32B /* StringExtensionLocalized.swift in Sources */,
 				318DDCFB2845319200F1242B /* AlertView.swift in Sources */,
 				314CA48E2A73C5AE002D4680 /* FoodListPresenterProtocol.swift in Sources */,
 				3187019C2A4DE1020079848C /* MyFoodInteractor.swift in Sources */,
@@ -651,12 +673,21 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		31DA20CC2839488A00DCE421 /* LaunchScreen.storyboard */ = {
+		31D0C4222A9A1A0700EDF32B /* Launch Screen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				31DA20CD2839488A00DCE421 /* Base */,
+				31D0C4212A9A1A0700EDF32B /* Base */,
 			);
-			name = LaunchScreen.storyboard;
+			name = "Launch Screen.storyboard";
+			sourceTree = "<group>";
+		};
+		31D0C42A2A9A1BA400EDF32B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				31D0C4292A9A1BA400EDF32B /* en */,
+				31D0C42B2A9A1BA700EDF32B /* ru */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -666,6 +697,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -713,11 +745,18 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LOCALIZATION_EXPORT_SUPPORTED = YES;
+				LOCALIZED_STRING_MACRO_NAMES = (
+					NSLocalizedString,
+					CFCopyLocalizedString,
+				);
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -726,6 +765,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -767,10 +807,17 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LOCALIZATION_EXPORT_SUPPORTED = YES;
+				LOCALIZED_STRING_MACRO_NAMES = (
+					NSLocalizedString,
+					CFCopyLocalizedString,
+				);
+				LOCALIZED_STRING_SWIFTUI_SUPPORT = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -792,6 +839,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -822,6 +870,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

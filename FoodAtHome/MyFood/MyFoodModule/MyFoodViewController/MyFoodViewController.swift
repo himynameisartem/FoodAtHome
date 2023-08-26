@@ -21,7 +21,8 @@ class MyFoodViewController: UIViewController {
     private var myFoodCollectionView: UICollectionView!
     private var navView: UIView!
     private var navTitle: UILabel!
-    
+    private var removeAll: UIButton!
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -30,6 +31,13 @@ class MyFoodViewController: UIViewController {
         configurator.configure(with: self)
         presenter.viewDidLoad()
     }
+    
+    override func viewDidLayoutSubviews() {
+//        print(view.frame.width)
+//        print(navigationItem.titleView?.frame.width)
+//        print(removeAll.frame.width)
+    }
+    
 }
 
 //MARK: - SetupUI
@@ -39,7 +47,7 @@ extension MyFoodViewController {
     private func setupUI() {
         
         view.backgroundColor = .systemGray5
-        navigationItem.backButtonTitle = "Назад"
+        navigationItem.backButtonTitle = "Back".localized()
         navigationController?.navigationBar.tintColor = .black
         wallpapers = UIImageView(image: UIImage(named: "wallpapers"))
         wallpapers.contentMode = .scaleAspectFit
@@ -47,12 +55,20 @@ extension MyFoodViewController {
         wallpapers.frame = view.bounds
         view.addSubview(wallpapers)
         
-        navView = UIView(frame: CGRect(x: 0, y: 0, width: 350, height: 100))
+        navView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 40))
         navTitle = UILabel()
-        navTitle.text = "ЕДА ДОМА"
+        navTitle.contentMode = .center
+        navTitle.text = "FOOD AT HOME".localized()
         navTitle.translatesAutoresizingMaskIntoConstraints = false
         navTitle.font = UIFont(name: "Inter-Light", size: 18)
         navView.addSubview(navTitle)
+        removeAll = UIButton()
+        removeAll.translatesAutoresizingMaskIntoConstraints = false
+        removeAll.setImage(UIImage(systemName: "trash"), for: .normal)
+        removeAll.addTarget(self, action: #selector(removeAllButtonTapped), for: .touchUpInside)
+        removeAll.contentMode = .center
+        navView.addSubview(removeAll)
+
         navigationItem.titleView = navView
         
         let layoutCategoriesCollectionView = UICollectionViewFlowLayout()
@@ -91,12 +107,20 @@ extension MyFoodViewController {
     }
     
     private func setupConstraints() {
-        
+ 
         NSLayoutConstraint.activate([
-            navTitle.topAnchor.constraint(equalTo: navView.topAnchor, constant: 5),
+            
+            navTitle.topAnchor.constraint(equalTo: navView.topAnchor),
             navTitle.leadingAnchor.constraint(equalTo: navView.leadingAnchor),
-            navTitle.trailingAnchor.constraint(equalTo: navView.trailingAnchor, constant: -(view.frame.width / 1.7)),
-            navTitle.bottomAnchor.constraint(equalTo: navView.bottomAnchor, constant: -5),
+            navTitle.bottomAnchor.constraint(equalTo: navView.bottomAnchor),
+            navTitle.widthAnchor.constraint(equalToConstant: view.frame.width),
+            navTitle.trailingAnchor.constraint(equalTo: navView.trailingAnchor),
+            
+            removeAll.topAnchor.constraint(equalTo: navView.topAnchor),
+            removeAll.centerYAnchor.constraint(equalTo: navTitle.centerYAnchor),
+            removeAll.widthAnchor.constraint(equalToConstant: 20),
+            removeAll.trailingAnchor.constraint(equalTo: navView.trailingAnchor),
+            removeAll.bottomAnchor.constraint(equalTo: navView.bottomAnchor),
             
             categoriesCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             categoriesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -174,7 +198,7 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
         if collectionView == myFoodCollectionView {
             let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
                 let item = self.presenter.myFood[indexPath.row]
-                let edit = UIAction(title: "Изменить",
+                let edit = UIAction(title: "Edit".localized(),
                                     image: UIImage(systemName: "pencil"),
                                     identifier: nil,
                                     discoverabilityTitle: nil,
@@ -182,7 +206,7 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
                     self.presenter.showChangeFoodMenu(for: self)
                     self.presenter.configureChangeFoodMenu(food: item)
                 }
-                let delete = UIAction(title: "Удалить",
+                let delete = UIAction(title: "Delete".localized(),
                                       image: UIImage(systemName: "trash"),
                                       attributes: .destructive) { _ in
                     try! self.localRealm.write {
@@ -229,12 +253,12 @@ extension MyFoodViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         let pickerLabel = UILabel()
 
         if pickerView.tag == 0 {
-            pickerLabel.text = pickerArray[row]
+            pickerLabel.text = pickerArray[row].localized()
         } else {
             if component == 0 {
-                pickerLabel.text = monthsInterval[row] + "м"
+                pickerLabel.text = monthsInterval[row] + "m".localized()
             } else {
-                pickerLabel.text = daysInterval[row] + "д"
+                pickerLabel.text = daysInterval[row] + "d".localized()
             }
         }
      
@@ -246,6 +270,28 @@ extension MyFoodViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         }
         
          return pickerLabel
+    }
+}
+
+//MARK: RemoveAll Button Action
+
+extension MyFoodViewController {
+    
+    @objc func removeAllButtonTapped(sender: UIButton) {
+        sender.showAnimation(for: .withoutColor) {
+            let alert = UIAlertController(title: "Delete All Products?".localized(), message: "This action will delete all your products, are you sure you want to continue?".localized(), preferredStyle: .alert)
+            let doneAction = UIAlertAction(title: "Yes".localized(), style: .destructive) { done in
+
+                self.presenter.removeAllFood()
+                self.presenter.viewDidLoad()
+                self.myFoodCollectionView.reloadData()
+            }
+            let cancelAction = UIAlertAction(title: "No".localized(), style: .default)
+            alert.addAction(doneAction)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true)
+            
+        }
     }
 }
 
@@ -277,8 +323,7 @@ extension MyFoodViewController: MyFoodViewProtocol {
 
 extension MyFoodViewController: AddAndChangeFoodDelegate {
     func didAddNewFood(_ food: FoodRealm) {
-        
-        presenter.changeFood(food)
+        presenter.changeFood(food, viewController: self)
         presenter.viewDidLoad()
         self.myFoodCollectionView.reloadData()
         

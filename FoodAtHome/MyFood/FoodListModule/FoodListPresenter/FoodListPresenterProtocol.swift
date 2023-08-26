@@ -14,5 +14,5 @@ protocol FoodListPresenterProtocol: AnyObject {
     func selectedCategories(at indexPath: IndexPath) -> [FoodRealm]
     func showAddFoodView(_ food: FoodRealm)
     func backToRoot()
-    func addAndChangeFood(_ food: FoodRealm)
+    func addAndChangeFood(_ food: FoodRealm, viewController: UIViewController)
 }

@@ -49,8 +49,9 @@ extension FoodListPresenter: FoodListPresenterProtocol {
         router.backToRootViewController()
     }
     
-    func addAndChangeFood(_ food: FoodRealm) {
-        FoodManager.shared.addFood(food, myFood: myFood)
+
+    func addAndChangeFood(_ food: FoodRealm, viewController: UIViewController) {
+        FoodManager.shared.addFood(food, myFood: myFood, viewController: viewController)
     }
 }
 

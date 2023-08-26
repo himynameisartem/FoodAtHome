@@ -277,13 +277,13 @@ extension PopupMenu {
     
     func configure(food: FoodRealm) {
         nameLabel.text = food.name
-        weightLabel.text = "Вес:"
-        detailWeightLabel.text = "\(food.weight) \(food.unit)"
-        dateOfManufactureLabel.text = "Дата изготовления:"
+        weightLabel.text = "Weight:".localized()
+        detailWeightLabel.text = "\(food.weight) \(food.unit.localized())"
+        dateOfManufactureLabel.text = "Manufacturing Date:".localized()
         detailDateOfManufactureLabel.text = DateManager.shared.dateFromString(with: food.productionDate)
-        sellByLabel.text = "Годен до:"
+        sellByLabel.text = "Expires on:".localized()
         detailSellByLabel.text = DateManager.shared.dateFromString(with: food.expirationDate)
-        leftLabel.text = "Осталось:"
+        leftLabel.text = "Remaining:".localized()
         detailLeftLabel.text = DateManager.shared.intervalDate(from: food.productionDate, to: food.expirationDate, type: .left)
         circle(from: circleView, from: food.productionDate, to: food.expirationDate)
     }

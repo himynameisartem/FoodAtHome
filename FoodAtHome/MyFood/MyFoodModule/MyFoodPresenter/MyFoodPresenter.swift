@@ -71,8 +71,14 @@ extension MyFoodPresenter: MyFoodPresenterProtocol {
         addAndChangeFoodView.configure(food: food)
     }
     
-    func changeFood(_ food: FoodRealm) {
-        FoodManager.shared.addFood(food, myFood: myFood)
+    func changeFood(_ food: FoodRealm, viewController: UIViewController) {
+        FoodManager.shared.addFood(food, myFood: myFood, viewController: viewController)
+    }
+    
+    func removeAllFood() {
+        try! localRealm.write({
+            localRealm.deleteAll()
+        })
     }
 }
 

@@ -30,7 +30,7 @@ class HorizontalMenuCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(at indexPath: IndexPath) {
-        categoryName.text = foodCatigoriesList[indexPath.row]
+        categoryName.text = foodCatigoriesList[indexPath.row].localized()
     }
     
     private func setupUI() {

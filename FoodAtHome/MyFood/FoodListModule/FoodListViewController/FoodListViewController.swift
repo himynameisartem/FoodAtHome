@@ -75,8 +75,8 @@ extension FoodListViewController {
         searcController.searchBar.delegate = self
         searcController.searchResultsUpdater = self
         searcController.obscuresBackgroundDuringPresentation = false
-        searcController.searchBar.placeholder = "Поиск"
-        searcController.searchBar.setValue("Отмена", forKey: "cancelButtonText")
+        searcController.searchBar.placeholder = "Search".localized()
+        searcController.searchBar.setValue("Cancel".localized(), forKey: "cancelButtonText")
         definesPresentationContext = true
         
         let layoutCategoriesCollectionView = UICollectionViewFlowLayout()
@@ -157,7 +157,7 @@ extension FoodListViewController: UICollectionViewDelegate, UICollectionViewData
         
         let categoryFont = UIFont(name: "Inter-SemiBold", size: 24)
         let categoryAttributes = [NSAttributedString.Key.font : categoryFont as Any]
-        let categoryWidth = foodCatigoriesList[indexPath.item].size(withAttributes: categoryAttributes).width
+        let categoryWidth = foodCatigoriesList[indexPath.item].localized().size(withAttributes: categoryAttributes).width
         
         return CGSize(width: categoryWidth,
                       height: collectionView.frame.height)
@@ -322,7 +322,7 @@ extension FoodListViewController: FoodListViewProtocol {
 extension FoodListViewController: AddAndChangeFoodDelegate {
     func didAddNewFood(_ food: FoodRealm) {
         
-        presenter.addAndChangeFood(food)
+        presenter.addAndChangeFood(food, viewController: self)
         
         presenter.backToRoot()
         presenter.viewDidLoad()
@@ -355,12 +355,12 @@ extension FoodListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         let pickerLabel = UILabel()
 
         if pickerView.tag == 0 {
-            pickerLabel.text = pickerArray[row]
+            pickerLabel.text = pickerArray[row].localized()
         } else {
             if component == 0 {
-                pickerLabel.text = monthsInterval[row] + "м"
+                pickerLabel.text = monthsInterval[row] + "m".localized()
             } else {
-                pickerLabel.text = daysInterval[row] + "д"
+                pickerLabel.text = daysInterval[row] + "d".localized()
             }
         }
      

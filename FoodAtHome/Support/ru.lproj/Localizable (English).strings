@@ -1,0 +1,12 @@
+/* 
+  Localizable (English).strings
+  FoodAtHome
+
+  Created by Артем Кудрявцев on 26.08.2023.
+  
+*/
+
+"deleteConfirmationTitle" = "Delete All Products?";
+"deleteConfirmationMessage" = "This action will delete all your products, are you sure you want to continue?";
+"deleteConfirmationYes" = "Yes";
+"deleteConfirmationNo" = "No";
