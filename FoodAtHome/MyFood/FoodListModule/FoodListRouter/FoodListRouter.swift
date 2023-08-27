@@ -23,6 +23,7 @@ extension FoodListRouter: FoodListRouterProtocol {
         DispatchQueue.main.async {
             self.addAndChangeFoodView.configure(food: food)
         }
+        viewController.delegate = addAndChangeFoodView
         addAndChangeFoodView.sohowAddAndChangeFoodView(for: viewController)
     }
     
@@ -32,7 +33,6 @@ extension FoodListRouter: FoodListRouterProtocol {
             myFoodViewController.presenter.viewDidLoad()
             myFoodViewController.reloadData()
         }
-        
         viewController.navigationController?.popToRootViewController(animated: true)
     }
 }

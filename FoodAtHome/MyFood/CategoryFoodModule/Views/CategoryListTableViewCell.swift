@@ -8,47 +8,51 @@
 import UIKit
 
 class CategoryListTableViewCell: UITableViewCell {
-        
-    let image: UIImageView = {
-        let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.layer.cornerRadius = 10
-        return image
-    }()
     
-    let name: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Inter-Light", size: 18)
-        return label
-    }()
+    private var foodImage: UIImageView!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    private var foodName: UILabel!
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-            self.addSubview(image)
-            contentView.addSubview(name)
-        
-        addConstraint()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+        setupUI()
+        setupConstraint()
     }
     
-    private func addConstraint() {
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    private func setupUI() {
+        foodImage = UIImageView()
+        foodImage.translatesAutoresizingMaskIntoConstraints = false
+        foodImage.layer.cornerRadius = 10
+        addSubview(foodImage)
+        
+        foodName = UILabel()
+        foodName.translatesAutoresizingMaskIntoConstraints = false
+        foodName.font = UIFont(name: "Inter-Light", size: 18)
+        addSubview(foodName)
+    }
+    
+    private func setupConstraint() {
         
         NSLayoutConstraint.activate([
-        
-            image.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            image.heightAnchor.constraint(equalToConstant: 60),
-            image.widthAnchor.constraint(equalToConstant: 60),
             
-            name.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            name.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 100)
+            foodImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            foodImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            foodImage.heightAnchor.constraint(equalToConstant: 60),
+            foodImage.widthAnchor.constraint(equalToConstant: 60),
+            
+            foodName.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            foodName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 100)
             
         ])
-        
+    }
+    
+    func configure(_ food: FoodRealm) {
+        foodImage.image = UIImage(named: food.name)
+        foodName.text = food.name
     }
 }

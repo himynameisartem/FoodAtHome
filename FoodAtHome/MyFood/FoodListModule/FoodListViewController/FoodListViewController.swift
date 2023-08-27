@@ -10,6 +10,8 @@ import RealmSwift
 
 class FoodListViewController: UIViewController {
 
+    weak var delegate: AddAndChangeClosedViewDelegate?
+    
     let localRealm = try! Realm()
     
     var foodList = [FoodRealm]()
@@ -245,35 +247,6 @@ extension FoodListViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-        
-//    @objc func tapped(sender: UIButton) {
-//
-//        print("asdasd")
-//
-//        let index = IndexPath(row: sender.tag, section: 0)
-//        if sender.isTracking {
-//            sender.backgroundColor = .addButtonSelectColor
-//        }
-//        else {
-//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15, execute: {
-//                sender.backgroundColor = .white
-//            })
-//        }
-//
-//        var food = [FoodRealm]()
-//        if isFiltering {
-//            food = filteredFoodList
-//        } else {
-//            food = foodList
-//        }
-//
-//
-//
-//        searcController.searchBar.resignFirstResponder()
-//    }
-    
-  
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return cellHeight(viewHeight: view.frame.height)
     }
@@ -321,8 +294,8 @@ extension FoodListViewController: FoodListViewProtocol {
 
 extension FoodListViewController: AddAndChangeFoodDelegate {
     func didAddNewFood(_ food: FoodRealm) {
-        
-        presenter.addAndChangeFood(food, viewController: self)
+
+        presenter.addAndChangeFood(food, viewController: self, closedView: delegate!.didRequestToclosedView)
         
         presenter.backToRoot()
         presenter.viewDidLoad()

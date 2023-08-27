@@ -19,7 +19,8 @@ extension MyFoodRouter: MyFoodRouterProtocol {
     
     func openCategoryFoodViewController(at indexPath: IndexPath, food: [FoodRealm]) {
         let categoryFoodViewController = CategoryListViewController()
-        categoryFoodViewController.foodCategoryArray = CategoryFoodManager.shared.appendFoodOnType(at: indexPath, from: food)
+        let categoryFoodConfiguration: CategoryFoodConfiguratorProtocol = CategoryFoodConfigurator()
+        categoryFoodConfiguration.configure(with: categoryFoodViewController, CategoryFoodManager.shared.appendFoodOnType(at: indexPath, from: food) , categoryName: foodCatigoriesList[indexPath.row])
         viewController.navigationController?.pushViewController(categoryFoodViewController, animated: true)
     }
     

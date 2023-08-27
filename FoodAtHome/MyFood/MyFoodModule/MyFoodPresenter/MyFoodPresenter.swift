@@ -72,7 +72,7 @@ extension MyFoodPresenter: MyFoodPresenterProtocol {
     }
     
     func changeFood(_ food: FoodRealm, viewController: UIViewController) {
-        FoodManager.shared.addFood(food, myFood: myFood, viewController: viewController)
+        FoodManager.shared.addFood(food, myFood: myFood, viewController: viewController, closedFunction: nil)
     }
     
     func removeAllFood() {

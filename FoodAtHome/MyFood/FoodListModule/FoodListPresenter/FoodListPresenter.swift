@@ -15,6 +15,7 @@ class FoodListPresenter {
     weak var view: FoodListViewProtocol!
     var interactor: FoodListInteractorProtocol!
     var router: FoodListRouterProtocol!
+    var addAndChangeFoodView = AddAndChangeFoodView()
     
     var myFood: [FoodRealm] = []
         
@@ -24,6 +25,8 @@ class FoodListPresenter {
 }
 
 extension FoodListPresenter: FoodListPresenterProtocol {
+
+    
     
     func viewDidLoad() {
         interactor.fetchMyFood()
@@ -49,9 +52,8 @@ extension FoodListPresenter: FoodListPresenterProtocol {
         router.backToRootViewController()
     }
     
-
-    func addAndChangeFood(_ food: FoodRealm, viewController: UIViewController) {
-        FoodManager.shared.addFood(food, myFood: myFood, viewController: viewController)
+    func addAndChangeFood(_ food: FoodRealm, viewController: UIViewController, closedView: @escaping () -> Void) {
+        FoodManager.shared.addFood(food, myFood: myFood, viewController: viewController, closedFunction: closedView)
     }
 }
 

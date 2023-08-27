@@ -12,6 +12,10 @@ protocol AddAndChangeFoodDelegate: AnyObject {
     func didAddNewFood(_ food: FoodRealm)
 }
 
+protocol AddAndChangeClosedViewDelegate: AnyObject {
+    func didRequestToclosedView()
+}
+
 class AddAndChangeFoodView: UIView {
     
     weak var delegate: AddAndChangeFoodDelegate!
@@ -52,6 +56,7 @@ class AddAndChangeFoodView: UIView {
         guard let view = viewController.tabBarController?.view else { return }
         guard let viewControllerPickerDelegate = viewController as? UIPickerViewDelegate else { return }
         guard let viewControllerFoodDelegate = viewController as? AddAndChangeFoodDelegate else { return }
+
         
         self.delegate = viewControllerFoodDelegate
         setupUI(for: view)
@@ -158,10 +163,13 @@ extension AddAndChangeFoodView {
         datePickerView.datePickerMode = .date
         datePickerView.preferredDatePickerStyle = .wheels
         dateOfManufactureTextField = UITextField()
+        dateOfManufactureTextField.placeholder = "-"
         dateOfManufactureTextField.inputView = datePickerView
         sellByTextField = UITextField()
+        sellByTextField.placeholder = "-"
         sellByTextField.inputView = datePickerView
         leftTextField = UITextField()
+        leftTextField.placeholder = "-"
         
         let textFields = [weightTextField, dateOfManufactureTextField, sellByTextField, leftTextField]
         for textField in textFields {
@@ -193,6 +201,10 @@ extension AddAndChangeFoodView {
         leftDaysPickerView = UIPickerView()
         leftDaysPickerView.tag = 1
         leftTextField.inputView = leftDaysPickerView
+    
+        if dateOfManufactureTextField.text == "" {
+            leftTextField.isEnabled = false
+        }
     }
     
     private func setupConstraints() {
@@ -240,7 +252,9 @@ extension AddAndChangeFoodView {
         dateOfManufactureLabel.text = "Manufacturing Date:".localized()
         sellByLabel.text = "Expires on:                ".localized()
         leftLabel.text = "Shelf Life:                ".localized()
-        weightTextField.text = food.weight
+        if food.weight != "0.0" {
+            weightTextField.text = food.weight
+        }
         dateOfManufactureTextField.text = DateManager.shared.dateFromString(with: food.productionDate)
         sellByTextField.text = DateManager.shared.dateFromString(with: food.expirationDate)
         leftTextField.text = DateManager.shared.intervalDate(from: food.productionDate, to: food.expirationDate, type: .experation)
@@ -251,7 +265,7 @@ extension AddAndChangeFoodView {
         foodItem.expirationDate = food.expirationDate
     }
     
-    private func closedView() {
+     func closedView() {
         UIView.animate(withDuration: 0.3) {
             self.addView.layer.position.y = -900
         } completion: { done in
@@ -298,31 +312,36 @@ extension AddAndChangeFoodView: UITextFieldDelegate {
         if textField == dateOfManufactureTextField || textField == sellByTextField {
             textField.text = date
             
+            if dateOfManufactureTextField.text != "" {
+                leftTextField.isEnabled = true
+            }
+            
             leftTextField.text = DateManager.shared.intervalDate(
-                from: DateManager.shared.stringFromDate(with: dateOfManufactureTextField.text ?? "-"),
-                to: DateManager.shared.stringFromDate(with: sellByTextField.text ?? "-"), type: .experation)
+                from: DateManager.shared.stringFromDate(with: dateOfManufactureTextField.text ?? ""),
+                to: DateManager.shared.stringFromDate(with: sellByTextField.text ?? ""), type: .experation)
             
         } else if textField == leftTextField {
             
             let month = leftDaysPickerView.selectedRow(inComponent: 0)
             let days = leftDaysPickerView.selectedRow(inComponent: 1)
-            leftTextField.text = monthsInterval[month] + "м." + " " + daysInterval[days] + "д."
+            leftTextField.text = monthsInterval[month] + "m".localized() + "." + " " + daysInterval[days] + "d".localized() + "."
             sellByTextField.text = DateManager.shared.dateFromString(
                 with: DateManager.shared.sellByDate(productedByDate: DateManager.shared.stringFromDate(
-                    with: dateOfManufactureTextField.text ?? "-"),
+                    with: dateOfManufactureTextField.text ?? ""),
                                                     months: month,
                                                     days: days))
         }
         
-        foodItem.weight = weightTextField.text ?? "-"
-        foodItem.productionDate = DateManager.shared.stringFromDate(with: dateOfManufactureTextField.text ?? "-")
-        foodItem.expirationDate = DateManager.shared.stringFromDate(with: sellByTextField.text ?? "-")
+        foodItem.weight = weightTextField.text ?? ""
+        foodItem.productionDate = DateManager.shared.stringFromDate(with: dateOfManufactureTextField.text ?? "")
+        foodItem.expirationDate = DateManager.shared.stringFromDate(with: sellByTextField.text ?? "")
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         guard let update = DateManager.shared.stringFromDate(with: textField.text) else { return }
+        
         if textField == dateOfManufactureTextField || textField == sellByTextField {
-
+            
             datePickerView.date = update
         }
 
@@ -337,16 +356,21 @@ extension AddAndChangeFoodView: UITextFieldDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        let dateOfManufacture = DateManager.shared.stringFromDate(with: dateOfManufactureTextField.text ?? "-")
-        let sellBy = DateManager.shared.stringFromDate(with: sellByTextField.text ?? "-")
+        let dateOfManufacture = DateManager.shared.stringFromDate(with: dateOfManufactureTextField.text ?? "")
+        let sellBy = DateManager.shared.stringFromDate(with: sellByTextField.text ?? "")
         let days = DateManager.shared.pickerRows(from: dateOfManufacture, to: sellBy, daysOrMonths: .days)
         let months = DateManager.shared.pickerRows(from: dateOfManufacture, to: sellBy, daysOrMonths: .months)
         
         leftDaysPickerView.selectRow(months ?? 0, inComponent: 0, animated: false)
         leftDaysPickerView.selectRow(days ?? 0, inComponent: 1, animated: false)
         
-        foodItem.productionDate = DateManager.shared.stringFromDate(with: dateOfManufactureTextField.text ?? "-")
-        foodItem.expirationDate = DateManager.shared.stringFromDate(with: sellByTextField.text ?? "-")
+        foodItem.productionDate = DateManager.shared.stringFromDate(with: dateOfManufactureTextField.text ?? "")
+        foodItem.expirationDate = DateManager.shared.stringFromDate(with: sellByTextField.text ?? "")
     }
 }
 
+extension AddAndChangeFoodView: AddAndChangeClosedViewDelegate {
+    func didRequestToclosedView() {
+        closedView()
+    }
+}

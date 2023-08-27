@@ -32,12 +32,6 @@ class MyFoodViewController: UIViewController {
         presenter.viewDidLoad()
     }
     
-    override func viewDidLayoutSubviews() {
-//        print(view.frame.width)
-//        print(navigationItem.titleView?.frame.width)
-//        print(removeAll.frame.width)
-    }
-    
 }
 
 //MARK: - SetupUI

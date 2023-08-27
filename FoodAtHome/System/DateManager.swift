@@ -23,7 +23,7 @@ class DateManager {
     private let currentDate = Date()
     
     func dateFromString(with date: Date?) -> String {
-        guard let date = date else { return "-"}
+        guard let date = date else { return ""}
         dateFormatter.dateFormat = "dd.MM.yyyy"
         let dateString = dateFormatter.string(from: date)
         return dateString
@@ -38,7 +38,7 @@ class DateManager {
     }
     
     func intervalDate(from date1: Date?, to date2: Date?, type: ExperationDateType) -> String {
-        guard let date1 = date1, let date2 = date2 else { return "-" }
+        guard let date1 = date1, let date2 = date2 else { return "" }
         var components = DateComponents()
             
         if type == .experation {

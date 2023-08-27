@@ -19,67 +19,67 @@ class CategoryFoodManager {
             
             switch i.type {
             case "vegetables":
-                if foodCatigoriesList[indexPath.row] == "Vegetables".localized() {
+                if foodCatigoriesList[indexPath.row].localized() == "Vegetables".localized() {
                     foodArray.append(i)
                 }
             case "fruitsAndBerries":
-                if foodCatigoriesList[indexPath.row] == "Fruits and Berries".localized() {
+                if foodCatigoriesList[indexPath.row].localized() == "Fruits and Berries".localized() {
                     foodArray.append(i)
                 }
             case "mushrooms":
-                if foodCatigoriesList[indexPath.row] == "Mushrooms".localized() {
+                if foodCatigoriesList[indexPath.row].localized() == "Mushrooms".localized() {
                     foodArray.append(i)
                 }
             case "eggsAndDairyProducts":
-                if foodCatigoriesList[indexPath.row] == "Eggs and Dairy Products".localized() {
+                if foodCatigoriesList[indexPath.row].localized() == "Eggs and Dairy Products".localized() {
                     foodArray.append(i)
                 }
             case "meatProducts":
-                if foodCatigoriesList[indexPath.row] == "Meat Products".localized() {
+                if foodCatigoriesList[indexPath.row].localized() == "Meat Products".localized() {
                     foodArray.append(i)
                 }
             case "fishAndSeafood":
-                if foodCatigoriesList[indexPath.row] == "Fish and Seafood".localized() {
+                if foodCatigoriesList[indexPath.row].localized() == "Fish and Seafood".localized() {
                     foodArray.append(i)
                 }
             case "nutsAndDriedFruits":
-                if foodCatigoriesList[indexPath.row] == "Nuts and Dried Fruits".localized() {
+                if foodCatigoriesList[indexPath.row].localized() == "Nuts and Dried Fruits".localized() {
                     foodArray.append(i)
                 }
             case "flourAndFlourProducts":
-                if foodCatigoriesList[indexPath.row] == "МFlour and Bakery Products".localized() {
+                if foodCatigoriesList[indexPath.row].localized() == "МFlour and Bakery Products".localized() {
                     foodArray.append(i)
                 }
             case "cereals":
-                if foodCatigoriesList[indexPath.row] == "Grains and Porridge".localized() {
+                if foodCatigoriesList[indexPath.row].localized() == "Grains and Porridge".localized() {
                     foodArray.append(i)
                 }
             case "confectioneryAndSweets":
-                if foodCatigoriesList[indexPath.row] == "Sweets and Confectionery".localized() {
+                if foodCatigoriesList[indexPath.row].localized() == "Sweets and Confectionery".localized() {
                     foodArray.append(i)
                 }
             case "greensAndFlowers":
-                if foodCatigoriesList[indexPath.row] == "Greens and Herbs".localized() {
+                if foodCatigoriesList[indexPath.row].localized() == "Greens and Herbs".localized() {
                     foodArray.append(i)
                 }
             case "spices":
-                if foodCatigoriesList[indexPath.row] == "Spices and Seasonings".localized() {
+                if foodCatigoriesList[indexPath.row].localized() == "Spices and Seasonings".localized() {
                     foodArray.append(i)
                 }
             case "additives":
-                if foodCatigoriesList[indexPath.row] == "Raw Materials and Additives".localized() {
+                if foodCatigoriesList[indexPath.row].localized() == "Raw Materials and Additives".localized() {
                     foodArray.append(i)
                 }
             case "babyFood":
-                if foodCatigoriesList[indexPath.row] == "Baby Food".localized() {
+                if foodCatigoriesList[indexPath.row].localized() == "Baby Food".localized() {
                     foodArray.append(i)
                 }
             case "softDrinks":
-                if foodCatigoriesList[indexPath.row] == "Non-Alcoholic Beverages".localized() {
+                if foodCatigoriesList[indexPath.row].localized() == "Non-Alcoholic Beverages".localized() {
                     foodArray.append(i)
                 }
             case "alcoholicDrinks":
-                if foodCatigoriesList[indexPath.row] == "Alcoholic Beverages".localized() {
+                if foodCatigoriesList[indexPath.row].localized() == "Alcoholic Beverages".localized() {
                     foodArray.append(i)
                 }
             default:
