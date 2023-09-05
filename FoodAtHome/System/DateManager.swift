@@ -46,15 +46,15 @@ class DateManager {
         } else {
             components = calendar.dateComponents([.month, .day], from: currentDate, to: date2)
         }
-            
+        
         if let months = components.month, let days = components.day {
-            return "\(months)м. \(days)д."
+            return "\(months)" + "м.".localized() + "\(days)" + "d.".localized()
         } else if let months = components.month {
-            return "\(months)м."
+            return "\(months)" + "m.".localized()
         } else if let days = components.day {
-            return "\(days)д."
+            return "\(days)" + "d.".localized()
         } else {
-            return "0д."
+            return "0" + "d.".localized()
         }
     }
     
@@ -68,6 +68,16 @@ class DateManager {
             
             return calendar.date(byAdding: dateComponents, to: productDate)
     }
+    
+    func expirationDateCheck(experationDate: Date?) -> Bool {
+        guard let experationDate = experationDate else { return false }
+        if experationDate < currentDate {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     
     func pickerRows(from date1: Date?, to date2: Date?, daysOrMonths: DaysOrMonths) -> Int? {
         guard let date1 = date1, let date2 = date2 else { return 0 }

@@ -26,6 +26,7 @@
 "This action will delete all your products, are you sure you want to continue?" = "Данное действие приведет к удалению всех ваших продуктов, вы действительно хотите продолжить?";
 "Yes" = "Да";
 "No" = "Нет";
+"Delete only expired" = "Удалить только просроченые";
 
 "Enter the weight of the product" = "Введите вес продукта";
 
@@ -51,6 +52,9 @@
 
 "d" = "д";
 "m" = "м";
+"d." = "д.";
+"m." = "м.";
+"Overdue" = "Просрочено";
 
 "Vegetables" = "Овощи";
 "Fruits and Berries" = "Фрукты и ягоды";

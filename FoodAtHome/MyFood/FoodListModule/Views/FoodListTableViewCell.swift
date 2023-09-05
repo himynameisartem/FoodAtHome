@@ -79,12 +79,10 @@ class DetailFoodCell: UITableViewCell {
         stack.distribution = .equalSpacing
 
         title = UILabel()
-        title.translatesAutoresizingMaskIntoConstraints = false
         title.numberOfLines = 2
         title.font = UIFont(name: "Inter-Light", size: 15)
 
         colories = UILabel()
-        colories.translatesAutoresizingMaskIntoConstraints = false
         colories.font = UIFont(name: "Inter-ExtraLight", size: 10)
         colories.alpha = 0.7
         

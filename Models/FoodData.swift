@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 var test = [FoodRealm]()
-var vcCheck = Bool()
+//var vcCheck = Bool()
 
 var foodRealmArra: Results<FoodRealm>!
 

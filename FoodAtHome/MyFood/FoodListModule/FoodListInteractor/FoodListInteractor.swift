@@ -13,8 +13,6 @@ class FoodListInteractor {
     init(presenter: FoodListInteractorOutputProtocol!) {
         self.presenter = presenter
     }
-    
-    
 }
 
 

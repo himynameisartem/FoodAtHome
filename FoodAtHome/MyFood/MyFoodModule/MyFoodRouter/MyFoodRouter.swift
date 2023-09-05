@@ -22,6 +22,7 @@ extension MyFoodRouter: MyFoodRouterProtocol {
         let categoryFoodConfiguration: CategoryFoodConfiguratorProtocol = CategoryFoodConfigurator()
         categoryFoodConfiguration.configure(with: categoryFoodViewController, CategoryFoodManager.shared.appendFoodOnType(at: indexPath, from: food) , categoryName: foodCatigoriesList[indexPath.row])
         viewController.navigationController?.pushViewController(categoryFoodViewController, animated: true)
+        categoryFoodViewController.navigationController?.navigationBar.isHidden = true
     }
     
     func openFoodListViewController() {

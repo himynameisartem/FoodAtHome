@@ -13,13 +13,13 @@ class FoodListViewController: UIViewController {
     weak var delegate: AddAndChangeClosedViewDelegate?
     
     let localRealm = try! Realm()
-    
     var foodList = [FoodRealm]()
     var filteredFoodList = [FoodRealm]()
         
     var presenter: FoodListPresenterProtocol!
     private let configurator: FoodListConfiguratorProtocol = FoodListConfigurator()
             
+    private var wallpapers: UIImageView!
     private var categoriesListCollectionView: UICollectionView!
     private var categoriesListCollectionViewConstraint = NSLayoutConstraint()
     private var foodListTableView: UITableView!
@@ -40,14 +40,11 @@ class FoodListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         setupUI()
         setupConstraints()
                 
         configurator.configure(with: self)
         presenter.viewDidLoad()
-        
-        vcCheck = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -61,9 +58,16 @@ extension FoodListViewController {
     
     private func setupUI() {
         
-        view.backgroundColor = #colorLiteral(red: 0.9438247681, green: 0.9557064176, blue: 0.9554974437, alpha: 1)
         navigationController?.navigationBar.backgroundColor = .clear
         tabBarController?.tabBar.isHidden = true
+        
+        view.backgroundColor = .systemGray5
+        
+        wallpapers = UIImageView(image: UIImage(named: "wallpapers"))
+        wallpapers.contentMode = .scaleAspectFill
+        wallpapers.alpha = 0.2
+        wallpapers.frame = view.bounds
+        view.addSubview(wallpapers)
         
         searchButton = UIBarButtonItem()
         searchButton.image = UIImage(systemName: "magnifyingglass")
@@ -125,10 +129,7 @@ extension FoodListViewController {
             
         ])
     }
-    
-    @objc func tappedSearch() {
-        presenter.tappedSearch()
-    }
+
 }
 
 //MARK: - UICollectionView
@@ -186,6 +187,10 @@ extension FoodListViewController: UISearchResultsUpdating, UISearchBarDelegate, 
         }
         foodListTableView.contentOffset = CGPoint(x: 0.0, y: 0.0)
     }
+    
+    @objc func tappedSearch() {
+        presenter.tappedSearch()
+    }
 }
 
 //MARK: - UITableView
@@ -214,12 +219,12 @@ extension FoodListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configure(food[indexPath.row])
         cell.addSubview(cell.addButton)
         cell.addButton.tag = indexPath.row
-        cell.addButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
+        cell.addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         
         return cell
     }
     
-    @objc func tapped(sender: UIButton) {
+    @objc func addButtonTapped(sender: UIButton) {
                 var food = [FoodRealm]()
                     if isFiltering {
                         food = filteredFoodList
@@ -248,7 +253,7 @@ extension FoodListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return cellHeight(viewHeight: view.frame.height)
+        return 100
     }
     
     //MARK: - scrollViewDidScroll
@@ -296,7 +301,6 @@ extension FoodListViewController: AddAndChangeFoodDelegate {
     func didAddNewFood(_ food: FoodRealm) {
 
         presenter.addAndChangeFood(food, viewController: self, closedView: delegate!.didRequestToclosedView)
-        
         presenter.backToRoot()
         presenter.viewDidLoad()
     }
@@ -346,129 +350,4 @@ extension FoodListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         
          return pickerLabel
     }
-}
-
-
-
-
-
-
-
-
-
-//MARK: - Detail Food Cell
-
-
-//MARK: - Size Items and Font
-
-
-extension FoodListViewController {
-    
-    func cellWhidth(viewHeight: Double) -> CGFloat {
-        switch viewHeight {
-        case iPhoneScreensHeight.iPhone_5s_SE.rawValue:
-            return 190
-        case iPhoneScreensHeight.iPhone_6S_6SPlus_7_8_SE2nd.rawValue:
-            return 220
-        case iPhoneScreensHeight.iPhone_7Plus_8Plus.rawValue:
-            return 250
-        case iPhoneScreensHeight.iPhone_X_XS_12mini_13mini.rawValue:
-            return 230
-        case iPhoneScreensHeight.iPhone_12_12Pro_13_13Pro.rawValue:
-            return 230
-        case iPhoneScreensHeight.iPhone_XSMax_XR_11_11Pro_11ProMax.rawValue:
-            return 260
-        case iPhoneScreensHeight.iPhone_12ProMax_13ProMax.rawValue:
-            return 260
-        default:
-            return 250
-        }
-    }
-    
-    func cellHeight(viewHeight: Double) -> CGFloat {
-        switch viewHeight {
-        case iPhoneScreensHeight.iPhone_5s_SE.rawValue:
-            return 90
-        case iPhoneScreensHeight.iPhone_6S_6SPlus_7_8_SE2nd.rawValue:
-            return 90
-        case iPhoneScreensHeight.iPhone_7Plus_8Plus.rawValue:
-            return 100
-        case iPhoneScreensHeight.iPhone_X_XS_12mini_13mini.rawValue:
-            return 100
-        case iPhoneScreensHeight.iPhone_12_12Pro_13_13Pro.rawValue:
-            return 95
-        case iPhoneScreensHeight.iPhone_XSMax_XR_11_11Pro_11ProMax.rawValue:
-            return 100
-        case iPhoneScreensHeight.iPhone_12ProMax_13ProMax.rawValue:
-            return 100
-        default:
-            return 100
-        }
-    }
-    
-    func addButtonConstraint(viewHeight: Double) -> CGFloat {
-        switch viewHeight {
-        case iPhoneScreensHeight.iPhone_5s_SE.rawValue:
-            return -12
-        case iPhoneScreensHeight.iPhone_6S_6SPlus_7_8_SE2nd.rawValue:
-            return -20
-        case iPhoneScreensHeight.iPhone_7Plus_8Plus.rawValue:
-            return -20
-        case iPhoneScreensHeight.iPhone_X_XS_12mini_13mini.rawValue:
-            return -20
-        case iPhoneScreensHeight.iPhone_12_12Pro_13_13Pro.rawValue:
-            return -20
-        case iPhoneScreensHeight.iPhone_XSMax_XR_11_11Pro_11ProMax.rawValue:
-            return -15
-        case iPhoneScreensHeight.iPhone_12ProMax_13ProMax.rawValue:
-            return -20
-        default:
-            return -20
-        }
-    }
-    
-    func imageConstraint(viewHeight: Double) -> CGFloat {
-        switch viewHeight {
-        case iPhoneScreensHeight.iPhone_5s_SE.rawValue:
-            return 30
-        case iPhoneScreensHeight.iPhone_6S_6SPlus_7_8_SE2nd.rawValue:
-            return 45
-        case iPhoneScreensHeight.iPhone_7Plus_8Plus.rawValue:
-            return 45
-        case iPhoneScreensHeight.iPhone_X_XS_12mini_13mini.rawValue:
-            return 40
-        case iPhoneScreensHeight.iPhone_12_12Pro_13_13Pro.rawValue:
-            return 45
-        case iPhoneScreensHeight.iPhone_XSMax_XR_11_11Pro_11ProMax.rawValue:
-            return 40
-        case iPhoneScreensHeight.iPhone_12ProMax_13ProMax.rawValue:
-            return 45
-        default:
-            return 45
-        }
-    }
-    
-
-    func titleFontSize(viewHeight: Double) -> CGFloat {
-        switch viewHeight {
-        case iPhoneScreensHeight.iPhone_5s_SE.rawValue:
-            return 12
-        case iPhoneScreensHeight.iPhone_6S_6SPlus_7_8_SE2nd.rawValue:
-            return 14
-        case iPhoneScreensHeight.iPhone_7Plus_8Plus.rawValue:
-            return 16
-        case iPhoneScreensHeight.iPhone_X_XS_12mini_13mini.rawValue:
-            return 14
-        case iPhoneScreensHeight.iPhone_12_12Pro_13_13Pro.rawValue:
-            return 16
-        case iPhoneScreensHeight.iPhone_XSMax_XR_11_11Pro_11ProMax.rawValue:
-            return 16
-        case iPhoneScreensHeight.iPhone_12ProMax_13ProMax.rawValue:
-            return 16
-        default:
-            return 16
-        }
-    }
-
-    
 }

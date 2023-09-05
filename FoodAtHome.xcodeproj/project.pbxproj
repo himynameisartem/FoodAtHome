@@ -55,6 +55,7 @@
 		31D117882A9B65020019C228 /* CategoryFoodRouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D117872A9B65020019C228 /* CategoryFoodRouterProtocol.swift */; };
 		31D1178A2A9B65140019C228 /* CategoryFoodRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D117892A9B65140019C228 /* CategoryFoodRouter.swift */; };
 		31D1178C2A9B68460019C228 /* CategoryFoodViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D1178B2A9B68460019C228 /* CategoryFoodViewProtocol.swift */; };
+		31D1178E2A9CA93C0019C228 /* StretchyTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D1178D2A9CA93C0019C228 /* StretchyTableHeaderView.swift */; };
 		31D456A92A5D315200FDFDFB /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D456A82A5D315200FDFDFB /* DateManager.swift */; };
 		31D456B22A5D753A00FDFDFB /* CategoryFoodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D456B12A5D753A00FDFDFB /* CategoryFoodManager.swift */; };
 		31D456B52A5E890B00FDFDFB /* AddAndChangeFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D456B42A5E890B00FDFDFB /* AddAndChangeFoodView.swift */; };
@@ -125,6 +126,7 @@
 		31D117872A9B65020019C228 /* CategoryFoodRouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFoodRouterProtocol.swift; sourceTree = "<group>"; };
 		31D117892A9B65140019C228 /* CategoryFoodRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFoodRouter.swift; sourceTree = "<group>"; };
 		31D1178B2A9B68460019C228 /* CategoryFoodViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFoodViewProtocol.swift; sourceTree = "<group>"; };
+		31D1178D2A9CA93C0019C228 /* StretchyTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StretchyTableHeaderView.swift; sourceTree = "<group>"; };
 		31D456A82A5D315200FDFDFB /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		31D456B12A5D753A00FDFDFB /* CategoryFoodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFoodManager.swift; sourceTree = "<group>"; };
 		31D456B42A5E890B00FDFDFB /* AddAndChangeFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAndChangeFoodView.swift; sourceTree = "<group>"; };
@@ -302,12 +304,20 @@
 			path = RefregiratorViewController;
 			sourceTree = "<group>";
 		};
+		318497A42AA75DCC004A2D7A /* ShoppingListModule */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ShoppingListModule;
+			sourceTree = "<group>";
+		};
 		3187018F2A4C94CA0079848C /* MyFood */ = {
 			isa = PBXGroup;
 			children = (
 				318701A82A503B0B0079848C /* MyFoodModule */,
 				31D456AA2A5D4CD900FDFDFB /* CategoryFoodModule */,
 				314CA4852A73C4F5002D4680 /* FoodListModule */,
+				318497A42AA75DCC004A2D7A /* ShoppingListModule */,
 				31D456B32A5E88A900FDFDFB /* AddAndChangeFoodModule */,
 			);
 			path = MyFood;
@@ -483,6 +493,7 @@
 			isa = PBXGroup;
 			children = (
 				316066E5288EC0F500EDB06F /* CategoryListTableViewCell.swift */,
+				31D1178D2A9CA93C0019C228 /* StretchyTableHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -658,6 +669,7 @@
 				31D1177C2A9B63BD0019C228 /* CategoryFoodConfiguratorProtocol.swift in Sources */,
 				3187019E2A4DE10C0079848C /* MyFoodInteractorProtocol.swift in Sources */,
 				31D0C42D2A9A767000EDF32B /* TextFieldExtension.swift in Sources */,
+				31D1178E2A9CA93C0019C228 /* StretchyTableHeaderView.swift in Sources */,
 				31E983BC2A53FAF0006FD303 /* MyFoodRouter.swift in Sources */,
 				314CA49F2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift in Sources */,
 				31D117822A9B64AE0019C228 /* CategoryFoodPresenter.swift in Sources */,

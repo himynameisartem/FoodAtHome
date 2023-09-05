@@ -45,6 +45,9 @@ class PopupMenu: UIView, ShowPopupMenuProtocol {
     private var detailsLabelsStackView: UIStackView!
     private var mainStackView: UIStackView!
     
+    private var expirationDateIndicator: UIView!
+    private var expirationSign: UILabel!
+    
     
     func showPopupMenu(from sourceCell: UICollectionViewCell?, at indexPath: IndexPath?, from viewController: UIViewController) {
         
@@ -198,16 +201,32 @@ extension PopupMenu {
         arrowView.transform = CGAffineTransform(scaleX: 0, y: 0)
         containerView.transform = CGAffineTransform(scaleX: 0, y: 0)
         
+        expirationDateIndicator = UIView()
+        expirationDateIndicator.translatesAutoresizingMaskIntoConstraints = false
+        expirationDateIndicator.layer.cornerRadius = 10
+        
+        expirationSign = UILabel()
+        expirationSign.translatesAutoresizingMaskIntoConstraints = false
+        expirationSign.text = "!"
+        expirationSign.font = UIFont(name: "Inter-SemiBold", size: 18)
+        expirationSign.textColor = .white
+        expirationSign.textAlignment = .center
+        
         view.addSubview(dimmingView)
         view.addSubview(containerView)
         view.addSubview(arrowView)
         containerView.addSubview(menuView)
+        menuView.addSubview(expirationDateIndicator)
         menuView.addSubview(nameLabel)
         menuView.addSubview(mainStackView)
         menuView.addSubview(circleView)
+        expirationDateIndicator.addSubview(expirationSign)
     }
     
     private func circle(from shapeView: UIView, from date1: Date?, to date2: Date?) {
+        
+        expirationSign.isHidden = true
+        expirationDateIndicator.isHidden = true
         
         guard let date1 = date1, let date2 = date2 else { return }
         let differenceOfDays = DateManager.shared.differenceDays(from: date1, to: date2)
@@ -233,18 +252,34 @@ extension PopupMenu {
         foreGroundLayer.fillColor = .none
         
         if foreGroundLayer.strokeEnd >= 0.5 {
+            shapeView.layer.addSublayer(backGroundLayer)
+            shapeView.layer.addSublayer(foreGroundLayer)
+            shapeView.isHidden = true
+            expirationSign.isHidden = true
+            expirationDateIndicator.isHidden = true
             foreGroundLayer.strokeColor = UIColor.green.cgColor
         } else if foreGroundLayer.strokeEnd < 0.5 && foreGroundLayer.strokeEnd >= 0.2 {
+            shapeView.layer.addSublayer(backGroundLayer)
+            shapeView.layer.addSublayer(foreGroundLayer)
+            shapeView.isHidden = true
+            expirationSign.isHidden = true
+            expirationDateIndicator.isHidden = true
             foreGroundLayer.strokeColor = UIColor.orange.cgColor
-        } else {
+        } else if foreGroundLayer.strokeEnd < 0.2 && foreGroundLayer.strokeEnd > 0.0 {
+            shapeView.layer.addSublayer(backGroundLayer)
+            shapeView.layer.addSublayer(foreGroundLayer)
+            shapeView.isHidden = true
+            expirationSign.isHidden = true
+            expirationDateIndicator.isHidden = true
             foreGroundLayer.strokeColor = UIColor.red.cgColor
+        } else {
+            expirationSign.isHidden = false
+            expirationDateIndicator.isHidden = false
+            expirationDateIndicator.backgroundColor = .red
+            detailLeftLabel.text = "Overdue".localized()
         }
         
         foreGroundLayer.lineCap = .round
-        
-        shapeView.layer.addSublayer(backGroundLayer)
-        shapeView.layer.addSublayer(foreGroundLayer)
-        shapeView.isHidden = true
         
         if sellByLabel.text != "-" {
             shapeView.isHidden = false
@@ -272,19 +307,43 @@ extension PopupMenu {
             mainStackView.trailingAnchor.constraint(equalTo: menuView.trailingAnchor, constant: -10),
             mainStackView.bottomAnchor.constraint(equalTo: menuView.bottomAnchor, constant: -10),
             
+            expirationDateIndicator.topAnchor.constraint(equalTo: menuView.topAnchor, constant: 10),
+            expirationDateIndicator.trailingAnchor.constraint(equalTo: menuView.trailingAnchor, constant: -10),
+            expirationDateIndicator.heightAnchor.constraint(equalToConstant: 20),
+            expirationDateIndicator.widthAnchor.constraint(equalToConstant: 20),
+            
+            expirationSign.topAnchor.constraint(equalTo: expirationDateIndicator.topAnchor),
+            expirationSign.leadingAnchor.constraint(equalTo: expirationDateIndicator.leadingAnchor),
+            expirationSign.trailingAnchor.constraint(equalTo: expirationDateIndicator.trailingAnchor),
+            expirationSign.bottomAnchor.constraint(equalTo: expirationDateIndicator.bottomAnchor)
+            
         ])
     }
     
     func configure(food: FoodRealm) {
         nameLabel.text = food.name
         weightLabel.text = "Weight:".localized()
-        detailWeightLabel.text = "\(food.weight) \(food.unit.localized())"
         dateOfManufactureLabel.text = "Manufacturing Date:".localized()
-        detailDateOfManufactureLabel.text = DateManager.shared.dateFromString(with: food.productionDate)
         sellByLabel.text = "Expires on:".localized()
-        detailSellByLabel.text = DateManager.shared.dateFromString(with: food.expirationDate)
         leftLabel.text = "Remaining:".localized()
-        detailLeftLabel.text = DateManager.shared.intervalDate(from: food.productionDate, to: food.expirationDate, type: .left)
+        detailWeightLabel.text = "\(food.weight) \(food.unit.localized())"
+        
+        if food.productionDate == nil {
+            detailDateOfManufactureLabel.text = "-"
+        } else {
+            detailDateOfManufactureLabel.text = DateManager.shared.dateFromString(with: food.productionDate)
+        }
+        if food.expirationDate == nil {
+            detailSellByLabel.text = "-"
+        } else {
+            detailSellByLabel.text = DateManager.shared.dateFromString(with: food.expirationDate)
+        }
+        if detailDateOfManufactureLabel.text == "-" || detailSellByLabel.text == "-" {
+            detailLeftLabel.text = "-"
+        } else {
+            detailLeftLabel.text = DateManager.shared.intervalDate(from: food.productionDate, to: food.expirationDate, type: .left)
+        }
+        
         circle(from: circleView, from: food.productionDate, to: food.expirationDate)
     }
 }

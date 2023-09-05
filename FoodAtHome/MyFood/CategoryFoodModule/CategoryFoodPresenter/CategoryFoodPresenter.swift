@@ -35,6 +35,7 @@ extension CategoryFoodPresenter: CategoryFoodPresenterProtocol {
 extension CategoryFoodPresenter: CategoryFoodInteractorOutputProtocol {
     func recieveFood(_ food: [FoodRealm], categoryName: String) {
         view.setImage(categoryName)
+        view.setName(categoryName.localized())
         self.foodList = food
     }
 }

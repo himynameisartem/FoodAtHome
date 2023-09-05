@@ -31,7 +31,6 @@ class MyFoodViewController: UIViewController {
         configurator.configure(with: self)
         presenter.viewDidLoad()
     }
-    
 }
 
 //MARK: - SetupUI
@@ -44,7 +43,7 @@ extension MyFoodViewController {
         navigationItem.backButtonTitle = "Back".localized()
         navigationController?.navigationBar.tintColor = .black
         wallpapers = UIImageView(image: UIImage(named: "wallpapers"))
-        wallpapers.contentMode = .scaleAspectFit
+        wallpapers.contentMode = .scaleAspectFill
         wallpapers.alpha = 0.2
         wallpapers.frame = view.bounds
         view.addSubview(wallpapers)
@@ -101,7 +100,7 @@ extension MyFoodViewController {
     }
     
     private func setupConstraints() {
- 
+         
         NSLayoutConstraint.activate([
             
             navTitle.topAnchor.constraint(equalTo: navView.topAnchor),
@@ -113,9 +112,8 @@ extension MyFoodViewController {
             removeAll.topAnchor.constraint(equalTo: navView.topAnchor),
             removeAll.centerYAnchor.constraint(equalTo: navTitle.centerYAnchor),
             removeAll.widthAnchor.constraint(equalToConstant: 20),
-            removeAll.trailingAnchor.constraint(equalTo: navView.trailingAnchor),
             removeAll.bottomAnchor.constraint(equalTo: navView.bottomAnchor),
-            
+
             categoriesCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             categoriesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             categoriesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -126,6 +124,12 @@ extension MyFoodViewController {
             myFoodCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -0),
             myFoodCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
+        if UIDevice.current.name == "iPhone SE (1st generation)" {
+            removeAll.leadingAnchor.constraint(equalTo: navView.leadingAnchor, constant: view.frame.width - 40).isActive = true
+        } else {
+            removeAll.trailingAnchor.constraint(equalTo: navView.trailingAnchor).isActive = true
+        }
+        
     }
 }
 
@@ -203,9 +207,7 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 let delete = UIAction(title: "Delete".localized(),
                                       image: UIImage(systemName: "trash"),
                                       attributes: .destructive) { _ in
-                    try! self.localRealm.write {
-                        self.localRealm.delete(item)
-                    }
+                    self.presenter.deleteFood(food: item)
                     self.presenter.viewDidLoad()
                     self.myFoodCollectionView.reloadData()
                 }
@@ -280,11 +282,20 @@ extension MyFoodViewController {
                 self.presenter.viewDidLoad()
                 self.myFoodCollectionView.reloadData()
             }
+            
+            let action = UIAlertAction(title: "Delete only expired", style: .default) { done in
+                
+                self.presenter.removeExpiredProducts(food: self.presenter.myFood)
+                self.presenter.viewDidLoad()
+                self.myFoodCollectionView.reloadData()
+                
+            }
+            
             let cancelAction = UIAlertAction(title: "No".localized(), style: .default)
             alert.addAction(doneAction)
+            alert.addAction(action)
             alert.addAction(cancelAction)
             self.present(alert, animated: true)
-            
         }
     }
 }

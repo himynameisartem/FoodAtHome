@@ -25,8 +25,6 @@ class FoodListPresenter {
 }
 
 extension FoodListPresenter: FoodListPresenterProtocol {
-
-    
     
     func viewDidLoad() {
         interactor.fetchMyFood()
@@ -53,12 +51,13 @@ extension FoodListPresenter: FoodListPresenterProtocol {
     }
     
     func addAndChangeFood(_ food: FoodRealm, viewController: UIViewController, closedView: @escaping () -> Void) {
-        FoodManager.shared.addFood(food, myFood: myFood, viewController: viewController, closedFunction: closedView)
+        FoodManager.shared.addFood(food, myFood: myFood, check: .check, viewController: viewController, closedFunction: closedView)
     }
 }
 
 
 extension FoodListPresenter: FoodListInteractorOutputProtocol {
+    
     func foodDidRecieve(_ food: [FoodRealm]) {
         self.myFood = food
         view.reloadData()

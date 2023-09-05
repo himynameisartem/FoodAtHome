@@ -71,8 +71,14 @@ extension MyFoodPresenter: MyFoodPresenterProtocol {
         addAndChangeFoodView.configure(food: food)
     }
     
+    func deleteFood(food: FoodRealm) {
+        try! localRealm.write({
+            localRealm.delete(food)
+        })
+    }
+    
     func changeFood(_ food: FoodRealm, viewController: UIViewController) {
-        FoodManager.shared.addFood(food, myFood: myFood, viewController: viewController, closedFunction: nil)
+        FoodManager.shared.addFood(food, myFood: myFood, check: .addition, viewController: viewController, closedFunction: nil)
     }
     
     func removeAllFood() {
@@ -80,6 +86,17 @@ extension MyFoodPresenter: MyFoodPresenterProtocol {
             localRealm.deleteAll()
         })
     }
+    
+    func removeExpiredProducts(food: [FoodRealm]) {
+        for i in food {
+            if DateManager.shared.expirationDateCheck(experationDate: i.expirationDate) {
+                try! localRealm.write({
+                    localRealm.delete(i)
+                })
+            }
+        }
+    }
+    
 }
 
 extension MyFoodPresenter: MyFoodInteractorOutputProtocol {

@@ -12,6 +12,10 @@ enum ClosedAddFoodViewStatus {
     case didClosedMenu, didNotClosedMenu
 }
 
+enum CheckForChangeOrAddition {
+    case check, addition
+}
+
 class FoodManager {
     
     let localRealm = try! Realm()
@@ -23,47 +27,54 @@ class FoodManager {
         return Array(results)
     }
     
-    func addFood(_ food: FoodRealm, myFood foodArray: [FoodRealm], viewController: UIViewController, closedFunction: (() -> Void)?) {
+    func addFood(_ food: FoodRealm, myFood foodArray: [FoodRealm], check: CheckForChangeOrAddition, viewController: UIViewController, closedFunction: (() -> Void)?) {
         var foundMatch = false
         menuStatus = .didClosedMenu
         
-        if food.weight == "0.0" {
-            
+        if food.weight == "0.0" || food.weight == "0" || food.weight == "" {
             let alert = UIAlertController(title: "Enter the weight of the product".localized(), message: nil, preferredStyle: .alert)
             let oklAction = UIAlertAction(title: "OK", style: .cancel)
             alert.addAction(oklAction)
             viewController.present(alert, animated: true)
             menuStatus = .didNotClosedMenu
-            
         } else {
-            
             for i in foodArray {
-                
                 if food.name == i.name {
-                    menuStatus = .didNotClosedMenu
-                    let alert = UIAlertController(title: "You already have this product".localized(), message: "Do you want to replace it?".localized(), preferredStyle: .alert)
-                    let yesAction = UIAlertAction(title: "Yes".localized(), style: .default) { done in
-                        closedFunction?()
-                        let index = foodArray.firstIndex(of: i)!
+                    if check == .check {
+                        menuStatus = .didNotClosedMenu
+                        let alert = UIAlertController(title: "You already have this product".localized(), message: "Do you want to replace it?".localized(), preferredStyle: .alert)
+                        let yesAction = UIAlertAction(title: "Yes".localized(), style: .default) { done in
+                            closedFunction?()
+                            let index = foodArray.firstIndex(of: i)!
+                            try! self.localRealm.write({
+                                foodArray[index].weight = food.weight
+                                foodArray[index].unit = food.unit
+                                foodArray[index].productionDate = food.productionDate
+                                foodArray[index].expirationDate = food.expirationDate
+                                foodArray[index].consumeUp = food.consumeUp
+                            })
+                            viewController.navigationController?.popToRootViewController(animated: true)
+                        }
+                        let noAction = UIAlertAction(title: "No".localized(), style: .default)
+                        foundMatch = true
+                        alert.addAction(yesAction)
+                        alert.addAction(noAction)
+                        viewController.present(alert, animated: true)
+                        break
+                    } else {
+                        foundMatch = true
                         try! self.localRealm.write({
-                            foodArray[index].weight = food.weight
-                            foodArray[index].unit = food.unit
-                            foodArray[index].productionDate = food.productionDate
-                            foodArray[index].expirationDate = food.expirationDate
-                            foodArray[index].consumeUp = food.consumeUp
+                            i.weight = food.weight
+                            i.unit = food.unit
+                            i.productionDate = food.productionDate
+                            i.expirationDate = food.expirationDate
+                            i.consumeUp = food.consumeUp
                         })
                         viewController.navigationController?.popToRootViewController(animated: true)
+                        break
                     }
-                    
-                    let noAction = UIAlertAction(title: "No".localized(), style: .default)
-                    foundMatch = true
-                    alert.addAction(yesAction)
-                    alert.addAction(noAction)
-                    viewController.present(alert, animated: true)
-                    break
                 }
             }
-            
             if !foundMatch {
                 try! localRealm.write({
                     localRealm.add(food)
