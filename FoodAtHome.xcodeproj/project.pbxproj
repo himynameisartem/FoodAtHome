@@ -28,6 +28,15 @@
 		3180FF832860D18C00060BD0 /* pobeda-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3180FF812860D18C00060BD0 /* pobeda-bold.ttf */; };
 		3180FF842860D18C00060BD0 /* pobeda-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3180FF822860D18C00060BD0 /* pobeda-regular.ttf */; };
 		3180FF8728620BA100060BD0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3180FF8628620BA100060BD0 /* Constants.swift */; };
+		318497AB2AA8C310004A2D7A /* ShoppingListPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318497AA2AA8C310004A2D7A /* ShoppingListPresenterProtocol.swift */; };
+		318497AD2AA8C322004A2D7A /* ShoppingListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318497AC2AA8C322004A2D7A /* ShoppingListPresenter.swift */; };
+		318497AF2AA8C33B004A2D7A /* ShoppingListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318497AE2AA8C33B004A2D7A /* ShoppingListInteractor.swift */; };
+		318497B12AA8C361004A2D7A /* ShoppingListInteractorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318497B02AA8C361004A2D7A /* ShoppingListInteractorProtocol.swift */; };
+		318497B32AA8C3A3004A2D7A /* ShoppingListConfiguratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318497B22AA8C3A3004A2D7A /* ShoppingListConfiguratorProtocol.swift */; };
+		318497B52AA8C3B4004A2D7A /* ShoppingListConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318497B42AA8C3B4004A2D7A /* ShoppingListConfigurator.swift */; };
+		318497B72AA8C3CA004A2D7A /* ShoppingListRouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318497B62AA8C3CA004A2D7A /* ShoppingListRouterProtocol.swift */; };
+		318497B92AA8C3DE004A2D7A /* ShoppingListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318497B82AA8C3DE004A2D7A /* ShoppingListRouter.swift */; };
+		318497BB2AA8C3F5004A2D7A /* ShoppingListViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318497BA2AA8C3F5004A2D7A /* ShoppingListViewProtocol.swift */; };
 		318701982A4DD9C00079848C /* MyFoodPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318701972A4DD9C00079848C /* MyFoodPresenter.swift */; };
 		3187019A2A4DD9D50079848C /* MyFoodPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318701992A4DD9D50079848C /* MyFoodPresenterProtocol.swift */; };
 		3187019C2A4DE1020079848C /* MyFoodInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3187019B2A4DE1020079848C /* MyFoodInteractor.swift */; };
@@ -38,7 +47,7 @@
 		318701AB2A503BA40079848C /* MyFoodViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318701AA2A503BA40079848C /* MyFoodViewProtocol.swift */; };
 		318DDCFB2845319200F1242B /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318DDCFA2845319200F1242B /* AlertView.swift */; };
 		31A696C9284270860044954E /* FoodListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A696C8284270860044954E /* FoodListViewController.swift */; };
-		31B1DFF12874C626006D7C64 /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1DFF02874C626006D7C64 /* ListVC.swift */; };
+		31B1DFF12874C626006D7C64 /* ShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1DFF02874C626006D7C64 /* ShoppingListViewController.swift */; };
 		31B1DFF52874CB7E006D7C64 /* ShareVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1DFF42874CB7E006D7C64 /* ShareVC.swift */; };
 		31C6B926288323A80066829C /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C6B925288323A80066829C /* CategoryCollectionViewCell.swift */; };
 		31C6B9292883F5570066829C /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C6B9282883F5570066829C /* CategoryListViewController.swift */; };
@@ -98,6 +107,15 @@
 		3180FF812860D18C00060BD0 /* pobeda-bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pobeda-bold.ttf"; sourceTree = "<group>"; };
 		3180FF822860D18C00060BD0 /* pobeda-regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pobeda-regular.ttf"; sourceTree = "<group>"; };
 		3180FF8628620BA100060BD0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		318497AA2AA8C310004A2D7A /* ShoppingListPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListPresenterProtocol.swift; sourceTree = "<group>"; };
+		318497AC2AA8C322004A2D7A /* ShoppingListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListPresenter.swift; sourceTree = "<group>"; };
+		318497AE2AA8C33B004A2D7A /* ShoppingListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListInteractor.swift; sourceTree = "<group>"; };
+		318497B02AA8C361004A2D7A /* ShoppingListInteractorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListInteractorProtocol.swift; sourceTree = "<group>"; };
+		318497B22AA8C3A3004A2D7A /* ShoppingListConfiguratorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListConfiguratorProtocol.swift; sourceTree = "<group>"; };
+		318497B42AA8C3B4004A2D7A /* ShoppingListConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListConfigurator.swift; sourceTree = "<group>"; };
+		318497B62AA8C3CA004A2D7A /* ShoppingListRouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListRouterProtocol.swift; sourceTree = "<group>"; };
+		318497B82AA8C3DE004A2D7A /* ShoppingListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListRouter.swift; sourceTree = "<group>"; };
+		318497BA2AA8C3F5004A2D7A /* ShoppingListViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListViewProtocol.swift; sourceTree = "<group>"; };
 		318701972A4DD9C00079848C /* MyFoodPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFoodPresenter.swift; sourceTree = "<group>"; };
 		318701992A4DD9D50079848C /* MyFoodPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFoodPresenterProtocol.swift; sourceTree = "<group>"; };
 		3187019B2A4DE1020079848C /* MyFoodInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFoodInteractor.swift; sourceTree = "<group>"; };
@@ -108,7 +126,7 @@
 		318701AA2A503BA40079848C /* MyFoodViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFoodViewProtocol.swift; sourceTree = "<group>"; };
 		318DDCFA2845319200F1242B /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		31A696C8284270860044954E /* FoodListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListViewController.swift; sourceTree = "<group>"; };
-		31B1DFF02874C626006D7C64 /* ListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
+		31B1DFF02874C626006D7C64 /* ShoppingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListViewController.swift; sourceTree = "<group>"; };
 		31B1DFF42874CB7E006D7C64 /* ShareVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareVC.swift; sourceTree = "<group>"; };
 		31C6B925288323A80066829C /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		31C6B9282883F5570066829C /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
@@ -183,9 +201,7 @@
 		31372FDE2849C684009F1747 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				31B1DFF02874C626006D7C64 /* ListVC.swift */,
 				31B1DFF42874CB7E006D7C64 /* ShareVC.swift */,
-				316066E7288ECCDC00EDB06F /* TabBarViewController */,
 				3180FF8528620A1800060BD0 /* RefregiratorViewController */,
 				31C6B9272883F5190066829C /* CategoryListViewController */,
 				31372FE12849C6E1009F1747 /* FoodListViewController */,
@@ -307,13 +323,72 @@
 		318497A42AA75DCC004A2D7A /* ShoppingListModule */ = {
 			isa = PBXGroup;
 			children = (
+				318497A52AA8C187004A2D7A /* ShoppingListViewController */,
+				318497A92AA8C2F2004A2D7A /* ShoppingListPresenter */,
+				318497A82AA8C2E5004A2D7A /* ShoppingListInteractor */,
+				318497A72AA8C2D7004A2D7A /* ShoppingListConfigurator */,
+				318497A62AA8C2B2004A2D7A /* ShoppingListRouter */,
 			);
 			path = ShoppingListModule;
+			sourceTree = "<group>";
+		};
+		318497A52AA8C187004A2D7A /* ShoppingListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				318497BA2AA8C3F5004A2D7A /* ShoppingListViewProtocol.swift */,
+				31B1DFF02874C626006D7C64 /* ShoppingListViewController.swift */,
+			);
+			path = ShoppingListViewController;
+			sourceTree = "<group>";
+		};
+		318497A62AA8C2B2004A2D7A /* ShoppingListRouter */ = {
+			isa = PBXGroup;
+			children = (
+				318497B62AA8C3CA004A2D7A /* ShoppingListRouterProtocol.swift */,
+				318497B82AA8C3DE004A2D7A /* ShoppingListRouter.swift */,
+			);
+			path = ShoppingListRouter;
+			sourceTree = "<group>";
+		};
+		318497A72AA8C2D7004A2D7A /* ShoppingListConfigurator */ = {
+			isa = PBXGroup;
+			children = (
+				318497B22AA8C3A3004A2D7A /* ShoppingListConfiguratorProtocol.swift */,
+				318497B42AA8C3B4004A2D7A /* ShoppingListConfigurator.swift */,
+			);
+			path = ShoppingListConfigurator;
+			sourceTree = "<group>";
+		};
+		318497A82AA8C2E5004A2D7A /* ShoppingListInteractor */ = {
+			isa = PBXGroup;
+			children = (
+				318497B02AA8C361004A2D7A /* ShoppingListInteractorProtocol.swift */,
+				318497AE2AA8C33B004A2D7A /* ShoppingListInteractor.swift */,
+			);
+			path = ShoppingListInteractor;
+			sourceTree = "<group>";
+		};
+		318497A92AA8C2F2004A2D7A /* ShoppingListPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				318497AA2AA8C310004A2D7A /* ShoppingListPresenterProtocol.swift */,
+				318497AC2AA8C322004A2D7A /* ShoppingListPresenter.swift */,
+			);
+			path = ShoppingListPresenter;
+			sourceTree = "<group>";
+		};
+		318497BC2AA8C467004A2D7A /* TabBarModule */ = {
+			isa = PBXGroup;
+			children = (
+				316066E7288ECCDC00EDB06F /* TabBarViewController */,
+			);
+			path = TabBarModule;
 			sourceTree = "<group>";
 		};
 		3187018F2A4C94CA0079848C /* MyFood */ = {
 			isa = PBXGroup;
 			children = (
+				318497BC2AA8C467004A2D7A /* TabBarModule */,
 				318701A82A503B0B0079848C /* MyFoodModule */,
 				31D456AA2A5D4CD900FDFDFB /* CategoryFoodModule */,
 				314CA4852A73C4F5002D4680 /* FoodListModule */,
@@ -659,7 +734,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31B1DFF12874C626006D7C64 /* ListVC.swift in Sources */,
+				31B1DFF12874C626006D7C64 /* ShoppingListViewController.swift in Sources */,
 				317F50E6286DB4C90049B64B /* UIColorExtension.swift in Sources */,
 				31D117842A9B64CF0019C228 /* CategoryFoodInteractorProtocol.swift in Sources */,
 				31D1177E2A9B64090019C228 /* CategoryFoodConfigurator.swift in Sources */,
@@ -671,15 +746,20 @@
 				31D0C42D2A9A767000EDF32B /* TextFieldExtension.swift in Sources */,
 				31D1178E2A9CA93C0019C228 /* StretchyTableHeaderView.swift in Sources */,
 				31E983BC2A53FAF0006FD303 /* MyFoodRouter.swift in Sources */,
+				318497B52AA8C3B4004A2D7A /* ShoppingListConfigurator.swift in Sources */,
+				318497AD2AA8C322004A2D7A /* ShoppingListPresenter.swift in Sources */,
 				314CA49F2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift in Sources */,
 				31D117822A9B64AE0019C228 /* CategoryFoodPresenter.swift in Sources */,
 				318701A52A4E061A0079848C /* MyFoodConfiguratorProtocol.swift in Sources */,
 				318701AB2A503BA40079848C /* MyFoodViewProtocol.swift in Sources */,
 				31600188283FE9F50033B5B8 /* AddCollectionViewCell.swift in Sources */,
+				318497BB2AA8C3F5004A2D7A /* ShoppingListViewProtocol.swift in Sources */,
 				314CA4A12A7A58C5002D4680 /* FoodListManager.swift in Sources */,
 				31E983C02A540502006FD303 /* PopupMenuView.swift in Sources */,
 				31D456A92A5D315200FDFDFB /* DateManager.swift in Sources */,
 				314CA4A72A8666D1002D4680 /* SpringAnimationExtension.swift in Sources */,
+				318497B72AA8C3CA004A2D7A /* ShoppingListRouterProtocol.swift in Sources */,
+				318497B92AA8C3DE004A2D7A /* ShoppingListRouter.swift in Sources */,
 				31D1178A2A9B65140019C228 /* CategoryFoodRouter.swift in Sources */,
 				31D0C4252A9A1AC200EDF32B /* StringExtensionLocalized.swift in Sources */,
 				318DDCFB2845319200F1242B /* AlertView.swift in Sources */,
@@ -698,14 +778,18 @@
 				316066E6288EC0F500EDB06F /* CategoryListTableViewCell.swift in Sources */,
 				3180FF8728620BA100060BD0 /* Constants.swift in Sources */,
 				316066E9288ECCF500EDB06F /* TabBarViewController.swift in Sources */,
+				318497B12AA8C361004A2D7A /* ShoppingListInteractorProtocol.swift in Sources */,
 				31D456B52A5E890B00FDFDFB /* AddAndChangeFoodView.swift in Sources */,
 				31D117862A9B64E60019C228 /* CategoryFoodInteractor.swift in Sources */,
 				314CA48C2A73C5A0002D4680 /* FoodListPresenter.swift in Sources */,
+				318497B32AA8C3A3004A2D7A /* ShoppingListConfiguratorProtocol.swift in Sources */,
 				31B1DFF52874CB7E006D7C64 /* ShareVC.swift in Sources */,
 				318701982A4DD9C00079848C /* MyFoodPresenter.swift in Sources */,
 				314CA49D2A7A543F002D4680 /* FoodListConfigurator.swift in Sources */,
 				314CA4952A7A52AD002D4680 /* FoodListInteractor.swift in Sources */,
+				318497AF2AA8C33B004A2D7A /* ShoppingListInteractor.swift in Sources */,
 				31A696C9284270860044954E /* FoodListViewController.swift in Sources */,
+				318497AB2AA8C310004A2D7A /* ShoppingListPresenterProtocol.swift in Sources */,
 				31D456B22A5D753A00FDFDFB /* CategoryFoodManager.swift in Sources */,
 				31DA20E0283BE72900DCE421 /* FoodCollectionViewCell.swift in Sources */,
 				31DA20D828396B0400DCE421 /* FoodData.swift in Sources */,

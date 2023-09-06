@@ -39,9 +39,11 @@ extension TabBarViewController {
         
         let navVC = UINavigationController()
         navVC.viewControllers = [MyFoodViewController()]
+        let shoppingListNavVC = UINavigationController()
+        shoppingListNavVC.viewControllers = [ShoppingListViewController()]
         
         viewControllers = [
-                           generateViewController(viewController: ListVC(),
+                           generateViewController(viewController: shoppingListNavVC,
                                                   title: "Shopping List".localized(),
                                                   image: UIImage(systemName: "list.bullet.rectangle.portrait.fill")),
                            generateViewController(viewController: navVC,
