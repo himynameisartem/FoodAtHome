@@ -8,6 +8,7 @@
 import Foundation
 
 protocol ShoppingListPresenterProtocol: AnyObject {
+    var shoppingList: [FoodRealm] { get }
     func viewDidLoad()
     func showFoodListViewController()
 }

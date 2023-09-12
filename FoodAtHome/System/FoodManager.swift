@@ -18,12 +18,28 @@ enum CheckForChangeOrAddition {
 
 class FoodManager {
     
-    let localRealm = try! Realm()
+//    let localRealm = try! Realm()
+    
     static let shared = FoodManager()
+    private let localRealm: Realm
+
+    private init() {
+        let config = Realm.Configuration(schemaVersion: 2)
+        do {
+            localRealm = try Realm(configuration: config)
+        } catch {
+            fatalError("Error initializing Realm: \(error)")
+        }
+    }
+    
+    func getRealm() -> Realm {
+        return localRealm
+    }
+    
     var menuStatus: ClosedAddFoodViewStatus = .didClosedMenu
     
     func fetchMyFood() -> [FoodRealm] {
-        let results = localRealm.objects(FoodRealm.self)
+        let results = localRealm.objects(FoodRealm.self).filter("isShoppingList == false")
         return Array(results)
     }
     
@@ -83,7 +99,15 @@ class FoodManager {
         }
     }
     
-    func fetchMyShoppingList() {
-        
+    func addFoodToShoppingList(_ food: FoodRealm) {
+        try! localRealm.write({
+            food.isShoppingList = true
+            self.localRealm.add(food)
+        })
+    }
+    
+    func fetchMyShoppingList() -> [FoodRealm] {
+        let results = localRealm.objects(FoodRealm.self).filter("isShoppingList == true")
+        return Array(results)
     }
 }

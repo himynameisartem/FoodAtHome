@@ -10,7 +10,7 @@ import RealmSwift
 
 class MyFoodPresenter {
     
-    let localRealm = try! Realm()
+    let localRealm = FoodManager.shared.getRealm()
     
     weak var view: MyFoodViewProtocol!
     var interactor: MyFoodInteractorProtocol!
@@ -82,9 +82,13 @@ extension MyFoodPresenter: MyFoodPresenterProtocol {
     }
     
     func removeAllFood() {
-        try! localRealm.write({
-            localRealm.deleteAll()
-        })
+        for i in myFood {
+            if !i.isShoppingList {
+                try! localRealm.write({
+                    localRealm.delete(i)
+                })
+            }
+        }
     }
     
     func removeExpiredProducts(food: [FoodRealm]) {
@@ -101,6 +105,7 @@ extension MyFoodPresenter: MyFoodPresenterProtocol {
 
 extension MyFoodPresenter: MyFoodInteractorOutputProtocol {
     func foodDidRecieve(_ food: [FoodRealm]) {
+        print(food)
         self.myFood = food
         view.reloadData()
     }

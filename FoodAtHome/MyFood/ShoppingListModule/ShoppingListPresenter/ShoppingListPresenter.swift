@@ -10,7 +10,9 @@ import RealmSwift
 
 class ShoppingListPresenter {
     
-    let localRealm = try! Realm()
+    let localRealm = FoodManager.shared.getRealm()
+    
+    var shoppingList: [FoodRealm] = []
     
     weak var view: ShoppingListViewProtocol!
     var interactor: ShoppingListInteractorProtocol!
@@ -23,7 +25,7 @@ class ShoppingListPresenter {
 
 extension ShoppingListPresenter: ShoppingListPresenterProtocol {
     func viewDidLoad() {
-        
+        interactor.fetchShoppingList()
     }
     
     func showFoodListViewController() {
@@ -32,5 +34,7 @@ extension ShoppingListPresenter: ShoppingListPresenterProtocol {
 }
 
 extension ShoppingListPresenter: ShoppingListInteractorOutputProtocol {
-    
+    func shoppingListDidRecieve(_ food: [FoodRealm]) {
+        self.shoppingList = food
+    }
 }

@@ -6,13 +6,6 @@
 //
 
 import Foundation
-import RealmSwift
-
-var test = [FoodRealm]()
-//var vcCheck = Bool()
-
-var foodRealmArra: Results<FoodRealm>!
-
 
 let vegitables = [Vegetables(name: "Анчо", type: .vegetables),
                   Vegetables(name: "Артишок", type: .vegetables),
@@ -538,7 +531,6 @@ let mushrooms = [Mushrooms(name: "Белые грибы маринованные
                  Mushrooms(name: "Шиитаке", type: .mushrooms),
                  Mushrooms(name: "Шимеджи", type: .mushrooms)
 ]
-
 
 var allFood = vegitables + fruitsAndBerries + mushrooms 
 

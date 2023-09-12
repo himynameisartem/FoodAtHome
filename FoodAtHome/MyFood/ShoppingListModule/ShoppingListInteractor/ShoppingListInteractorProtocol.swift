@@ -8,9 +8,10 @@
 import Foundation
 
 protocol ShoppingListInteractorProtocol: AnyObject {
+    func fetchShoppingList()
     
 }
 
 protocol ShoppingListInteractorOutputProtocol: AnyObject {
-    
+    func shoppingListDidRecieve(_ food: [FoodRealm])
 }

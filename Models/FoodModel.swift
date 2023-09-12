@@ -23,6 +23,7 @@ class FoodRealm: Object {
     @Persisted var expirationDate: Date? = nil
     @Persisted var consumeUp: Date? = nil
     @Persisted var calories = "0"
+    @Persisted var isShoppingList: Bool = false
     
     convenience  init(name: String, type: FoodType) {
         self.init()
@@ -31,24 +32,10 @@ class FoodRealm: Object {
     }
 }
 
-//class FoodRealm {
-//
-//    var name: String
-//    var type: FoodType
-//    var weight = "0.0"
-//    var unit = ""
-//    var productionDate: Date? = nil
-//    var expirationDate: Date? = nil
-//    var consumeUp: Date? = nil
-//    var calories = "0"
-//
-//
-//    init(name: String, type: FoodType) {
-//
-//        self.name = name
-//        self.type = type
-//    }
-//}
+class ShoppingList: FoodRealm {
+    
+}
+
 
 class Vegetables: FoodRealm {
     

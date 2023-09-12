@@ -33,6 +33,11 @@ extension FoodListRouter: FoodListRouterProtocol {
             myFoodViewController.presenter.viewDidLoad()
             myFoodViewController.reloadData()
         }
+        
+        if let shoppingListViewController = viewController.navigationController?.viewControllers.first(where: { $0 is ShoppingListViewController }) as? ShoppingListViewController {
+            shoppingListViewController.presenter.viewDidLoad()
+        }
+        
         viewController.navigationController?.popToRootViewController(animated: true)
     }
 }

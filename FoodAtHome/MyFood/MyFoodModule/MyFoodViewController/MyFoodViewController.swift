@@ -9,8 +9,10 @@ import UIKit
 import RealmSwift
 
 class MyFoodViewController: UIViewController {
-    
-    let localRealm = try! Realm()
+
+//    let localRealm = try! Realm()
+    let localRealm = FoodManager.shared.getRealm()
+
     
     var presenter: MyFoodPresenterProtocol!
     private let configurator: MyFoodConfiguratorProtocol = MyFoodConfigurator()

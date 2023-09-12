@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ShoppingListInteractor: ShoppingListInteractorProtocol {
+class ShoppingListInteractor {
     
     weak var presenter: ShoppingListInteractorOutputProtocol!
     
@@ -16,6 +16,8 @@ class ShoppingListInteractor: ShoppingListInteractorProtocol {
     }
 }
 
-extension ShoppingListInteractor: ShoppingListInteractorOutputProtocol {
-    
+extension ShoppingListInteractor: ShoppingListInteractorProtocol {
+    func fetchShoppingList() {
+        presenter.shoppingListDidRecieve(FoodManager.shared.fetchMyShoppingList())
+    }
 }

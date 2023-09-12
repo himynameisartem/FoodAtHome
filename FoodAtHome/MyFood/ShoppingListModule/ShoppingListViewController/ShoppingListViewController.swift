@@ -26,6 +26,8 @@ class ShoppingListViewController: UIViewController {
         
         configurator.configure(with: self)
         presenter.viewDidLoad()
+        
+        print(presenter.shoppingList)
     }
 }
 
