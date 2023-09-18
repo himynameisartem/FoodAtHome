@@ -9,6 +9,7 @@ import Foundation
 
 protocol FoodListInteractorProtocol: AnyObject {
     func fetchMyFood()
+    func fetchShoopingList()
     func filterContentForSearchText(_ searchText: String)
 }
 
@@ -16,4 +17,5 @@ protocol FoodListInteractorProtocol: AnyObject {
 protocol FoodListInteractorOutputProtocol: AnyObject {
     func foodDidRecieve(_ food: [FoodRealm])
     func didFilterFood(_ filteredFoodList: [FoodRealm])
+    func shoppingListDidRecieve(_ food: [FoodRealm])
 }

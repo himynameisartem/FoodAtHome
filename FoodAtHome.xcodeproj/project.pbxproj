@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		310AC9E42A6D7A2F0055E013 /* PickerPropertiesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310AC9E32A6D7A2F0055E013 /* PickerPropertiesManager.swift */; };
+		313153342AB863E900A3E11D /* ShoppingListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313153332AB863E900A3E11D /* ShoppingListTableViewCell.swift */; };
+		313153362AB8D22F00A3E11D /* ContextualActionViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313153352AB8D22F00A3E11D /* ContextualActionViewManager.swift */; };
 		314CA48C2A73C5A0002D4680 /* FoodListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA48B2A73C5A0002D4680 /* FoodListPresenter.swift */; };
 		314CA48E2A73C5AE002D4680 /* FoodListPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA48D2A73C5AE002D4680 /* FoodListPresenterProtocol.swift */; };
 		314CA4912A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4902A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift */; };
@@ -87,6 +89,8 @@
 
 /* Begin PBXFileReference section */
 		310AC9E32A6D7A2F0055E013 /* PickerPropertiesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerPropertiesManager.swift; sourceTree = "<group>"; };
+		313153332AB863E900A3E11D /* ShoppingListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListTableViewCell.swift; sourceTree = "<group>"; };
+		313153352AB8D22F00A3E11D /* ContextualActionViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualActionViewManager.swift; sourceTree = "<group>"; };
 		314CA48B2A73C5A0002D4680 /* FoodListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListPresenter.swift; sourceTree = "<group>"; };
 		314CA48D2A73C5AE002D4680 /* FoodListPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListPresenterProtocol.swift; sourceTree = "<group>"; };
 		314CA4902A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizntalMenuCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -196,6 +200,14 @@
 				61D6D49D71DA0A80957369B1 /* Pods-FoodAtHome.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		313153322AB863BB00A3E11D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				313153332AB863E900A3E11D /* ShoppingListTableViewCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		31372FDE2849C684009F1747 /* Controllers */ = {
@@ -328,6 +340,7 @@
 				318497A82AA8C2E5004A2D7A /* ShoppingListInteractor */,
 				318497A72AA8C2D7004A2D7A /* ShoppingListConfigurator */,
 				318497A62AA8C2B2004A2D7A /* ShoppingListRouter */,
+				313153322AB863BB00A3E11D /* Views */,
 			);
 			path = ShoppingListModule;
 			sourceTree = "<group>";
@@ -455,6 +468,7 @@
 				317F50E5286DB4C90049B64B /* UIColorExtension.swift */,
 				31D0C4242A9A1AC200EDF32B /* StringExtensionLocalized.swift */,
 				31D0C42C2A9A767000EDF32B /* TextFieldExtension.swift */,
+				313153352AB8D22F00A3E11D /* ContextualActionViewManager.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -745,6 +759,7 @@
 				3187019E2A4DE10C0079848C /* MyFoodInteractorProtocol.swift in Sources */,
 				31D0C42D2A9A767000EDF32B /* TextFieldExtension.swift in Sources */,
 				31D1178E2A9CA93C0019C228 /* StretchyTableHeaderView.swift in Sources */,
+				313153342AB863E900A3E11D /* ShoppingListTableViewCell.swift in Sources */,
 				31E983BC2A53FAF0006FD303 /* MyFoodRouter.swift in Sources */,
 				318497B52AA8C3B4004A2D7A /* ShoppingListConfigurator.swift in Sources */,
 				318497AD2AA8C322004A2D7A /* ShoppingListPresenter.swift in Sources */,
@@ -785,6 +800,7 @@
 				318497B32AA8C3A3004A2D7A /* ShoppingListConfiguratorProtocol.swift in Sources */,
 				31B1DFF52874CB7E006D7C64 /* ShareVC.swift in Sources */,
 				318701982A4DD9C00079848C /* MyFoodPresenter.swift in Sources */,
+				313153362AB8D22F00A3E11D /* ContextualActionViewManager.swift in Sources */,
 				314CA49D2A7A543F002D4680 /* FoodListConfigurator.swift in Sources */,
 				314CA4952A7A52AD002D4680 /* FoodListInteractor.swift in Sources */,
 				318497AF2AA8C33B004A2D7A /* ShoppingListInteractor.swift in Sources */,

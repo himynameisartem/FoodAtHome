@@ -12,7 +12,7 @@ protocol FoodListPresenterProtocol: AnyObject {
     func tappedSearch()
     func updateSearchResults(for searchText: String)
     func selectedCategories(at indexPath: IndexPath) -> [FoodRealm]
-    func showAddFoodView(_ food: FoodRealm)
+    func showAddFoodView(_ food: FoodRealm, _ viewController: UIViewController)
     func backToRoot()
     func addAndChangeFood(_ food: FoodRealm, viewController: UIViewController, closedView: @escaping () -> Void)
 }

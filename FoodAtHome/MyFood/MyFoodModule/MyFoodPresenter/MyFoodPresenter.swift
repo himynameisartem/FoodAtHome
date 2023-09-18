@@ -105,7 +105,6 @@ extension MyFoodPresenter: MyFoodPresenterProtocol {
 
 extension MyFoodPresenter: MyFoodInteractorOutputProtocol {
     func foodDidRecieve(_ food: [FoodRealm]) {
-        print(food)
         self.myFood = food
         view.reloadData()
     }

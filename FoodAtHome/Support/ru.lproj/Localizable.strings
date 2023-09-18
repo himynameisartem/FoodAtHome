@@ -28,6 +28,8 @@
 "No" = "Нет";
 "Delete only expired" = "Удалить только просроченые";
 
+"This action will lead to the removal of all products from the shopping list. Are you sure you want to proceed?" = "Данное действие приедет к удалению всех продуктов из списка покупок, вы уверены, что хотите продолжить?";
+
 "Enter the weight of the product" = "Введите вес продукта";
 
 "You already have this product" = "У вас уже имеется данный продукт";

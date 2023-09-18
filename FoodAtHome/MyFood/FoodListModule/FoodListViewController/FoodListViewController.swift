@@ -233,7 +233,7 @@ extension FoodListViewController: UITableViewDelegate, UITableViewDataSource {
                        }
         
         sender.showAnimation(for: .withColor) {
-            self.presenter.showAddFoodView(food[sender.tag])
+            self.presenter.showAddFoodView(food[sender.tag], self)
             self.searcController.searchBar.resignFirstResponder()
         }
     }

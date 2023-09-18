@@ -8,6 +8,10 @@
 import UIKit
 import RealmSwift
 
+enum CheckViewController {
+    case foodList, shoppingList
+}
+
 protocol AddAndChangeFoodDelegate: AnyObject {
     func didAddNewFood(_ food: FoodRealm)
 }
@@ -53,24 +57,48 @@ class AddAndChangeFoodView: UIView {
     private var leftDaysPickerView: UIPickerView!
     
     func sohowAddAndChangeFoodView(for viewController: UIViewController) {
-        guard let view = viewController.tabBarController?.view else { return }
-        guard let viewControllerPickerDelegate = viewController as? UIPickerViewDelegate else { return }
-        guard let viewControllerFoodDelegate = viewController as? AddAndChangeFoodDelegate else { return }
-
         
-        self.delegate = viewControllerFoodDelegate
-        setupUI(for: view)
-        setupConstraints()
-        
-        weightTypePickerView.delegate = viewControllerPickerDelegate
-        leftDaysPickerView.delegate = viewControllerPickerDelegate
-        
-        UIView.animate(withDuration: 0.3) {
-            self.blurView.alpha = self.blurAlpha
-        } completion: { done in
-            if done {
-                UIView.animate(withDuration: 0.3) {
-                    self.addView.center = view.center
+        if viewController.navigationController?.viewControllers.first(where: { $0 is MyFoodViewController }) is MyFoodViewController {
+            
+            guard let view = viewController.tabBarController?.view else { return }
+            guard let viewControllerPickerDelegate = viewController as? UIPickerViewDelegate else { return }
+            guard let viewControllerFoodDelegate = viewController as? AddAndChangeFoodDelegate else { return }
+            
+            self.delegate = viewControllerFoodDelegate
+            setupUI(for: view, checkVievController: .foodList)
+            setupConstraints(checkVievController: .foodList)
+            
+            weightTypePickerView.delegate = viewControllerPickerDelegate
+            leftDaysPickerView.delegate = viewControllerPickerDelegate
+            
+            UIView.animate(withDuration: 0.3) {
+                self.blurView.alpha = self.blurAlpha
+            } completion: { done in
+                if done {
+                    UIView.animate(withDuration: 0.3) {
+                        self.addView.center = view.center
+                    }
+                }
+            }
+        } else if viewController.navigationController?.viewControllers.first(where: { $0 is ShoppingListViewController }) is ShoppingListViewController {
+            guard let view = viewController.tabBarController?.view else { return }
+            guard let viewControllerPickerDelegate = viewController as? UIPickerViewDelegate else { return }
+            guard let viewControllerFoodDelegate = viewController as? AddAndChangeFoodDelegate else { return }
+            
+            self.delegate = viewControllerFoodDelegate
+            setupUI(for: view, checkVievController: .shoppingList)
+            setupConstraints(checkVievController: .shoppingList)
+            
+            weightTypePickerView.delegate = viewControllerPickerDelegate
+            leftDaysPickerView.delegate = viewControllerPickerDelegate
+            
+            UIView.animate(withDuration: 0.3) {
+                self.blurView.alpha = self.blurAlpha
+            } completion: { done in
+                if done {
+                    UIView.animate(withDuration: 0.3) {
+                        self.addView.center = view.center
+                    }
                 }
             }
         }
@@ -80,7 +108,7 @@ class AddAndChangeFoodView: UIView {
 //MARK: - SetupUI
 
 extension AddAndChangeFoodView {
-    private func setupUI(for view: UIView) {
+    private func setupUI(for view: UIView, checkVievController: CheckViewController) {
         
         let blurEffect = UIBlurEffect(style: .dark)
         blurView = UIVisualEffectView(effect: blurEffect)
@@ -88,7 +116,12 @@ extension AddAndChangeFoodView {
         blurView.frame = view.bounds
         view.addSubview(blurView)
         
-        addView = UIView(frame: CGRect(x: 25, y: -900, width: view.frame.width - 40, height: view.frame.width * 1.4))
+        if checkVievController == .foodList {
+            addView = UIView(frame: CGRect(x: 25, y: -900, width: view.frame.width - 40, height: view.frame.width * 1.4))
+        } else {
+            addView = UIView(frame: CGRect(x: 25, y: -900, width: view.frame.width - 40, height: view.frame.width ))
+        }
+        
         addView.backgroundColor = .white
         addView.layer.cornerRadius = 10
         view.addSubview(addView)
@@ -121,24 +154,20 @@ extension AddAndChangeFoodView {
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.distribution = .fillEqually
         mainStackView.spacing = 10
-        addView.addSubview(mainStackView)
         
         labelsStackView = UIStackView()
         labelsStackView.axis = .vertical
         labelsStackView.distribution = .fillEqually
         labelsStackView.spacing = 20
-        mainStackView.addArrangedSubview(labelsStackView)
         
         optionsStackView = UIStackView()
         optionsStackView.axis = .vertical
         optionsStackView.distribution = .fillEqually
         optionsStackView.spacing = 20
-        mainStackView.addArrangedSubview(optionsStackView)
         
         weightOptionsStack = UIStackView()
         weightOptionsStack.axis = .horizontal
         weightOptionsStack.spacing = 10
-        optionsStackView.addArrangedSubview(weightOptionsStack)
         
         weightLabel = UILabel()
         dateOfManufactureLabel = UILabel()
@@ -152,9 +181,8 @@ extension AddAndChangeFoodView {
             label.font = UIFont(name: "Inter-Light", size: 15)
             label.minimumScaleFactor = 0.5
             label.adjustsFontSizeToFitWidth = true
-            labelsStackView.addArrangedSubview(label)
         }
-        
+    
         weightTextField = UITextField()
         weightTextField.keyboardType = .decimalPad
         weightTextField.placeholder = "0.0"
@@ -171,6 +199,7 @@ extension AddAndChangeFoodView {
         leftTextField = UITextField()
         leftTextField.placeholder = "-"
         
+        
         let textFields = [weightTextField, dateOfManufactureTextField, sellByTextField, leftTextField]
         for textField in textFields {
             guard let textField = textField else { return }
@@ -180,11 +209,6 @@ extension AddAndChangeFoodView {
             textField.tintColor = .black
             textField.textAlignment = .center
             textField.delegate = self
-            if textField == weightTextField {
-                weightOptionsStack.addArrangedSubview(textField)
-            } else {
-                optionsStackView.addArrangedSubview(textField)
-            }
         }
         
         weaightTypeView = UIView()
@@ -195,19 +219,48 @@ extension AddAndChangeFoodView {
         weightTypePickerView = UIPickerView()
         weightTypePickerView.tag = 0
         weightTypePickerView.translatesAutoresizingMaskIntoConstraints = false
-        weightOptionsStack.addArrangedSubview(weaightTypeView)
-        weaightTypeView.addSubview(weightTypePickerView)
         
         leftDaysPickerView = UIPickerView()
         leftDaysPickerView.tag = 1
         leftTextField.inputView = leftDaysPickerView
-    
+        
         if dateOfManufactureTextField.text == "" {
             leftTextField.isEnabled = false
         }
+        
+        if checkVievController == .foodList {
+            
+            labelsStackView.addArrangedSubview(weightLabel)
+            labelsStackView.addArrangedSubview(dateOfManufactureLabel)
+            labelsStackView.addArrangedSubview(sellByLabel)
+            labelsStackView.addArrangedSubview(leftLabel)
+            
+            addView.addSubview(mainStackView)
+            mainStackView.addArrangedSubview(labelsStackView)
+            mainStackView.addArrangedSubview(optionsStackView)
+            optionsStackView.addArrangedSubview(weightOptionsStack)
+            weightOptionsStack.addArrangedSubview(weightTextField)
+            weightOptionsStack.addArrangedSubview(weaightTypeView)
+            weaightTypeView.addSubview(weightTypePickerView)
+            optionsStackView.addArrangedSubview(dateOfManufactureTextField)
+            optionsStackView.addArrangedSubview(sellByTextField)
+            optionsStackView.addArrangedSubview(leftTextField)
+        } else {
+            
+            labelsStackView.addArrangedSubview(weightLabel)
+            
+            addView.addSubview(mainStackView)
+            mainStackView.addArrangedSubview(labelsStackView)
+            mainStackView.addArrangedSubview(optionsStackView)
+            optionsStackView.addArrangedSubview(weightOptionsStack)
+            weightOptionsStack.addArrangedSubview(weightTextField)
+            weightOptionsStack.addArrangedSubview(weaightTypeView)
+            weaightTypeView.addSubview(weightTypePickerView)
+
+        }
     }
     
-    private func setupConstraints() {
+    private func setupConstraints(checkVievController: CheckViewController) {
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: addView.topAnchor, constant: 20),
             imageView.centerXAnchor.constraint(equalTo: addView.centerXAnchor),
@@ -241,9 +294,14 @@ extension AddAndChangeFoodView {
             mainStackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
             mainStackView.leadingAnchor.constraint(equalTo: addView.leadingAnchor, constant: 20),
             mainStackView.trailingAnchor.constraint(equalTo: addView.trailingAnchor, constant: -20),
-            mainStackView.heightAnchor.constraint(lessThanOrEqualToConstant: 210),
             mainStackView.bottomAnchor.constraint(lessThanOrEqualTo: addButton.topAnchor, constant: -20),
         ])
+        
+        if checkVievController == .foodList {
+            mainStackView.heightAnchor.constraint(equalToConstant: 210).isActive = true
+        } else {
+            mainStackView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        }
     }
     
     func configure(food: FoodRealm) {
@@ -265,7 +323,7 @@ extension AddAndChangeFoodView {
         foodItem.expirationDate = food.expirationDate
     }
     
-     func closedView() {
+    func closedView() {
         UIView.animate(withDuration: 0.3) {
             self.addView.layer.position.y = -900
         } completion: { done in
@@ -344,7 +402,7 @@ extension AddAndChangeFoodView: UITextFieldDelegate {
             
             datePickerView.date = update
         }
-
+        
         if textField == dateOfManufactureTextField {
             datePickerView.maximumDate = currentDate
             datePickerView.minimumDate = nil
@@ -352,7 +410,7 @@ extension AddAndChangeFoodView: UITextFieldDelegate {
             datePickerView.maximumDate = nil
             datePickerView.minimumDate = currentDate
         }
-
+        
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
