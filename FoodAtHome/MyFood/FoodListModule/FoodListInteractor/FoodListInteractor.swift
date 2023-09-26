@@ -25,7 +25,7 @@ extension FoodListInteractor: FoodListInteractorProtocol {
     }
     
     func fetchMyFood() {
-        presenter.foodDidRecieve(FoodManager.shared.fetchMyFood())
+        presenter.foodDidRecieve(FoodManager.shared.fetchMyFoodList())
     }
     
     func fetchShoopingList() {

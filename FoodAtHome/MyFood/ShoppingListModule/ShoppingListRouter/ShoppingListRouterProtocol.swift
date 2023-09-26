@@ -9,5 +9,4 @@ import Foundation
 
 protocol ShoppingListRouterProtocol: AnyObject {
     func openFoodListViewController()
-    
 }

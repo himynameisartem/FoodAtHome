@@ -10,8 +10,8 @@ import UIKit
 
 class CategoryListViewController: UIViewController {
     
-    private var time = true
-    
+    private var openAnimation = true
+
     private var categoryListTableView: UITableView!
     private var wallpapers: UIImageView!
     private var backButton: UIButton!
@@ -119,13 +119,13 @@ extension CategoryListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if time {
+        if openAnimation {
             cell.transform = CGAffineTransform(translationX: 0, y: cell.contentView.frame.height)
             UIView.animate(withDuration: 0.3, delay: 0.05 * Double(indexPath.row)) {
                 cell.transform = CGAffineTransform(translationX: cell.contentView.frame.width, y: cell.contentView.frame.height)
             } completion: { done in
                 if done {
-                    self.time = false
+                    self.openAnimation = false
                 }
             }
         }

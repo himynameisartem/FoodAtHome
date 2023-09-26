@@ -29,7 +29,6 @@
 		317F50E6286DB4C90049B64B /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317F50E5286DB4C90049B64B /* UIColorExtension.swift */; };
 		3180FF832860D18C00060BD0 /* pobeda-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3180FF812860D18C00060BD0 /* pobeda-bold.ttf */; };
 		3180FF842860D18C00060BD0 /* pobeda-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3180FF822860D18C00060BD0 /* pobeda-regular.ttf */; };
-		3180FF8728620BA100060BD0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3180FF8628620BA100060BD0 /* Constants.swift */; };
 		318497AB2AA8C310004A2D7A /* ShoppingListPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318497AA2AA8C310004A2D7A /* ShoppingListPresenterProtocol.swift */; };
 		318497AD2AA8C322004A2D7A /* ShoppingListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318497AC2AA8C322004A2D7A /* ShoppingListPresenter.swift */; };
 		318497AF2AA8C33B004A2D7A /* ShoppingListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318497AE2AA8C33B004A2D7A /* ShoppingListInteractor.swift */; };
@@ -110,7 +109,6 @@
 		317F50E5286DB4C90049B64B /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		3180FF812860D18C00060BD0 /* pobeda-bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pobeda-bold.ttf"; sourceTree = "<group>"; };
 		3180FF822860D18C00060BD0 /* pobeda-regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pobeda-regular.ttf"; sourceTree = "<group>"; };
-		3180FF8628620BA100060BD0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		318497AA2AA8C310004A2D7A /* ShoppingListPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListPresenterProtocol.swift; sourceTree = "<group>"; };
 		318497AC2AA8C322004A2D7A /* ShoppingListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListPresenter.swift; sourceTree = "<group>"; };
 		318497AE2AA8C33B004A2D7A /* ShoppingListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListInteractor.swift; sourceTree = "<group>"; };
@@ -226,7 +224,6 @@
 			children = (
 				31DA20D52839553600DCE421 /* FoodModel.swift */,
 				31DA20D728396B0400DCE421 /* FoodData.swift */,
-				3180FF8628620BA100060BD0 /* Constants.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -599,7 +596,6 @@
 			isa = PBXGroup;
 			children = (
 				31DA20C02839488900DCE421 /* FoodAtHome */,
-				31372FDF2849C6A4009F1747 /* Models */,
 				31372FDE2849C684009F1747 /* Controllers */,
 				31DA20BF2839488900DCE421 /* Products */,
 				2BF38B1D33C4955E3DD1E527 /* Pods */,
@@ -621,6 +617,7 @@
 				3187018F2A4C94CA0079848C /* MyFood */,
 				3187019F2A4E018A0079848C /* System */,
 				31B4BA9B2A4C89D500CD0977 /* Support */,
+				31372FDF2849C6A4009F1747 /* Models */,
 			);
 			path = FoodAtHome;
 			sourceTree = "<group>";
@@ -636,7 +633,7 @@
 				31DA20BA2839488900DCE421 /* Sources */,
 				31DA20BB2839488900DCE421 /* Frameworks */,
 				31DA20BC2839488900DCE421 /* Resources */,
-				8B2F97FF0DEE40F18EE49210 /* [CP] Embed Pods Frameworks */,
+				F62755EDCF840F8DB0FEF4C1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -655,7 +652,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					31DA20BD2839488900DCE421 = {
 						CreatedOnToolsVersion = 13.4;
@@ -702,23 +699,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8B2F97FF0DEE40F18EE49210 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FoodAtHome/Pods-FoodAtHome-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FoodAtHome/Pods-FoodAtHome-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FoodAtHome/Pods-FoodAtHome-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		9EC40F347F7EC0147F37B44A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -739,6 +719,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F62755EDCF840F8DB0FEF4C1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FoodAtHome/Pods-FoodAtHome-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FoodAtHome/Pods-FoodAtHome-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FoodAtHome/Pods-FoodAtHome-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -791,7 +788,6 @@
 				314CA4932A7A50D0002D4680 /* FoodListViewProtocol.swift in Sources */,
 				314CA4912A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift in Sources */,
 				316066E6288EC0F500EDB06F /* CategoryListTableViewCell.swift in Sources */,
-				3180FF8728620BA100060BD0 /* Constants.swift in Sources */,
 				316066E9288ECCF500EDB06F /* TabBarViewController.swift in Sources */,
 				318497B12AA8C361004A2D7A /* ShoppingListInteractorProtocol.swift in Sources */,
 				31D456B52A5E890B00FDFDFB /* AddAndChangeFoodView.swift in Sources */,
@@ -845,6 +841,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -878,6 +875,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -892,7 +890,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LOCALIZATION_EXPORT_SUPPORTED = YES;
 				LOCALIZED_STRING_MACRO_NAMES = (
 					NSLocalizedString,
@@ -913,6 +911,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -946,6 +945,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -954,7 +954,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LOCALIZATION_EXPORT_SUPPORTED = YES;
 				LOCALIZED_STRING_MACRO_NAMES = (
 					NSLocalizedString,

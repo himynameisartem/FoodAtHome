@@ -64,7 +64,7 @@ extension MyFoodPresenter: MyFoodPresenterProtocol {
     }
     
     func showChangeFoodMenu(for viewController: UIViewController) {
-        addAndChangeFoodView.sohowAddAndChangeFoodView(for: viewController)
+        addAndChangeFoodView.showOptionsMenu(for: viewController, choiseType: .foodList)
     }
     
     func configureChangeFoodMenu(food: FoodRealm) {

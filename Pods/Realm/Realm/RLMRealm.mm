@@ -23,6 +23,7 @@
 #import "RLMArray_Private.hpp"
 #import "RLMDictionary_Private.hpp"
 #import "RLMError_Private.hpp"
+#import "RLMLogger.h"
 #import "RLMMigration_Private.h"
 #import "RLMObject_Private.h"
 #import "RLMObject_Private.hpp"
@@ -49,7 +50,6 @@
 #import <realm/object-store/schema.hpp>
 #import <realm/object-store/shared_realm.hpp>
 #import <realm/object-store/util/scheduler.hpp>
-#import <realm/util/logger.hpp>
 #import <realm/util/scope_exit.hpp>
 #import <realm/version.hpp>
 
@@ -101,12 +101,17 @@ BOOL RLMIsRealmCachedAtPath(NSString *path) {
     return RLMGetAnyCachedRealmForPath([path cStringUsingEncoding:NSUTF8StringEncoding]) != nil;
 }
 
+RLM_HIDDEN
 @implementation RLMRealmNotificationToken
-- (void)invalidate {
-    [_realm verifyThread];
-    [_realm.notificationHandlers removeObject:self];
-    _realm = nil;
-    _block = nil;
+- (bool)invalidate {
+    if (_realm) {
+        [_realm verifyThread];
+        [_realm.notificationHandlers removeObject:self];
+        _realm = nil;
+        _block = nil;
+        return true;
+    }
+    return false;
 }
 
 - (void)suppressNextNotification {
@@ -233,25 +238,22 @@ bool copySeedFile(RLMRealmConfiguration *configuration, NSError **error) {
     bool _sendingNotifications;
 }
 
-namespace {
-class NullLogger : public realm::util::Logger {
-public:
-    NullLogger() = default;
-    void do_log(Level, const std::string&) override {}
-};
++ (void)initialize {
+    // In cases where we are not using a synced Realm, we initialise the default logger
+    // before opening any realm.
+    [RLMLogger class];
 }
 
-+ (void)initialize {
++ (void)runFirstCheckForConfiguration:(RLMRealmConfiguration *)configuration schema:(RLMSchema *)schema {
     static bool initialized;
     if (initialized) {
         return;
     }
     initialized = true;
 
+    // Run Analytics on the very first any Realm open.
+    RLMSendAnalytics(configuration, schema);
     RLMCheckForUpdates();
-    RLMSendAnalytics();
-    realm::util::Logger::set_default_level_threshold(realm::util::Logger::Level::off);
-    realm::util::Logger::set_default_logger(std::make_shared<NullLogger>());
 }
 
 - (instancetype)initPrivate {
@@ -363,6 +365,7 @@ public:
 
     RLMRealm *realm = [[self alloc] initPrivate];
     realm->_dynamic = dynamic;
+    realm->_actor = scheduler.actor;
 
     // protects the realm cache and accessors cache
     static auto& initLock = *new RLMUnfairMutex;
@@ -477,6 +480,9 @@ public:
     }
 #endif
 
+    // Run Analytics and Update checker, this will be run only the first any realm open
+    [self runFirstCheckForConfiguration:configuration schema:realm.schema];
+
     return realm;
 }
 
@@ -494,7 +500,7 @@ public:
     if (_realm->is_frozen()) {
         @throw RLMException(@"Frozen Realms do not change and do not have change notifications.");
     }
-    if (!_realm->can_deliver_notifications()) {
+    if (_realm->config().automatic_change_notifications && !_realm->can_deliver_notifications()) {
         @throw RLMException(@"Can only add notification blocks from within runloops.");
     }
     if (isCollection && _realm->is_in_transaction()) {
@@ -651,6 +657,22 @@ public:
         RLMRealmTranslateException(nil);
         return 0;
     }
+}
+
+- (RLMAsyncWriteTask *)beginAsyncWrite {
+    try {
+        auto write = [[RLMAsyncWriteTask alloc] initWithRealm:self];
+        write.transactionId = _realm->async_begin_transaction(^{ [write complete:false]; }, true);
+        return write;
+    }
+    catch (std::exception &ex) {
+        @throw RLMException(ex);
+    }
+}
+
+- (void)commitAsyncWriteWithGrouping:(bool)allowGrouping
+                          completion:(void(^)(NSError *_Nullable))completion {
+    [self commitAsyncWriteTransaction:completion allowGrouping:allowGrouping];
 }
 
 - (RLMAsyncTransactionId)commitAsyncWriteTransaction:(void(^)(NSError *))completionBlock {
@@ -1078,17 +1100,6 @@ public:
     return [[RLMSyncSubscriptionSet alloc] initWithSubscriptionSet:_realm->get_latest_subscription_set() realm:self];
 #else
     @throw RLMException(@"Realm was not compiled with sync enabled");
-#endif
-}
-
-- (void)waitForDownloadCompletion:(void (^)(NSError *))completion {
-#if REALM_ENABLE_SYNC
-    _realm->sync_session()->revive_if_needed();
-    _realm->sync_session()->wait_for_download_completion([=](Status status) {
-        completion(makeError(status));
-    });
-#else
-    completion(nil);
 #endif
 }
 @end

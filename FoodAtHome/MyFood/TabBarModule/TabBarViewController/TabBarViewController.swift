@@ -42,6 +42,8 @@ extension TabBarViewController {
         let shoppingListNavVC = UINavigationController()
         shoppingListNavVC.viewControllers = [ShoppingListViewController()]
         
+        
+        
         viewControllers = [
                            generateViewController(viewController: shoppingListNavVC,
                                                   title: "Shopping List".localized(),

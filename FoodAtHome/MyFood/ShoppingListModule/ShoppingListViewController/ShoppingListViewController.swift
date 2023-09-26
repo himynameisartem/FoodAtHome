@@ -8,9 +8,11 @@
 import UIKit
 
 class ShoppingListViewController: UIViewController {
-    
+        
     var presenter: ShoppingListPresenterProtocol!
     private let configurator: ShoppingListConfiguratorProtocol = ShoppingListConfigurator()
+    
+    private var openAnimation = true
     
     private var wallpapers: UIImageView!
     private var navView: UIView!
@@ -18,17 +20,27 @@ class ShoppingListViewController: UIViewController {
     private var removeAll: UIButton!
     private var addFood: UIButton!
     
+    private var isEditingFromList = false
+    
     private var shoppingListTableView: UITableView!
     
+    override func viewWillAppear(_ animated: Bool) {
+        presenter.viewDidLoad()
+    }
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         setupUI()
         setupConstraint()
         
         configurator.configure(with: self)
         presenter.viewDidLoad()
         
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        openAnimation = true
     }
 }
 
@@ -129,12 +141,12 @@ extension ShoppingListViewController {
                 self.presenter.removeAllFood()
                 self.presenter.viewDidLoad()
             }
-
+            
             let cancelAction = UIAlertAction(title: "No".localized(), style: .default)
             alert.addAction(doneAction)
             alert.addAction(cancelAction)
             self.present(alert, animated: true)
-
+            
             
         }
     }
@@ -145,6 +157,8 @@ extension ShoppingListViewController {
     }
     
 }
+
+//MARK: - UITableViewDelegate
 
 extension ShoppingListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -161,37 +175,168 @@ extension ShoppingListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
+        let item = self.presenter.food(at: indexPath)
         let okAction = UIContextualAction(style: .normal, title: "") { (action, view, completionHandler) in
+            self.isEditingFromList = true
+            
+            if self.presenter.checkExistFood(food: item) {
+                
+                let alert = UIAlertController(title: "You already have this product".localized(), message: "Do you want to replace it?".localized(), preferredStyle: .alert)
+                let yesAction = UIAlertAction(title: "Yes".localized(), style: .default) { done in
+                    
+                    let alert = UIAlertController(title: "Add an expiration date?".localized(), message: "", preferredStyle: .alert)
+                    let yesAction = UIAlertAction(title: "Yes".localized(), style: .default) { done in
+                        self.presenter.addExperationDate(food: item, viewController: self)
+                        self.presenter.configureChangeMenu(food: item)
+                        self.presenter.viewDidLoad()
+                    }
+                    let noAction = UIAlertAction(title: "No".localized(), style: .default) { done in
+                        self.presenter.addFoodForFoodList(food: item, viewController: self)
+                        self.presenter.deleteFoodAfterAdding(food: item)
+                        self.presenter.viewDidLoad()
+                        tableView.reloadData()
+                    }
+                    alert.addAction(yesAction)
+                    alert.addAction(noAction)
+                    self.present(alert, animated: true)
+                }
+                
+                let noAction = UIAlertAction(title: "No".localized(), style: .default)
+                alert.addAction(yesAction)
+                alert.addAction(noAction)
+                self.present(alert, animated: true)
+            } else {
+                let alert = UIAlertController(title: "Add an expiration date?".localized(), message: "", preferredStyle: .alert)
+                let yesAction = UIAlertAction(title: "Yes".localized(), style: .default) { done in
+                    self.presenter.addExperationDate(food: item, viewController: self)
+                    self.presenter.configureChangeMenu(food: item)
+                    self.presenter.viewDidLoad()
+                }
+                let noAction = UIAlertAction(title: "No".localized(), style: .default) { done in
+                    self.presenter.moveFood(food: item, viewController: self)
+                    self.presenter.viewDidLoad()
+                    tableView.reloadData()
+                }
+                alert.addAction(yesAction)
+                alert.addAction(noAction)
+                self.present(alert, animated: true)
+            }
+            
             completionHandler(true)
         }
         
         
         let deleteAction = UIContextualAction(style: .normal, title: "") { (action, view, completionHandler) in
+            self.isEditingFromList = false
+            self.presenter.deleteProducts(food: item)
+            self.presenter.viewDidLoad()
+            tableView.reloadData()
             completionHandler(true)
         }
         
         ContextualActionViewManager.shared.setupAction(action: okAction, imageName: "success")
         ContextualActionViewManager.shared.setupAction(action: deleteAction, imageName: "delete")
-                
+        
         let actions = UISwipeActionsConfiguration(actions: [okAction, deleteAction])
+        actions.performsFirstActionWithFullSwipe = false
         return actions
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
+        let item = presenter.food(at: indexPath)
+        
+        
         let changeAction = UIContextualAction(style: .normal, title: "") { (action, view, completionHandler) in
+            self.isEditingFromList = false
+            self.presenter.showChangeMenu(viewController: self)
+            self.presenter.configureChangeMenu(food: item)
             completionHandler(true)
         }
         
         ContextualActionViewManager.shared.setupAction(action: changeAction, imageName: "edit")
-
+        
         let actions = UISwipeActionsConfiguration(actions: [changeAction])
+        actions.performsFirstActionWithFullSwipe = false
         return actions
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if openAnimation {
+            cell.transform = CGAffineTransform(translationX: -cell.contentView.frame.width, y: 0)
+            UIView.animate(withDuration: 0.3, delay: 0.05 * Double(indexPath.row)) {
+                cell.transform = .identity
+            } completion: { done in
+                if done {
+                    self.openAnimation = false
+                }
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
+    }
+}
+
+//MARK: - PickerView DataSource
+
+extension ShoppingListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        if pickerView.tag == 0 {
+            return 1
+        } else {
+            return 2
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView.tag == 0 {
+            return pickerArray.count
+        } else {
+            if component == 0 {
+                return monthsInterval.count
+            }
+            return daysInterval.count
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let pickerLabel = UILabel()
+
+        if pickerView.tag == 0 {
+            pickerLabel.text = pickerArray[row].localized()
+        } else {
+            if component == 0 {
+                pickerLabel.text = monthsInterval[row] + "m".localized()
+            } else {
+                pickerLabel.text = daysInterval[row] + "d".localized()
+            }
+        }
+     
+        pickerLabel.textAlignment = .center
+        pickerLabel.font = UIFont(name: "Helvetica", size: 22)
+
+        for subview in pickerView.subviews {
+            subview.backgroundColor = .clear
+        }
+        
+         return pickerLabel
+    }
+}
+
+extension ShoppingListViewController: AddAndChangeFoodDelegate {
+    func didAddNewFood(_ food: FoodRealm) {
+        if isEditingFromList {
+            presenter.addFoodForFoodList(food: food, viewController: self)
+            presenter.deleteFoodAfterAdding(food: food)
+            presenter.viewDidLoad()
+            shoppingListTableView.reloadData()
+        } else {
+            presenter.changeFood(food: food, viewController: self)
+            presenter.viewDidLoad()
+            shoppingListTableView.reloadData()
+        }
     }
 }
 

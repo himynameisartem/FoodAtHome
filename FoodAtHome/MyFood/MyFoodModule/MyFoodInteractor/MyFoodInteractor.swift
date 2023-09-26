@@ -20,7 +20,7 @@ class MyFoodInteractor {
 extension MyFoodInteractor: MyFoodInteractorProtocol {
 
     func fetchMyFood() {
-        self.presenter.foodDidRecieve(FoodManager.shared.fetchMyFood())
+        self.presenter.foodDidRecieve(FoodManager.shared.fetchMyFoodList())
     }
     
 }

@@ -56,49 +56,31 @@ class AddAndChangeFoodView: UIView {
     private var datePickerView: UIDatePicker!
     private var leftDaysPickerView: UIPickerView!
     
-    func sohowAddAndChangeFoodView(for viewController: UIViewController) {
+    func showOptionsMenu(for viewController: UIViewController, choiseType: CheckViewController) {
         
-        if viewController.navigationController?.viewControllers.first(where: { $0 is MyFoodViewController }) is MyFoodViewController {
-            
-            guard let view = viewController.tabBarController?.view else { return }
-            guard let viewControllerPickerDelegate = viewController as? UIPickerViewDelegate else { return }
-            guard let viewControllerFoodDelegate = viewController as? AddAndChangeFoodDelegate else { return }
-            
-            self.delegate = viewControllerFoodDelegate
+        guard let view = viewController.tabBarController?.view else { return }
+        guard let viewControllerPickerDelegate = viewController as? UIPickerViewDelegate else { return }
+        guard let viewControllerFoodDelegate = viewController as? AddAndChangeFoodDelegate else { return }
+        self.delegate = viewControllerFoodDelegate
+        
+        if choiseType == .foodList {
             setupUI(for: view, checkVievController: .foodList)
             setupConstraints(checkVievController: .foodList)
             
-            weightTypePickerView.delegate = viewControllerPickerDelegate
-            leftDaysPickerView.delegate = viewControllerPickerDelegate
-            
-            UIView.animate(withDuration: 0.3) {
-                self.blurView.alpha = self.blurAlpha
-            } completion: { done in
-                if done {
-                    UIView.animate(withDuration: 0.3) {
-                        self.addView.center = view.center
-                    }
-                }
-            }
-        } else if viewController.navigationController?.viewControllers.first(where: { $0 is ShoppingListViewController }) is ShoppingListViewController {
-            guard let view = viewController.tabBarController?.view else { return }
-            guard let viewControllerPickerDelegate = viewController as? UIPickerViewDelegate else { return }
-            guard let viewControllerFoodDelegate = viewController as? AddAndChangeFoodDelegate else { return }
-            
-            self.delegate = viewControllerFoodDelegate
+        } else {
             setupUI(for: view, checkVievController: .shoppingList)
             setupConstraints(checkVievController: .shoppingList)
-            
-            weightTypePickerView.delegate = viewControllerPickerDelegate
-            leftDaysPickerView.delegate = viewControllerPickerDelegate
-            
-            UIView.animate(withDuration: 0.3) {
-                self.blurView.alpha = self.blurAlpha
-            } completion: { done in
-                if done {
-                    UIView.animate(withDuration: 0.3) {
-                        self.addView.center = view.center
-                    }
+        }
+        
+        weightTypePickerView.delegate = viewControllerPickerDelegate
+        leftDaysPickerView.delegate = viewControllerPickerDelegate
+        
+        UIView.animate(withDuration: 0.3) {
+            self.blurView.alpha = self.blurAlpha
+        } completion: { done in
+            if done {
+                UIView.animate(withDuration: 0.3) {
+                    self.addView.center = view.center
                 }
             }
         }
@@ -182,7 +164,7 @@ extension AddAndChangeFoodView {
             label.minimumScaleFactor = 0.5
             label.adjustsFontSizeToFitWidth = true
         }
-    
+        
         weightTextField = UITextField()
         weightTextField.keyboardType = .decimalPad
         weightTextField.placeholder = "0.0"
@@ -256,7 +238,7 @@ extension AddAndChangeFoodView {
             weightOptionsStack.addArrangedSubview(weightTextField)
             weightOptionsStack.addArrangedSubview(weaightTypeView)
             weaightTypeView.addSubview(weightTypePickerView)
-
+            
         }
     }
     
@@ -334,7 +316,6 @@ extension AddAndChangeFoodView {
             }
         }
     }
-    
 }
 
 //MARK: - Setup Action
@@ -366,7 +347,7 @@ extension AddAndChangeFoodView: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         let date = DateManager.shared.dateFromString(with: datePickerView.date)
-        
+                
         if textField == dateOfManufactureTextField || textField == sellByTextField {
             textField.text = date
             
@@ -390,7 +371,19 @@ extension AddAndChangeFoodView: UITextFieldDelegate {
                                                     days: days))
         }
         
-        foodItem.weight = weightTextField.text ?? ""
+        var stringFromNumber: String
+        guard let weight = weightTextField.text else { return }
+        
+        if let intWeight = Int(weight) {
+            stringFromNumber = String(intWeight)
+        } else if let doubleWeight = Double(weight) {
+            stringFromNumber = String(doubleWeight)
+        } else {
+            stringFromNumber = ""
+        }
+        
+        foodItem.weight = stringFromNumber
+        weightTextField.text = stringFromNumber
         foodItem.productionDate = DateManager.shared.stringFromDate(with: dateOfManufactureTextField.text ?? "")
         foodItem.expirationDate = DateManager.shared.stringFromDate(with: sellByTextField.text ?? "")
     }
@@ -399,7 +392,6 @@ extension AddAndChangeFoodView: UITextFieldDelegate {
         guard let update = DateManager.shared.stringFromDate(with: textField.text) else { return }
         
         if textField == dateOfManufactureTextField || textField == sellByTextField {
-            
             datePickerView.date = update
         }
         
@@ -424,6 +416,16 @@ extension AddAndChangeFoodView: UITextFieldDelegate {
         
         foodItem.productionDate = DateManager.shared.stringFromDate(with: dateOfManufactureTextField.text ?? "")
         foodItem.expirationDate = DateManager.shared.stringFromDate(with: sellByTextField.text ?? "")
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField.keyboardType == .decimalPad {
+            if string == "," {
+                textField.text = (textField.text ?? "") + "."
+                return false
+            }
+        }
+        return true
     }
 }
 

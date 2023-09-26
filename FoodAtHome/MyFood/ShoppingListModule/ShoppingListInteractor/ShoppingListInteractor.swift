@@ -20,4 +20,12 @@ extension ShoppingListInteractor: ShoppingListInteractorProtocol {
     func fetchShoppingList() {
         presenter.shoppingListDidRecieve(FoodManager.shared.fetchMyShoppingList())
     }
+    
+    func fetchFoodList() {
+        presenter.foodListDidRecieve(FoodManager.shared.fetchMyFoodList())
+    }
+    
+    func fetchAllFood() {
+        presenter.allFoodDidRecieve(FoodManager.shared.fetchAllFood())
+    }
 }

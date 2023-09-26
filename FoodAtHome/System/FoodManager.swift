@@ -18,11 +18,11 @@ enum CheckForChangeOrAddition {
 
 class FoodManager {
     
-//    let localRealm = try! Realm()
+    //    let localRealm = try! Realm()
     
     static let shared = FoodManager()
     private let localRealm: Realm
-
+    
     private init() {
         let config = Realm.Configuration(schemaVersion: 2)
         do {
@@ -38,8 +38,18 @@ class FoodManager {
     
     var menuStatus: ClosedAddFoodViewStatus = .didClosedMenu
     
-    func fetchMyFood() -> [FoodRealm] {
+    func fetchAllFood() -> [FoodRealm] {
+        let results = localRealm.objects(FoodRealm.self)
+        return Array(results)
+    }
+    
+    func fetchMyFoodList() -> [FoodRealm] {
         let results = localRealm.objects(FoodRealm.self).filter("isShoppingList == false")
+        return Array(results)
+    }
+    
+    func fetchMyShoppingList() -> [FoodRealm] {
+        let results = localRealm.objects(FoodRealm.self).filter("isShoppingList == true")
         return Array(results)
     }
     
@@ -55,13 +65,13 @@ class FoodManager {
             menuStatus = .didNotClosedMenu
         } else {
             for i in foodArray {
+                let index = foodArray.firstIndex(of: i)!
                 if food.name == i.name {
                     if check == .check {
                         menuStatus = .didNotClosedMenu
                         let alert = UIAlertController(title: "You already have this product".localized(), message: "Do you want to replace it?".localized(), preferredStyle: .alert)
                         let yesAction = UIAlertAction(title: "Yes".localized(), style: .default) { done in
                             closedFunction?()
-                            let index = foodArray.firstIndex(of: i)!
                             try! self.localRealm.write({
                                 foodArray[index].weight = food.weight
                                 foodArray[index].unit = food.unit
@@ -85,6 +95,9 @@ class FoodManager {
                             i.productionDate = food.productionDate
                             i.expirationDate = food.expirationDate
                             i.consumeUp = food.consumeUp
+                            if i.expirationDate != nil && i.isShoppingList == true {
+                                i.isShoppingList = false
+                            }
                         })
                         viewController.navigationController?.popToRootViewController(animated: true)
                         break
@@ -104,10 +117,5 @@ class FoodManager {
             food.isShoppingList = true
             self.localRealm.add(food)
         })
-    }
-    
-    func fetchMyShoppingList() -> [FoodRealm] {
-        let results = localRealm.objects(FoodRealm.self).filter("isShoppingList == true")
-        return Array(results)
     }
 }

@@ -75,6 +75,7 @@ command:
   examples-ios-swift:   builds all Swift iOS examples
   examples-osx:         builds all macOS examples
   get-version:          get the current version
+  get-ioplatformuuid:   get io platform uuid
   set-version version:  set the version
   cocoapods-setup:      download realm-core and create a stub RLMPlatform.h file to enable building via CocoaPods
 
@@ -445,17 +446,18 @@ case "$COMMAND" in
         # Because we have a module named Realm and a type named Realm we need to manually resolve the naming
         # collisions that are happening. These collisions create a red herring which tells the user the xcframework
         # was compiled with an older Swift version and is not compatible with the current compiler.
-        find build/RealmSwift.xcframework -name "*.swiftinterface" -exec sed -i '' 's/Realm\.//g' {} \; \
-        -exec sed -i '' 's/import Private/import Realm.Private/g' {} \; \
-        -exec sed -i '' 's/RealmSwift.Configuration/RealmSwift.Realm.Configuration/g' {} \; \
-        -exec sed -i '' 's/extension Configuration/extension Realm.Configuration/g' {} \; \
-        -exec sed -i '' 's/RealmSwift.Error[[:>:]]/RealmSwift.Realm.Error/g' {} \; \
-        -exec sed -i '' 's/extension Error/extension Realm.Error/g' {} \; \
-        -exec sed -i '' 's/RealmSwift.AsyncOpenTask/RealmSwift.Realm.AsyncOpenTask/g' {} \; \
-        -exec sed -i '' 's/RealmSwift.UpdatePolicy/RealmSwift.Realm.UpdatePolicy/g' {} \; \
-        -exec sed -i '' 's/RealmSwift.Notification[[:>:]]/RealmSwift.Realm.Notification/g' {} \; \
-        -exec sed -i '' 's/RealmSwift.OpenBehavior/RealmSwift.Realm.OpenBehavior/g' {} \; \
-        -exec sed -i '' 's/τ_1_0/V/g' {} \; # Generics will use τ_1_0 which needs to be changed to the correct type name.
+        find build/RealmSwift.xcframework -name "*.swiftinterface" \
+            -exec sed -i '' 's/Realm\.//g' {} \; \
+            -exec sed -i '' 's/import Private/import Realm.Private\nimport Realm.Swift/g' {} \; \
+            -exec sed -i '' 's/RealmSwift.Configuration/RealmSwift.Realm.Configuration/g' {} \; \
+            -exec sed -i '' 's/extension Configuration/extension Realm.Configuration/g' {} \; \
+            -exec sed -i '' 's/RealmSwift.Error[[:>:]]/RealmSwift.Realm.Error/g' {} \; \
+            -exec sed -i '' 's/extension Error/extension Realm.Error/g' {} \; \
+            -exec sed -i '' 's/RealmSwift.AsyncOpenTask/RealmSwift.Realm.AsyncOpenTask/g' {} \; \
+            -exec sed -i '' 's/RealmSwift.UpdatePolicy/RealmSwift.Realm.UpdatePolicy/g' {} \; \
+            -exec sed -i '' 's/RealmSwift.Notification[[:>:]]/RealmSwift.Realm.Notification/g' {} \; \
+            -exec sed -i '' 's/RealmSwift.OpenBehavior/RealmSwift.Realm.OpenBehavior/g' {} \; \
+            -exec sed -i '' 's/τ_1_0/V/g' {} \; # Generics will use τ_1_0 which needs to be changed to the correct type name.
 
         exit 0
         ;;
@@ -955,6 +957,11 @@ case "$COMMAND" in
         exit 0
         ;;
 
+    "get-ioplatformuuid")
+        ioreg -d2 -c IOPlatformExpertDevice | awk -F\" '/IOPlatformUUID/{print $(NF-1)}'
+        exit 0
+        ;;
+
     "set-version")
         realm_version="$2"
         version_files="Realm/Realm-Info.plist"
@@ -1128,15 +1135,6 @@ case "$COMMAND" in
                 unzip "${WORKSPACE}/realm-framework-${platform}-${REALM_XCODE_VERSION}.zip" -d "${extract_dir}/${platform}"
             done
 
-            # Add the arm64 slice to the watchOS library
-            # The arm64 arch was added in Xcode 14, but we need the other
-            # slices to be built with Xcode 13 so that they have bitcode.
-            unzip "${WORKSPACE}/realm-framework-watchos-14.1.zip" -d "${extract_dir}/watchos"
-            lipo "${extract_dir}/watchos/swift-14.1/Realm.xcframework/watchos-arm64_arm64_32_armv7k/Realm.framework/Realm" -thin arm64 -output watchos-arm64-slice
-            lipo "${extract_dir}/watchos/swift-${REALM_XCODE_VERSION}/Realm.xcframework/watchos-arm64_32_armv7k/Realm.framework/Realm" watchos-arm64-slice -create -output watchos-fat
-            mv watchos-fat "${extract_dir}/watchos/swift-${REALM_XCODE_VERSION}/Realm.xcframework/watchos-arm64_32_armv7k/Realm.framework/Realm"
-            rm -r "${extract_dir}/watchos/swift-14.1"
-
             find "${extract_dir}" -name 'Realm.framework' \
                 | sed 's/.*/-framework &/' \
                 | xargs xcodebuild -create-xcframework -allow-internal-distribution -output "${package_dir}/Realm.xcframework"
@@ -1271,11 +1269,11 @@ x.y.z Release notes (yyyy-MM-dd)
 <!-- ### Breaking Changes - ONLY INCLUDE FOR NEW MAJOR version -->
 
 ### Compatibility
-* Realm Studio: 13.0.2 or later.
+* Realm Studio: 14.0.1 or later.
 * APIs are backwards compatible with all previous releases in the 10.x.y series.
-* Carthage release for Swift is built with Xcode 14.3.
+* Carthage release for Swift is built with Xcode 14.3.1.
 * CocoaPods: 1.10 or later.
-* Xcode: 13.4-14.3.
+* Xcode: 14.1-15 beta 1.
 
 ### Internal
 * Upgraded realm-core from ? to ?

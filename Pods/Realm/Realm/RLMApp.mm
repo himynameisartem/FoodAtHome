@@ -21,6 +21,7 @@
 #import "RLMBSON_Private.hpp"
 #import "RLMCredentials_Private.hpp"
 #import "RLMEmailPasswordAuth.h"
+#import "RLMLogger.h"
 #import "RLMPushClient_Private.hpp"
 #import "RLMSyncManager_Private.hpp"
 #import "RLMUser_Private.hpp"
@@ -134,10 +135,6 @@ namespace {
         // Non-Xcode SPM builds can't build for anything but macOS, so this is
         // probably unimportant for now and we can just report "unknown"
         auto processInfo = [NSProcessInfo processInfo];
-        auto platform = [processInfo.environment[@"RUN_DESTINATION_DEVICE_PLATFORM_IDENTIFIER"]
-                         componentsSeparatedByString:@"."].lastObject;
-        RLMNSStringToStdString(_config.device_info.platform,
-                               platform ?: @"unknown");
         RLMNSStringToStdString(_config.device_info.platform_version,
                                [processInfo operatingSystemVersionString] ?: @"unknown");
         RLMNSStringToStdString(_config.device_info.sdk_version, REALM_COCOA_VERSION);
@@ -250,6 +247,9 @@ static void setOptionalString(std::optional<std::string>& dst, NSString *src) {
 
 + (void)initialize {
     [RLMRealm class];
+    // Even though there is nothing to log when the App initialises, we want to
+    // be able to log anything happening after this e.g. login/register.
+    [RLMLogger class];
 }
 
 - (instancetype)initWithApp:(std::shared_ptr<realm::app::App>)app {

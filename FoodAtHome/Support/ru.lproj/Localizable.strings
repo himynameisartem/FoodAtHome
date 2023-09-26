@@ -27,6 +27,7 @@
 "Yes" = "Да";
 "No" = "Нет";
 "Delete only expired" = "Удалить только просроченые";
+"Add an expiration date?" = "Добавить срок годности?";
 
 "This action will lead to the removal of all products from the shopping list. Are you sure you want to proceed?" = "Данное действие приедет к удалению всех продуктов из списка покупок, вы уверены, что хотите продолжить?";
 

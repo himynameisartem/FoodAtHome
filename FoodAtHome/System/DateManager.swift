@@ -19,12 +19,13 @@ class DateManager {
     
     static let shared = DateManager()
     private var dateFormatter = DateFormatter()
-    private let calendar = Calendar.current
-    private let currentDate = Date()
+    private var calendar = Calendar.current
+    private var currentDate = Date()
     
     func dateFromString(with date: Date?) -> String {
         guard let date = date else { return ""}
         dateFormatter.dateFormat = "dd.MM.yyyy"
+        dateFormatter.timeZone = .current
         let dateString = dateFormatter.string(from: date)
         return dateString
     }
@@ -39,13 +40,21 @@ class DateManager {
     
     func intervalDate(from date1: Date?, to date2: Date?, type: ExperationDateType) -> String {
         guard let date1 = date1, let date2 = date2 else { return "" }
+        
+        var calendar = Calendar.current
+        
         var components = DateComponents()
+        
+        calendar.timeZone = .current
             
         if type == .experation {
             components = calendar.dateComponents([.month, .day], from: date1, to: date2)
         } else {
             components = calendar.dateComponents([.month, .day], from: currentDate, to: date2)
         }
+        
+        print(date1)
+        print(date2)
         
         if let months = components.month, let days = components.day {
             return "\(months)" + "м.".localized() + "\(days)" + "d.".localized()
@@ -104,7 +113,13 @@ class DateManager {
               let daysFromProductDate = daysFromProductDate.day
         else { return 0 }
         
-        let days = CGFloat(daysFromCurrentDate) / CGFloat(daysFromProductDate)
+        var days: CGFloat
+        
+        if CGFloat(daysFromProductDate) != 0 {
+             days = CGFloat(daysFromCurrentDate + 1) / CGFloat(daysFromProductDate)
+        } else {
+             days = CGFloat(daysFromCurrentDate) / CGFloat(daysFromProductDate)
+        }
         return days * 100 / 100
     }
 }

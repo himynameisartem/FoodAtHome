@@ -23,8 +23,17 @@ extension FoodListRouter: FoodListRouterProtocol {
         DispatchQueue.main.async {
             self.addAndChangeFoodView.configure(food: food)
         }
+
         viewController.delegate = addAndChangeFoodView
-        addAndChangeFoodView.sohowAddAndChangeFoodView(for: viewController)
+        
+        if viewController.navigationController?.viewControllers.first(where: { $0 is MyFoodViewController }) is MyFoodViewController {
+            addAndChangeFoodView.showOptionsMenu(for: viewController, choiseType: .foodList)
+        }
+        
+        if viewController.navigationController?.viewControllers.first(where: { $0 is ShoppingListViewController }) is ShoppingListViewController {
+            addAndChangeFoodView.showOptionsMenu(for: viewController, choiseType: .shoppingList)
+        }
+
     }
     
     func backToRootViewController() {

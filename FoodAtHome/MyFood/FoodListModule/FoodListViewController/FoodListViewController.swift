@@ -26,16 +26,16 @@ class FoodListViewController: UIViewController {
     private var searchButton: UIBarButtonItem!
     private var searcController = UISearchController(searchResultsController: nil)
     
-    var searchBarIsEmpty: Bool {
+    private var searchBarIsEmpty: Bool {
         guard let text = searcController.searchBar.text else { return false }
         return text.isEmpty
     }
-    var isFiltering: Bool {
+    private var isFiltering: Bool {
         return searcController.isActive && !searchBarIsEmpty
     }
     
-    var time = true
-    var cellWhidth = CGFloat()
+    private var openAnimation = true
+    private var cellWhidth = CGFloat()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -151,7 +151,7 @@ extension FoodListViewController: UICollectionViewDelegate, UICollectionViewData
         
         foodList = presenter.selectedCategories(at: indexPath)
         
-        time = true
+        openAnimation = true
         foodListTableView.contentOffset = CGPoint(x: 0.0, y: 0.0)
         foodListTableView.reloadData()
     }
@@ -240,13 +240,13 @@ extension FoodListViewController: UITableViewDelegate, UITableViewDataSource {
 
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if time {
+        if openAnimation {
             cell.transform = CGAffineTransform(translationX: 0, y: cell.contentView.frame.height)
             UIView.animate(withDuration: 0.3, delay: 0.05 * Double(indexPath.row)) {
                 cell.transform = CGAffineTransform(translationX: cell.contentView.frame.width, y: cell.contentView.frame.height)
             } completion: { done in
                 if done {
-                    self.time = false
+                    self.openAnimation = false
                 }
             }
         }

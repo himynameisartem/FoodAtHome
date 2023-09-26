@@ -10,12 +10,12 @@ import RealmSwift
 
 class MyFoodViewController: UIViewController {
 
-//    let localRealm = try! Realm()
     let localRealm = FoodManager.shared.getRealm()
 
-    
     var presenter: MyFoodPresenterProtocol!
     private let configurator: MyFoodConfiguratorProtocol = MyFoodConfigurator()
+    
+    private var openAnimation = true
     
     private let gestureForClosePopup = UITapGestureRecognizer()
     private var wallpapers: UIImageView!
@@ -24,14 +24,23 @@ class MyFoodViewController: UIViewController {
     private var navView: UIView!
     private var navTitle: UILabel!
     private var removeAll: UIButton!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        presenter.viewDidLoad()
+    }
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupUI()
         setupConstraints()
         
         configurator.configure(with: self)
         presenter.viewDidLoad()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        openAnimation = true
     }
 }
 
@@ -40,6 +49,7 @@ class MyFoodViewController: UIViewController {
 extension MyFoodViewController {
     
     private func setupUI() {
+        
         
         view.backgroundColor = .systemGray5
         navigationItem.backButtonTitle = "Back".localized()
@@ -223,6 +233,21 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
         return nil
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if collectionView == categoriesCollectionView {
+            if openAnimation {
+                cell.transform = CGAffineTransform(translationX: view.frame.width, y: 0)
+                UIView.animate(withDuration: 0.3, delay: 0.05 * Double(indexPath.row)) {
+                                    cell.transform = CGAffineTransform(translationX: 0, y: 0)
+                } completion: { done in
+                    if done {
+                        self.openAnimation = false
+                    }
+                }
+            }
+        }
+    }
 }
 
 //MARK: - PickerView DataSource
@@ -285,7 +310,7 @@ extension MyFoodViewController {
                 self.myFoodCollectionView.reloadData()
             }
             
-            let action = UIAlertAction(title: "Delete only expired", style: .default) { done in
+            let action = UIAlertAction(title: "Delete only expired".localized(), style: .default) { done in
                 
                 self.presenter.removeExpiredProducts(food: self.presenter.myFood)
                 self.presenter.viewDidLoad()
@@ -319,6 +344,7 @@ extension MyFoodViewController {
 extension MyFoodViewController: MyFoodViewProtocol {
     func reloadData() {
         self.myFoodCollectionView.reloadData()
+        self.categoriesCollectionView.reloadData()
     }
     
     @objc func closePopup() {
