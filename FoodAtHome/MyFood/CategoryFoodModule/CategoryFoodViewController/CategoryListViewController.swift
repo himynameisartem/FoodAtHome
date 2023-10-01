@@ -16,6 +16,7 @@ class CategoryListViewController: UIViewController {
     private var wallpapers: UIImageView!
     private var backButton: UIButton!
     private var headerView = StretchyTableHeaderView()
+    private var infoLabel: UILabel!
     
     var presenter: CategoryFoodPresenterProtocol!
  
@@ -50,6 +51,12 @@ extension CategoryListViewController {
         wallpapers.alpha = 0.2
         wallpapers.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(wallpapers)
+        
+        infoLabel = UILabel()
+        infoLabel.translatesAutoresizingMaskIntoConstraints = false
+        infoLabel.text = "You don't have any products in this category yet.".localized()
+        infoLabel.numberOfLines = 0
+        infoLabel.textAlignment = .center
         
         backButton = UIButton()
         backButton.translatesAutoresizingMaskIntoConstraints = false
@@ -91,8 +98,17 @@ extension CategoryListViewController {
             backButton.heightAnchor.constraint(equalToConstant: 40),
             backButton.widthAnchor.constraint(equalToConstant: 40),
 
-            
         ])
+        
+        if presenter.foodCount == 0{
+            view.addSubview(infoLabel)
+            categoryListTableView.isUserInteractionEnabled = false
+            NSLayoutConstraint.activate([
+                infoLabel.centerXAnchor.constraint(equalTo: categoryListTableView.centerXAnchor),
+                infoLabel.centerYAnchor.constraint(equalTo: categoryListTableView.centerYAnchor),
+                infoLabel.widthAnchor.constraint(equalToConstant: view.frame.width / 1.5)
+            ])
+        }
 
     }
 }

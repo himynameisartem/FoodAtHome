@@ -169,15 +169,19 @@ extension AddAndChangeFoodView {
         weightTextField.keyboardType = .decimalPad
         weightTextField.placeholder = "0.0"
         weightTextField.translatesAutoresizingMaskIntoConstraints = false
+        
         datePickerView = UIDatePicker()
         datePickerView.datePickerMode = .date
         datePickerView.preferredDatePickerStyle = .wheels
+        
         dateOfManufactureTextField = UITextField()
         dateOfManufactureTextField.placeholder = "-"
         dateOfManufactureTextField.inputView = datePickerView
+        
         sellByTextField = UITextField()
         sellByTextField.placeholder = "-"
         sellByTextField.inputView = datePickerView
+        
         leftTextField = UITextField()
         leftTextField.placeholder = "-"
         
@@ -206,9 +210,11 @@ extension AddAndChangeFoodView {
         leftDaysPickerView.tag = 1
         leftTextField.inputView = leftDaysPickerView
         
-        if dateOfManufactureTextField.text == "" {
-            leftTextField.isEnabled = false
-        }
+//        if dateOfManufactureTextField.hasText {
+//            leftTextField.isEnabled = true
+//        } else {
+//            leftTextField.isEnabled = false
+//        }
         
         if checkVievController == .foodList {
             
@@ -303,6 +309,12 @@ extension AddAndChangeFoodView {
         foodItem.weight = food.weight
         foodItem.productionDate = food.productionDate
         foodItem.expirationDate = food.expirationDate
+        
+        if dateOfManufactureTextField.hasText {
+            leftTextField.isEnabled = true
+        } else {
+            leftTextField.isEnabled = false
+        }
     }
     
     func closedView() {
@@ -348,12 +360,9 @@ extension AddAndChangeFoodView: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         let date = DateManager.shared.dateFromString(with: datePickerView.date)
                 
+        
         if textField == dateOfManufactureTextField || textField == sellByTextField {
             textField.text = date
-            
-            if dateOfManufactureTextField.text != "" {
-                leftTextField.isEnabled = true
-            }
             
             leftTextField.text = DateManager.shared.intervalDate(
                 from: DateManager.shared.stringFromDate(with: dateOfManufactureTextField.text ?? ""),
@@ -371,6 +380,10 @@ extension AddAndChangeFoodView: UITextFieldDelegate {
                                                     days: days))
         }
         
+        if dateOfManufactureTextField.hasText {
+            leftTextField.isEnabled = true
+        }
+
         var stringFromNumber: String
         guard let weight = weightTextField.text else { return }
         
@@ -384,25 +397,38 @@ extension AddAndChangeFoodView: UITextFieldDelegate {
         
         foodItem.weight = stringFromNumber
         weightTextField.text = stringFromNumber
+        
         foodItem.productionDate = DateManager.shared.stringFromDate(with: dateOfManufactureTextField.text ?? "")
         foodItem.expirationDate = DateManager.shared.stringFromDate(with: sellByTextField.text ?? "")
+        
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        guard let update = DateManager.shared.stringFromDate(with: textField.text) else { return }
         
         if textField == dateOfManufactureTextField || textField == sellByTextField {
-            datePickerView.date = update
+            if textField.hasText {
+                let update = DateManager.shared.stringFromDate(with: textField.text!)
+                datePickerView.date = update!
+            }
         }
-        
+
         if textField == dateOfManufactureTextField {
             datePickerView.maximumDate = currentDate
             datePickerView.minimumDate = nil
-        } else if textField == sellByTextField {
+        }
+        
+        if textField == sellByTextField {
             datePickerView.maximumDate = nil
             datePickerView.minimumDate = currentDate
         }
         
+        if textField == leftTextField {
+            if dateOfManufactureTextField.hasText {
+                leftTextField.isEnabled = true
+            } else {
+                leftTextField.isEnabled = false
+            }
+        }
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {

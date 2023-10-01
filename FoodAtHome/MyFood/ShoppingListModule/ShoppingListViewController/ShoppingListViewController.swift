@@ -246,7 +246,6 @@ extension ShoppingListViewController: UITableViewDelegate, UITableViewDataSource
         
         let item = presenter.food(at: indexPath)
         
-        
         let changeAction = UIContextualAction(style: .normal, title: "") { (action, view, completionHandler) in
             self.isEditingFromList = false
             self.presenter.showChangeMenu(viewController: self)

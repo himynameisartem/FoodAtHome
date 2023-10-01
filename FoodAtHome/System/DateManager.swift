@@ -33,28 +33,30 @@ class DateManager {
     func stringFromDate(with string: String?) -> Date? {
         guard let string = string else { return nil }
         dateFormatter.dateFormat = "dd.MM.yyyy"
-        dateFormatter.timeZone = .current
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         let date = dateFormatter.date(from: string)
         return date
     }
     
     func intervalDate(from date1: Date?, to date2: Date?, type: ExperationDateType) -> String {
         guard let date1 = date1, let date2 = date2 else { return "" }
-        
-        var calendar = Calendar.current
-        
+                
         var components = DateComponents()
-        
+        components.timeZone = .current
         calendar.timeZone = .current
-            
+        let formatedCurrentDateString = dateFromString(with: currentDate)
+                    
         if type == .experation {
             components = calendar.dateComponents([.month, .day], from: date1, to: date2)
         } else {
             components = calendar.dateComponents([.month, .day], from: currentDate, to: date2)
+
+            if stringFromDate(with: formatedCurrentDateString) != date2 {
+                if components.day != nil {
+                    components.day! += 1
+                }
+            }
         }
-        
-        print(date1)
-        print(date2)
         
         if let months = components.month, let days = components.day {
             return "\(months)" + "м.".localized() + "\(days)" + "d.".localized()
