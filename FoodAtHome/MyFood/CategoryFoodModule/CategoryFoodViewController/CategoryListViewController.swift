@@ -10,6 +10,7 @@ import UIKit
 
 class CategoryListViewController: UIViewController {
     
+    
     private var openAnimation = true
 
     private var categoryListTableView: UITableView!
@@ -55,6 +56,7 @@ extension CategoryListViewController {
         infoLabel = UILabel()
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         infoLabel.text = "You don't have any products in this category yet.".localized()
+        infoLabel.font = UIFont(name: "Inter", size: UIFont.systemFontSize)
         infoLabel.numberOfLines = 0
         infoLabel.textAlignment = .center
         
@@ -109,7 +111,6 @@ extension CategoryListViewController {
                 infoLabel.widthAnchor.constraint(equalToConstant: view.frame.width / 1.5)
             ])
         }
-
     }
 }
 

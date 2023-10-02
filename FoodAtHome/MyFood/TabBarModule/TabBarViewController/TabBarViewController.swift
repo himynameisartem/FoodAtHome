@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 
-
 class TabBarViewController: UITabBarController {
     
     private var isBottom: Bool {
@@ -18,22 +17,33 @@ class TabBarViewController: UITabBarController {
         return false
     }
     
+    private var shareButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         setupUI()
         generateTabBar()
+        setupConstraints()
         setTabBarAppearance()
     }
 }
 
 extension TabBarViewController {
-    
+
     private func setupUI() {
-         if !isBottom {
-             additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 25, right: 0)
-         }
+        
+        shareButton = UIButton()
+        shareButton.translatesAutoresizingMaskIntoConstraints = false
+        shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
+
+        if !isBottom {
+            additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 25, right: 0)
+        }
+                
      }
+    
+
     
     private func generateTabBar() {
         
@@ -42,8 +52,6 @@ extension TabBarViewController {
         let shoppingListNavVC = UINavigationController()
         shoppingListNavVC.viewControllers = [ShoppingListViewController()]
         
-        
-        
         viewControllers = [
                            generateViewController(viewController: shoppingListNavVC,
                                                   title: "Shopping List".localized(),
@@ -51,10 +59,26 @@ extension TabBarViewController {
                            generateViewController(viewController: navVC,
                                                   title: "Food at Home".localized(),
                                                   image: UIImage(systemName: "house.fill")),
-                           generateViewController(viewController: ShareVC(),
+                           generateViewController(viewController: UIViewController(),
                                                   title: "Share".localized(),
                                                   image: UIImage(systemName: "square.and.arrow.up"))
         ]
+        
+        tabBar.addSubview(shareButton)
+    }
+    
+    private func setupConstraints() {
+        let xPosition = (view.frame.width / 3) * 2
+        let height = tabBar.bounds.height + 28
+        let yPosition = -(height - tabBar.frame.height) / 2
+        let width = view.frame.width / 3
+        
+        NSLayoutConstraint.activate([
+            shareButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: xPosition),
+            shareButton.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: yPosition),
+            shareButton.heightAnchor.constraint(equalToConstant: height),
+            shareButton.widthAnchor.constraint(equalToConstant: width)
+        ])
     }
     
     private func generateViewController(viewController: UIViewController, title: String, image: UIImage?) -> UIViewController {
@@ -94,7 +118,27 @@ extension TabBarViewController {
         roundLayer.fillColor = UIColor.mainTabBarColor.cgColor
         tabBar.tintColor = .tabBarItemAccent
         tabBar.unselectedItemTintColor = .tabBarItemLight
+    }
+}
+
+extension TabBarViewController {
+    
+    @objc private func shareButtonTapped() {
+        
+        var text = ""
+        
+        if tabBar.selectedItem?.title == "Shopping List".localized() {
+            text = FoodManager.shared.shareString(listType: .shoppingList)
+        } else if tabBar.selectedItem?.title == "Food at Home".localized() {
+            text = FoodManager.shared.shareString(listType: .MyFoodList)
+        }
+        
+        let controller = UIActivityViewController(
+          activityItems: [text],
+          applicationActivities: nil
+        )
+        controller.popoverPresentationController?.sourceView = shareButton
+        present(controller, animated: true, completion: nil)
         
     }
-    
 }

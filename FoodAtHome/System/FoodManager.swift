@@ -16,10 +16,12 @@ enum CheckForChangeOrAddition {
     case check, addition
 }
 
+enum ChioseShare {
+    case shoppingList, MyFoodList
+}
+
 class FoodManager {
-    
-    //    let localRealm = try! Realm()
-    
+        
     static let shared = FoodManager()
     private let localRealm: Realm
     
@@ -117,5 +119,23 @@ class FoodManager {
             food.isShoppingList = true
             self.localRealm.add(food)
         })
+    }
+    
+    func shareString(listType: ChioseShare) -> String {
+        
+        var food: [FoodRealm]
+        if listType == .MyFoodList {
+            food = fetchMyFoodList()
+        } else {
+            food = fetchMyShoppingList()
+        }
+        
+        var shareText = ""
+        
+        for i in food {
+            shareText += "\(i.name): \(i.weight)\(i.unit.localized()) \n"
+        }
+        
+        return shareText
     }
 }
