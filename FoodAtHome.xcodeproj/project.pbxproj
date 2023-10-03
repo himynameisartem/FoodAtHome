@@ -46,10 +46,8 @@
 		318701A32A4E060F0079848C /* MyFoodConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318701A22A4E060F0079848C /* MyFoodConfigurator.swift */; };
 		318701A52A4E061A0079848C /* MyFoodConfiguratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318701A42A4E061A0079848C /* MyFoodConfiguratorProtocol.swift */; };
 		318701AB2A503BA40079848C /* MyFoodViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318701AA2A503BA40079848C /* MyFoodViewProtocol.swift */; };
-		318DDCFB2845319200F1242B /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318DDCFA2845319200F1242B /* AlertView.swift */; };
 		31A696C9284270860044954E /* FoodListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A696C8284270860044954E /* FoodListViewController.swift */; };
 		31B1DFF12874C626006D7C64 /* ShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1DFF02874C626006D7C64 /* ShoppingListViewController.swift */; };
-		31B1DFF52874CB7E006D7C64 /* ShareVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1DFF42874CB7E006D7C64 /* ShareVC.swift */; };
 		31C6B926288323A80066829C /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C6B925288323A80066829C /* CategoryCollectionViewCell.swift */; };
 		31C6B9292883F5570066829C /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C6B9282883F5570066829C /* CategoryListViewController.swift */; };
 		31D0C4202A9A1A0700EDF32B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31D0C4222A9A1A0700EDF32B /* Launch Screen.storyboard */; };
@@ -126,10 +124,10 @@
 		318701A22A4E060F0079848C /* MyFoodConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFoodConfigurator.swift; sourceTree = "<group>"; };
 		318701A42A4E061A0079848C /* MyFoodConfiguratorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFoodConfiguratorProtocol.swift; sourceTree = "<group>"; };
 		318701AA2A503BA40079848C /* MyFoodViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFoodViewProtocol.swift; sourceTree = "<group>"; };
-		318DDCFA2845319200F1242B /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		31A696C8284270860044954E /* FoodListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListViewController.swift; sourceTree = "<group>"; };
+		31AB2AAF2ACBFEA400F9F040 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = "ru.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
+		31AB2AB02ACBFEB100F9F040 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = "en.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
 		31B1DFF02874C626006D7C64 /* ShoppingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListViewController.swift; sourceTree = "<group>"; };
-		31B1DFF42874CB7E006D7C64 /* ShareVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareVC.swift; sourceTree = "<group>"; };
 		31C6B925288323A80066829C /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		31C6B9282883F5570066829C /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
 		31D0C4212A9A1A0700EDF32B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
@@ -208,17 +206,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		31372FDE2849C684009F1747 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				31B1DFF42874CB7E006D7C64 /* ShareVC.swift */,
-				3180FF8528620A1800060BD0 /* RefregiratorViewController */,
-				31C6B9272883F5190066829C /* CategoryListViewController */,
-				31372FE12849C6E1009F1747 /* FoodListViewController */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		31372FDF2849C6A4009F1747 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -237,14 +224,6 @@
 				31E983BF2A540502006FD303 /* PopupMenuView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		31372FE12849C6E1009F1747 /* FoodListViewController */ = {
-			isa = PBXGroup;
-			children = (
-				318DDCFA2845319200F1242B /* AlertView.swift */,
-			);
-			path = FoodListViewController;
 			sourceTree = "<group>";
 		};
 		314CA4852A73C4F5002D4680 /* FoodListModule */ = {
@@ -320,13 +299,6 @@
 				316066E8288ECCF500EDB06F /* TabBarViewController.swift */,
 			);
 			path = TabBarViewController;
-			sourceTree = "<group>";
-		};
-		3180FF8528620A1800060BD0 /* RefregiratorViewController */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = RefregiratorViewController;
 			sourceTree = "<group>";
 		};
 		318497A42AA75DCC004A2D7A /* ShoppingListModule */ = {
@@ -496,13 +468,6 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
-		31C6B9272883F5190066829C /* CategoryListViewController */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CategoryListViewController;
-			sourceTree = "<group>";
-		};
 		31D0C3F92A9A093500EDF32B /* Font */ = {
 			isa = PBXGroup;
 			children = (
@@ -596,7 +561,6 @@
 			isa = PBXGroup;
 			children = (
 				31DA20C02839488900DCE421 /* FoodAtHome */,
-				31372FDE2849C684009F1747 /* Controllers */,
 				31DA20BF2839488900DCE421 /* Products */,
 				2BF38B1D33C4955E3DD1E527 /* Pods */,
 				1B5DE49824AF097CDD1D1075 /* Frameworks */,
@@ -774,7 +738,6 @@
 				318497B92AA8C3DE004A2D7A /* ShoppingListRouter.swift in Sources */,
 				31D1178A2A9B65140019C228 /* CategoryFoodRouter.swift in Sources */,
 				31D0C4252A9A1AC200EDF32B /* StringExtensionLocalized.swift in Sources */,
-				318DDCFB2845319200F1242B /* AlertView.swift in Sources */,
 				314CA48E2A73C5AE002D4680 /* FoodListPresenterProtocol.swift in Sources */,
 				3187019C2A4DE1020079848C /* MyFoodInteractor.swift in Sources */,
 				314CA4992A7A52E5002D4680 /* FoodListRouter.swift in Sources */,
@@ -794,7 +757,6 @@
 				31D117862A9B64E60019C228 /* CategoryFoodInteractor.swift in Sources */,
 				314CA48C2A73C5A0002D4680 /* FoodListPresenter.swift in Sources */,
 				318497B32AA8C3A3004A2D7A /* ShoppingListConfiguratorProtocol.swift in Sources */,
-				31B1DFF52874CB7E006D7C64 /* ShareVC.swift in Sources */,
 				318701982A4DD9C00079848C /* MyFoodPresenter.swift in Sources */,
 				313153362AB8D22F00A3E11D /* ContextualActionViewManager.swift in Sources */,
 				314CA49D2A7A543F002D4680 /* FoodListConfigurator.swift in Sources */,
@@ -821,6 +783,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				31D0C4212A9A1A0700EDF32B /* Base */,
+				31AB2AAF2ACBFEA400F9F040 /* ru */,
+				31AB2AB02ACBFEB100F9F040 /* en */,
 			);
 			name = "Launch Screen.storyboard";
 			sourceTree = "<group>";
@@ -977,16 +941,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HZU66MWZY7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = /Users/himynameisartem/Documents/Development/myApp/CommercialApp/FoodAtHome/FoodAtHome/FoodAtHome/Support/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1008,16 +972,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HZU66MWZY7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = /Users/himynameisartem/Documents/Development/myApp/CommercialApp/FoodAtHome/FoodAtHome/FoodAtHome/Support/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (

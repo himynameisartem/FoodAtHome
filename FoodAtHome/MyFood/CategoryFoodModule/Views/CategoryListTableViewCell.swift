@@ -179,8 +179,8 @@ class CategoryListTableViewCell: UITableViewCell {
         
         image.image = UIImage(named: food.name)
         title.text = food.name
-        colories.text = ("\(food.calories) кКал. / 100г.")
-        weight.text = ("\(food.weight) \(food.unit)")
+        colories.text = ("\(food.calories) \("kCal".localized()) / \("100g.".localized())")
+        weight.text = ("\(food.weight) \(food.unit.localized())")
         experationIndication(from: expirationDateIndicator, sign: expirationSign, from: food.productionDate, to: food.expirationDate)
     }
 }
