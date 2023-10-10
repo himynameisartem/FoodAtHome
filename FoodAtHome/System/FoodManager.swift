@@ -133,7 +133,7 @@ class FoodManager {
         var shareText = ""
         
         for i in food {
-            shareText += "\(i.name): \(i.weight)\(i.unit.localized()) \n"
+            shareText += "\(i.name.localized()): \(i.weight)\(i.unit.localized()) \n"
         }
         
         return shareText

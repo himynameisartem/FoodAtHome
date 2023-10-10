@@ -321,7 +321,7 @@ extension PopupMenu {
     }
     
     func configure(food: FoodRealm) {
-        nameLabel.text = food.name
+        nameLabel.text = food.name.localized()
         weightLabel.text = "Weight:".localized()
         dateOfManufactureLabel.text = "Manufacturing Date:".localized()
         sellByLabel.text = "Expires on:".localized()

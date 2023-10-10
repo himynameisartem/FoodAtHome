@@ -134,8 +134,9 @@ class DetailFoodCell: UITableViewCell {
     
     func configure(_ food: FoodRealm) {
         image.image = UIImage(named: food.name)
-        title.text = food.name
+        title.text = food.name.localized()
         colories.text = ("\(food.calories) кКал. / 100г.")
+
     }
 }
 

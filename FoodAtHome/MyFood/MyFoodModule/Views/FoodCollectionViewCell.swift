@@ -31,7 +31,7 @@ class FoodCollectionViewCell: UICollectionViewCell {
     
     func configure(food: FoodRealm) {
         foodImage.image = UIImage(named: food.name)
-        foodName.text = food.name
+        foodName.text = food.name.localized()
         if DateManager.shared.expirationDateCheck(experationDate: food.expirationDate) {
             expiredIndication.isHidden = false
         } else {

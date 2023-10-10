@@ -178,7 +178,7 @@ class CategoryListTableViewCell: UITableViewCell {
     func configure(_ food: FoodRealm) {
         
         image.image = UIImage(named: food.name)
-        title.text = food.name
+        title.text = food.name.localized()
         colories.text = ("\(food.calories) \("kCal".localized()) / \("100g.".localized())")
         weight.text = ("\(food.weight) \(food.unit.localized())")
         experationIndication(from: expirationDateIndicator, sign: expirationSign, from: food.productionDate, to: food.expirationDate)

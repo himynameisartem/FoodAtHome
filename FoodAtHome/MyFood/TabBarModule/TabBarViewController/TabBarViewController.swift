@@ -134,7 +134,7 @@ extension TabBarViewController {
         }
         
         let controller = UIActivityViewController(
-          activityItems: [text],
+            activityItems: [text],
           applicationActivities: nil
         )
         controller.popoverPresentationController?.sourceView = shareButton
