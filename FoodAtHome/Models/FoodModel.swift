@@ -49,3 +49,15 @@ class Mushrooms: FoodRealm {
     
 }
 
+class EggsAndDairyProducts: FoodRealm {
+    
+}
+
+class MeatProducts: FoodRealm {
+    
+}
+
+class FishAndSeafood: FoodRealm {
+    
+}
+

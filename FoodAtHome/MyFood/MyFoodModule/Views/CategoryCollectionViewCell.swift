@@ -27,7 +27,11 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(at indexPath: IndexPath) {
-        categoryImage.image = UIImage(named: foodCatigoriesList[indexPath.row])
+        if foodCatigoriesList[indexPath.row] == "Meat Products" {
+            categoryImage.image = UIImage(named: "Meat Products (Cover)")
+        } else {
+            categoryImage.image = UIImage(named: foodCatigoriesList[indexPath.row])
+        }
         categoryName.text = foodCatigoriesList[indexPath.row].localized()
     }
     

@@ -17,6 +17,9 @@ class FoodListManager {
         case 0: return vegitables
         case 1: return fruitsAndBerries
         case 2: return mushrooms
+        case 3: return eggsAndDairyProducts
+        case 4: return meatProducts
+        case 5: return fishAndSeafood
         default:
             return vegitables
         }
