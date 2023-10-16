@@ -164,7 +164,6 @@ let fruitsAndBerries = [FruitsAndBerries(name: "Acai Berries", type: .fruitsAndB
                         FruitsAndBerries(name: "Melon", type: .fruitsAndBerries),
                         FruitsAndBerries(name: "Merlot Grape", type: .fruitsAndBerries),
                         FruitsAndBerries(name: "Mini Bananas", type: .fruitsAndBerries),
-                        FruitsAndBerries(name: "Mint", type: .fruitsAndBerries),
                         FruitsAndBerries(name: "Miracle Fruit", type: .fruitsAndBerries),
                         FruitsAndBerries(name: "Mopa", type: .fruitsAndBerries),
                         FruitsAndBerries(name: "Mulberry", type: .fruitsAndBerries),

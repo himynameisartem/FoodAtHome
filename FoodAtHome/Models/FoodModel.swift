@@ -9,8 +9,8 @@ import Foundation
 import RealmSwift
 
 enum FoodType: String {
-    case vegetables, fruitsAndBerries, mushrooms, eggsAndDairyProducts, meatProducts, fishAndSeafood, nutsAndDriedFruits, flourAndFlourProducts,
-         cereals, confectioneryAndSweets, greensAndFlowers, spices, additives, babyFood, softDrinks, alcoholicDrinks
+    case vegetables, fruitsAndBerries, mushrooms, eggsAndDairyProducts, meatProducts, fishAndSeafood, nutsAndDriedFruits, flourAndBakeryProducts,
+         grainsAndPorridge, sweetsAndConfectionery, greensAndHerbs, spices, additives, babyFood, softDrinks, alcoholicDrinks
 }
 
 class FoodRealm: Object {
@@ -32,32 +32,16 @@ class FoodRealm: Object {
     }
 }
 
-class ShoppingList: FoodRealm {
-    
-}
+class ShoppingList: FoodRealm {}
 
-
-class Vegetables: FoodRealm {
-    
-}
-
-class FruitsAndBerries: FoodRealm {
-    
-}
-
-class Mushrooms: FoodRealm {
-    
-}
-
-class EggsAndDairyProducts: FoodRealm {
-    
-}
-
-class MeatProducts: FoodRealm {
-    
-}
-
-class FishAndSeafood: FoodRealm {
-    
-}
-
+class Vegetables: FoodRealm {}
+class FruitsAndBerries: FoodRealm {}
+class Mushrooms: FoodRealm {}
+class EggsAndDairyProducts: FoodRealm {}
+class MeatProducts: FoodRealm {}
+class FishAndSeafood: FoodRealm {}
+class NutsAndDriedFruits: FoodRealm {}
+class FlourAndBakeryProducts: FoodRealm {}
+class GrainsAndPorridge: FoodRealm {}
+class SweetsAndConfectionery: FoodRealm {}
+class GreensAndHerbs: FoodRealm {}

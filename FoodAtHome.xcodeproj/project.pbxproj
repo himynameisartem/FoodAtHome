@@ -15,6 +15,11 @@
 		311554EB2ADBF5F9009C39E2 /* FishAndSeafoodData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311554EA2ADBF5F9009C39E2 /* FishAndSeafoodData.swift */; };
 		313153342AB863E900A3E11D /* ShoppingListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313153332AB863E900A3E11D /* ShoppingListTableViewCell.swift */; };
 		313153362AB8D22F00A3E11D /* ContextualActionViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313153352AB8D22F00A3E11D /* ContextualActionViewManager.swift */; };
+		3136B0FA2ADDC79700B6CF89 /* NutsAndDriedFruitsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3136B0F92ADDC79700B6CF89 /* NutsAndDriedFruitsData.swift */; };
+		3136B0FC2ADDC7B600B6CF89 /* FlourAndBakeryProductsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3136B0FB2ADDC7B600B6CF89 /* FlourAndBakeryProductsData.swift */; };
+		3136B0FE2ADDC7D400B6CF89 /* GrainsAndPorridgeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3136B0FD2ADDC7D400B6CF89 /* GrainsAndPorridgeData.swift */; };
+		3136B1002ADDC7EE00B6CF89 /* SweetsAndConfectioneryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3136B0FF2ADDC7EE00B6CF89 /* SweetsAndConfectioneryData.swift */; };
+		3136B1022ADDC80A00B6CF89 /* GreensAndHerbsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3136B1012ADDC80A00B6CF89 /* GreensAndHerbsData.swift */; };
 		314CA48C2A73C5A0002D4680 /* FoodListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA48B2A73C5A0002D4680 /* FoodListPresenter.swift */; };
 		314CA48E2A73C5AE002D4680 /* FoodListPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA48D2A73C5AE002D4680 /* FoodListPresenterProtocol.swift */; };
 		314CA4912A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4902A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift */; };
@@ -98,6 +103,11 @@
 		311554EA2ADBF5F9009C39E2 /* FishAndSeafoodData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FishAndSeafoodData.swift; sourceTree = "<group>"; };
 		313153332AB863E900A3E11D /* ShoppingListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListTableViewCell.swift; sourceTree = "<group>"; };
 		313153352AB8D22F00A3E11D /* ContextualActionViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualActionViewManager.swift; sourceTree = "<group>"; };
+		3136B0F92ADDC79700B6CF89 /* NutsAndDriedFruitsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutsAndDriedFruitsData.swift; sourceTree = "<group>"; };
+		3136B0FB2ADDC7B600B6CF89 /* FlourAndBakeryProductsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlourAndBakeryProductsData.swift; sourceTree = "<group>"; };
+		3136B0FD2ADDC7D400B6CF89 /* GrainsAndPorridgeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrainsAndPorridgeData.swift; sourceTree = "<group>"; };
+		3136B0FF2ADDC7EE00B6CF89 /* SweetsAndConfectioneryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetsAndConfectioneryData.swift; sourceTree = "<group>"; };
+		3136B1012ADDC80A00B6CF89 /* GreensAndHerbsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreensAndHerbsData.swift; sourceTree = "<group>"; };
 		314CA48B2A73C5A0002D4680 /* FoodListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListPresenter.swift; sourceTree = "<group>"; };
 		314CA48D2A73C5AE002D4680 /* FoodListPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListPresenterProtocol.swift; sourceTree = "<group>"; };
 		314CA4902A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizntalMenuCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -226,6 +236,11 @@
 				311554E62AD5E05C009C39E2 /* EggsAndDairyProductsData.swift */,
 				311554E82ADBF5EC009C39E2 /* MeatProductsData.swift */,
 				311554EA2ADBF5F9009C39E2 /* FishAndSeafoodData.swift */,
+				3136B0F92ADDC79700B6CF89 /* NutsAndDriedFruitsData.swift */,
+				3136B0FB2ADDC7B600B6CF89 /* FlourAndBakeryProductsData.swift */,
+				3136B0FD2ADDC7D400B6CF89 /* GrainsAndPorridgeData.swift */,
+				3136B0FF2ADDC7EE00B6CF89 /* SweetsAndConfectioneryData.swift */,
+				3136B1012ADDC80A00B6CF89 /* GreensAndHerbsData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -739,15 +754,18 @@
 				31D1178E2A9CA93C0019C228 /* StretchyTableHeaderView.swift in Sources */,
 				313153342AB863E900A3E11D /* ShoppingListTableViewCell.swift in Sources */,
 				31E983BC2A53FAF0006FD303 /* MyFoodRouter.swift in Sources */,
+				3136B0FC2ADDC7B600B6CF89 /* FlourAndBakeryProductsData.swift in Sources */,
 				318497B52AA8C3B4004A2D7A /* ShoppingListConfigurator.swift in Sources */,
 				318497AD2AA8C322004A2D7A /* ShoppingListPresenter.swift in Sources */,
 				314CA49F2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift in Sources */,
 				31D117822A9B64AE0019C228 /* CategoryFoodPresenter.swift in Sources */,
 				318701A52A4E061A0079848C /* MyFoodConfiguratorProtocol.swift in Sources */,
 				318701AB2A503BA40079848C /* MyFoodViewProtocol.swift in Sources */,
+				3136B1022ADDC80A00B6CF89 /* GreensAndHerbsData.swift in Sources */,
 				31600188283FE9F50033B5B8 /* AddCollectionViewCell.swift in Sources */,
 				318497BB2AA8C3F5004A2D7A /* ShoppingListViewProtocol.swift in Sources */,
 				314CA4A12A7A58C5002D4680 /* FoodListManager.swift in Sources */,
+				3136B1002ADDC7EE00B6CF89 /* SweetsAndConfectioneryData.swift in Sources */,
 				31E983C02A540502006FD303 /* PopupMenuView.swift in Sources */,
 				31D456A92A5D315200FDFDFB /* DateManager.swift in Sources */,
 				314CA4A72A8666D1002D4680 /* SpringAnimationExtension.swift in Sources */,
@@ -766,6 +784,7 @@
 				31C6B9292883F5570066829C /* CategoryListViewController.swift in Sources */,
 				31DA20C22839488900DCE421 /* AppDelegate.swift in Sources */,
 				3187019A2A4DD9D50079848C /* MyFoodPresenterProtocol.swift in Sources */,
+				3136B0FE2ADDC7D400B6CF89 /* GrainsAndPorridgeData.swift in Sources */,
 				314CA4932A7A50D0002D4680 /* FoodListViewProtocol.swift in Sources */,
 				314CA4912A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift in Sources */,
 				316066E6288EC0F500EDB06F /* CategoryListTableViewCell.swift in Sources */,
@@ -775,6 +794,7 @@
 				31D117862A9B64E60019C228 /* CategoryFoodInteractor.swift in Sources */,
 				314CA48C2A73C5A0002D4680 /* FoodListPresenter.swift in Sources */,
 				318497B32AA8C3A3004A2D7A /* ShoppingListConfiguratorProtocol.swift in Sources */,
+				3136B0FA2ADDC79700B6CF89 /* NutsAndDriedFruitsData.swift in Sources */,
 				311554E92ADBF5EC009C39E2 /* MeatProductsData.swift in Sources */,
 				318701982A4DD9C00079848C /* MyFoodPresenter.swift in Sources */,
 				313153362AB8D22F00A3E11D /* ContextualActionViewManager.swift in Sources */,
