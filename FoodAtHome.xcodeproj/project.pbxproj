@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		310AC9E42A6D7A2F0055E013 /* PickerPropertiesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310AC9E32A6D7A2F0055E013 /* PickerPropertiesManager.swift */; };
+		310BC1622ADEAC0C00B3EE25 /* SpicesAndSeasoningsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310BC1612ADEAC0C00B3EE25 /* SpicesAndSeasoningsData.swift */; };
+		310BC1642ADEAC2200B3EE25 /* RawMaterialsAndAdditivesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310BC1632ADEAC2200B3EE25 /* RawMaterialsAndAdditivesData.swift */; };
+		310BC1662ADEAC4200B3EE25 /* BabyFoodData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310BC1652ADEAC4200B3EE25 /* BabyFoodData.swift */; };
+		310BC1682ADEAC6500B3EE25 /* SoftDrinksData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310BC1672ADEAC6500B3EE25 /* SoftDrinksData.swift */; };
+		310BC16A2ADEAC7900B3EE25 /* AlcoholicDrinksData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310BC1692ADEAC7900B3EE25 /* AlcoholicDrinksData.swift */; };
+		310BC16C2AE6C72400B3EE25 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 310BC16D2AE6C72400B3EE25 /* Launch Screen.storyboard */; };
 		311554E32AD5E048009C39E2 /* FruitsAndBerriesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311554E22AD5E048009C39E2 /* FruitsAndBerriesData.swift */; };
 		311554E52AD5E050009C39E2 /* MushroomsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311554E42AD5E050009C39E2 /* MushroomsData.swift */; };
 		311554E72AD5E05C009C39E2 /* EggsAndDairyProductsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311554E62AD5E05C009C39E2 /* EggsAndDairyProductsData.swift */; };
@@ -60,7 +66,6 @@
 		31B1DFF12874C626006D7C64 /* ShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1DFF02874C626006D7C64 /* ShoppingListViewController.swift */; };
 		31C6B926288323A80066829C /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C6B925288323A80066829C /* CategoryCollectionViewCell.swift */; };
 		31C6B9292883F5570066829C /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C6B9282883F5570066829C /* CategoryListViewController.swift */; };
-		31D0C4202A9A1A0700EDF32B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31D0C4222A9A1A0700EDF32B /* Launch Screen.storyboard */; };
 		31D0C4252A9A1AC200EDF32B /* StringExtensionLocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D0C4242A9A1AC200EDF32B /* StringExtensionLocalized.swift */; };
 		31D0C4282A9A1BA400EDF32B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 31D0C42A2A9A1BA400EDF32B /* Localizable.strings */; };
 		31D0C42D2A9A767000EDF32B /* TextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D0C42C2A9A767000EDF32B /* TextFieldExtension.swift */; };
@@ -96,6 +101,12 @@
 
 /* Begin PBXFileReference section */
 		310AC9E32A6D7A2F0055E013 /* PickerPropertiesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerPropertiesManager.swift; sourceTree = "<group>"; };
+		310BC1612ADEAC0C00B3EE25 /* SpicesAndSeasoningsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpicesAndSeasoningsData.swift; sourceTree = "<group>"; };
+		310BC1632ADEAC2200B3EE25 /* RawMaterialsAndAdditivesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawMaterialsAndAdditivesData.swift; sourceTree = "<group>"; };
+		310BC1652ADEAC4200B3EE25 /* BabyFoodData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabyFoodData.swift; sourceTree = "<group>"; };
+		310BC1672ADEAC6500B3EE25 /* SoftDrinksData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoftDrinksData.swift; sourceTree = "<group>"; };
+		310BC1692ADEAC7900B3EE25 /* AlcoholicDrinksData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlcoholicDrinksData.swift; sourceTree = "<group>"; };
+		310BC16D2AE6C72400B3EE25 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		311554E22AD5E048009C39E2 /* FruitsAndBerriesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitsAndBerriesData.swift; sourceTree = "<group>"; };
 		311554E42AD5E050009C39E2 /* MushroomsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MushroomsData.swift; sourceTree = "<group>"; };
 		311554E62AD5E05C009C39E2 /* EggsAndDairyProductsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EggsAndDairyProductsData.swift; sourceTree = "<group>"; };
@@ -145,12 +156,9 @@
 		318701A42A4E061A0079848C /* MyFoodConfiguratorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFoodConfiguratorProtocol.swift; sourceTree = "<group>"; };
 		318701AA2A503BA40079848C /* MyFoodViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFoodViewProtocol.swift; sourceTree = "<group>"; };
 		31A696C8284270860044954E /* FoodListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListViewController.swift; sourceTree = "<group>"; };
-		31AB2AAF2ACBFEA400F9F040 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = "ru.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
-		31AB2AB02ACBFEB100F9F040 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = "en.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
 		31B1DFF02874C626006D7C64 /* ShoppingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListViewController.swift; sourceTree = "<group>"; };
 		31C6B925288323A80066829C /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		31C6B9282883F5570066829C /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
-		31D0C4212A9A1A0700EDF32B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
 		31D0C4242A9A1AC200EDF32B /* StringExtensionLocalized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionLocalized.swift; sourceTree = "<group>"; };
 		31D0C4292A9A1BA400EDF32B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		31D0C42B2A9A1BA700EDF32B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -241,6 +249,11 @@
 				3136B0FD2ADDC7D400B6CF89 /* GrainsAndPorridgeData.swift */,
 				3136B0FF2ADDC7EE00B6CF89 /* SweetsAndConfectioneryData.swift */,
 				3136B1012ADDC80A00B6CF89 /* GreensAndHerbsData.swift */,
+				310BC1612ADEAC0C00B3EE25 /* SpicesAndSeasoningsData.swift */,
+				310BC1632ADEAC2200B3EE25 /* RawMaterialsAndAdditivesData.swift */,
+				310BC1652ADEAC4200B3EE25 /* BabyFoodData.swift */,
+				310BC1672ADEAC6500B3EE25 /* SoftDrinksData.swift */,
+				310BC1692ADEAC7900B3EE25 /* AlcoholicDrinksData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -491,7 +504,7 @@
 				31DA20C12839488900DCE421 /* AppDelegate.swift */,
 				31DA20CF2839488A00DCE421 /* Info.plist */,
 				31DA20CA2839488A00DCE421 /* Assets.xcassets */,
-				31D0C4222A9A1A0700EDF32B /* Launch Screen.storyboard */,
+				310BC16D2AE6C72400B3EE25 /* Launch Screen.storyboard */,
 				31D0C42A2A9A1BA400EDF32B /* Localizable.strings */,
 				31D0C3F92A9A093500EDF32B /* Font */,
 			);
@@ -680,7 +693,7 @@
 				31DF397E287BD65900624AFD /* Inter-ExtraLight.otf in Resources */,
 				31DF3984287BD96400624AFD /* Inter-Light.otf in Resources */,
 				31DF3980287BD7F900624AFD /* Inter-Bold.otf in Resources */,
-				31D0C4202A9A1A0700EDF32B /* Launch Screen.storyboard in Resources */,
+				310BC16C2AE6C72400B3EE25 /* Launch Screen.storyboard in Resources */,
 				3180FF842860D18C00060BD0 /* pobeda-regular.ttf in Resources */,
 				31D0C4282A9A1BA400EDF32B /* Localizable.strings in Resources */,
 				31DF397C287BD61600624AFD /* Inter.ttf in Resources */,
@@ -747,6 +760,7 @@
 				31D117882A9B65020019C228 /* CategoryFoodRouterProtocol.swift in Sources */,
 				314CA49B2A7A52EE002D4680 /* FoodListRouterProtocol.swift in Sources */,
 				311554E72AD5E05C009C39E2 /* EggsAndDairyProductsData.swift in Sources */,
+				310BC1682ADEAC6500B3EE25 /* SoftDrinksData.swift in Sources */,
 				31D1177C2A9B63BD0019C228 /* CategoryFoodConfiguratorProtocol.swift in Sources */,
 				3187019E2A4DE10C0079848C /* MyFoodInteractorProtocol.swift in Sources */,
 				311554E52AD5E050009C39E2 /* MushroomsData.swift in Sources */,
@@ -762,6 +776,7 @@
 				318701A52A4E061A0079848C /* MyFoodConfiguratorProtocol.swift in Sources */,
 				318701AB2A503BA40079848C /* MyFoodViewProtocol.swift in Sources */,
 				3136B1022ADDC80A00B6CF89 /* GreensAndHerbsData.swift in Sources */,
+				310BC1642ADEAC2200B3EE25 /* RawMaterialsAndAdditivesData.swift in Sources */,
 				31600188283FE9F50033B5B8 /* AddCollectionViewCell.swift in Sources */,
 				318497BB2AA8C3F5004A2D7A /* ShoppingListViewProtocol.swift in Sources */,
 				314CA4A12A7A58C5002D4680 /* FoodListManager.swift in Sources */,
@@ -785,6 +800,7 @@
 				31DA20C22839488900DCE421 /* AppDelegate.swift in Sources */,
 				3187019A2A4DD9D50079848C /* MyFoodPresenterProtocol.swift in Sources */,
 				3136B0FE2ADDC7D400B6CF89 /* GrainsAndPorridgeData.swift in Sources */,
+				310BC16A2ADEAC7900B3EE25 /* AlcoholicDrinksData.swift in Sources */,
 				314CA4932A7A50D0002D4680 /* FoodListViewProtocol.swift in Sources */,
 				314CA4912A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift in Sources */,
 				316066E6288EC0F500EDB06F /* CategoryListTableViewCell.swift in Sources */,
@@ -800,10 +816,12 @@
 				313153362AB8D22F00A3E11D /* ContextualActionViewManager.swift in Sources */,
 				314CA49D2A7A543F002D4680 /* FoodListConfigurator.swift in Sources */,
 				314CA4952A7A52AD002D4680 /* FoodListInteractor.swift in Sources */,
+				310BC1622ADEAC0C00B3EE25 /* SpicesAndSeasoningsData.swift in Sources */,
 				318497AF2AA8C33B004A2D7A /* ShoppingListInteractor.swift in Sources */,
 				31A696C9284270860044954E /* FoodListViewController.swift in Sources */,
 				318497AB2AA8C310004A2D7A /* ShoppingListPresenterProtocol.swift in Sources */,
 				311554E32AD5E048009C39E2 /* FruitsAndBerriesData.swift in Sources */,
+				310BC1662ADEAC4200B3EE25 /* BabyFoodData.swift in Sources */,
 				31D456B22A5D753A00FDFDFB /* CategoryFoodManager.swift in Sources */,
 				31DA20E0283BE72900DCE421 /* FoodCollectionViewCell.swift in Sources */,
 				31DA20D828396B0400DCE421 /* VegitablesData.swift in Sources */,
@@ -819,16 +837,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		31D0C4222A9A1A0700EDF32B /* Launch Screen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				31D0C4212A9A1A0700EDF32B /* Base */,
-				31AB2AAF2ACBFEA400F9F040 /* ru */,
-				31AB2AB02ACBFEB100F9F040 /* en */,
-			);
-			name = "Launch Screen.storyboard";
-			sourceTree = "<group>";
-		};
 		31D0C42A2A9A1BA400EDF32B /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

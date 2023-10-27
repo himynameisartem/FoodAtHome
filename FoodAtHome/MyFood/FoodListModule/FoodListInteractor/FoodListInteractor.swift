@@ -18,10 +18,11 @@ class FoodListInteractor {
 
 extension FoodListInteractor: FoodListInteractorProtocol {
     func filterContentForSearchText(_ searchText: String) {
-        let filteredFoodList = allFood.filter { (food: FoodRealm) in
-            return food.name.lowercased().contains(searchText.lowercased())
+        let filteredFoodList = FoodManager.shared.allFood.filter { (food: FoodRealm) in
+            return food.name.localized().lowercased().contains(searchText.lowercased())
         }
-        presenter.didFilterFood(filteredFoodList)
+        let array = Array(filteredFoodList)
+        presenter.didFilterFood(array)
     }
     
     func fetchMyFood() {

@@ -34,6 +34,8 @@ class FoodManager {
         }
     }
     
+    let allFood = Set(vegitables).union(fruitsAndBerries).union(mushrooms).union(eggsAndDairyProducts).union(meatProducts).union(fishAndSeafood).union(nutsAndDriedFruits).union(flourAndBakeryProducts).union(grainsAndPorridge).union(sweetsAndConfectionery).union(greensAndHerbs).union(spicesAndSeasonings).union(rawMaterialsAndAdditives).union(babyFood).union(softDrinks).union(alcoholicDrinks)
+    
     func getRealm() -> Realm {
         return localRealm
     }
@@ -79,6 +81,7 @@ class FoodManager {
                                 foodArray[index].unit = food.unit
                                 foodArray[index].productionDate = food.productionDate
                                 foodArray[index].expirationDate = food.expirationDate
+                                foodArray[index].calories = food.calories
                                 foodArray[index].consumeUp = food.consumeUp
                             })
                             viewController.navigationController?.popToRootViewController(animated: true)
@@ -97,6 +100,7 @@ class FoodManager {
                             i.productionDate = food.productionDate
                             i.expirationDate = food.expirationDate
                             i.consumeUp = food.consumeUp
+                            i.calories = food.calories
                             if i.expirationDate != nil && i.isShoppingList == true {
                                 i.isShoppingList = false
                             }

@@ -9,8 +9,22 @@ import Foundation
 import RealmSwift
 
 enum FoodType: String {
-    case vegetables, fruitsAndBerries, mushrooms, eggsAndDairyProducts, meatProducts, fishAndSeafood, nutsAndDriedFruits, flourAndBakeryProducts,
-         grainsAndPorridge, sweetsAndConfectionery, greensAndHerbs, spices, additives, babyFood, softDrinks, alcoholicDrinks
+    case vegetables, 
+         fruitsAndBerries,
+         mushrooms,
+         eggsAndDairyProducts,
+         meatProducts,
+         fishAndSeafood,
+         nutsAndDriedFruits,
+         flourAndBakeryProducts,
+         grainsAndPorridge, 
+         sweetsAndConfectionery,
+         greensAndHerbs,
+         spicesAndSeasonings,
+         rawMaterialsAndAdditives,
+         babyFood,
+         softDrinks,
+         alcoholicDrinks
 }
 
 class FoodRealm: Object {
@@ -25,10 +39,11 @@ class FoodRealm: Object {
     @Persisted var calories = "0"
     @Persisted var isShoppingList: Bool = false
     
-    convenience  init(name: String, type: FoodType) {
+    convenience  init(name: String, type: FoodType, calories: String) {
         self.init()
         self.name = name
         self.type = type.rawValue
+        self.calories = calories
     }
 }
 
@@ -45,3 +60,8 @@ class FlourAndBakeryProducts: FoodRealm {}
 class GrainsAndPorridge: FoodRealm {}
 class SweetsAndConfectionery: FoodRealm {}
 class GreensAndHerbs: FoodRealm {}
+class SpicesAndSeasonings: FoodRealm {}
+class RawMaterialsAndAdditives: FoodRealm {}
+class BabyFood: FoodRealm {}
+class SoftDrinks: FoodRealm {}
+class AlcoholicDrinks: FoodRealm {}

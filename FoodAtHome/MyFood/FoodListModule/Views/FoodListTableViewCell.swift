@@ -12,7 +12,7 @@ class DetailFoodCell: UITableViewCell {
     var addButton: UIButton!
     private var shadowView: UIView!
     private var containerView: UIView!
-    private var image: UIImageView!
+     var image: UIImageView!
     private var imageBackgroundColor: UIView!
     private var stack: UIStackView!
     private var title: UILabel!
@@ -135,7 +135,7 @@ class DetailFoodCell: UITableViewCell {
     func configure(_ food: FoodRealm) {
         image.image = UIImage(named: food.name)
         title.text = food.name.localized()
-        colories.text = ("\(food.calories) кКал. / 100г.")
+        colories.text = ("\(food.calories) \("kCal".localized()) / \("100g.".localized())")
 
     }
 }

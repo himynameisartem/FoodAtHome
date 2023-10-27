@@ -209,13 +209,7 @@ extension AddAndChangeFoodView {
         leftDaysPickerView = UIPickerView()
         leftDaysPickerView.tag = 1
         leftTextField.inputView = leftDaysPickerView
-        
-//        if dateOfManufactureTextField.hasText {
-//            leftTextField.isEnabled = true
-//        } else {
-//            leftTextField.isEnabled = false
-//        }
-        
+
         if checkVievController == .foodList {
             
             labelsStackView.addArrangedSubview(weightLabel)
@@ -309,6 +303,7 @@ extension AddAndChangeFoodView {
         foodItem.weight = food.weight
         foodItem.productionDate = food.productionDate
         foodItem.expirationDate = food.expirationDate
+        foodItem.calories = food.calories
         
         if dateOfManufactureTextField.hasText {
             leftTextField.isEnabled = true
