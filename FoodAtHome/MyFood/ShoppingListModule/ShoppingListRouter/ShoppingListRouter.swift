@@ -21,7 +21,7 @@ extension ShoppingListRouter: ShoppingListRouterProtocol {
     func openFoodListViewController() {
         let listVC = FoodListViewController()
         listVC.modalPresentationStyle = .fullScreen
-        listVC.foodList = vegitables
+        listVC.foodList = vegitables.sorted { $0.name.localized() < $1.name.localized() }
         viewController.navigationController?.pushViewController(listVC, animated: true)
     }
     

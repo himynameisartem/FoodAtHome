@@ -31,7 +31,7 @@ class FoodListManager {
         case 14: return softDrinks.sorted { $0.name.localized() < $1.name.localized() }
         case 15: return alcoholicDrinks.sorted { $0.name.localized() < $1.name.localized() }
         default:
-            return vegitables
+            return vegitables.sorted { $0.name.localized() < $1.name.localized() }
         }
     }
     

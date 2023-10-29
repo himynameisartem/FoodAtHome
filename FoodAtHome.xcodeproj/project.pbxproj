@@ -13,7 +13,8 @@
 		310BC1662ADEAC4200B3EE25 /* BabyFoodData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310BC1652ADEAC4200B3EE25 /* BabyFoodData.swift */; };
 		310BC1682ADEAC6500B3EE25 /* SoftDrinksData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310BC1672ADEAC6500B3EE25 /* SoftDrinksData.swift */; };
 		310BC16A2ADEAC7900B3EE25 /* AlcoholicDrinksData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310BC1692ADEAC7900B3EE25 /* AlcoholicDrinksData.swift */; };
-		310BC16C2AE6C72400B3EE25 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 310BC16D2AE6C72400B3EE25 /* Launch Screen.storyboard */; };
+		310D13262AEC1343001BB5E5 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 310D13252AEC1343001BB5E5 /* Launch Screen.storyboard */; };
+		310D13282AEC1B37001BB5E5 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310D13272AEC1B37001BB5E5 /* NotificationManager.swift */; };
 		311554E32AD5E048009C39E2 /* FruitsAndBerriesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311554E22AD5E048009C39E2 /* FruitsAndBerriesData.swift */; };
 		311554E52AD5E050009C39E2 /* MushroomsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311554E42AD5E050009C39E2 /* MushroomsData.swift */; };
 		311554E72AD5E05C009C39E2 /* EggsAndDairyProductsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311554E62AD5E05C009C39E2 /* EggsAndDairyProductsData.swift */; };
@@ -106,7 +107,8 @@
 		310BC1652ADEAC4200B3EE25 /* BabyFoodData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabyFoodData.swift; sourceTree = "<group>"; };
 		310BC1672ADEAC6500B3EE25 /* SoftDrinksData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoftDrinksData.swift; sourceTree = "<group>"; };
 		310BC1692ADEAC7900B3EE25 /* AlcoholicDrinksData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlcoholicDrinksData.swift; sourceTree = "<group>"; };
-		310BC16D2AE6C72400B3EE25 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		310D13252AEC1343001BB5E5 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		310D13272AEC1B37001BB5E5 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		311554E22AD5E048009C39E2 /* FruitsAndBerriesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitsAndBerriesData.swift; sourceTree = "<group>"; };
 		311554E42AD5E050009C39E2 /* MushroomsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MushroomsData.swift; sourceTree = "<group>"; };
 		311554E62AD5E05C009C39E2 /* EggsAndDairyProductsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EggsAndDairyProductsData.swift; sourceTree = "<group>"; };
@@ -481,6 +483,7 @@
 				31D0C4242A9A1AC200EDF32B /* StringExtensionLocalized.swift */,
 				31D0C42C2A9A767000EDF32B /* TextFieldExtension.swift */,
 				313153352AB8D22F00A3E11D /* ContextualActionViewManager.swift */,
+				310D13272AEC1B37001BB5E5 /* NotificationManager.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -504,7 +507,7 @@
 				31DA20C12839488900DCE421 /* AppDelegate.swift */,
 				31DA20CF2839488A00DCE421 /* Info.plist */,
 				31DA20CA2839488A00DCE421 /* Assets.xcassets */,
-				310BC16D2AE6C72400B3EE25 /* Launch Screen.storyboard */,
+				310D13252AEC1343001BB5E5 /* Launch Screen.storyboard */,
 				31D0C42A2A9A1BA400EDF32B /* Localizable.strings */,
 				31D0C3F92A9A093500EDF32B /* Font */,
 			);
@@ -693,12 +696,12 @@
 				31DF397E287BD65900624AFD /* Inter-ExtraLight.otf in Resources */,
 				31DF3984287BD96400624AFD /* Inter-Light.otf in Resources */,
 				31DF3980287BD7F900624AFD /* Inter-Bold.otf in Resources */,
-				310BC16C2AE6C72400B3EE25 /* Launch Screen.storyboard in Resources */,
 				3180FF842860D18C00060BD0 /* pobeda-regular.ttf in Resources */,
 				31D0C4282A9A1BA400EDF32B /* Localizable.strings in Resources */,
 				31DF397C287BD61600624AFD /* Inter.ttf in Resources */,
 				3180FF832860D18C00060BD0 /* pobeda-bold.ttf in Resources */,
 				31DA20CB2839488A00DCE421 /* Assets.xcassets in Resources */,
+				310D13262AEC1343001BB5E5 /* Launch Screen.storyboard in Resources */,
 				31DF3982287BD88A00624AFD /* Inter-SemiBold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -774,6 +777,7 @@
 				314CA49F2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift in Sources */,
 				31D117822A9B64AE0019C228 /* CategoryFoodPresenter.swift in Sources */,
 				318701A52A4E061A0079848C /* MyFoodConfiguratorProtocol.swift in Sources */,
+				310D13282AEC1B37001BB5E5 /* NotificationManager.swift in Sources */,
 				318701AB2A503BA40079848C /* MyFoodViewProtocol.swift in Sources */,
 				3136B1022ADDC80A00B6CF89 /* GreensAndHerbsData.swift in Sources */,
 				310BC1642ADEAC2200B3EE25 /* RawMaterialsAndAdditivesData.swift in Sources */,

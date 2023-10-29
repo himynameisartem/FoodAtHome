@@ -32,6 +32,7 @@ class MyFoodViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         setupUI()
         setupConstraints()
         
@@ -49,7 +50,6 @@ class MyFoodViewController: UIViewController {
 extension MyFoodViewController {
     
     private func setupUI() {
-        
         
         view.backgroundColor = .systemGray5
         navigationItem.backButtonTitle = "Back".localized()

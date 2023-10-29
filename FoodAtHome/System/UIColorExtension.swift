@@ -14,7 +14,6 @@ extension UIColor {
     }
     
     static var mainTabBarColor: UIColor {
-//        #colorLiteral(red: 0.7160393596, green: 0.7160393596, blue: 0.7160393596, alpha: 0.3037562086)
         #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.9393108444)
     }
     

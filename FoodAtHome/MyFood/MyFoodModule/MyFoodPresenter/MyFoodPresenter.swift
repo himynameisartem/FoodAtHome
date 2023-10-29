@@ -33,6 +33,7 @@ extension MyFoodPresenter: MyFoodPresenterProtocol {
 
     func viewDidLoad() {            
         interactor.fetchMyFood()
+        NotificationManager.shared.addedNotification()
     }
     
     func food(atIndex indexPath: IndexPath) -> FoodRealm? {
@@ -100,7 +101,6 @@ extension MyFoodPresenter: MyFoodPresenterProtocol {
             }
         }
     }
-    
 }
 
 extension MyFoodPresenter: MyFoodInteractorOutputProtocol {

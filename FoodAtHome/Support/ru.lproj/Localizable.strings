@@ -17,6 +17,10 @@
 "Delete" = "Удалить";
 
 "FOOD AT HOME" = "ЕДА ДОМА";
+"Food At Home" = "Еда Дома";
+
+"The expiration date of some products is almost expired." = "Срок годности некоторых продуктов почти истек.";
+"Some of your products have expired!" = "Некоторые из ваших продуктов просрочены!";
 
 "Shopping List" = "Покупки";
 "Food at Home" = "Еда Дома";
