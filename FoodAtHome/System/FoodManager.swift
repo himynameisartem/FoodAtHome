@@ -26,9 +26,10 @@ class FoodManager {
     private let localRealm: Realm
     
     private init() {
-        let config = Realm.Configuration(schemaVersion: 3)
+//        let config = Realm.Configuration(schemaVersion: 3)
         do {
-            localRealm = try Realm(configuration: config)
+//            localRealm = try Realm(configuration: config)
+            localRealm = try Realm()
         } catch {
             fatalError("Error initializing Realm: \(error)")
         }

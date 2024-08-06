@@ -1,5 +1,5 @@
 //
-//  FoodModel.swift
+//  FoodMode.swift
 //  FoodAtHome
 //
 //  Created by Артем Кудрявцев on 21.05.2022.
@@ -9,37 +9,68 @@ import Foundation
 import RealmSwift
 
 enum FoodType: String {
-    case vegetables, 
-         fruitsAndBerries,
-         mushrooms,
-         eggsAndDairyProducts,
-         meatProducts,
-         fishAndSeafood,
-         nutsAndDriedFruits,
-         flourAndBakeryProducts,
-         grainsAndPorridge, 
-         sweetsAndConfectionery,
-         greensAndHerbs,
-         spicesAndSeasonings,
-         rawMaterialsAndAdditives,
-         babyFood,
-         softDrinks,
-         alcoholicDrinks
+    case vegetables
+    case fruitsAndBerries
+    case mushrooms
+    case eggsAndDairyProducts
+    case meatProducts
+    case fishAndSeafood
+    case nutsAndDriedFruits
+    case flourAndBakeryProducts
+    case grainsAndPorridge
+    case sweetsAndConfectionery
+    case greensAndHerbs
+    case spicesAndSeasonings
+    case rawMaterialsAndAdditives
+    case babyFood
+    case softDrinks
+    case alcoholicDrinks
+}
+
+class ConsumeUp: Object {
+    @Persisted var months: Int?
+    @Persisted var days: Int?
+     
+    convenience init(months: Int?, days: Int?) {
+        self.init()
+        self.months = months
+        self.days = days
+    }
 }
 
 class FoodRealm: Object {
-     
+    
     @Persisted var name: String
     @Persisted var type: FoodType.RawValue
     @Persisted var weight = "0.0"
     @Persisted var unit = ""
-    @Persisted var productionDate: Date? = nil
-    @Persisted var expirationDate: Date? = nil
-    @Persisted var consumeUp: Date? = nil
     @Persisted var calories = "0"
     @Persisted var isShoppingList: Bool = false
+    @Persisted var productionDate: Date? {
+        didSet {
+            if productionDate == nil {
+                expirationDate = nil
+                consumeUp = nil
+            }
+        }
+    }
+    @Persisted var expirationDate: Date? = nil {
+        willSet {
+            setValueToConsumeUp(newValue: newValue)
+        }
+    }
+    @Persisted var consumeUp: ConsumeUp? = nil {
+        willSet {
+            setValueToExpirationDate(newValue: newValue)
+        }
+    }
+    private var isUpdateingExpirationDate = false
+    private var isUpdatingConsumeUp = false
+    private let dateFormatter = DateFormatter()
+    private let calendar = Calendar.current
+    private var dateComponents = DateComponents()
     
-    convenience  init(name: String, type: FoodType, calories: String) {
+    convenience init(name: String, type: FoodType, calories: String) {
         self.init()
         self.name = name
         self.type = type.rawValue
@@ -47,21 +78,59 @@ class FoodRealm: Object {
     }
 }
 
-class ShoppingList: FoodRealm {}
-
-class Vegetables: FoodRealm {}
-class FruitsAndBerries: FoodRealm {}
-class Mushrooms: FoodRealm {}
-class EggsAndDairyProducts: FoodRealm {}
-class MeatProducts: FoodRealm {}
-class FishAndSeafood: FoodRealm {}
-class NutsAndDriedFruits: FoodRealm {}
-class FlourAndBakeryProducts: FoodRealm {}
-class GrainsAndPorridge: FoodRealm {}
-class SweetsAndConfectionery: FoodRealm {}
-class GreensAndHerbs: FoodRealm {}
-class SpicesAndSeasonings: FoodRealm {}
-class RawMaterialsAndAdditives: FoodRealm {}
-class BabyFood: FoodRealm {}
-class SoftDrinks: FoodRealm {}
-class AlcoholicDrinks: FoodRealm {}
+extension FoodRealm {
+    
+    func productionDateString() -> String? {
+        guard let productionDate = productionDate else { return nil }
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        return dateFormatter.string(from: productionDate)
+    }
+    
+    func expirationDateString() -> String? {
+        guard let expirationDate = expirationDate else { return nil }
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        return dateFormatter.string(from: expirationDate)
+    }
+    
+    func consumeUpString() -> String? {
+        guard let consumeUp = consumeUp else { return nil }
+        let fullDate = "\(consumeUp.months ?? 0)м. \(consumeUp.days ?? 0)д."
+        return fullDate
+    }
+    
+    func daysLeftString() -> String? {
+        guard let expirationDate = expirationDate else { return nil }
+        dateComponents = calendar.dateComponents([.month, .day], from: Date(), to: expirationDate)
+        let daysLeftString = "\(dateComponents.month ?? 0)м. \(dateComponents.day ?? 0)д."
+        return daysLeftString
+    }
+    
+    func distanceBetweenProductionAndExpiration() -> CGFloat? {
+        guard let productionDate = productionDate, let expirationDate = expirationDate else { return nil }
+        let fullDistance = calendar.dateComponents([.day], from: productionDate, to: expirationDate)
+        let currentDistance = calendar.dateComponents([.day], from: Date(), to: expirationDate)
+        let differenceDate = CGFloat(currentDistance.day! + 1) / CGFloat(fullDistance.day!)
+        return CGFloat(differenceDate)
+    }
+    
+    private func setValueToConsumeUp(newValue: Date?) {
+        guard !isUpdatingConsumeUp, let productionDate = productionDate, let expirationDate = newValue else { return }
+        if expirationDate > productionDate {
+            dateComponents = calendar.dateComponents([.month, .day], from: productionDate, to: expirationDate)
+            isUpdateingExpirationDate = true
+            consumeUp = ConsumeUp(months: dateComponents.month, days: dateComponents.day)
+            isUpdateingExpirationDate = false
+        } else {
+            consumeUp = nil
+        }
+    }
+    
+    private func setValueToExpirationDate(newValue: ConsumeUp?) {
+        guard !isUpdateingExpirationDate, let productionDate = productionDate, let newValue = newValue else { return }
+        isUpdatingConsumeUp = true
+        dateComponents.month = newValue.months
+        dateComponents.day = newValue.days
+        expirationDate = calendar.date(byAdding: dateComponents, to: productionDate)
+        isUpdatingConsumeUp = false
+    }
+}

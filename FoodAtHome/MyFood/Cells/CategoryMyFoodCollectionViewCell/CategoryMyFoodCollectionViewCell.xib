@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_72" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" preservesSuperviewLayoutMargins="YES" reuseIdentifier="categoryMyFoodCell" id="BfF-5K-tc9" userLabel="CategoryMyFoodCollectionViewCell" customClass="CategoryMyFoodCollectionViewCell" customModule="FoodAtHome" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="180" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Fuv-A4-KOU">
+                <rect key="frame" x="0.0" y="0.0" width="180" height="100"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HZI-PV-4dd">
+                        <rect key="frame" x="0.0" y="0.0" width="180" height="100"/>
+                    </imageView>
+                    <visualEffectView opaque="NO" alpha="0.45000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3KR-vx-1uK">
+                        <rect key="frame" x="0.0" y="60" width="180" height="40"/>
+                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="sdg-m9-u7S">
+                            <rect key="frame" x="0.0" y="0.0" width="180" height="40"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        </view>
+                        <blurEffect style="dark"/>
+                    </visualEffectView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2FW-W8-j2d">
+                        <rect key="frame" x="0.0" y="60" width="180" height="40"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="2FW-W8-j2d" firstAttribute="bottom" secondItem="3KR-vx-1uK" secondAttribute="bottom" id="1HE-0Z-cnU"/>
+                    <constraint firstItem="HZI-PV-4dd" firstAttribute="top" secondItem="Fuv-A4-KOU" secondAttribute="top" id="6jf-vM-LdP"/>
+                    <constraint firstAttribute="bottom" secondItem="2FW-W8-j2d" secondAttribute="bottom" id="98K-m2-5iJ"/>
+                    <constraint firstItem="2FW-W8-j2d" firstAttribute="leading" secondItem="Fuv-A4-KOU" secondAttribute="leading" id="AdX-V4-aRU"/>
+                    <constraint firstItem="HZI-PV-4dd" firstAttribute="leading" secondItem="Fuv-A4-KOU" secondAttribute="leading" id="Oe8-ID-fCL"/>
+                    <constraint firstItem="2FW-W8-j2d" firstAttribute="leading" secondItem="3KR-vx-1uK" secondAttribute="leading" id="Ovm-ei-7Yt"/>
+                    <constraint firstAttribute="bottom" secondItem="HZI-PV-4dd" secondAttribute="bottom" id="PJa-gq-3y2"/>
+                    <constraint firstItem="2FW-W8-j2d" firstAttribute="trailing" secondItem="3KR-vx-1uK" secondAttribute="trailing" id="TbG-RU-Gly"/>
+                    <constraint firstAttribute="trailing" secondItem="HZI-PV-4dd" secondAttribute="trailing" id="d42-ba-nhS"/>
+                    <constraint firstAttribute="trailing" secondItem="2FW-W8-j2d" secondAttribute="trailing" id="gxI-1c-fWt"/>
+                    <constraint firstItem="2FW-W8-j2d" firstAttribute="top" secondItem="Fuv-A4-KOU" secondAttribute="top" constant="60" id="kxc-bQ-fTz"/>
+                    <constraint firstItem="2FW-W8-j2d" firstAttribute="top" secondItem="3KR-vx-1uK" secondAttribute="top" id="rvj-fl-BMi"/>
+                </constraints>
+                <userDefinedRuntimeAttributes>
+                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                        <integer key="value" value="10"/>
+                    </userDefinedRuntimeAttribute>
+                </userDefinedRuntimeAttributes>
+            </collectionViewCellContentView>
+            <rect key="contentStretch" x="0.0" y="0.0" width="0.55000000000000004" height="1"/>
+            <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
+            <size key="customSize" width="119" height="60"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                    <integer key="value" value="10"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="categoryImage" destination="HZI-PV-4dd" id="PaQ-Me-P3V"/>
+                <outlet property="categoryName" destination="2FW-W8-j2d" id="XHO-ln-gYN"/>
+            </connections>
+            <point key="canvasLocation" x="346.04651162790697" y="-26.394849785407725"/>
+        </collectionViewCell>
+    </objects>
+</document>

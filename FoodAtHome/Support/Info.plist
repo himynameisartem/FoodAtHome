@@ -4,10 +4,10 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Inter-SemiBold.otf</string>
-		<string>Inter-Light.otf</string>
 		<string>Inter-Bold.otf</string>
 		<string>Inter-ExtraLight.otf</string>
+		<string>Inter-Light.otf</string>
+		<string>Inter-SemiBold.otf</string>
 		<string>Inter.ttf</string>
 		<string>pobeda-bold.ttf</string>
 		<string>pobeda-regular.ttf</string>

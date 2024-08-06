@@ -77,10 +77,6 @@
 #import "RLMVersion.h"
 #endif
 
-#ifndef REALM_IOPLATFORMUUID
-#import <Realm/RLMPlatform.h>
-#endif
-
 // Wrapper for sysctl() that handles the memory management stuff
 static auto RLMSysCtl(int *mib, u_int mibSize, size_t *bufferSize) {
     std::unique_ptr<void, decltype(&free)> buffer(nullptr, &free);
@@ -126,7 +122,7 @@ static NSString *RLMTargetArch() {
 }
 
 // Hash the data in the given buffer and convert it to a hex-format string
-static NSString *RLMHashBase16Data(const void *bytes, size_t length) {
+NSString *RLMHashBase16Data(const void *bytes, size_t length) {
     unsigned char buffer[CC_SHA256_DIGEST_LENGTH];
     CC_SHA256(bytes, static_cast<CC_LONG>(length), buffer);
 
@@ -186,12 +182,8 @@ static NSString *RLMMACAddress() {
  }
 
 static NSString *RLMBuilderId() {
-    NSString *ioPlatformUuid = REALM_IOPLATFORMUUID;
-    if ([ioPlatformUuid length] == 0) {
-        return nil;
-    }
-    NSString *salt = @"realm is great";
-    NSString *saltedId = [ioPlatformUuid stringByAppendingString:salt];
+#ifdef REALM_IOPLATFORMUUID
+    NSString *saltedId = [@"Realm is great" stringByAppendingString:REALM_IOPLATFORMUUID];
     NSData *data = [saltedId dataUsingEncoding:NSUTF8StringEncoding];
 
     unsigned char buffer[CC_SHA256_DIGEST_LENGTH];
@@ -200,6 +192,9 @@ static NSString *RLMBuilderId() {
     
     // Base64 Encoding
     return [hashedData base64EncodedStringWithOptions:kNilOptions];
+#else
+    return nil;
+#endif
 }
 
 static NSDictionary *RLMBaseMetrics() {

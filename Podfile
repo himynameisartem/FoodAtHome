@@ -7,6 +7,7 @@ target 'FoodAtHome' do
 
   # Pods for FoodAtHome
 
-pod 'RealmSwift', '~> 10.40.2'
+pod 'RealmSwift', '~>10'
+
 
 end
