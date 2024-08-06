@@ -160,6 +160,7 @@
 		3139EE6A2C4EAF4300AEC1F2 /* CategoryDetailsFoodCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryDetailsFoodCell.xib; sourceTree = "<group>"; };
 		3139EE6F2C52591000AEC1F2 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		3139EE712C52593300AEC1F2 /* TestView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TestView.xib; sourceTree = "<group>"; };
+		3139EE932C625B8900AEC1F2 /* .gitignore.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = .gitignore.md; sourceTree = "<group>"; };
 		314CA48B2A73C5A0002D4680 /* FoodListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListPresenter.swift; sourceTree = "<group>"; };
 		314CA48D2A73C5AE002D4680 /* FoodListPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListPresenterProtocol.swift; sourceTree = "<group>"; };
 		314CA4902A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizntalMenuCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -471,6 +472,7 @@
 				3188955E2BC47F0B00ABD040 /* Info.plist */,
 				31B1C5F12BC7FB9A00C6D43F /* Localizable.strings */,
 				3146EF872BC7F2F3002E9BF5 /* Fonts */,
+				3139EE932C625B8900AEC1F2 /* .gitignore.md */,
 			);
 			path = Support;
 			sourceTree = "<group>";
