@@ -14,18 +14,17 @@ protocol CategoryDetailsDisplayLogic: AnyObject {
 class CategoryDetailsViewController: UIViewController {
     
     @IBOutlet weak var foodListTableView: UITableView!
-        
+    @IBOutlet weak var returnButton: UIButton!
+    
     var interactor: CategoryDetailsBusinessLogic?
     var router: (NSObjectProtocol & CategoryDetailsRoutingLogic)?
     
     var food: [CategoryDetails.ShowDetails.ViewModel.DisplayedDetails] = []
-    
+        
     // MARK: Object lifecycle
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        
-
         setup()
     }
     
@@ -56,23 +55,22 @@ class CategoryDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let header = TestView(frame: CGRect(x: 0, y: 0,
-                                            width: view.frame.size.width, height: view.frame.size.width))
-        
-        foodListTableView.tableHeaderView = header
-        
-        foodListTableView.register(UINib(nibName: "CategoryDetailsFoodCell", bundle: nil), forCellReuseIdentifier: "CategoryDetailsFoodCell")
-  
-        foodListTableView.delegate = self
-        foodListTableView.dataSource = self
-        foodListTableView.tintColor = .blue
+        setupUI()
         getFoodDetails()
-
     }
     
     private func getFoodDetails() {
         let request = CategoryDetails.ShowDetails.Request()
         interactor?.makeRequest(request: request)
+    }
+    
+    private func setupUI() {
+        let header = CategoryDetailsHeaderView(frame: CGRect(x: 0, y: 0,
+                                            width: view.frame.size.width, height: view.frame.size.width / 1.2))
+        foodListTableView.tableHeaderView = header
+        foodListTableView.register(UINib(nibName: "CategoryDetailsFoodCell", bundle: nil), forCellReuseIdentifier: "CategoryDetailsFoodCell")
+        foodListTableView.delegate = self
+        foodListTableView.dataSource = self
     }
 }
 
@@ -85,7 +83,6 @@ extension CategoryDetailsViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryDetailsFoodCell", for: indexPath) as! CategoryDetailsFoodCell
-        
         cell.foodImageView.image = UIImage(named: "Absinthe")
         
         return cell
@@ -100,11 +97,10 @@ extension CategoryDetailsViewController: UITableViewDelegate, UITableViewDataSou
 
 extension CategoryDetailsViewController: UIScrollViewDelegate {
     
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        guard let header = foodListTableView.tableHeaderView as? CategoryDetailsHeaderView else { return }
-//        header.scrollViewDidScroll(scrollView: foodListTableView)
-//    }
-    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let header = foodListTableView.tableHeaderView as? CategoryDetailsHeaderView else { return }
+        header.scrollViewDidScroll(scrollView: foodListTableView)
+    }
 }
 
 extension CategoryDetailsViewController: CategoryDetailsDisplayLogic {

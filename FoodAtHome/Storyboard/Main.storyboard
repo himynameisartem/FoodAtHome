@@ -124,8 +124,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wallpapers" translatesAutoresizingMaskIntoConstraints="NO" id="x5M-tr-3RI">
-                                <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="wallpapers" translatesAutoresizingMaskIntoConstraints="NO" id="x5M-tr-3RI">
+                                <rect key="frame" x="0.0" y="463" width="430" height="469"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPY-ws-2Rd">
                                 <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
@@ -136,22 +137,34 @@
                                     <outlet property="delegate" destination="A3G-dv-TNa" id="yC8-yQ-y9x"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4f-Ld-Lgz">
+                                <rect key="frame" x="360" y="74" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemGray4Color"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="xmark" catalog="system"/>
+                                <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system">
+                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="25"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Nb6-Et-1wQ"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="vPY-ws-2Rd" secondAttribute="bottom" id="31A-mK-ndS"/>
-                            <constraint firstAttribute="bottom" secondItem="x5M-tr-3RI" secondAttribute="bottom" id="HeB-KE-qhp"/>
-                            <constraint firstItem="Nb6-Et-1wQ" firstAttribute="trailing" secondItem="x5M-tr-3RI" secondAttribute="trailing" id="KEc-VH-h0W"/>
-                            <constraint firstItem="vPY-ws-2Rd" firstAttribute="top" secondItem="1Ck-bu-WPK" secondAttribute="top" id="LRQ-fw-mox"/>
-                            <constraint firstItem="vPY-ws-2Rd" firstAttribute="leading" secondItem="Nb6-Et-1wQ" secondAttribute="leading" id="YYe-qh-Hw7"/>
-                            <constraint firstItem="vPY-ws-2Rd" firstAttribute="trailing" secondItem="Nb6-Et-1wQ" secondAttribute="trailing" id="deb-8Z-DFL"/>
-                            <constraint firstItem="x5M-tr-3RI" firstAttribute="top" secondItem="1Ck-bu-WPK" secondAttribute="top" id="k8G-K5-ghs"/>
-                            <constraint firstItem="x5M-tr-3RI" firstAttribute="leading" secondItem="Nb6-Et-1wQ" secondAttribute="leading" id="kxk-92-WA6"/>
+                            <constraint firstItem="vPY-ws-2Rd" firstAttribute="leading" secondItem="Nb6-Et-1wQ" secondAttribute="leading" id="58R-9F-d1f"/>
+                            <constraint firstAttribute="bottom" secondItem="vPY-ws-2Rd" secondAttribute="bottom" id="iiR-Ga-La1"/>
+                            <constraint firstItem="vPY-ws-2Rd" firstAttribute="top" secondItem="1Ck-bu-WPK" secondAttribute="top" id="qLh-h8-l9z"/>
+                            <constraint firstItem="vPY-ws-2Rd" firstAttribute="trailing" secondItem="Nb6-Et-1wQ" secondAttribute="trailing" id="tRy-TI-vHw"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="foodListTableView" destination="vPY-ws-2Rd" id="tu0-Sh-404"/>
+                        <outlet property="returnButton" destination="U4f-Ld-Lgz" id="SD1-h1-meT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dT4-rY-cHI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -162,6 +175,10 @@
     <resources>
         <image name="separatorForNavigationBar" width="2083" height="4"/>
         <image name="wallpapers" width="1000" height="1200"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

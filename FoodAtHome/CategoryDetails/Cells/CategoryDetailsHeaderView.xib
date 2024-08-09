@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CategoryDetailsHeaderView" customModule="FoodAtHome" customModuleProvider="target">
+            <connections>
+                <outlet property="categoryNameLabel" destination="EFR-7V-3wp" id="vcc-jI-kK3"/>
+                <outlet property="imageView" destination="w21-Ds-YPH" id="yJs-fv-dQM"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="kBB-Ib-6Be">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="393"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="w21-Ds-YPH">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="393"/>
+                </imageView>
+                <visualEffectView opaque="NO" alpha="0.84999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kvV-4w-DfO">
+                    <rect key="frame" x="0.0" y="277" width="393" height="49"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="n9R-ql-gCM">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EFR-7V-3wp">
+                                <rect key="frame" x="20" y="0.0" width="353" height="49"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="EFR-7V-3wp" firstAttribute="leading" secondItem="n9R-ql-gCM" secondAttribute="leading" constant="20" id="eNS-vu-et7"/>
+                            <constraint firstAttribute="trailing" secondItem="EFR-7V-3wp" secondAttribute="trailing" constant="20" id="qTd-hW-2vq"/>
+                            <constraint firstItem="EFR-7V-3wp" firstAttribute="top" secondItem="n9R-ql-gCM" secondAttribute="top" id="qpw-kz-mKC"/>
+                            <constraint firstAttribute="bottom" secondItem="EFR-7V-3wp" secondAttribute="bottom" id="tGW-s4-z71"/>
+                        </constraints>
+                    </view>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="49" id="9fp-ic-fAD"/>
+                    </constraints>
+                    <blurEffect style="dark"/>
+                </visualEffectView>
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1eK-02-IOA" customClass="GradientForHeaderView" customModule="FoodAtHome" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="326" width="393" height="69"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                            <color key="value" systemColor="systemGray6Color"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                            <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="WOM-MT-3hB"/>
+            <constraints>
+                <constraint firstItem="w21-Ds-YPH" firstAttribute="top" secondItem="kBB-Ib-6Be" secondAttribute="top" id="FFV-xF-pu4"/>
+                <constraint firstItem="w21-Ds-YPH" firstAttribute="trailing" secondItem="WOM-MT-3hB" secondAttribute="trailing" id="KCZ-gb-nmK"/>
+                <constraint firstItem="1eK-02-IOA" firstAttribute="trailing" secondItem="WOM-MT-3hB" secondAttribute="trailing" id="TJk-58-pGw"/>
+                <constraint firstItem="1eK-02-IOA" firstAttribute="leading" secondItem="WOM-MT-3hB" secondAttribute="leading" id="bS6-i5-awd"/>
+                <constraint firstItem="kvV-4w-DfO" firstAttribute="leading" secondItem="WOM-MT-3hB" secondAttribute="leading" id="mXD-iw-uIi"/>
+                <constraint firstAttribute="bottom" secondItem="kvV-4w-DfO" secondAttribute="bottom" constant="67" id="sex-5m-v9M"/>
+                <constraint firstItem="kvV-4w-DfO" firstAttribute="trailing" secondItem="WOM-MT-3hB" secondAttribute="trailing" id="tnP-86-NHn"/>
+                <constraint firstItem="w21-Ds-YPH" firstAttribute="leading" secondItem="WOM-MT-3hB" secondAttribute="leading" id="two-kg-RJK"/>
+                <constraint firstAttribute="bottom" secondItem="1eK-02-IOA" secondAttribute="bottom" constant="-2" id="wcI-k5-cFh"/>
+                <constraint firstItem="1eK-02-IOA" firstAttribute="top" secondItem="kvV-4w-DfO" secondAttribute="bottom" id="xzi-j7-2w0"/>
+                <constraint firstAttribute="bottom" secondItem="w21-Ds-YPH" secondAttribute="bottom" id="zxa-LB-H5W"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="17.557251908396946" y="-179.22535211267606"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
