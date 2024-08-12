@@ -9,8 +9,8 @@ import UIKit
 
 class CategoryDetailsWorker {
     
-    func getDisplayedFood(food: [FoodRealm]) -> [CategoryDetails.ShowDetails.ViewModel.DisplayedDetails] {
-        var displayedFood: [CategoryDetails.ShowDetails.ViewModel.DisplayedDetails] = []
+    func getDisplayedFood(food: [FoodRealm]) -> [CategoryDetails.ShowFood.ViewModel.DisplayedCells] {
+        var displayedFood: [CategoryDetails.ShowFood.ViewModel.DisplayedCells] = []
         
         food.forEach { food in
             let foodName = food.name
@@ -18,7 +18,7 @@ class CategoryDetailsWorker {
             let weight = food.weight
             let calories = food.calories
             
-            let foodDetails = CategoryDetails.ShowDetails.ViewModel.DisplayedDetails(
+            let foodDetails = CategoryDetails.ShowFood.ViewModel.DisplayedCells(
                 foodName: foodName,
                 imageName: imageName,
                 weight: weight,
@@ -26,7 +26,6 @@ class CategoryDetailsWorker {
             
             displayedFood.append(foodDetails)
         }
-        
         return displayedFood
     }
     

@@ -42,7 +42,6 @@ extension CategoryDetailsHeaderView {
     
     private func setupUI() {
         setupConstraints()
-        configure()
     }
     
     private func setupConstraints() {
@@ -52,8 +51,9 @@ extension CategoryDetailsHeaderView {
         imageViewHeight.isActive = true
     }
     
-    func configure() {
-        imageView.image = UIImage(named: "Alcoholic Drinks")
+    func configure(viewModel: CategoryDetails.ShowCategory.ViewModel) {
+        imageView.image = UIImage(named: viewModel.displayedCategory.categoryImage)
+        categoryNameLabel.text = viewModel.displayedCategory.categoryName
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {

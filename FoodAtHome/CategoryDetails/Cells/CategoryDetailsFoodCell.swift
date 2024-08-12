@@ -36,4 +36,11 @@ extension CategoryDetailsFoodCell {
         weightLabel.font = UIFont(name: "Inter", size: 17)
         foodImageView.clipsToBounds = true
     }
+    
+    func configure(viewModel: CategoryDetails.ShowFood.ViewModel.DisplayedCells) {
+        foodImageView.image = UIImage(named: viewModel.imageName)
+        foodLabel.text = viewModel.foodName
+        caloriesLabel.text = viewModel.calories
+        weightLabel.text = viewModel.weight
+    }
 }

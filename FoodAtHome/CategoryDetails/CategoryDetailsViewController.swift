@@ -8,18 +8,21 @@
 import UIKit
 
 protocol CategoryDetailsDisplayLogic: AnyObject {
-    func displayData(viewModel: CategoryDetails.ShowDetails.ViewModel)
+    func displayCategoryData(viewModel: CategoryDetails.ShowCategory.ViewModel)
+    func displayCellsData(viewModel: CategoryDetails.ShowFood.ViewModel)
 }
 
 class CategoryDetailsViewController: UIViewController {
     
     @IBOutlet weak var foodListTableView: UITableView!
     @IBOutlet weak var returnButton: UIButton!
-    
+        
     var interactor: CategoryDetailsBusinessLogic?
-    var router: (NSObjectProtocol & CategoryDetailsRoutingLogic)?
+    var router: (NSObjectProtocol & CategoryDetailsRoutingLogic & CategoryDetailsDataPassing)?
     
-    var food: [CategoryDetails.ShowDetails.ViewModel.DisplayedDetails] = []
+    var header = CategoryDetailsHeaderView()
+    
+    var foodCells: [CategoryDetails.ShowFood.ViewModel.DisplayedCells] = []
         
     // MARK: Object lifecycle
     
@@ -31,6 +34,7 @@ class CategoryDetailsViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
+
     }
     
     // MARK: Setup
@@ -45,6 +49,7 @@ class CategoryDetailsViewController: UIViewController {
         interactor.presenter = presenter
         presenter.viewController = viewController
         router.viewController = viewController
+        router.dataStore = interactor
     }
     
     // MARK: Routing
@@ -57,15 +62,18 @@ class CategoryDetailsViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         getFoodDetails()
+
     }
     
     private func getFoodDetails() {
-        let request = CategoryDetails.ShowDetails.Request()
-        interactor?.makeRequest(request: request)
+        let requestCategory = CategoryDetails.ShowCategory.Request()
+        interactor?.showCategory(request: requestCategory)
+        let requestCells = CategoryDetails.ShowFood.Request()
+        interactor?.showCells(request: requestCells)
     }
     
     private func setupUI() {
-        let header = CategoryDetailsHeaderView(frame: CGRect(x: 0, y: 0,
+        header = CategoryDetailsHeaderView(frame: CGRect(x: 0, y: 0,
                                             width: view.frame.size.width, height: view.frame.size.width / 1.2))
         foodListTableView.tableHeaderView = header
         foodListTableView.register(UINib(nibName: "CategoryDetailsFoodCell", bundle: nil), forCellReuseIdentifier: "CategoryDetailsFoodCell")
@@ -77,14 +85,14 @@ class CategoryDetailsViewController: UIViewController {
 extension CategoryDetailsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        foodCells.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryDetailsFoodCell", for: indexPath) as! CategoryDetailsFoodCell
-        cell.foodImageView.image = UIImage(named: "Absinthe")
-        
+        let viewModel = foodCells[indexPath.row]
+        cell.configure(viewModel: viewModel)
         return cell
         
     }
@@ -105,7 +113,12 @@ extension CategoryDetailsViewController: UIScrollViewDelegate {
 
 extension CategoryDetailsViewController: CategoryDetailsDisplayLogic {
     
-    func displayData(viewModel: CategoryDetails.ShowDetails.ViewModel) {
-        food = viewModel.displayedDetails
+    func displayCategoryData(viewModel: CategoryDetails.ShowCategory.ViewModel) {
+        header.categoryNameLabel.text = viewModel.displayedCategory.categoryName
+        header.imageView.image = UIImage(named: viewModel.displayedCategory.categoryImage)
+    }
+    
+    func displayCellsData(viewModel: CategoryDetails.ShowFood.ViewModel) {
+        foodCells = viewModel.displayedCells
     }
 }

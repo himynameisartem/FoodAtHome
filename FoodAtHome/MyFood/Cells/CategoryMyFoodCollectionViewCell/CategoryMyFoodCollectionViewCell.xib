@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CategoryMyFoodCollectionViewCell" customModule="FoodAtHome" customModuleProvider="target"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" preservesSuperviewLayoutMargins="YES" reuseIdentifier="categoryMyFoodCell" id="BfF-5K-tc9" userLabel="CategoryMyFoodCollectionViewCell" customClass="CategoryMyFoodCollectionViewCell" customModule="FoodAtHome" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="180" height="100"/>

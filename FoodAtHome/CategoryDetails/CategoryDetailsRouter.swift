@@ -7,14 +7,19 @@
 
 import UIKit
 
-protocol CategoryDetailsRoutingLogic {
-
+@objc protocol CategoryDetailsRoutingLogic {
+    
 }
 
-class CategoryDetailsRouter: NSObject, CategoryDetailsRoutingLogic {
+protocol CategoryDetailsDataPassing {
+    var dataStore: CategoryDetailsDataStore? { get }
+}
 
-  weak var viewController: CategoryDetailsViewController?
-  
-  // MARK: Routing
-  
+class CategoryDetailsRouter: NSObject, CategoryDetailsRoutingLogic, CategoryDetailsDataPassing {
+    
+    weak var viewController: CategoryDetailsViewController?
+    var dataStore: CategoryDetailsDataStore?
+    
+    // MARK: Routing
+    
 }

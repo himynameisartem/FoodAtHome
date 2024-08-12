@@ -13,12 +13,12 @@ protocol MyFoodBusinessLogic {
     func showMyFood(request: MyFood.ShowMyFood.Request)
 }
 
-protocol MyfoodDataStore {
+protocol MyFoodDataStore {
     var myFood: [FoodRealm] { get }
     var categories: [String] { get }
 }
 
-class MyFoodInteractor: MyFoodBusinessLogic, MyfoodDataStore {
+class MyFoodInteractor: MyFoodBusinessLogic, MyFoodDataStore {
     
     var myFood: [FoodRealm] = []
     var categories: [String] = []

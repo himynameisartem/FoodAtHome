@@ -19,11 +19,9 @@ enum MyFood {
         }
         
         struct ViewModel {
-            
             struct DisplayedMyFood {
                 let name: String
             }
-            
             let displayedMyFood: [DisplayedMyFood]
         }
     }
@@ -42,7 +40,6 @@ enum MyFood {
                 let name: String
                 let imageName: String
             }
-            
             let displayedCategories: [DiplayedCategories]
         }
     }
