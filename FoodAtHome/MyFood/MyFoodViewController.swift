@@ -14,10 +14,6 @@ protocol MyFoodDisplayLogic: AnyObject {
 
 class MyFoodViewController: UIViewController {
     
-    private var window: UIWindow? {
-        return UIApplication.shared.windows.first
-    }
-    
     var myFood: [MyFood.ShowMyFood.ViewModel.DisplayedMyFood] = []
     var categories: [MyFood.ShowCategories.ViewModel.DiplayedCategories] = []
     
@@ -25,13 +21,19 @@ class MyFoodViewController: UIViewController {
     var router: (NSObjectProtocol & MyFoodRoutingLogic & MyFoodDataPassing)?
     
     private var categoryMyFoodCollectionAnimationIsComlete = false
-    //    private let myFoodDetailsPopupMenu = Bundle.main.loadNibNamed("MyFoodDetailsPopupMenu", owner: MyFoodViewController.self)?.first as! MyFoodDetailsPopupMenu
-    //    private var closePopupMenuGesture = UITapGestureRecognizer()
-    //    private let dimmingPopupMenuView = UIView()
+    private let myFoodDetailsPopupMenu = Bundle.main.loadNibNamed("MyFoodDetailsPopupMenu", owner: MyFoodViewController.self)?.first as! MyFoodDetailsPopupMenu
     
     @IBOutlet weak var categoryMyFoodCollectionView: UICollectionView!
     @IBOutlet weak var myFoodCollectionView: UICollectionView!
     
+    // MARK: View lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setup()
+        getMyFood()
+        getCategories()
+    }
     
     // MARK: Setup
     
@@ -46,6 +48,10 @@ class MyFoodViewController: UIViewController {
         presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
+        
+        categoryMyFoodCollectionView.register(UINib(nibName: "CategoryMyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "categoryMyFoodCell")
+        myFoodCollectionView.register(UINib(nibName: "MyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "myFoodCell")
+        myFoodCollectionView.register(UINib(nibName: "AddMyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "addMyFoodCell")
     }
     
     // MARK: Routing
@@ -57,20 +63,6 @@ class MyFoodViewController: UIViewController {
             }
         }
     }
-
-    
-    
-    // MARK: View lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setup()
-        getMyFood()
-        getCategories()
-        setNib()
-        settings()
-    }
     
     private func getMyFood() {
         let request = MyFood.ShowMyFood.Request()
@@ -80,30 +72,6 @@ class MyFoodViewController: UIViewController {
     private func getCategories() {
         let request = MyFood.ShowCategories.Request()
         interactor?.showCategories(request: request)
-    }
-    
-    private func setNib() {
-        categoryMyFoodCollectionView.register(UINib(nibName: "CategoryMyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "categoryMyFoodCell")
-        myFoodCollectionView.register(UINib(nibName: "MyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "myFoodCell")
-        myFoodCollectionView.register(UINib(nibName: "AddMyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "addMyFoodCell")
-    }
-    
-    private func settings() {
-        //        closePopupMenuGesture.addTarget(self, action: #selector(closeDetailView))
-        //
-        //        dimmingPopupMenuView.backgroundColor = .black
-        //        dimmingPopupMenuView.alpha = 0
-        //        dimmingPopupMenuView.isUserInteractionEnabled = true
-        //        dimmingPopupMenuView.frame = view.bounds
-    }
-    
-    
-    
-    @objc private func closeDetailView() {
-        //        guard let window = window else { return }
-        //        myFoodDetailsPopupMenu.removeFromSuperview()
-        //        window.removeGestureRecognizer(closePopupMenuGesture)
-        //        dimmingPopupMenuView.removeFromSuperview()
     }
 }
 
@@ -154,15 +122,12 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == categoryMyFoodCollectionView {
-            performSegue(withIdentifier: "CategoryDetails", sender: nil)
+            collectionView.cellForItem(at: indexPath)?.showAnimation(for: .withoutColor, {
+                self.performSegue(withIdentifier: "CategoryDetails", sender: nil)
+            })
+        } else {
+            myFoodDetailsPopupMenu.setupPopUpMenu(for: view, with: collectionView, at: indexPath)
         }
-        //        guard let window = window else { return }
-        //        dimmingPopupMenuView.alpha = 0.5
-        //        myFoodDetailsPopupMenu.setupPopUpMenu(for: view, tabBarController, with: collectionView, at: indexPath)
-        //        window.addSubview(dimmingPopupMenuView)
-        //        window.addSubview(myFoodDetailsPopupMenu)
-        //        window.addGestureRecognizer(closePopupMenuGesture)
-        
     }
     
     // MARK: Animation
@@ -186,6 +151,7 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
 }
 
+// MARK: - MyFoodDisplayLogic
 
 extension MyFoodViewController: MyFoodDisplayLogic {
     

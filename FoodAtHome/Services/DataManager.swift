@@ -19,6 +19,7 @@ struct DataManager {
 extension DataManager {
     
     func fetchMyFood() -> [FoodRealm] {
+//        print(localRealm.configuration.fileURL!.path)
         let results = localRealm.objects(FoodRealm.self)
         return Array(results).filter { !$0.isShoppingList }
     }

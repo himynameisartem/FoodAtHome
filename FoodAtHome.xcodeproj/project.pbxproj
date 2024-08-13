@@ -50,7 +50,6 @@
 		314CA49F2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA49E2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift */; };
 		314CA4A12A7A58C5002D4680 /* FoodListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4A02A7A58C5002D4680 /* FoodListManager.swift */; };
 		314CA4A32A7C35F3002D4680 /* FoodListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4A22A7C35F3002D4680 /* FoodListTableViewCell.swift */; };
-		314CA4A72A8666D1002D4680 /* SpringAnimationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4A62A8666D1002D4680 /* SpringAnimationExtension.swift */; };
 		31600188283FE9F50033B5B8 /* AddCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31600187283FE9F50033B5B8 /* AddCollectionViewCell.swift */; };
 		316066E6288EC0F500EDB06F /* CategoryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316066E5288EC0F500EDB06F /* CategoryListTableViewCell.swift */; };
 		316066E9288ECCF500EDB06F /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316066E8288ECCF500EDB06F /* TabBarViewController.swift */; };
@@ -174,7 +173,6 @@
 		314CA49E2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListConfiguratorProtocol.swift; sourceTree = "<group>"; };
 		314CA4A02A7A58C5002D4680 /* FoodListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListManager.swift; sourceTree = "<group>"; };
 		314CA4A22A7C35F3002D4680 /* FoodListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListTableViewCell.swift; sourceTree = "<group>"; };
-		314CA4A62A8666D1002D4680 /* SpringAnimationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringAnimationExtension.swift; sourceTree = "<group>"; };
 		31600187283FE9F50033B5B8 /* AddCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCollectionViewCell.swift; sourceTree = "<group>"; };
 		316066E5288EC0F500EDB06F /* CategoryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListTableViewCell.swift; sourceTree = "<group>"; };
 		316066E8288ECCF500EDB06F /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -609,7 +607,6 @@
 				31D456B12A5D753A00FDFDFB /* CategoryFoodManager.swift */,
 				310AC9E32A6D7A2F0055E013 /* PickerPropertiesManager.swift */,
 				313153352AB8D22F00A3E11D /* ContextualActionViewManager.swift */,
-				314CA4A62A8666D1002D4680 /* SpringAnimationExtension.swift */,
 				317F50E5286DB4C90049B64B /* UIColorExtension.swift */,
 				31D0C4242A9A1AC200EDF32B /* StringExtensionLocalized.swift */,
 				31D0C42C2A9A767000EDF32B /* TextFieldExtension.swift */,
@@ -798,13 +795,13 @@
 		31FA89112BC90D50005EA855 /* MyFood */ = {
 			isa = PBXGroup;
 			children = (
-				31CFBD4B2BD9390C004C75A8 /* MyFoodDetailsPopupMenu */,
 				31FA89162BC90DD5005EA855 /* MyFoodViewController.swift */,
 				31FA89172BC90DD5005EA855 /* MyFoodInteractor.swift */,
 				31FA89122BC90DD5005EA855 /* MyFoodPresenter.swift */,
 				31FA89132BC90DD5005EA855 /* MyFoodWorker.swift */,
 				31FA89142BC90DD5005EA855 /* MyFoodRouter.swift */,
 				31FA89152BC90DD5005EA855 /* MyFoodModels.swift */,
+				31CFBD4B2BD9390C004C75A8 /* MyFoodDetailsPopupMenu */,
 				3106796C2BD94BDF00CF9CF9 /* Cells */,
 			);
 			path = MyFood;
@@ -986,7 +983,6 @@
 				3139EE702C52591000AEC1F2 /* CategoryDetailsHeaderView.swift in Sources */,
 				31E983C02A540502006FD303 /* PopupMenuView.swift in Sources */,
 				31D456A92A5D315200FDFDFB /* DateManager.swift in Sources */,
-				314CA4A72A8666D1002D4680 /* SpringAnimationExtension.swift in Sources */,
 				311554EB2ADBF5F9009C39E2 /* FishAndSeafoodData.swift in Sources */,
 				318497B72AA8C3CA004A2D7A /* ShoppingListRouterProtocol.swift in Sources */,
 				318497B92AA8C3DE004A2D7A /* ShoppingListRouter.swift in Sources */,

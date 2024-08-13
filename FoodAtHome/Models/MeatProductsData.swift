@@ -138,7 +138,6 @@ let meatProducts = [FoodRealm(name: "Amateur sausage", type: .meatProducts, calo
                     FoodRealm(name: "Meat broth", type: .meatProducts, calories: "45"),
                     FoodRealm(name: "Meat meatballs", type: .meatProducts, calories: "140"),
                     FoodRealm(name: "Meat pate", type: .meatProducts, calories: "300"),
-                    FoodRealm(name: "Meat products", type: .meatProducts, calories: "300"),
                     FoodRealm(name: "Meat semi-finished products", type: .meatProducts, calories: "150"),
                     FoodRealm(name: "Meatballs", type: .meatProducts, calories: "140"),
                     FoodRealm(name: "Meatloaf", type: .meatProducts, calories: "230"),

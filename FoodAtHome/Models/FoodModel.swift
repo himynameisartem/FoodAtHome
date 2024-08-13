@@ -9,22 +9,22 @@ import Foundation
 import RealmSwift
 
 enum FoodType: String {
-    case vegetables
-    case fruitsAndBerries
-    case mushrooms
-    case eggsAndDairyProducts
-    case meatProducts
-    case fishAndSeafood
-    case nutsAndDriedFruits
-    case flourAndBakeryProducts
-    case grainsAndPorridge
-    case sweetsAndConfectionery
-    case greensAndHerbs
-    case spicesAndSeasonings
-    case rawMaterialsAndAdditives
-    case babyFood
-    case softDrinks
-    case alcoholicDrinks
+    case vegetables = "Vegetables"
+    case fruitsAndBerries = "Fruits and Berries"
+    case mushrooms = "Mushrooms"
+    case eggsAndDairyProducts = "Eggs and Dairy Products"
+    case meatProducts = "Meat Products"
+    case fishAndSeafood = "Fish and Seafood"
+    case nutsAndDriedFruits = "Nuts and Dried Fruits"
+    case flourAndBakeryProducts = "Flour and Bakery Products"
+    case grainsAndPorridge = "Grains and Porridge"
+    case sweetsAndConfectionery = "Sweets and Confectionery"
+    case greensAndHerbs = "Greens and Herbs"
+    case spicesAndSeasonings = "Spices and Seasonings"
+    case rawMaterialsAndAdditives = "Raw Materials and Additives"
+    case babyFood = "Baby Food"
+    case softDrinks = "Soft Drinks"
+    case alcoholicDrinks = "Alcoholic Drinks"
 }
 
 class ConsumeUp: Object {

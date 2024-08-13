@@ -19,6 +19,7 @@ class MyFoodRouter: NSObject, MyFoodRoutingLogic, MyFoodDataPassing {
     
     weak var viewController: MyFoodViewController?
     var dataStore: MyFoodDataStore?
+    var worker = MyFoodWorker()
     // MARK: Routing
     
     func routeToCategoryDetails(segue: UIStoryboardSegue?) {
@@ -46,8 +47,9 @@ class MyFoodRouter: NSObject, MyFoodRoutingLogic, MyFoodDataPassing {
     
     func passDataToCategoryDetails(source: MyFoodDataStore, destination: inout CategoryDetailsDataStore) {
         guard let indexPath = viewController?.categoryMyFoodCollectionView.indexPathsForSelectedItems?.first else { return }
-        destination.category = source.categories[indexPath.row]
-        destination.food = source.myFood
+        let category = source.categories[indexPath.row]
+        let food = worker.getFoodForRouting(source: source.myFood, type: category)
+        destination.category = category
+        destination.food = food
     }
 }
-

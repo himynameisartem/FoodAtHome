@@ -15,8 +15,7 @@ protocol CategoryDetailsDisplayLogic: AnyObject {
 class CategoryDetailsViewController: UIViewController {
     
     @IBOutlet weak var foodListTableView: UITableView!
-    @IBOutlet weak var returnButton: UIButton!
-        
+    
     var interactor: CategoryDetailsBusinessLogic?
     var router: (NSObjectProtocol & CategoryDetailsRoutingLogic & CategoryDetailsDataPassing)?
     
@@ -35,6 +34,19 @@ class CategoryDetailsViewController: UIViewController {
         super.init(coder: aDecoder)
         setup()
 
+    }
+    
+    // MARK: View lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+        getFoodDetails()
+        
+    }
+    
+    @IBAction func returnTapped(_ sender: Any) {
+        navigationController?.popToRootViewController(animated: true)
     }
     
     // MARK: Setup
@@ -56,14 +68,8 @@ class CategoryDetailsViewController: UIViewController {
     
     
     
-    // MARK: View lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupUI()
-        getFoodDetails()
 
-    }
+    
     
     private func getFoodDetails() {
         let requestCategory = CategoryDetails.ShowCategory.Request()

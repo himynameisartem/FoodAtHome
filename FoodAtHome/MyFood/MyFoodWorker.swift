@@ -32,4 +32,8 @@ class MyFoodWorker {
         }
         return displayedCategories
     }
+    
+    func getFoodForRouting(source: [FoodRealm], type: String) -> [FoodRealm] {
+        source.filter { $0.type == type }
+    }
 }

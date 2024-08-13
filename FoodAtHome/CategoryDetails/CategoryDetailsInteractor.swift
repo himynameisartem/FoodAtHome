@@ -25,7 +25,6 @@ class CategoryDetailsInteractor: CategoryDetailsBusinessLogic, CategoryDetailsDa
     
     func showCategory(request: CategoryDetails.ShowCategory.Request) {
         let responce = CategoryDetails.ShowCategory.Responce(category: category)
-        print(responce.category)
         presenter?.presentCategory(responce: responce)
     }
     

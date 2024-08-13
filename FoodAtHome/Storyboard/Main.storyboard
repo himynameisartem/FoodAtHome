@@ -137,7 +137,7 @@
                     <connections>
                         <outlet property="categoryMyFoodCollectionView" destination="OZe-cr-GmQ" id="Mr3-LQ-jg4"/>
                         <outlet property="myFoodCollectionView" destination="xfG-dN-ahP" id="zUd-df-bBa"/>
-                        <segue destination="A3G-dv-TNa" kind="push" identifier="CategoryDetails" id="com-Fu-tFb"/>
+                        <segue destination="A3G-dv-TNa" kind="show" identifier="CategoryDetails" id="com-Fu-tFb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fDW-t2-83d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -165,12 +165,11 @@
                                     <outlet property="delegate" destination="A3G-dv-TNa" id="yC8-yQ-y9x"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4f-Ld-Lgz">
+                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="close" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4f-Ld-Lgz">
                                 <rect key="frame" x="360" y="74" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemGray4Color"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="xmark" catalog="system"/>
                                 <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system">
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
@@ -179,6 +178,9 @@
                                         <integer key="value" value="25"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="returnTapped:" destination="A3G-dv-TNa" eventType="touchUpInside" id="J5c-k6-5b2"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Nb6-Et-1wQ"/>
@@ -190,24 +192,20 @@
                             <constraint firstItem="vPY-ws-2Rd" firstAttribute="trailing" secondItem="Nb6-Et-1wQ" secondAttribute="trailing" id="tRy-TI-vHw"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="g8G-6N-oat"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="g8G-6N-oat"/>
                     <connections>
                         <outlet property="foodListTableView" destination="vPY-ws-2Rd" id="tu0-Sh-404"/>
-                        <outlet property="returnButton" destination="U4f-Ld-Lgz" id="SD1-h1-meT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dT4-rY-cHI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2222.7906976744184" y="-527.2532188841202"/>
+            <point key="canvasLocation" x="2187" y="-527"/>
         </scene>
     </scenes>
     <resources>
         <image name="separatorForNavigationBar" width="2083" height="4"/>
         <image name="wallpapers" width="1000" height="1200"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
-        <systemColor name="systemGray4Color">
-            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
