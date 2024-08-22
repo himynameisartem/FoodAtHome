@@ -11,6 +11,7 @@ import RealmSwift
 protocol MyFoodBusinessLogic {
     func showCategories(request: MyFood.ShowCategories.Request)
     func showMyFood(request: MyFood.ShowMyFood.Request)
+    func showDetailsFood(request: MyFood.showDetailFood.Request)
 }
 
 protocol MyFoodDataStore {
@@ -25,16 +26,19 @@ class MyFoodInteractor: MyFoodBusinessLogic, MyFoodDataStore {
     var presenter: MyFoodPresentationLogic?
     
     func showCategories(request: MyFood.ShowCategories.Request) {
-        
         categories = categoriesList
         let responce = MyFood.ShowCategories.Responce(categories: categories)
         presenter?.presentCategories(responce: responce)
     }
     
     func showMyFood(request: MyFood.ShowMyFood.Request) {
-        
         myFood = DataManager.shared.fetchMyFood()
         let responce = MyFood.ShowMyFood.Response(food: myFood)
         presenter?.presentMyFood(response: responce)
+    }
+    
+    func showDetailsFood(request: MyFood.showDetailFood.Request) {
+        let responce = MyFood.showDetailFood.Responce(foodDetails: myFood)
+        presenter?.presentDetailsFood(responce: responce)
     }
 }

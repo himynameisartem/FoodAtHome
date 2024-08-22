@@ -10,6 +10,7 @@ import UIKit
 protocol MyFoodPresentationLogic {
     func presentCategories(responce: MyFood.ShowCategories.Responce)
     func presentMyFood(response: MyFood.ShowMyFood.Response)
+    func presentDetailsFood(responce: MyFood.showDetailFood.Responce)
 }
 
 class MyFoodPresenter: MyFoodPresentationLogic {
@@ -29,5 +30,12 @@ class MyFoodPresenter: MyFoodPresentationLogic {
         guard let displayedMyFood = worker?.getDisplayedMyFood(from: response.food) else { return }
         let viewModel = MyFood.ShowMyFood.ViewModel(displayedMyFood: displayedMyFood)
         viewController?.displayMyFood(viewModel: viewModel)
+    }
+    
+    func presentDetailsFood(responce: MyFood.showDetailFood.Responce) {
+        worker = MyFoodWorker()
+        guard let displayedDetailsFood = worker?.getDisplayedFoodDetails(from: responce.foodDetails) else { return }
+        let viewModel = MyFood.showDetailFood.ViewModel(DiplayedDetails: displayedDetailsFood)
+        viewController?.displayFoodDetails(viewModel: viewModel)
     }
 }

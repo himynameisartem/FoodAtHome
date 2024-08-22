@@ -63,14 +63,7 @@ class CategoryDetailsViewController: UIViewController {
         router.viewController = viewController
         router.dataStore = interactor
     }
-    
-    // MARK: Routing
-    
-    
-    
 
-    
-    
     private func getFoodDetails() {
         let requestCategory = CategoryDetails.ShowCategory.Request()
         interactor?.showCategory(request: requestCategory)

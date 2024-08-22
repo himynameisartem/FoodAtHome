@@ -43,4 +43,25 @@ enum MyFood {
             let displayedCategories: [DiplayedCategories]
         }
     }
+    
+    enum showDetailFood {
+        struct Request{
+        }
+        
+        struct Responce {
+            let foodDetails: [FoodRealm]
+        }
+        
+        struct ViewModel {
+            struct DiplayedDetails {
+                let name: String
+                let weight: String
+                let productionDate: String
+                let expirationDate: String
+                let consumeUp: String
+                let distaceIndicator: CGFloat?
+            }
+            let DiplayedDetails: [DiplayedDetails]
+        }
+    }
 }

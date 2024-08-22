@@ -10,12 +10,14 @@ import UIKit
 protocol MyFoodDisplayLogic: AnyObject {
     func displayCategories(viewModel: MyFood.ShowCategories.ViewModel)
     func displayMyFood(viewModel: MyFood.ShowMyFood.ViewModel)
+    func displayFoodDetails(viewModel: MyFood.showDetailFood.ViewModel)
 }
 
 class MyFoodViewController: UIViewController {
     
-    var myFood: [MyFood.ShowMyFood.ViewModel.DisplayedMyFood] = []
-    var categories: [MyFood.ShowCategories.ViewModel.DiplayedCategories] = []
+    private var myFood: [MyFood.ShowMyFood.ViewModel.DisplayedMyFood] = []
+    private var categories: [MyFood.ShowCategories.ViewModel.DiplayedCategories] = []
+    private var foodDetails: [MyFood.showDetailFood.ViewModel.DiplayedDetails] = []
     
     var interactor: MyFoodBusinessLogic?
     var router: (NSObjectProtocol & MyFoodRoutingLogic & MyFoodDataPassing)?
@@ -31,8 +33,10 @@ class MyFoodViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        setupCollectionViewCells()
         getMyFood()
         getCategories()
+        getDetailsFood()
     }
     
     // MARK: Setup
@@ -48,7 +52,9 @@ class MyFoodViewController: UIViewController {
         presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
-        
+    }
+    
+    func setupCollectionViewCells() {
         categoryMyFoodCollectionView.register(UINib(nibName: "CategoryMyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "categoryMyFoodCell")
         myFoodCollectionView.register(UINib(nibName: "MyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "myFoodCell")
         myFoodCollectionView.register(UINib(nibName: "AddMyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "addMyFoodCell")
@@ -72,6 +78,11 @@ class MyFoodViewController: UIViewController {
     private func getCategories() {
         let request = MyFood.ShowCategories.Request()
         interactor?.showCategories(request: request)
+    }
+    
+    private func getDetailsFood() {
+        let request = MyFood.showDetailFood.Request()
+        interactor?.showDetailsFood(request: request)
     }
 }
 
@@ -127,6 +138,7 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
             })
         } else {
             myFoodDetailsPopupMenu.setupPopUpMenu(for: view, with: collectionView, at: indexPath)
+            myFoodDetailsPopupMenu.configure(viewModel: foodDetails, at: indexPath)
         }
     }
     
@@ -161,5 +173,9 @@ extension MyFoodViewController: MyFoodDisplayLogic {
     
     func displayMyFood(viewModel: MyFood.ShowMyFood.ViewModel) {
         myFood = viewModel.displayedMyFood
+    }
+    
+    func displayFoodDetails(viewModel: MyFood.showDetailFood.ViewModel) {
+        foodDetails = viewModel.DiplayedDetails
     }
 }
