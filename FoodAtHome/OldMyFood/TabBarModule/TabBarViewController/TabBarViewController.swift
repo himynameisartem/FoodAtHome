@@ -10,13 +10,14 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
-    private var isBottom: Bool {
-        if #available(iOS 13.0, *), UIApplication.shared.windows[0].safeAreaInsets.bottom > 0 {
-            return true
-        }
-        return false
-    }
+//    private var isBottom: Bool {
+//        if #available(iOS 13.0, *), UIApplication.shared.windows[0].safeAreaInsets.bottom > 0 {
+//            return true
+//        }
+//        return false
+//    }
     
+    private var isBottom = true
     private var shareButton: UIButton!
     
     override func viewDidLoad() {

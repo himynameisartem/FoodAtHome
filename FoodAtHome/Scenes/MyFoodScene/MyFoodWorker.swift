@@ -33,27 +33,6 @@ class MyFoodWorker {
         return displayedCategories
     }
     
-    func getDisplayedFoodDetails(from myFood: [FoodRealm]) -> [MyFood.showDetailFood.ViewModel.DiplayedDetails] {
-        var foodDetails: [MyFood.showDetailFood.ViewModel.DiplayedDetails] = []
-        myFood.forEach { food in
-            let name = food.name
-            let weight = food.weight
-            let productionDate = food.productionDateString() ?? "-"
-            let expirationDate = food.expirationDateString() ?? "-"
-            let consumeUp = food.consumeUpString() ?? "-"
-            let distaceIndicator = food.distanceBetweenProductionAndExpiration()
-            let food = MyFood.showDetailFood.ViewModel.DiplayedDetails(name: name,
-                                                                              weight: weight,
-                                                                              productionDate: productionDate,
-                                                                              expirationDate: expirationDate,
-                                                                              consumeUp: consumeUp,
-                                                                              distaceIndicator: distaceIndicator)
-            foodDetails.append(food)
-        }
-
-        return foodDetails
-    }
-    
     func getFoodForRouting(source: [FoodRealm], type: String) -> [FoodRealm] {
         source.filter { $0.type == type }
     }

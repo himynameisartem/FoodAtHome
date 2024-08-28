@@ -9,11 +9,11 @@ import UIKit
 
 class CategoryDetailsHeaderView: UIView {
     
-    private var imageViewHeight = NSLayoutConstraint()
-    private var imageViewBottom = NSLayoutConstraint()
-    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var categoryNameLabel: UILabel!
+    
+    private var imageViewHeight = NSLayoutConstraint()
+    private var imageViewBottom = NSLayoutConstraint()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -20,6 +20,7 @@ class MyFoodRouter: NSObject, MyFoodRoutingLogic, MyFoodDataPassing {
     weak var viewController: MyFoodViewController?
     var dataStore: MyFoodDataStore?
     var worker = MyFoodWorker()
+    
     // MARK: Routing
     
     func routeToCategoryDetails(segue: UIStoryboardSegue?) {
@@ -40,7 +41,6 @@ class MyFoodRouter: NSObject, MyFoodRoutingLogic, MyFoodDataPassing {
     
     func navigateToCategoryDetails(source: MyFoodViewController, destination: CategoryDetailsViewController) {
         source.show(destination, sender: nil)
-
     }
     
 //MARK: Passing data

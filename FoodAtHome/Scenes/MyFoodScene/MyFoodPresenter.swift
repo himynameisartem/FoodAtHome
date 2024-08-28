@@ -34,7 +34,13 @@ class MyFoodPresenter: MyFoodPresentationLogic {
     
     func presentDetailsFood(responce: MyFood.showDetailFood.Responce) {
         worker = MyFoodWorker()
-        guard let displayedDetailsFood = worker?.getDisplayedFoodDetails(from: responce.foodDetails) else { return }
+        let displayedDetailsFood = MyFood.showDetailFood.ViewModel.DiplayedDetails(
+                                    name: responce.foodDetails.name,
+                                    weight: responce.foodDetails.weight,
+                                    productionDate: responce.foodDetails.productionDateString() ?? "-",
+                                    expirationDate: responce.foodDetails.expirationDateString() ?? "-",
+                                    consumeUp: responce.foodDetails.consumeUpString() ?? "-",
+                                    distaceIndicator: responce.foodDetails.distanceBetweenProductionAndExpiration())
         let viewModel = MyFood.showDetailFood.ViewModel(DiplayedDetails: displayedDetailsFood)
         viewController?.displayFoodDetails(viewModel: viewModel)
     }

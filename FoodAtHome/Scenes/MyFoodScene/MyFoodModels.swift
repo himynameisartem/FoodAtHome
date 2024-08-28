@@ -49,7 +49,7 @@ enum MyFood {
         }
         
         struct Responce {
-            let foodDetails: [FoodRealm]
+            let foodDetails: FoodRealm
         }
         
         struct ViewModel {
@@ -61,7 +61,7 @@ enum MyFood {
                 let consumeUp: String
                 let distaceIndicator: CGFloat?
             }
-            let DiplayedDetails: [DiplayedDetails]
+            let DiplayedDetails: DiplayedDetails
         }
     }
 }

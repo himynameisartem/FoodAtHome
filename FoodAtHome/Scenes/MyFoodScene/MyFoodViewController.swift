@@ -15,18 +15,17 @@ protocol MyFoodDisplayLogic: AnyObject {
 
 class MyFoodViewController: UIViewController {
     
+    @IBOutlet weak var categoryMyFoodCollectionView: UICollectionView!
+    @IBOutlet weak var myFoodCollectionView: UICollectionView!
+    
     private var myFood: [MyFood.ShowMyFood.ViewModel.DisplayedMyFood] = []
     private var categories: [MyFood.ShowCategories.ViewModel.DiplayedCategories] = []
-    private var foodDetails: [MyFood.showDetailFood.ViewModel.DiplayedDetails] = []
+    private var foodDetails: MyFood.showDetailFood.ViewModel.DiplayedDetails?
     
     var interactor: MyFoodBusinessLogic?
     var router: (NSObjectProtocol & MyFoodRoutingLogic & MyFoodDataPassing)?
     
     private var categoryMyFoodCollectionAnimationIsComlete = false
-    private let myFoodDetailsPopupMenu = Bundle.main.loadNibNamed("MyFoodDetailsPopupMenu", owner: MyFoodViewController.self)?.first as! MyFoodDetailsPopupMenu
-    
-    @IBOutlet weak var categoryMyFoodCollectionView: UICollectionView!
-    @IBOutlet weak var myFoodCollectionView: UICollectionView!
     
     // MARK: View lifecycle
     
@@ -36,7 +35,14 @@ class MyFoodViewController: UIViewController {
         setupCollectionViewCells()
         getMyFood()
         getCategories()
-        getDetailsFood()
+    }
+    
+    @IBAction func deleteFoodTapped(_ sender: UIBarButtonItem) {
+        print(#function)
+    }
+    
+    @IBAction func shareFoodTapped(_ sender: UIBarButtonItem) {
+        print(#function)
     }
     
     // MARK: Setup
@@ -80,9 +86,9 @@ class MyFoodViewController: UIViewController {
         interactor?.showCategories(request: request)
     }
     
-    private func getDetailsFood() {
+    private func getDetailsFood(at index: Int) {
         let request = MyFood.showDetailFood.Request()
-        interactor?.showDetailsFood(request: request)
+        interactor?.showDetailsFood(request: request, at: index)
     }
 }
 
@@ -113,6 +119,11 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 return myFoodCell
             } else {
                 let addMyFoodCell = collectionView.dequeueReusableCell(withReuseIdentifier: "addMyFoodCell", for: indexPath) as! AddMyFoodCollectionViewCell
+                addMyFoodCell.buttonAction = { [weak self] in
+                    addMyFoodCell.addFoodButton.showAnimation(for: .withColor) {
+                        self?.performSegue(withIdentifier: "ChoiseFood", sender: nil)
+                    }
+                }
                 return addMyFoodCell
             }
         }
@@ -137,8 +148,9 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 self.performSegue(withIdentifier: "CategoryDetails", sender: nil)
             })
         } else {
-            myFoodDetailsPopupMenu.setupPopUpMenu(for: view, with: collectionView, at: indexPath)
-            myFoodDetailsPopupMenu.configure(viewModel: foodDetails, at: indexPath)
+            if indexPath.row < myFood.count {
+                getDetailsFood(at: indexPath.row)
+            }
         }
     }
     
@@ -176,6 +188,9 @@ extension MyFoodViewController: MyFoodDisplayLogic {
     }
     
     func displayFoodDetails(viewModel: MyFood.showDetailFood.ViewModel) {
-        foodDetails = viewModel.DiplayedDetails
+        let myFoodDetailsPopupMenu = Bundle.main.loadNibNamed("MyFoodDetailsPopupMenu",
+                                                              owner: MyFoodViewController.self)?.first as! MyFoodDetailsPopupMenu
+        myFoodDetailsPopupMenu.openPopUpMenu(for: self.view, with: myFoodCollectionView)
+        myFoodDetailsPopupMenu.configure(viewModel: viewModel.DiplayedDetails)
     }
 }

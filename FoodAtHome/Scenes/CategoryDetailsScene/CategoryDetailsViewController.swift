@@ -45,8 +45,12 @@ class CategoryDetailsViewController: UIViewController {
         
     }
     
-    @IBAction func returnTapped(_ sender: Any) {
-        navigationController?.popToRootViewController(animated: true)
+    @IBAction func returnTapped(_ sender: UIButton) {
+        
+        sender.showAnimation(for: .withoutColor) {
+            
+            self.navigationController?.popToRootViewController(animated: true)
+        }
     }
     
     // MARK: Setup

@@ -11,15 +11,33 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="AddMyFoodCollectionViewCell" customModule="FoodAtHome" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="80" height="120"/>
+            <rect key="frame" x="0.0" y="0.0" width="125" height="183"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="80" height="120"/>
+                <rect key="frame" x="0.0" y="0.0" width="125" height="183"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wnL-5k-7dq">
+                        <rect key="frame" x="22" y="51" width="80" height="80"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="plus" catalog="system"/>
+                        <buttonConfiguration key="configuration" style="filled" image="plus" catalog="system">
+                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </buttonConfiguration>
+                    </button>
+                </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <size key="customSize" width="104" height="131"/>
-            <point key="canvasLocation" x="180.15267175572518" y="48.239436619718312"/>
+            <size key="customSize" width="149" height="194"/>
+            <connections>
+                <outlet property="addFoodButton" destination="wnL-5k-7dq" id="eJg-r1-H6n"/>
+            </connections>
+            <point key="canvasLocation" x="214.50381679389312" y="69.366197183098592"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="plus" catalog="system" width="128" height="113"/>
+    </resources>
 </document>

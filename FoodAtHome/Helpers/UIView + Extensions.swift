@@ -21,7 +21,11 @@ extension UIView {
                        animations: { [weak self] in
             self?.transform = CGAffineTransform.init(scaleX: 0.85, y: 0.85)
             if color == .withColor {
-                self?.backgroundColor = .addButtonSelectColor
+                if let button = self as? UIButton {
+                    button.configuration?.background.backgroundColor = .addButtonSelectColor
+                } else {
+                    self?.backgroundColor = .addButtonSelectColor
+                }
             }
         }) {  (done) in
             completionBlock()
@@ -30,11 +34,15 @@ extension UIView {
                            options: .curveLinear,
                            animations: { [weak self] in
                 self?.transform = CGAffineTransform.init(scaleX: 1, y: 1)
-                if color == .withColor {
-                    self?.backgroundColor = .white
-                }
             }) { [weak self] (_) in
                 self?.isUserInteractionEnabled = true
+                if color == .withColor {
+                    if let button = self as? UIButton {
+                        button.configuration?.background.backgroundColor = .white
+                    } else {
+                        self?.backgroundColor = .white
+                    }
+                }
             }
         }
     }
