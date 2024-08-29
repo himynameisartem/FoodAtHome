@@ -3,7 +3,6 @@
 //  FoodAtHome
 //
 //  Created by Артем Кудрявцев on 27.08.2024.
-//  Copyright (c) 2024 ___ORGANIZATIONNAME___. All rights reserved.
 //
 
 import UIKit
@@ -13,10 +12,13 @@ protocol ChoiseFoodDisplayLogic: AnyObject {
 }
 
 class ChoiseFoodViewController: UIViewController {
-        
-    @IBOutlet weak var navItem: UINavigationItem!
     
-    let searchController = UISearchController(searchResultsController: nil)
+    @IBOutlet weak var navItem: UINavigationItem!
+    @IBOutlet weak var backButton: UIBarButtonItem!
+    @IBOutlet weak var searchButton: UIBarButtonItem!
+    
+    private let searchController = UISearchController(searchResultsController: nil)
+    private let hideSearchBarGesture = UITapGestureRecognizer()
     
     var interactor: ChoiseFoodBusinessLogic?
     var router: (NSObjectProtocol & ChoiseFoodRoutingLogic)?
@@ -55,23 +57,46 @@ class ChoiseFoodViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        searchController.searchBar.showsCancelButton = true
-        searchController.hidesNavigationBarDuringPresentation = true
-        searchController.automaticallyShowsCancelButton = true
-        searchController.searchBar.delegate = self
+        setupSearchBar()
     }
+    
     
     @IBAction func backButtonTapped(_ sender: Any) {
         self.navigationController?.popToRootViewController(animated: true)
     }
     
     @IBAction func searchButtonTapped(_ sender: Any) {
-        if navItem.titleView == nil {
-            navItem.titleView = searchController.searchBar
-        } else {
-            navItem.titleView = nil
-        }
+        navItem.titleView = self.searchController.searchBar
+        searchController.searchBar.becomeFirstResponder()
+        navItem.hidesBackButton = true
+        navItem.rightBarButtonItem = .none
+        navItem.leftBarButtonItem = .none
+        hideSearchBarGesture.addTarget(self, action: #selector(tapForCloseSearchBar))
+        view.addGestureRecognizer(hideSearchBarGesture)
+    }
+    
+    private func setupSearchBar() {
+        searchController.searchBar.delegate = self
+        searchController.delegate = self
+        searchController.searchResultsUpdater = self
+        searchController.resignFirstResponder()
+        searchController.searchBar.showsCancelButton = true
+        searchController.searchBar.placeholder = "Search".localized()
+        searchController.searchBar.setValue("Cancel".localized(), forKey: "cancelButtonText")
+        searchController.searchBar.tintColor = .black
+        searchController.delegate = self
+
+    }
+    
+    private func hideSearchBar() {
+        navItem.titleView = .none
+        navItem.leftBarButtonItem = backButton
+        navItem.rightBarButtonItem = searchButton
+    }
+    
+    @objc private func tapForCloseSearchBar() {
+        hideSearchBar()
+        view.removeGestureRecognizer(hideSearchBarGesture)
     }
 }
 
@@ -82,9 +107,13 @@ extension ChoiseFoodViewController: ChoiseFoodDisplayLogic {
     }
 }
 
-extension ChoiseFoodViewController: UISearchBarDelegate {
+extension ChoiseFoodViewController: UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        
+    }
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        navItem.titleView = nil
+        hideSearchBar()
     }
 }
 

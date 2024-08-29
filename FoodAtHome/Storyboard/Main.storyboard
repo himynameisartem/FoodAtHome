@@ -264,7 +264,9 @@
                     <navigationItem key="navigationItem" id="TSN-L4-uE8"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="backButton" destination="Ov6-Wl-6Qd" id="p31-Ok-vNE"/>
                         <outlet property="navItem" destination="muy-q5-JNi" id="PZD-8Z-wNe"/>
+                        <outlet property="searchButton" destination="gYi-DR-yxh" id="T34-CZ-UTS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PK7-fB-uTc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
