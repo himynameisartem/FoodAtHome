@@ -13,9 +13,10 @@
         <!--Item-->
         <scene sceneID="0Gl-aR-2IB">
             <objects>
-                <navigationController navigationBarHidden="YES" id="Mmu-Hz-9IK" sceneMemberID="viewController">
+                <navigationController id="Mmu-Hz-9IK" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="Qi6-R9-dss"/>
-                    <navigationBar key="navigationBar" hidden="YES" contentMode="scaleToFill" id="9O1-YO-dYE">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="9O1-YO-dYE">
+                        <rect key="frame" x="0.0" y="59" width="430" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -37,35 +38,6 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wallpapers" translatesAutoresizingMaskIntoConstraints="NO" id="k20-Ss-897">
                                 <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                             </imageView>
-                            <navigationBar contentMode="scaleToFill" translucent="NO" shadowImage="separatorForNavigationBar" translatesAutoresizingMaskIntoConstraints="NO" id="nut-8N-GRV">
-                                <rect key="frame" x="0.0" y="59" width="430" height="44"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="MvE-XA-KXD"/>
-                                </constraints>
-                                <color key="barTintColor" systemColor="systemGray6Color"/>
-                                <textAttributes key="titleTextAttributes">
-                                    <offsetWrapper key="textShadowOffset" horizontal="-1000" vertical="0.0"/>
-                                </textAttributes>
-                                <items>
-                                    <navigationItem largeTitleDisplayMode="never" id="beA-BY-guW">
-                                        <rightBarButtonItems>
-                                            <barButtonItem systemItem="trash" id="Vbf-Zb-Qut">
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <connections>
-                                                    <action selector="deleteFoodTapped:" destination="aSf-Dj-mpe" id="MvX-9d-dIS"/>
-                                                </connections>
-                                            </barButtonItem>
-                                            <barButtonItem image="square.and.arrow.up" catalog="system" id="pnr-tv-NEN" userLabel="Share">
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <connections>
-                                                    <action selector="shareFoodTapped:" destination="aSf-Dj-mpe" id="6kP-R4-fla"/>
-                                                </connections>
-                                            </barButtonItem>
-                                        </rightBarButtonItems>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" prefetchingEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OZe-cr-GmQ">
                                 <rect key="frame" x="0.0" y="103" width="430" height="128"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -114,40 +86,60 @@
                                     <outlet property="delegate" destination="aSf-Dj-mpe" id="b6i-Ql-9NN"/>
                                 </connections>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FOOD AT HOME" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8um-uJ-xJQ">
-                                <rect key="frame" x="10" y="71" width="220" height="20.333333333333329"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Wu4-4d-B3a"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="Wu4-4d-B3a" firstAttribute="trailing" secondItem="8um-uJ-xJQ" secondAttribute="trailing" constant="200" id="04g-I4-oUc"/>
-                            <constraint firstItem="nut-8N-GRV" firstAttribute="trailing" secondItem="Wu4-4d-B3a" secondAttribute="trailing" id="6o2-lW-jTr"/>
+                            <constraint firstItem="OZe-cr-GmQ" firstAttribute="top" secondItem="Wu4-4d-B3a" secondAttribute="top" id="Brz-TM-wU2"/>
                             <constraint firstAttribute="bottom" secondItem="xfG-dN-ahP" secondAttribute="bottom" id="DC6-Wx-ejX"/>
                             <constraint firstItem="k20-Ss-897" firstAttribute="leading" secondItem="Wu4-4d-B3a" secondAttribute="leading" id="F8n-SS-e9f"/>
                             <constraint firstItem="xfG-dN-ahP" firstAttribute="leading" secondItem="Wu4-4d-B3a" secondAttribute="leading" id="KOB-xt-aaN"/>
-                            <constraint firstItem="8um-uJ-xJQ" firstAttribute="centerY" secondItem="nut-8N-GRV" secondAttribute="centerY" id="LpO-fg-bV4"/>
-                            <constraint firstItem="nut-8N-GRV" firstAttribute="top" secondItem="Wu4-4d-B3a" secondAttribute="top" id="Pmc-ny-PK6"/>
                             <constraint firstItem="k20-Ss-897" firstAttribute="trailing" secondItem="Wu4-4d-B3a" secondAttribute="trailing" id="WOw-6w-jDU"/>
-                            <constraint firstItem="nut-8N-GRV" firstAttribute="leading" secondItem="Wu4-4d-B3a" secondAttribute="leading" id="XZZ-dF-3cW"/>
-                            <constraint firstItem="OZe-cr-GmQ" firstAttribute="top" secondItem="nut-8N-GRV" secondAttribute="bottom" id="YCS-81-EeT"/>
                             <constraint firstItem="xfG-dN-ahP" firstAttribute="top" secondItem="OZe-cr-GmQ" secondAttribute="bottom" id="awf-7I-iGw"/>
                             <constraint firstItem="k20-Ss-897" firstAttribute="top" secondItem="BvU-YF-wCJ" secondAttribute="top" id="f4Q-c2-kA2"/>
                             <constraint firstItem="xfG-dN-ahP" firstAttribute="trailing" secondItem="Wu4-4d-B3a" secondAttribute="trailing" id="gEz-xd-fsh"/>
                             <constraint firstItem="OZe-cr-GmQ" firstAttribute="leading" secondItem="Wu4-4d-B3a" secondAttribute="leading" id="hKb-f9-t6e"/>
                             <constraint firstAttribute="bottom" secondItem="k20-Ss-897" secondAttribute="bottom" id="led-bJ-5h6"/>
-                            <constraint firstItem="8um-uJ-xJQ" firstAttribute="leading" secondItem="nut-8N-GRV" secondAttribute="leading" constant="10" id="nN9-Ju-D2m"/>
                             <constraint firstItem="OZe-cr-GmQ" firstAttribute="trailing" secondItem="Wu4-4d-B3a" secondAttribute="trailing" id="vf7-hm-lKi"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="FS6-vr-VWb"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="FS6-vr-VWb">
+                        <nil key="title"/>
+                        <view key="titleView" contentMode="scaleToFill" id="ncq-dp-p1Z">
+                            <rect key="frame" x="215" y="22" width="0.0" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="FOOD AT HOME" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fi9-ra-43R">
+                                    <rect key="frame" x="-205" y="-13" width="137" height="34"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBrownColor"/>
+                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                        <rightBarButtonItems>
+                            <barButtonItem image="trash" catalog="system" id="p7S-xJ-uF2">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="deleteFoodTapped:" destination="aSf-Dj-mpe" id="VYL-rW-Ln5"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="square.and.arrow.up" catalog="system" id="SLc-Fl-Ubd">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="shareFoodTapped:" destination="aSf-Dj-mpe" id="BPF-2M-yPE"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
                         <outlet property="categoryMyFoodCollectionView" destination="OZe-cr-GmQ" id="Mr3-LQ-jg4"/>
                         <outlet property="myFoodCollectionView" destination="xfG-dN-ahP" id="zUd-df-bBa"/>
+                        <outlet property="titleBarLabel" destination="fi9-ra-43R" id="32I-KK-btU"/>
                         <segue destination="A3G-dv-TNa" kind="show" identifier="CategoryDetails" id="com-Fu-tFb"/>
                         <segue destination="Zjr-dd-2ze" kind="show" identifier="ChoiseFood" id="611-3j-3Rw"/>
                     </connections>
@@ -177,10 +169,13 @@
                                     <outlet property="delegate" destination="A3G-dv-TNa" id="yC8-yQ-y9x"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="close" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4f-Ld-Lgz">
-                                <rect key="frame" x="360" y="74" width="50" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="close" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4f-Ld-Lgz">
+                                <rect key="frame" x="360" y="123" width="50" height="50"/>
                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="U4f-Ld-Lgz" secondAttribute="height" multiplier="1:1" id="6v7-Ip-6EX"/>
+                                    <constraint firstAttribute="width" constant="50" id="K9b-ZQ-IfV"/>
+                                </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system">
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -202,6 +197,8 @@
                             <constraint firstAttribute="bottom" secondItem="vPY-ws-2Rd" secondAttribute="bottom" id="iiR-Ga-La1"/>
                             <constraint firstItem="vPY-ws-2Rd" firstAttribute="top" secondItem="1Ck-bu-WPK" secondAttribute="top" id="qLh-h8-l9z"/>
                             <constraint firstItem="vPY-ws-2Rd" firstAttribute="trailing" secondItem="Nb6-Et-1wQ" secondAttribute="trailing" id="tRy-TI-vHw"/>
+                            <constraint firstItem="Nb6-Et-1wQ" firstAttribute="trailing" secondItem="U4f-Ld-Lgz" secondAttribute="trailing" constant="20" id="yY5-dO-XL9"/>
+                            <constraint firstItem="U4f-Ld-Lgz" firstAttribute="top" secondItem="Nb6-Et-1wQ" secondAttribute="top" constant="20" id="ye2-5T-nd9"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="g8G-6N-oat"/>
@@ -221,65 +218,42 @@
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wallpapers" translatesAutoresizingMaskIntoConstraints="NO" id="vfV-LK-AxF">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="wallpapers" translatesAutoresizingMaskIntoConstraints="NO" id="vfV-LK-AxF">
                                 <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vny-tP-KJK">
-                                <rect key="frame" x="0.0" y="59" width="430" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="8ao-Z0-rVF">
+                                <rect key="frame" x="0.0" y="103" width="430" height="829"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="barTintColor" systemColor="systemGray6Color"/>
-                                <items>
-                                    <navigationItem id="muy-q5-JNi">
-                                        <barButtonItem key="leftBarButtonItem" image="chevron.backward" catalog="system" id="Ov6-Wl-6Qd">
-                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <connections>
-                                                <action selector="backButtonTapped:" destination="Zjr-dd-2ze" id="0q5-fc-bsb"/>
-                                            </connections>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="gYi-DR-yxh">
-                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <connections>
-                                                <action selector="searchButtonTapped:" destination="Zjr-dd-2ze" id="EjE-en-qAC"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                                <navigationBarAppearance key="standardAppearance">
-                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                    <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </navigationBarAppearance>
-                            </navigationBar>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="UeT-Y7-Ofs"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
-                            <constraint firstItem="vfV-LK-AxF" firstAttribute="trailing" secondItem="UeT-Y7-Ofs" secondAttribute="trailing" id="fzl-YN-1ie"/>
-                            <constraint firstAttribute="bottom" secondItem="vfV-LK-AxF" secondAttribute="bottom" id="ifh-D3-dJX"/>
-                            <constraint firstItem="vfV-LK-AxF" firstAttribute="leading" secondItem="UeT-Y7-Ofs" secondAttribute="leading" id="tLa-K2-UW8"/>
-                            <constraint firstItem="vfV-LK-AxF" firstAttribute="top" secondItem="1px-Na-UgO" secondAttribute="top" id="uy1-Xw-Afi"/>
+                            <constraint firstAttribute="bottom" secondItem="8ao-Z0-rVF" secondAttribute="bottom" id="6ic-H7-miV"/>
+                            <constraint firstItem="8ao-Z0-rVF" firstAttribute="trailing" secondItem="UeT-Y7-Ofs" secondAttribute="trailing" id="Yoy-7u-AfG"/>
+                            <constraint firstItem="8ao-Z0-rVF" firstAttribute="leading" secondItem="UeT-Y7-Ofs" secondAttribute="leading" id="kM4-RY-gqu"/>
+                            <constraint firstItem="8ao-Z0-rVF" firstAttribute="top" secondItem="UeT-Y7-Ofs" secondAttribute="top" id="mwj-IZ-Ako"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="TSN-L4-uE8"/>
-                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="backButton" destination="Ov6-Wl-6Qd" id="p31-Ok-vNE"/>
-                        <outlet property="navItem" destination="muy-q5-JNi" id="PZD-8Z-wNe"/>
-                        <outlet property="searchButton" destination="gYi-DR-yxh" id="T34-CZ-UTS"/>
+                        <outlet property="foodListTableView" destination="8ao-Z0-rVF" id="6lz-T4-NpH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PK7-fB-uTc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1306" y="189"/>
+            <point key="canvasLocation" x="1304.6511627906978" y="188.6266094420601"/>
         </scene>
     </scenes>
     <resources>
-        <image name="chevron.backward" catalog="system" width="97" height="128"/>
-        <image name="separatorForNavigationBar" width="2083" height="4"/>
         <image name="square.and.arrow.up" catalog="system" width="108" height="128"/>
+        <image name="trash" catalog="system" width="117" height="128"/>
         <image name="wallpapers" width="1000" height="1200"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
+        <systemColor name="systemBrownColor">
+            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

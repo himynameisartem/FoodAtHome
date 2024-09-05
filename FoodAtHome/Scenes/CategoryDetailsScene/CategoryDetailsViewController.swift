@@ -40,6 +40,7 @@ class CategoryDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
         setupUI()
         getFoodDetails()
         
@@ -48,7 +49,7 @@ class CategoryDetailsViewController: UIViewController {
     @IBAction func returnTapped(_ sender: UIButton) {
         
         sender.showAnimation(for: .withoutColor) {
-            
+            self.navigationController?.navigationBar.isHidden = false
             self.navigationController?.popToRootViewController(animated: true)
         }
     }
@@ -82,6 +83,19 @@ class CategoryDetailsViewController: UIViewController {
         foodListTableView.register(UINib(nibName: "CategoryDetailsFoodCell", bundle: nil), forCellReuseIdentifier: "CategoryDetailsFoodCell")
         foodListTableView.delegate = self
         foodListTableView.dataSource = self
+        
+
+    }
+    
+    private func setupNavigationBar() {
+        navigationItem.hidesBackButton = true
+        UIView.animate(withDuration: 0.3) {
+            self.navigationController?.navigationBar.alpha = 0.0
+        } completion: { done in
+            self.navigationController?.navigationBar.isHidden = true
+            self.navigationController?.navigationBar.alpha = 1
+
+        }
     }
 }
 

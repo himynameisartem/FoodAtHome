@@ -49,7 +49,7 @@
 		314CA49D2A7A543F002D4680 /* FoodListConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA49C2A7A543F002D4680 /* FoodListConfigurator.swift */; };
 		314CA49F2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA49E2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift */; };
 		314CA4A12A7A58C5002D4680 /* FoodListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4A02A7A58C5002D4680 /* FoodListManager.swift */; };
-		314CA4A32A7C35F3002D4680 /* FoodListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4A22A7C35F3002D4680 /* FoodListTableViewCell.swift */; };
+		314CA4A32A7C35F3002D4680 /* DetailFoodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4A22A7C35F3002D4680 /* DetailFoodCell.swift */; };
 		31600188283FE9F50033B5B8 /* AddCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31600187283FE9F50033B5B8 /* AddCollectionViewCell.swift */; };
 		316066E6288EC0F500EDB06F /* CategoryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316066E5288EC0F500EDB06F /* CategoryListTableViewCell.swift */; };
 		316066E9288ECCF500EDB06F /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316066E8288ECCF500EDB06F /* TabBarViewController.swift */; };
@@ -94,6 +94,8 @@
 		31C624712C7EF5EC004E83B7 /* PopUpMenuPositionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C624702C7EF5EC004E83B7 /* PopUpMenuPositionModel.swift */; };
 		31C6B926288323A80066829C /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C6B925288323A80066829C /* CategoryCollectionViewCell.swift */; };
 		31C6B9292883F5570066829C /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C6B9282883F5570066829C /* CategoryListViewController.swift */; };
+		31C7B02D2C81A6D100C41CE3 /* FoodListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31C7B02C2C81A6D100C41CE3 /* FoodListTableViewCell.xib */; };
+		31C7B02E2C81A6D100C41CE3 /* FoodListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7B02B2C81A6D100C41CE3 /* FoodListTableViewCell.swift */; };
 		31CFBD2A2BCED856004C75A8 /* CategoryMyFoodCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31CFBD292BCED856004C75A8 /* CategoryMyFoodCollectionViewCell.xib */; };
 		31CFBD2E2BCEDA62004C75A8 /* CategoryMyFoodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CFBD2D2BCEDA62004C75A8 /* CategoryMyFoodCollectionViewCell.swift */; };
 		31CFBD322BCEF211004C75A8 /* UIViewController + StoryBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CFBD312BCEF211004C75A8 /* UIViewController + StoryBoard.swift */; };
@@ -180,7 +182,7 @@
 		314CA49C2A7A543F002D4680 /* FoodListConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListConfigurator.swift; sourceTree = "<group>"; };
 		314CA49E2A7A5457002D4680 /* FoodListConfiguratorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListConfiguratorProtocol.swift; sourceTree = "<group>"; };
 		314CA4A02A7A58C5002D4680 /* FoodListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListManager.swift; sourceTree = "<group>"; };
-		314CA4A22A7C35F3002D4680 /* FoodListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListTableViewCell.swift; sourceTree = "<group>"; };
+		314CA4A22A7C35F3002D4680 /* DetailFoodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFoodCell.swift; sourceTree = "<group>"; };
 		31600187283FE9F50033B5B8 /* AddCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCollectionViewCell.swift; sourceTree = "<group>"; };
 		316066E5288EC0F500EDB06F /* CategoryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListTableViewCell.swift; sourceTree = "<group>"; };
 		316066E8288ECCF500EDB06F /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -227,6 +229,8 @@
 		31C624702C7EF5EC004E83B7 /* PopUpMenuPositionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpMenuPositionModel.swift; sourceTree = "<group>"; };
 		31C6B925288323A80066829C /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		31C6B9282883F5570066829C /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
+		31C7B02B2C81A6D100C41CE3 /* FoodListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListTableViewCell.swift; sourceTree = "<group>"; };
+		31C7B02C2C81A6D100C41CE3 /* FoodListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoodListTableViewCell.xib; sourceTree = "<group>"; };
 		31CFBD292BCED856004C75A8 /* CategoryMyFoodCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryMyFoodCollectionViewCell.xib; sourceTree = "<group>"; };
 		31CFBD2D2BCEDA62004C75A8 /* CategoryMyFoodCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryMyFoodCollectionViewCell.swift; sourceTree = "<group>"; };
 		31CFBD312BCEF211004C75A8 /* UIViewController + StoryBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIViewController + StoryBoard.swift"; path = "FoodAtHome/Helpers/UIViewController + StoryBoard.swift"; sourceTree = SOURCE_ROOT; };
@@ -466,7 +470,7 @@
 			isa = PBXGroup;
 			children = (
 				314CA4902A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift */,
-				314CA4A22A7C35F3002D4680 /* FoodListTableViewCell.swift */,
+				314CA4A22A7C35F3002D4680 /* DetailFoodCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -663,6 +667,7 @@
 				31C624642C7DBABC004E83B7 /* ChoiseFoodModels.swift */,
 				31C624622C7DBABC004E83B7 /* ChoiseFoodWorker.swift */,
 				31C624632C7DBABC004E83B7 /* ChoiseFoodRouter.swift */,
+				31C7B0292C81A6A000C41CE3 /* Cells */,
 			);
 			path = ChoiseFoodScene;
 			sourceTree = "<group>";
@@ -673,6 +678,23 @@
 				31C624702C7EF5EC004E83B7 /* PopUpMenuPositionModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		31C7B0292C81A6A000C41CE3 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				31C7B02A2C81A6AC00C41CE3 /* FoodListTableViewCell */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		31C7B02A2C81A6AC00C41CE3 /* FoodListTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				31C7B02B2C81A6D100C41CE3 /* FoodListTableViewCell.swift */,
+				31C7B02C2C81A6D100C41CE3 /* FoodListTableViewCell.xib */,
+			);
+			path = FoodListTableViewCell;
 			sourceTree = "<group>";
 		};
 		31CFBD2F2BCEDAF7004C75A8 /* CategoryMyFoodCollectionViewCell */ = {
@@ -930,6 +952,7 @@
 				31CFBD4F2BD93933004C75A8 /* MyFoodDetailsPopupMenu.xib in Resources */,
 				31B1C6052BC8001B00C6D43F /* Inter-Bold.otf in Resources */,
 				31CFBD3A2BD130A0004C75A8 /* MyFoodCollectionViewCell.xib in Resources */,
+				31C7B02D2C81A6D100C41CE3 /* FoodListTableViewCell.xib in Resources */,
 				31B1C6062BC8001B00C6D43F /* Inter-ExtraLight.otf in Resources */,
 				31B1C6072BC8001B00C6D43F /* pobeda-regular.ttf in Resources */,
 				3139EE9B2C66575A00AEC1F2 /* .gitignore in Resources */,
@@ -992,7 +1015,7 @@
 				31CFBD3D2BD7DE51004C75A8 /* DataManager.swift in Sources */,
 				31D117842A9B64CF0019C228 /* CategoryFoodInteractorProtocol.swift in Sources */,
 				31D1177E2A9B64090019C228 /* CategoryFoodConfigurator.swift in Sources */,
-				314CA4A32A7C35F3002D4680 /* FoodListTableViewCell.swift in Sources */,
+				314CA4A32A7C35F3002D4680 /* DetailFoodCell.swift in Sources */,
 				31D117882A9B65020019C228 /* CategoryFoodRouterProtocol.swift in Sources */,
 				3139EE5A2C4D2D8D00AEC1F2 /* CategoryDetailsPresenter.swift in Sources */,
 				3139EE5B2C4D2D8D00AEC1F2 /* CategoryDetailsWorker.swift in Sources */,
@@ -1059,6 +1082,7 @@
 				314CA4932A7A50D0002D4680 /* FoodListViewProtocol.swift in Sources */,
 				314CA4912A7A36C6002D4680 /* HorizntalMenuCollectionViewCell.swift in Sources */,
 				316066E6288EC0F500EDB06F /* CategoryListTableViewCell.swift in Sources */,
+				31C7B02E2C81A6D100C41CE3 /* FoodListTableViewCell.swift in Sources */,
 				316066E9288ECCF500EDB06F /* TabBarViewController.swift in Sources */,
 				318497B12AA8C361004A2D7A /* ShoppingListInteractorProtocol.swift in Sources */,
 				31D456B52A5E890B00FDFDFB /* AddAndChangeFoodView.swift in Sources */,

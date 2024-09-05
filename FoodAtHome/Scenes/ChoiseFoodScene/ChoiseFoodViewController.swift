@@ -13,13 +13,13 @@ protocol ChoiseFoodDisplayLogic: AnyObject {
 
 class ChoiseFoodViewController: UIViewController {
     
-    @IBOutlet weak var navItem: UINavigationItem!
-    @IBOutlet weak var backButton: UIBarButtonItem!
-    @IBOutlet weak var searchButton: UIBarButtonItem!
+    @IBOutlet weak var foodListTableView: UITableView!
     
+    private let backButton = UIBarButtonItem()
+    private let searchButton = UIBarButtonItem()
     private let searchController = UISearchController(searchResultsController: nil)
     private let hideSearchBarGesture = UITapGestureRecognizer()
-    
+        
     var interactor: ChoiseFoodBusinessLogic?
     var router: (NSObjectProtocol & ChoiseFoodRoutingLogic)?
     
@@ -36,6 +36,7 @@ class ChoiseFoodViewController: UIViewController {
     }
     
     // MARK: Setup
+    
     
     private func setup() {
         let viewController = self
@@ -57,25 +58,27 @@ class ChoiseFoodViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationView()
+        setupTableView()
+    }
+
+    private func setupNavigationView() {
+        backButton.tintColor = .black
+        backButton.image = UIImage(systemName: "chevron.backward")
+        searchButton.tintColor = .black
+        searchButton.image = UIImage(systemName: "magnifyingglass")
+        navigationItem.hidesBackButton = true
+        navigationItem.leftBarButtonItem = backButton
+        navigationItem.rightBarButtonItem = searchButton
+        backButton.target = self
+        backButton.action = #selector(backButtonTapped(sender:))
+        searchButton.target = self
+        searchButton.action = #selector(searchButtonTapped(sender:))
         setupSearchBar()
     }
     
-    
-    @IBAction func backButtonTapped(_ sender: Any) {
-        self.navigationController?.popToRootViewController(animated: true)
-    }
-    
-    @IBAction func searchButtonTapped(_ sender: Any) {
-        navItem.titleView = self.searchController.searchBar
-        searchController.searchBar.becomeFirstResponder()
-        navItem.hidesBackButton = true
-        navItem.rightBarButtonItem = .none
-        navItem.leftBarButtonItem = .none
-        hideSearchBarGesture.addTarget(self, action: #selector(tapForCloseSearchBar))
-        view.addGestureRecognizer(hideSearchBarGesture)
-    }
-    
     private func setupSearchBar() {
+        searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.delegate = self
         searchController.delegate = self
         searchController.searchResultsUpdater = self
@@ -84,14 +87,34 @@ class ChoiseFoodViewController: UIViewController {
         searchController.searchBar.placeholder = "Search".localized()
         searchController.searchBar.setValue("Cancel".localized(), forKey: "cancelButtonText")
         searchController.searchBar.tintColor = .black
-        searchController.delegate = self
 
     }
-    
+
     private func hideSearchBar() {
-        navItem.titleView = .none
-        navItem.leftBarButtonItem = backButton
-        navItem.rightBarButtonItem = searchButton
+        navigationItem.titleView = .none
+        navigationItem.leftBarButtonItem = backButton
+        navigationItem.rightBarButtonItem = searchButton
+    }
+    
+    private func setupTableView() {
+        foodListTableView.delegate = self
+        foodListTableView.dataSource = self
+        foodListTableView.register(UINib(nibName: "FoodListTableViewCell", bundle: nil), forCellReuseIdentifier: "foodListCell")
+        
+    }
+    
+    
+    @objc private func searchButtonTapped(sender: UIBarButtonItem) {
+        navigationItem.titleView = searchController.searchBar
+        navigationItem.leftBarButtonItem = .none
+        navigationItem.rightBarButtonItem = .none
+        searchController.searchBar.becomeFirstResponder()
+        hideSearchBarGesture.addTarget(self, action: #selector(tapForCloseSearchBar))
+        view.addGestureRecognizer(hideSearchBarGesture)
+    }
+    
+    @objc private func backButtonTapped(sender: UIBarButtonItem) {
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     @objc private func tapForCloseSearchBar() {
@@ -100,12 +123,25 @@ class ChoiseFoodViewController: UIViewController {
     }
 }
 
-extension ChoiseFoodViewController: ChoiseFoodDisplayLogic {
+//MARK: - UITableViewDelegate, UITableViewDataSource
+
+extension ChoiseFoodViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        5
+    }
     
-    func displayFood(viewModel: ChoiseFood.Model.ViewModel) {
-        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "foodListCell", for: indexPath) as! FoodListTableViewCell
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let height = view.frame.width / 3.9
+        return height
     }
 }
+
+//MARK: - UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating
 
 extension ChoiseFoodViewController: UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
@@ -117,4 +153,12 @@ extension ChoiseFoodViewController: UISearchBarDelegate, UISearchControllerDeleg
     }
 }
 
+//MARK: - ChoiseFoodDisplayLogic
+
+extension ChoiseFoodViewController: ChoiseFoodDisplayLogic {
+    
+    func displayFood(viewModel: ChoiseFood.Model.ViewModel) {
+        
+    }
+}
 

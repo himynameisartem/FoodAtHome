@@ -15,6 +15,7 @@ protocol MyFoodDisplayLogic: AnyObject {
 
 class MyFoodViewController: UIViewController {
     
+    @IBOutlet weak var titleBarLabel: UILabel!
     @IBOutlet weak var categoryMyFoodCollectionView: UICollectionView!
     @IBOutlet weak var myFoodCollectionView: UICollectionView!
     
@@ -32,6 +33,7 @@ class MyFoodViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        navigationBarSetup()
         setupCollectionViewCells()
         getMyFood()
         getCategories()
@@ -46,6 +48,14 @@ class MyFoodViewController: UIViewController {
     }
     
     // MARK: Setup
+    
+    private func navigationBarSetup() {
+        let x = -(view.frame.width / 2) + 10
+        let y = view.frame.origin.y - ((navigationController?.navigationBar.frame.height ?? 0) / 2)
+        let height = navigationController?.navigationBar.frame.height ?? 0
+        let width = view.frame.width / 2
+        titleBarLabel.frame = CGRect(x: x, y: y, width: width, height: height)
+    }
     
     private func setup() {
         let viewController = self
