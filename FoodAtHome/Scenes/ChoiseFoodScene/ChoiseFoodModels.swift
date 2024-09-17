@@ -9,15 +9,34 @@
 import UIKit
 
 enum ChoiseFood {
+    
+    enum ShowCategoriesFood {
+        struct Request {
+        }
+        struct Response {
+            let categoriesName: [String]
+        }
+        struct ViewModel {
+            let categoriesName: [String]
+
+        }
+    }
    
-  enum Model {
+  enum ShowFood {
     struct Request {
+        let category: FoodType?
+        let name: String?
     }
     struct Response {
-
+        let food: [FoodRealm]
     }
     struct ViewModel {
+        struct DispalyedFood {
+            let name: String
+            let imageName: String
+            let calories: String
+        }
+        let displayedFood: [DispalyedFood]
     }
   }
-  
 }

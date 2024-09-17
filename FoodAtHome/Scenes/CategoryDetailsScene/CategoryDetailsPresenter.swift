@@ -18,7 +18,7 @@ class CategoryDetailsPresenter: CategoryDetailsPresentationLogic {
     var worker: CategoryDetailsWorker?
     
     func presentCategory(responce: CategoryDetails.ShowCategory.Responce) {
-        let displayedDetails = CategoryDetails.ShowCategory.ViewModel.DisplayedCategory(categoryName: responce.category, categoryImage: responce.category)
+        let displayedDetails = CategoryDetails.ShowCategory.ViewModel.DisplayedCategory(categoryName: responce.category.localized(), categoryImage: responce.category)
         let viewModel = CategoryDetails.ShowCategory.ViewModel(displayedCategory: displayedDetails)
         viewController?.displayCategoryData(viewModel: viewModel)
     }

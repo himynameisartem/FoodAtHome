@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-enum FoodType: String {
+enum FoodType: String, CaseIterable {
     case vegetables = "Vegetables"
     case fruitsAndBerries = "Fruits and Berries"
     case mushrooms = "Mushrooms"

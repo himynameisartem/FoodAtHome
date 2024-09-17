@@ -23,7 +23,7 @@ class MyFoodCollectionViewCell: UICollectionViewCell {
     }
     
     func setData(viewModel: MyFood.ShowMyFood.ViewModel.DisplayedMyFood) {
-        foodImage.image = UIImage(named: viewModel.name)
+        foodImage.image = UIImage(named: viewModel.imageName)
         foodName.text = viewModel.name
     }
 }

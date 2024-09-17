@@ -9,15 +9,24 @@
 import UIKit
 
 protocol ChoiseFoodPresentationLogic {
-  func presentData(response: ChoiseFood.Model.Response)
+    func presentCategories(responce: ChoiseFood.ShowCategoriesFood.Response)
+    func presentFood(response: ChoiseFood.ShowFood.Response)
 }
 
 class ChoiseFoodPresenter: ChoiseFoodPresentationLogic {
     
-  weak var viewController: ChoiseFoodDisplayLogic?
-  
-  func presentData(response: ChoiseFood.Model.Response) {
-  
-  }
-  
+    weak var viewController: ChoiseFoodDisplayLogic?
+    var worker: ChoiseFoodWorker?
+    
+    func presentCategories(responce: ChoiseFood.ShowCategoriesFood.Response) {
+        let viewModel = ChoiseFood.ShowCategoriesFood.ViewModel(categoriesName: responce.categoriesName)
+        viewController?.displayCategories(viewModel: viewModel)
+    }
+    
+    func presentFood(response: ChoiseFood.ShowFood.Response) {
+        worker = ChoiseFoodWorker()
+        guard let displayedFood = worker?.displayedFood(from: response.food) else { return }
+        let viewModel = ChoiseFood.ShowFood.ViewModel(displayedFood: displayedFood)
+        viewController?.displayFood(viewModel: viewModel)
+    }
 }

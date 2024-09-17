@@ -35,7 +35,7 @@ class FoodListViewController: UIViewController {
     }
     
     private var openAnimation = true
-    private var cellWhidth = CGFloat()
+//    private var cellWhidth = CGFloat()
     
     override func viewDidLoad() {
         super.viewDidLoad()

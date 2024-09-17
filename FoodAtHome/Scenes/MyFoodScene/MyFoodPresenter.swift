@@ -35,7 +35,7 @@ class MyFoodPresenter: MyFoodPresentationLogic {
     func presentDetailsFood(responce: MyFood.showDetailFood.Responce) {
         worker = MyFoodWorker()
         let displayedDetailsFood = MyFood.showDetailFood.ViewModel.DiplayedDetails(
-                                    name: responce.foodDetails.name,
+                                    name: responce.foodDetails.name.localized(),
                                     weight: responce.foodDetails.weight,
                                     productionDate: responce.foodDetails.productionDateString() ?? "-",
                                     expirationDate: responce.foodDetails.expirationDateString() ?? "-",

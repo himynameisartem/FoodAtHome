@@ -1,13 +1,13 @@
 //
-//  HorizntalMenuCollectionViewCell.swift
+//  CategoriesCollectionViewCell.swift
 //  FoodAtHome
 //
-//  Created by Артем Кудрявцев on 02.08.2023.
+//  Created by Артем Кудрявцев on 08.09.2024.
 //
 
 import UIKit
 
-class HorizontalMenuCollectionViewCell: UICollectionViewCell {
+class CategoriesCollectionViewCell: UICollectionViewCell {
     
     private var selectedCellImage: UIImageView!
     private var categoryName: UILabel!
@@ -29,8 +29,8 @@ class HorizontalMenuCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(at indexPath: IndexPath) {
-        categoryName.text = foodCatigoriesList[indexPath.row].localized()
+    func configure(categoryNamme: String) {
+        categoryName.text = categoryNamme
     }
     
     private func setupUI() {
@@ -66,7 +66,5 @@ class HorizontalMenuCollectionViewCell: UICollectionViewCell {
             selectedCellImage.bottomAnchor.constraint(equalTo: bottomAnchor)
             
         ])
-        
     }
-    
 }

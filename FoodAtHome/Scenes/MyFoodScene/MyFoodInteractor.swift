@@ -26,7 +26,7 @@ class MyFoodInteractor: MyFoodBusinessLogic, MyFoodDataStore {
     var presenter: MyFoodPresentationLogic?
     
     func showCategories(request: MyFood.ShowCategories.Request) {
-        categories = categoriesList
+        categories = FoodType.allCases.map {$0.rawValue}
         let responce = MyFood.ShowCategories.Responce(categories: categories)
         presenter?.presentCategories(responce: responce)
     }

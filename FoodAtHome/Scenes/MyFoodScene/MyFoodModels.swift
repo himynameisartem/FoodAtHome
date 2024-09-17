@@ -21,6 +21,7 @@ enum MyFood {
         struct ViewModel {
             struct DisplayedMyFood {
                 let name: String
+                let imageName: String
             }
             let displayedMyFood: [DisplayedMyFood]
         }

@@ -223,21 +223,35 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="8ao-Z0-rVF">
-                                <rect key="frame" x="0.0" y="103" width="430" height="829"/>
+                                <rect key="frame" x="0.0" y="153" width="430" height="779"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
+                            <collectionView opaque="NO" clearsContextBeforeDrawing="NO" contentMode="center" bounces="NO" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" delaysContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QWB-7t-ZTR">
+                                <rect key="frame" x="0.0" y="103" width="430" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="lPb-Pq-3WI"/>
+                                </constraints>
+                                <inset key="scrollIndicatorInsets" minX="8" minY="0.0" maxX="10" maxY="0.0"/>
+                                <collectionViewLayout key="collectionViewLayout" id="HaJ-CH-nIq"/>
+                                <cells/>
+                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="UeT-Y7-Ofs"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="8ao-Z0-rVF" secondAttribute="bottom" id="6ic-H7-miV"/>
-                            <constraint firstItem="8ao-Z0-rVF" firstAttribute="trailing" secondItem="UeT-Y7-Ofs" secondAttribute="trailing" id="Yoy-7u-AfG"/>
-                            <constraint firstItem="8ao-Z0-rVF" firstAttribute="leading" secondItem="UeT-Y7-Ofs" secondAttribute="leading" id="kM4-RY-gqu"/>
-                            <constraint firstItem="8ao-Z0-rVF" firstAttribute="top" secondItem="UeT-Y7-Ofs" secondAttribute="top" id="mwj-IZ-Ako"/>
+                            <constraint firstItem="UeT-Y7-Ofs" firstAttribute="trailing" secondItem="QWB-7t-ZTR" secondAttribute="trailing" id="9c7-fx-dfI"/>
+                            <constraint firstItem="8ao-Z0-rVF" firstAttribute="trailing" secondItem="UeT-Y7-Ofs" secondAttribute="trailing" id="QEe-Q2-OhQ"/>
+                            <constraint firstItem="QWB-7t-ZTR" firstAttribute="top" secondItem="UeT-Y7-Ofs" secondAttribute="top" id="TaS-Sl-y77"/>
+                            <constraint firstAttribute="bottom" secondItem="8ao-Z0-rVF" secondAttribute="bottom" id="Wbi-n4-89q"/>
+                            <constraint firstItem="8ao-Z0-rVF" firstAttribute="leading" secondItem="UeT-Y7-Ofs" secondAttribute="leading" id="byX-4R-2g6"/>
+                            <constraint firstItem="8ao-Z0-rVF" firstAttribute="top" secondItem="QWB-7t-ZTR" secondAttribute="bottom" id="cgV-EI-7Vg"/>
+                            <constraint firstItem="QWB-7t-ZTR" firstAttribute="leading" secondItem="UeT-Y7-Ofs" secondAttribute="leading" id="ln7-lr-Vah"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="categoriesFoodCollectionView" destination="QWB-7t-ZTR" id="jiF-Ws-5th"/>
                         <outlet property="foodListTableView" destination="8ao-Z0-rVF" id="6lz-T4-NpH"/>
                     </connections>
                 </viewController>

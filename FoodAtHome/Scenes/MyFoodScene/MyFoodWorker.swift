@@ -14,8 +14,9 @@ class MyFoodWorker {
         
         var displayedMyFood: [MyFood.ShowMyFood.ViewModel.DisplayedMyFood] = []
         myFood.forEach { food in
-            let name = food.name
-            let food = MyFood.ShowMyFood.ViewModel.DisplayedMyFood(name: name)
+            let name = food.name.localized()
+            let imageName = food.name
+            let food = MyFood.ShowMyFood.ViewModel.DisplayedMyFood(name: name, imageName: imageName)
             displayedMyFood.append(food)
         }
         return displayedMyFood
@@ -25,7 +26,7 @@ class MyFoodWorker {
         
         var displayedCategories: [MyFood.ShowCategories.ViewModel.DiplayedCategories] = []
         categories.forEach { category in
-            let name = category
+            let name = category.localized()
             let imageName = category
             let categories = MyFood.ShowCategories.ViewModel.DiplayedCategories(name: name, imageName: imageName)
             displayedCategories.append(categories)

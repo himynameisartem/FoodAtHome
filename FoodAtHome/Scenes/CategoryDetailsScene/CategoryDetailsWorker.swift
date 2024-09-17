@@ -19,10 +19,10 @@ class CategoryDetailsWorker {
             let calories = food.calories
             
             let foodDetails = CategoryDetails.ShowFood.ViewModel.DisplayedCells(
-                foodName: foodName,
+                foodName: foodName.localized(),
                 imageName: imageName,
                 weight: weight,
-                calories: calories + "kCal.".localized() + " / " + "100g.".localized())
+                calories: calories + "kCal".localized() + " / " + "100g.".localized())
             
             displayedFood.append(foodDetails)
         }

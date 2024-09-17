@@ -133,10 +133,10 @@ extension MyFoodDetailsPopupMenu {
         dimmingView.alpha = 0.5
         dimmingView.backgroundColor = .black
         contentView.layer.cornerRadius = 8
-        weightNameLabel.text = "Weight: "
-        productionDAteNameLabel.text = "Production Date: "
-        expirationDateNameLabel.text = "Expiration Date: "
-        consumeUpNameLabel.text = "Consume Up: "
+        weightNameLabel.text = "Weight:".localized()
+        productionDAteNameLabel.text = "Manufacturing Date:".localized()
+        expirationDateNameLabel.text = "Expires on:".localized()
+        consumeUpNameLabel.text = "Remaining:".localized()
         nameLabel.font = UIFont(name: "Inter", size: nameLabel.font.pointSize)
         setupFonts(labels: [weightNameLabel,
                            productionDAteNameLabel,
