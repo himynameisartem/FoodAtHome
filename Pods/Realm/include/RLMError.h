@@ -254,8 +254,7 @@ typedef RLM_ERROR_ENUM(NSInteger, RLMSyncError, RLMSyncErrorDomain) {
      difficult to guarantee).
 
      If `+[RLMSyncSession immediatelyHandleError:]` is not called, the client reset process
-     will be automatically carried out the next time the app is launched and the
-     `RLMSyncManager` is accessed.
+     will be automatically carried out the next time the app is launched and the `App` is initialized.
 
      The value for the `kRLMSyncPathOfRealmBackupCopyKey` key in the `userInfo` dictionary
      describes the path of the recovered copy of the Realm. This copy will not actually be
@@ -329,6 +328,14 @@ typedef RLM_ERROR_ENUM(NSInteger, RLMSyncError, RLMSyncErrorDomain) {
      Connecting to the server failed due to a TLS issue such as an invalid certificate.
      */
     RLMSyncErrorTLSHandshakeFailed = 13,
+    /**
+     The server has encountered an error that it wants the user to know about,
+     but is not necessarily fatal.
+
+     An error with this code may indicate that either sync is not enabled or it's trying to connect to
+     an edge server app.
+     */
+    RLMSyncErrorServerWarning = 14,
 };
 
 #pragma mark - RLMSyncAuthError

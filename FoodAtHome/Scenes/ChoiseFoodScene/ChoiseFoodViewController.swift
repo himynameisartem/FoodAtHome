@@ -167,12 +167,13 @@ class ChoiseFoodViewController: UIViewController {
         navigationItem.rightBarButtonItem = searchButton
         view.removeGestureRecognizer(hideSearchBarGesture)
         
-        UIView.animate(withDuration: 0.3, delay: 0.1, options: .curveEaseInOut) {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut) {
             self.collectionViewHeightConstraint.constant += 50
             self.view.layoutIfNeeded()
         } completion: { done in
             UIView.animate(withDuration: 0.1) {
                 self.categoriesFoodCollectionView.alpha = 1
+                self.getFoodList()
             }
         }
     }
@@ -184,6 +185,7 @@ extension ChoiseFoodViewController: UISearchBarDelegate, UISearchControllerDeleg
     func updateSearchResults(for searchController: UISearchController) {
         let request = ChoiseFood.ShowFood.Request(category: nil, name: searchController.searchBar.text)
         interactor?.showFoodList(request: request)
+        openAnimation = false
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -233,11 +235,11 @@ extension ChoiseFoodViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "foodListCell", for: indexPath) as! FoodListTableViewCell
         cell.configure(from: foodList[indexPath.row])
-        cell.buttonAction = { [weak self] in
-            cell.addFoodButton.showAnimation(for: .withColor) {
-                print("Calling Add Food Menu")
-            }
-        }
+//        cell.buttonAction = { [weak self] in
+//            cell.addFoodButton.showAnimation(for: .withColor) {
+//                print("Calling Add Food Menu")
+//            }
+//        }
         return cell
     }
     

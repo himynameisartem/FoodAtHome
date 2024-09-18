@@ -127,9 +127,18 @@ NSInteger translateFileError(realm::ErrorCodes::Error code) {
 }
 
 NSString *errorDomain(realm::ErrorCodes::Error error) {
-    if (error == realm::ErrorCodes::SyncConnectTimeout) {
-        return NSPOSIXErrorDomain;
+    // Special-case errors where our error domain doesn't match core's category
+    // NEXT-MAJOR: we should unify everything into RLMErrorDomain
+    using ec = realm::ErrorCodes::Error;
+    switch (error) {
+        case ec::SubscriptionFailed:
+            return RLMErrorDomain;
+        case ec::SyncConnectTimeout:
+            return NSPOSIXErrorDomain;
+        default:
+            break;
     }
+
     auto category = realm::ErrorCodes::error_categories(error);
     if (category.test(realm::ErrorCategory::sync_error)) {
         return RLMSyncErrorDomain;
@@ -227,7 +236,7 @@ __attribute__((objc_direct_members))
 }
 @end
 
-NSError *makeError(realm::SyncError&& error) {
+NSError *makeError(realm::SyncError&& error, const std::shared_ptr<realm::app::App>& app) {
     auto& status = error.status;
     if (status.is_ok()) {
         return nil;
@@ -248,7 +257,7 @@ NSError *makeError(realm::SyncError&& error) {
     for (auto& pair : error.user_info) {
         if (pair.first == realm::SyncError::c_original_file_path_key) {
             userInfo[kRLMSyncErrorActionTokenKey] =
-                [[RLMSyncErrorActionToken alloc] initWithOriginalPath:pair.second];
+                [[RLMSyncErrorActionToken alloc] initWithOriginalPath:pair.second app:app];
         }
         else if (pair.first == realm::SyncError::c_recovery_file_path_key) {
             userInfo[kRLMSyncPathOfRealmBackupCopyKey] = @(pair.second.c_str());
@@ -283,6 +292,8 @@ NSError *makeError(realm::SyncError&& error) {
                 errorCode = RLMSyncErrorClientResetError;
             else if (isSyncError)
                 errorCode = RLMSyncErrorClientSessionError;
+            else if (error.server_requests_action == realm::sync::ProtocolErrorInfo::Action::Warning)
+                errorCode = RLMSyncErrorServerWarning;
             else if (!error.is_fatal)
                 return nil;
             break;

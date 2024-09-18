@@ -19,11 +19,13 @@
 #import <Foundation/Foundation.h>
 
 #import <Realm/RLMSyncManager.h>
+#import <Realm/RLMInitialSubscriptionsConfiguration.h>
 
 @class RLMApp;
 @class RLMRealm;
 @class RLMRealmConfiguration;
 @class RLMUser;
+@class RLMInitialSubscriptionsConfiguration;
 @protocol RLMBSON;
 
 RLM_HEADER_AUDIT_BEGIN(nullability, sendability)
@@ -145,7 +147,7 @@ typedef void(^RLMClientResetAfterBlock)(RLMRealm * _Nonnull beforeFrozen, RLMRea
  Atlas App Services. All classes with a property with this value will be synchronized to the
  Realm.
  */
-@property (nonatomic, readonly) id<RLMBSON> partitionValue;
+@property (nonatomic, readonly, nullable) id<RLMBSON> partitionValue;
 
 /**
  An enum which determines file recovery behavior in the event of a client reset.
@@ -175,6 +177,11 @@ typedef void(^RLMClientResetAfterBlock)(RLMRealm * _Nonnull beforeFrozen, RLMRea
  */
 @property (nonatomic, nullable) RLMSyncErrorReportingBlock manualClientResetHandler;
 
+/**
+ A configuration that controls how initial subscriptions are populated when the Realm is opened.
+ @see `RLMInitialSubscriptionsConfiguration`
+ */
+@property (nonatomic, readwrite, nullable) RLMInitialSubscriptionsConfiguration *initialSubscriptions;
 
 /**
  Whether nonfatal connection errors should cancel async opens.

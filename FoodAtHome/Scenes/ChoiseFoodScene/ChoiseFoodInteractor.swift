@@ -33,7 +33,7 @@ class ChoiseFoodInteractor: ChoiseFoodBusinessLogic, ChoiseFoodDataStore {
     
     func showFoodList(request: ChoiseFood.ShowFood.Request) {
         worker = ChoiseFoodWorker()
-        if request.category != nil {
+        if request.category != nil  {
             guard let food = worker?.showFood(from: request.category) else { return }
             let responce = ChoiseFood.ShowFood.Response(food: food)
             presenter?.presentFood(response: responce)
