@@ -11,11 +11,13 @@ import UIKit
 protocol ChoiseFoodBusinessLogic {
     func showCategories(request: ChoiseFood.ShowCategoriesFood.Request)
     func showFoodList(request: ChoiseFood.ShowFood.Request)
+    func showAddFoodMenu(request: ChoiseFood.AddFood.Request)
 }
 
 protocol ChoiseFoodDataStore {
     var categoriesName: [String] { get }
     var food: [FoodRealm] { get }
+    var addFood: FoodRealm { get }
 }
 
 class ChoiseFoodInteractor: ChoiseFoodBusinessLogic, ChoiseFoodDataStore {
@@ -25,6 +27,7 @@ class ChoiseFoodInteractor: ChoiseFoodBusinessLogic, ChoiseFoodDataStore {
     
     var categoriesName = FoodType.allCases.map {$0.rawValue.localized()}
     var food: [FoodRealm] = []
+    var addFood = FoodRealm()
     
     func showCategories(request: ChoiseFood.ShowCategoriesFood.Request) {
         let responce = ChoiseFood.ShowCategoriesFood.Response(categoriesName: categoriesName)
@@ -46,5 +49,12 @@ class ChoiseFoodInteractor: ChoiseFoodBusinessLogic, ChoiseFoodDataStore {
             let responce = ChoiseFood.ShowFood.Response(food: array)
             presenter?.presentFood(response: responce)
         }
+    }
+    
+    func showAddFoodMenu(request: ChoiseFood.AddFood.Request) {
+        worker = ChoiseFoodWorker()
+        guard let food = worker?.getFood(from: request.food) else { return }
+        let responce = ChoiseFood.AddFood.Response(food: food)
+        presenter?.presentAddFoodMenu(response: responce)
     }
 }

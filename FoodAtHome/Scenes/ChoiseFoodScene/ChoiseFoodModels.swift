@@ -39,4 +39,18 @@ enum ChoiseFood {
         let displayedFood: [DispalyedFood]
     }
   }
+    
+    enum AddFood {
+        struct Request {
+            let food: ChoiseFood.ShowFood.ViewModel.DispalyedFood
+        }
+        
+        struct Response {
+            let food: FoodRealm
+        }
+        
+        struct ViewModel {
+            let displayedFood: FoodRealm
+        }
+    }
 }

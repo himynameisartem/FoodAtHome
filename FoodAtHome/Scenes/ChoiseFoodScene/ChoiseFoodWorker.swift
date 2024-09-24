@@ -64,4 +64,14 @@ class ChoiseFoodWorker {
         }
         return displayedFood.sorted {$0.name < $1.name}
     }
+    
+    func getFood(from food: ChoiseFood.ShowFood.ViewModel.DispalyedFood) -> FoodRealm {
+        var foodRealm = FoodRealm()
+        FoodManager.shared.allFood.forEach { foodStorage in
+            if food.name.localized() == foodStorage.name.localized() {
+                foodRealm = foodStorage
+            }
+        }
+        return foodRealm
+    }
 }

@@ -36,10 +36,10 @@
 "You already have this product" = "У вас уже имеется данный продукт";
 "Do you want to replace it?" = "Хотите заменить его?";
 
-"Weight:                        " = "Вес:                            ";
+"Weight:" = "Вес:";
 "Manufacturing Date:" = "Дата изготовления:";
-"Expires on:                " = "Годен до:                  ";
-"Shelf Life:                " = "Срок годности:        ";
+"Expires on:" = "Годен до:";
+"Shelf Life:" = "Срок годности:";
 
 "Weight:" = "Вес:";
 "Manufacturing Date:" = "Дата изготовления:";

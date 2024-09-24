@@ -21,6 +21,8 @@
 		311554EB2ADBF5F9009C39E2 /* FishAndSeafoodData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311554EA2ADBF5F9009C39E2 /* FishAndSeafoodData.swift */; };
 		313153342AB863E900A3E11D /* ShoppingListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313153332AB863E900A3E11D /* ShoppingListTableViewCell.swift */; };
 		313153362AB8D22F00A3E11D /* ContextualActionViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313153352AB8D22F00A3E11D /* ContextualActionViewManager.swift */; };
+		3133D59B2C9AC6B6004A7C31 /* AddFoodMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3133D59A2C9AC6B5004A7C31 /* AddFoodMenu.swift */; };
+		3133D59D2C9AC6CB004A7C31 /* AddFoodMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3133D59C2C9AC6CB004A7C31 /* AddFoodMenu.xib */; };
 		3136B0FA2ADDC79700B6CF89 /* NutsAndDriedFruitsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3136B0F92ADDC79700B6CF89 /* NutsAndDriedFruitsData.swift */; };
 		3136B0FC2ADDC7B600B6CF89 /* FlourAndBakeryProductsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3136B0FB2ADDC7B600B6CF89 /* FlourAndBakeryProductsData.swift */; };
 		3136B0FE2ADDC7D400B6CF89 /* GrainsAndPorridgeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3136B0FD2ADDC7D400B6CF89 /* GrainsAndPorridgeData.swift */; };
@@ -155,6 +157,8 @@
 		311554EA2ADBF5F9009C39E2 /* FishAndSeafoodData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FishAndSeafoodData.swift; sourceTree = "<group>"; };
 		313153332AB863E900A3E11D /* ShoppingListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListTableViewCell.swift; sourceTree = "<group>"; };
 		313153352AB8D22F00A3E11D /* ContextualActionViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextualActionViewManager.swift; sourceTree = "<group>"; };
+		3133D59A2C9AC6B5004A7C31 /* AddFoodMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFoodMenu.swift; sourceTree = "<group>"; };
+		3133D59C2C9AC6CB004A7C31 /* AddFoodMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddFoodMenu.xib; sourceTree = "<group>"; };
 		3136B0F92ADDC79700B6CF89 /* NutsAndDriedFruitsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutsAndDriedFruitsData.swift; sourceTree = "<group>"; };
 		3136B0FB2ADDC7B600B6CF89 /* FlourAndBakeryProductsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlourAndBakeryProductsData.swift; sourceTree = "<group>"; };
 		3136B0FD2ADDC7D400B6CF89 /* GrainsAndPorridgeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrainsAndPorridgeData.swift; sourceTree = "<group>"; };
@@ -493,6 +497,8 @@
 		316D2A8C2C9AC32700D6A54A /* AddFoodMenuView */ = {
 			isa = PBXGroup;
 			children = (
+				3133D59A2C9AC6B5004A7C31 /* AddFoodMenu.swift */,
+				3133D59C2C9AC6CB004A7C31 /* AddFoodMenu.xib */,
 			);
 			path = AddFoodMenuView;
 			sourceTree = "<group>";
@@ -959,6 +965,7 @@
 			files = (
 				31B1C5F02BC7FA5300C6D43F /* Launch Screen.storyboard in Resources */,
 				31E21F432C117B94007B74B5 /* AddMyFoodCollectionViewCell.xib in Resources */,
+				3133D59D2C9AC6CB004A7C31 /* AddFoodMenu.xib in Resources */,
 				31CFBD2A2BCED856004C75A8 /* CategoryMyFoodCollectionViewCell.xib in Resources */,
 				31B1C5F52BC7FB9A00C6D43F /* Localizable.strings in Resources */,
 				31CFBD532BD94A55004C75A8 /* Main.storyboard in Resources */,
@@ -1094,6 +1101,7 @@
 				31E983BE2A53FAFA006FD303 /* OldMyFoodRouterProtocol.swift in Sources */,
 				31DA20DE283BE45C00DCE421 /* OldMyFoodViewController.swift in Sources */,
 				31C6245F2C776821004E83B7 /* MyFoodDetailsPopupMenu+Extension+Animate.swift in Sources */,
+				3133D59B2C9AC6B6004A7C31 /* AddFoodMenu.swift in Sources */,
 				310D686A2C8DF07A001D791E /* CategoriesCollectionViewCell.swift in Sources */,
 				31C6B9292883F5570066829C /* CategoryListViewController.swift in Sources */,
 				3187019A2A4DD9D50079848C /* OldMyFoodPresenterProtocol.swift in Sources */,

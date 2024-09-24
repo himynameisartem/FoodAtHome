@@ -10,6 +10,7 @@ import UIKit
 protocol ChoiseFoodDisplayLogic: AnyObject {
     func displayCategories(viewModel: ChoiseFood.ShowCategoriesFood.ViewModel)
     func displayFood(viewModel: ChoiseFood.ShowFood.ViewModel)
+    func displayAddFoodMenu(viewModel: ChoiseFood.AddFood.ViewModel)
 }
 
 class ChoiseFoodViewController: UIViewController {
@@ -26,6 +27,8 @@ class ChoiseFoodViewController: UIViewController {
     
     private var categoriesName: [String] = []
     private var foodList: [ChoiseFood.ShowFood.ViewModel.DispalyedFood] = []
+    
+    private var addFoodMenu = AddFoodMenu()
     
     var interactor: ChoiseFoodBusinessLogic?
     var router: (NSObjectProtocol & ChoiseFoodRoutingLogic)?
@@ -72,7 +75,7 @@ class ChoiseFoodViewController: UIViewController {
         getFoodList()
         setupTableView()
     }
-    
+
     private func getCategories() {
         let request = ChoiseFood.ShowCategoriesFood.Request()
         interactor?.showCategories(request: request)
@@ -235,11 +238,12 @@ extension ChoiseFoodViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "foodListCell", for: indexPath) as! FoodListTableViewCell
         cell.configure(from: foodList[indexPath.row])
-//        cell.buttonAction = { [weak self] in
-//            cell.addFoodButton.showAnimation(for: .withColor) {
-//                print("Calling Add Food Menu")
-//            }
-//        }
+        let request = ChoiseFood.AddFood.Request(food: foodList[indexPath.row])
+        cell.buttonAction = { [weak self] in
+            cell.addFoodButton.showAnimation(for: .withColor) {
+                self?.interactor?.showAddFoodMenu(request: request)
+            }
+        }
         return cell
     }
     
@@ -274,6 +278,14 @@ extension ChoiseFoodViewController: ChoiseFoodDisplayLogic {
         foodList = viewModel.displayedFood
         openAnimation = true
         foodListTableView.reloadData()
+    }
+    
+    func displayAddFoodMenu(viewModel: ChoiseFood.AddFood.ViewModel) {
+        addFoodMenu = Bundle.main.loadNibNamed("AddFoodMenu", owner: ChoiseFoodViewController.self)?.first as! AddFoodMenu
+        addFoodMenu.configure(from: viewModel.displayedFood)
+        if let viewController = self.navigationController {
+            addFoodMenu.showAddFoodMenu(for: viewController)
+        }
     }
 }
 
