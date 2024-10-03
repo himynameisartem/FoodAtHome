@@ -285,7 +285,15 @@ extension ChoiseFoodViewController: ChoiseFoodDisplayLogic {
         addFoodMenu.configure(from: viewModel.displayedFood)
         if let viewController = self.navigationController {
             addFoodMenu.showAddFoodMenu(for: viewController)
+            addFoodMenu.delegate = self
         }
     }
 }
 
+//MARK: - AddFoodMenuDelegate
+
+extension ChoiseFoodViewController: AddFoodMenuDelegate {
+    func didCloseAddFood() {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+}

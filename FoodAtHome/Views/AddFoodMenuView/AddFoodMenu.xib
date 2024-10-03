@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -40,38 +41,41 @@
                         <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="baseBackgroundColor" name="SelectedColor"/>
                     </buttonConfiguration>
+                    <connections>
+                        <action selector="addFoodButtonTapped:" destination="f1n-Ur-fVj" eventType="touchUpInside" id="IMr-Oc-QF6"/>
+                    </connections>
                 </button>
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" id="XOe-8Z-GbW">
                     <rect key="frame" x="16" y="261" width="308" height="168"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" distribution="fillEqually" spacing="29" id="xvb-bU-Xau">
+                        <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" distribution="fillEqually" spacing="20" id="xvb-bU-Xau">
                             <rect key="frame" x="0.0" y="0.0" width="149" height="168"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="kA0-vM-cCc">
-                                    <rect key="frame" x="0.0" y="0.0" width="149" height="20.333333333333332"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kA0-vM-cCc">
+                                    <rect key="frame" x="0.0" y="0.0" width="149" height="27"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="AOK-gd-gte">
-                                    <rect key="frame" x="0.0" y="49.333333333333336" width="149" height="20.333333333333336"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AOK-gd-gte">
+                                    <rect key="frame" x="0.0" y="47" width="149" height="27"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="ndR-cH-xuO">
-                                    <rect key="frame" x="0.0" y="98.666666666666671" width="149" height="20"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ndR-cH-xuO">
+                                    <rect key="frame" x="0.0" y="94" width="149" height="27"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="DO9-xv-jbu">
-                                    <rect key="frame" x="0.0" y="147.66666666666666" width="149" height="20.333333333333343"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DO9-xv-jbu">
+                                    <rect key="frame" x="0.0" y="141" width="149" height="27"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
@@ -83,29 +87,41 @@
                             <rect key="frame" x="159" y="0.0" width="149" height="168"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="XU3-hP-aGz">
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="XU3-hP-aGz">
                                     <rect key="frame" x="0.0" y="0.0" width="149" height="27"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0.0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hye-ju-6Gc">
-                                            <rect key="frame" x="0.0" y="0.0" width="74.666666666666671" height="27"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="69.666666666666671" height="27"/>
                                             <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.CornerRadius">
                                                     <integer key="value" value="5"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </textField>
-                                        <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W84-I4-MQg">
-                                            <rect key="frame" x="74" y="0.0" width="75" height="27"/>
-                                        </pickerView>
+                                        <button opaque="NO" contentMode="scaleAspectFit" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EoJ-JR-nr4">
+                                            <rect key="frame" x="79.666666666666657" y="0.0" width="69.333333333333343" height="27"/>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <menu key="menu" id="hxB-jz-ww4">
+                                                <children>
+                                                    <command title="1" id="UzT-hE-Ywy"/>
+                                                    <command title="2" id="DSU-ef-xT6"/>
+                                                </children>
+                                            </menu>
+                                            <buttonConfiguration key="configuration" style="tinted" title="Button" cornerStyle="small">
+                                                <color key="baseBackgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </buttonConfiguration>
+                                        </button>
                                     </subviews>
                                 </stackView>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="x2L-1h-G16">
+                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="x2L-1h-G16">
                                     <rect key="frame" x="0.0" y="47" width="149" height="27"/>
                                     <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <nil key="textColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.CornerRadius">
@@ -113,10 +129,10 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </textField>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P9N-yw-Ptc">
+                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P9N-yw-Ptc">
                                     <rect key="frame" x="0.0" y="94" width="149" height="27"/>
                                     <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.CornerRadius">
@@ -124,10 +140,10 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </textField>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ubK-Ri-KPK">
+                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ubK-Ri-KPK">
                                     <rect key="frame" x="0.0" y="141" width="149" height="27"/>
                                     <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.CornerRadius">
@@ -142,6 +158,7 @@
             </subviews>
             <viewLayoutGuide key="safeArea" id="qcW-R2-6q0"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <gestureRecognizers/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="C7f-AM-QG7" secondAttribute="trailing" constant="10" id="4WF-1b-4jM"/>
                 <constraint firstItem="C7f-AM-QG7" firstAttribute="top" secondItem="f1n-Ur-fVj" secondAttribute="top" constant="10" id="cUD-1S-ATM"/>
@@ -160,15 +177,22 @@
                 <outlet property="expirationDateTextField" destination="P9N-yw-Ptc" id="bDe-UC-gym"/>
                 <outlet property="foodImageView" destination="7SF-CT-o9W" id="H7u-9F-4qJ"/>
                 <outlet property="labelsStackView" destination="xvb-bU-Xau" id="jHy-FQ-ieG"/>
+                <outlet property="popupMenuButton" destination="EoJ-JR-nr4" id="cOD-Cd-ojt"/>
                 <outlet property="productionDateLabel" destination="AOK-gd-gte" id="bVD-f8-orV"/>
                 <outlet property="productionDateTextField" destination="x2L-1h-G16" id="m0c-jf-U8t"/>
                 <outlet property="stackViewContainer" destination="XOe-8Z-GbW" id="d3t-tC-qJx"/>
+                <outlet property="swipeGestureRecognizer" destination="EN3-8L-BAo" id="lxh-ZF-WoY"/>
                 <outlet property="weightLabel" destination="kA0-vM-cCc" id="ybm-KT-wgn"/>
                 <outlet property="weightTextField" destination="hye-ju-6Gc" id="0oe-Pi-5z2"/>
-                <outlet property="weightTypePickerView" destination="W84-I4-MQg" id="kTE-QD-R7e"/>
+                <outletCollection property="gestureRecognizers" destination="EN3-8L-BAo" appends="YES" id="yhr-76-knk"/>
             </connections>
             <point key="canvasLocation" x="238.1679389312977" y="-54.577464788732399"/>
         </view>
+        <swipeGestureRecognizer direction="up" id="EN3-8L-BAo">
+            <connections>
+                <action selector="swipeToClose:" destination="f1n-Ur-fVj" id="pOW-cA-mdv"/>
+            </connections>
+        </swipeGestureRecognizer>
     </objects>
     <resources>
         <image name="7UP" width="300" height="300"/>
@@ -177,7 +201,7 @@
             <color red="0.73333333333333328" green="0.66666666666666663" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

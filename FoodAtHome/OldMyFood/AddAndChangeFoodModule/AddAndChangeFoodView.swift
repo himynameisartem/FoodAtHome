@@ -190,7 +190,7 @@ extension AddAndChangeFoodView {
         for textField in textFields {
             guard let textField = textField else { return }
             textField.layer.cornerRadius = 8
-            textField.addDoneButtonToKeyboard(myAction: #selector(textField.resignFirstResponder))
+//            textField.addDoneButtonToKeyboard(myAction: #selector(textField.resignFirstResponder))
             textField.backgroundColor = .systemGray6
             textField.tintColor = .black
             textField.textAlignment = .center

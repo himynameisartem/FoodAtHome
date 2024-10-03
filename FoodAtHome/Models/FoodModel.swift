@@ -30,7 +30,7 @@ enum FoodType: String, CaseIterable {
 class ConsumeUp: Object {
     @Persisted var months: Int?
     @Persisted var days: Int?
-     
+    
     convenience init(months: Int?, days: Int?) {
         self.init()
         self.months = months
@@ -47,10 +47,10 @@ class FoodRealm: Object {
     @Persisted var calories = "0"
     @Persisted var isShoppingList: Bool = false
     @Persisted var productionDate: Date? {
-        didSet {
-            if productionDate == nil {
-                expirationDate = nil
-                consumeUp = nil
+        willSet {
+            if expirationDate != nil {
+                isUpdatingProductionDate = true
+                setValueToConsumeUp(newValue: newValue)
             }
         }
     }
@@ -64,6 +64,7 @@ class FoodRealm: Object {
             setValueToExpirationDate(newValue: newValue)
         }
     }
+    private var isUpdatingProductionDate = false
     private var isUpdateingExpirationDate = false
     private var isUpdatingConsumeUp = false
     private let dateFormatter = DateFormatter()
@@ -114,10 +115,22 @@ extension FoodRealm {
     }
     
     private func setValueToConsumeUp(newValue: Date?) {
-        guard !isUpdatingConsumeUp, let productionDate = productionDate, let expirationDate = newValue else { return }
+        guard !isUpdatingConsumeUp else { return }
+        let productionDate: Date!
+        let expirationDate: Date!
+        
+        if isUpdatingProductionDate {
+            productionDate = newValue
+            expirationDate = self.expirationDate
+            isUpdatingProductionDate = false
+        } else {
+            productionDate = self.productionDate
+            expirationDate = newValue
+            isUpdateingExpirationDate = false
+        }
         if expirationDate > productionDate {
-            dateComponents = calendar.dateComponents([.month, .day], from: productionDate, to: expirationDate)
             isUpdateingExpirationDate = true
+            dateComponents = calendar.dateComponents([.month, .day], from: productionDate, to: expirationDate)
             consumeUp = ConsumeUp(months: dateComponents.month, days: dateComponents.day)
             isUpdateingExpirationDate = false
         } else {

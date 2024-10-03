@@ -30,12 +30,15 @@ class MyFoodViewController: UIViewController {
     
     // MARK: View lifecycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        getMyFood()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         navigationBarSetup()
         setupCollectionViewCells()
-        getMyFood()
         getCategories()
     }
     
@@ -195,6 +198,7 @@ extension MyFoodViewController: MyFoodDisplayLogic {
     
     func displayMyFood(viewModel: MyFood.ShowMyFood.ViewModel) {
         myFood = viewModel.displayedMyFood
+        myFoodCollectionView.reloadData()
     }
     
     func displayFoodDetails(viewModel: MyFood.showDetailFood.ViewModel) {
