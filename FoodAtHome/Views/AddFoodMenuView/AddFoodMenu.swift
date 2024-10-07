@@ -17,8 +17,8 @@ class AddFoodMenu: UIView {
     
     private var dimmingView: UIVisualEffectView!
     private var blurEffect: UIVisualEffect!
-    private var datePicker: UIDatePicker!
-    private var consumeUPPicker: UIPickerView!
+    var datePicker: UIDatePicker!
+    var consumeUPPicker: UIPickerView!
     
     @IBOutlet weak var foodImageView: UIImageView!
     @IBOutlet weak var weightLabel: UILabel!
@@ -35,7 +35,7 @@ class AddFoodMenu: UIView {
     @IBOutlet weak var labelsStackView: UIStackView!
     @IBOutlet weak var swipeGestureRecognizer: UISwipeGestureRecognizer!
     
-    private var food: FoodRealm?
+    var food: FoodRealm?
     private let monthWheel: [Int] = Array(0...48)
     private let daysWheel: [Int] = Array(0...31)
     
@@ -43,21 +43,52 @@ class AddFoodMenu: UIView {
         super.awakeFromNib()
         setupPopupMenu()
     }
+    
+    @IBAction func exitButtonTapped(_ sender: UIButton) {
+        closeAddFoodMenu()
+    }
     @IBAction func swipeToClose(_ sender: Any) {
         closeAddFoodMenu()
     }
     
     @IBAction func addFoodButtonTapped(_ sender: UIButton) {
         sender.showAnimation(for: .withoutColor) {
-            if self.food?.weight == "0.0" {
-                let alertController = UIAlertController(title: "Enter the weight of the product".localized(), message: nil, preferredStyle: .alert)
-                let alert = UIAlertAction(title: "OK".localized(), style: .default)
-                alertController.addAction(alert)
-                self.window?.rootViewController?.present(alertController, animated: true, completion: nil)
-            } else {
-                self.closeAddFoodMenu()
-                self.delegate?.didCloseAddFood()
-                self.addFood()
+            self.checkWeightAdnDuplicate()
+        }
+    }
+    
+    func configure(from food: FoodRealm) {
+        foodImageView.image = UIImage(named: food.name)
+        if food.weight != "0.0" {
+            weightTextField.text = food.weight
+        }
+        productionDateTextField.text = food.productionDateString()
+        expirationDateTextField.text = food.expirationDateString()
+        consumeUpTextField.text = food.consumeUpString()
+        
+        self.food = food
+    }
+    
+    func addFood() {
+        if food?.unit == nil {
+            food?.unit = "kg.".localized()
+        }
+        
+        guard let food = food else { return }
+        DataManager.shared.writeFood(food)
+    }
+    
+    func closeAddFoodMenu() {
+        UIView.animate(withDuration: 0.3) {
+            self.frame.origin.y = -900
+        } completion: { done in
+            UIView.animate(withDuration: 0.3) {
+                self.dimmingView.alpha = 0
+            } completion: { done in
+                if done {
+                    self.dimmingView.removeFromSuperview()
+                    self.removeFromSuperview()
+                }
             }
         }
     }
@@ -105,58 +136,20 @@ class AddFoodMenu: UIView {
             let unit = action.title
             self.food?.unit = unit
         }
-            popupMenuButton.menu = UIMenu(children: [
-                UIAction(title: "kg.".localized(), state: .off, handler: optionClosure),
-                UIAction(title: "g.".localized(), state: .off, handler: optionClosure),
-                UIAction(title: "l.".localized(), state: .off, handler: optionClosure),
-                UIAction(title: "ml.".localized(), state: .off, handler: optionClosure),
-                UIAction(title: "pk.".localized(), state: .off, handler: optionClosure),
-                UIAction(title: "pcs.".localized(), state: .off, handler: optionClosure),
-            ])
-
+        popupMenuButton.menu = UIMenu(children: [
+            UIAction(title: "kg.".localized(), state: .off, handler: optionClosure),
+            UIAction(title: "g.".localized(), state: .off, handler: optionClosure),
+            UIAction(title: "l.".localized(), state: .off, handler: optionClosure),
+            UIAction(title: "ml.".localized(), state: .off, handler: optionClosure),
+            UIAction(title: "pk.".localized(), state: .off, handler: optionClosure),
+            UIAction(title: "pcs.".localized(), state: .off, handler: optionClosure),
+        ])
+        
         popupMenuButton.showsMenuAsPrimaryAction = true
         popupMenuButton.changesSelectionAsPrimaryAction = true
     }
     
-    func configure(from food: FoodRealm) {
-        foodImageView.image = UIImage(named: food.name)
-        if food.weight != "0.0" {
-            weightTextField.text = food.weight
-        }
-        productionDateTextField.text = food.productionDateString()
-        expirationDateTextField.text = food.expirationDateString()
-        consumeUpTextField.text = food.consumeUpString()
-        
-        self.food = food
-    }
     
-    private func addFood() {
-        if food?.unit == nil {
-            food?.unit = "kg.".localized()
-        }
-        
-        guard let food = food else { return }
-        DataManager.shared.writeFood(food)
-    }
-    
-    private func closeAddFoodMenu() {
-        UIView.animate(withDuration: 0.3) {
-            self.frame.origin.y = -900
-        } completion: { done in
-            UIView.animate(withDuration: 0.3) {
-                self.dimmingView.alpha = 0
-            } completion: { done in
-                if done {
-                    self.dimmingView.removeFromSuperview()
-                    self.removeFromSuperview()
-                }
-            }
-        }
-    }
-    
-    @IBAction func exitButtonTapped(_ sender: UIButton) {
-        closeAddFoodMenu()
-    }
 }
 
 //MARK: - UITextFieldDelegate
@@ -223,7 +216,7 @@ extension AddFoodMenu: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-
+        
         if component == 0 {
             let firstComponent = String(monthWheel[row]) + "m.".localized()
             return firstComponent
@@ -232,7 +225,7 @@ extension AddFoodMenu: UIPickerViewDelegate, UIPickerViewDataSource {
             return secondComponent
         }
     }
-
+    
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if component == 0 {
@@ -240,47 +233,5 @@ extension AddFoodMenu: UIPickerViewDelegate, UIPickerViewDataSource {
         } else {
             return daysWheel.count
         }
-    }
-}
-
-//MARK: - setupTextFields
-
-extension AddFoodMenu {
-    
-    private func setupTextFields() {
-        weightLabel.text = "Weight:".localized()
-        productionDateLabel.text = "Manufacturing Date:".localized()
-        expirationDateLabel.text = "Expires on:".localized()
-        consumeUpLabel.text = "Shelf Life:".localized()
-        addFoodButton.setTitle("Add".localized(), for: .normal)
-        var fontSize = productionDateLabel.font.pointSize
-        
-        while productionDateLabel.intrinsicContentSize.width > (self.frame.width / 2 - 20) {
-            fontSize -= 1
-            productionDateLabel.font = UIFont.systemFont(ofSize: fontSize)
-        }
-        weightLabel.font = UIFont.systemFont(ofSize: fontSize)
-        expirationDateLabel.font = UIFont.systemFont(ofSize: fontSize)
-        consumeUpLabel.font = UIFont.systemFont(ofSize: fontSize)
-        weightTextField.font = UIFont.systemFont(ofSize: fontSize)
-        productionDateTextField.font = UIFont.systemFont(ofSize: fontSize)
-        expirationDateTextField.font = UIFont.systemFont(ofSize: fontSize)
-        consumeUpTextField.font = UIFont.systemFont(ofSize: fontSize)
-        popupMenuButton.titleLabel?.font = UIFont.systemFont(ofSize: fontSize)
-        
-        weightTextField.keyboardType = .decimalPad
-        weightTextField.addDoneButtonToKeyboard()
-        weightTextField.delegate = self
-        productionDateTextField.inputView = datePicker
-        productionDateTextField.addDoneButtonToKeyboard()
-        productionDateTextField.delegate = self
-        expirationDateTextField.inputView = datePicker
-        expirationDateTextField.delegate = self
-        expirationDateTextField.addDoneButtonToKeyboard()
-        consumeUpTextField.addDoneButtonToKeyboard()
-        expirationDateTextField.isEnabled = false
-        consumeUpTextField.isEnabled = false
-        consumeUpTextField.inputView = consumeUPPicker
-        consumeUpTextField.delegate = self
     }
 }

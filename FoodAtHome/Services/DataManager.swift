@@ -26,12 +26,34 @@ extension DataManager {
     }
 }
 
-//MARK: - writeFood
+//MARK: - write change and delete food
 
 extension DataManager {
     func writeFood(_ food: FoodRealm) {
-//        let realmFood = FoodRealm(from: food)
         try! localRealm.write {
             localRealm.add(food)
-        }}
+        }
+    }
+    
+    func changeFood(_ food: FoodRealm) {
+        let allFood = Array(localRealm.objects(FoodRealm.self))
+        try! localRealm.write {
+            allFood.forEach { foodName in
+                if foodName.name == food.name {
+                    localRealm.delete(foodName)
+                }
+            }
+        }
+    }
+    
+    func checkFoDuplicates(food: FoodRealm) -> Bool {
+        let results = Array(localRealm.objects(FoodRealm.self))
+        return results.contains(where: { $0.name == food.name })
+    }
+    
+    func delete(food: FoodRealm) {
+        try! localRealm.write({
+            localRealm.delete(food)
+        })
+    }
 }

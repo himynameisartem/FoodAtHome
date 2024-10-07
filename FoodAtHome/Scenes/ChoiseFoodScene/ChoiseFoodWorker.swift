@@ -3,7 +3,6 @@
 //  FoodAtHome
 //
 //  Created by Артем Кудрявцев on 27.08.2024.
-//  Copyright (c) 2024 ___ORGANIZATIONNAME___. All rights reserved.
 //
 
 import UIKit
@@ -66,10 +65,10 @@ class ChoiseFoodWorker {
     }
     
     func getFood(from food: ChoiseFood.ShowFood.ViewModel.DispalyedFood) -> FoodRealm {
-        var foodRealm = FoodRealm()
+        let foodRealm = FoodRealm()
         FoodManager.shared.allFood.forEach { foodStorage in
             if food.name.localized() == foodStorage.name.localized() {
-                foodRealm = foodStorage
+                foodRealm.name = foodStorage.name
             }
         }
         return foodRealm

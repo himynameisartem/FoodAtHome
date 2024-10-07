@@ -222,6 +222,7 @@ extension ChoiseFoodViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        foodListTableView.scrollToRow(at: [0, 0], at: .top, animated: false)
         
         let request = ChoiseFood.ShowFood.Request(category: FoodType.allCases[indexPath.row], name: nil)
         interactor?.showFoodList(request: request)
@@ -242,6 +243,7 @@ extension ChoiseFoodViewController: UITableViewDelegate, UITableViewDataSource {
         cell.buttonAction = { [weak self] in
             cell.addFoodButton.showAnimation(for: .withColor) {
                 self?.interactor?.showAddFoodMenu(request: request)
+                self?.searchController.searchBar.resignFirstResponder()
             }
         }
         return cell

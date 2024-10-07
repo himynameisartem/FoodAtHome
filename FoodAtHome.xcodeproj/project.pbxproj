@@ -128,6 +128,7 @@
 		31DA20D828396B0400DCE421 /* VegitablesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA20D728396B0400DCE421 /* VegitablesData.swift */; };
 		31DA20DE283BE45C00DCE421 /* OldMyFoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA20DD283BE45C00DCE421 /* OldMyFoodViewController.swift */; };
 		31DA20E0283BE72900DCE421 /* FoodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA20DF283BE72900DCE421 /* FoodCollectionViewCell.swift */; };
+		31DB563E2CB4556E00514101 /* AddFoodMenu + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DB563D2CB4556E00514101 /* AddFoodMenu + Extension.swift */; };
 		31E21F432C117B94007B74B5 /* AddMyFoodCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31E21F422C117B94007B74B5 /* AddMyFoodCollectionViewCell.xib */; };
 		31E21F442C117B94007B74B5 /* AddMyFoodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E21F412C117B94007B74B5 /* AddMyFoodCollectionViewCell.swift */; };
 		31E983BC2A53FAF0006FD303 /* OldMyFoodRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E983BB2A53FAF0006FD303 /* OldMyFoodRouter.swift */; };
@@ -267,6 +268,7 @@
 		31DA20D728396B0400DCE421 /* VegitablesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VegitablesData.swift; sourceTree = "<group>"; };
 		31DA20DD283BE45C00DCE421 /* OldMyFoodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldMyFoodViewController.swift; sourceTree = "<group>"; };
 		31DA20DF283BE72900DCE421 /* FoodCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCollectionViewCell.swift; sourceTree = "<group>"; };
+		31DB563D2CB4556E00514101 /* AddFoodMenu + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddFoodMenu + Extension.swift"; sourceTree = "<group>"; };
 		31E21F412C117B94007B74B5 /* AddMyFoodCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMyFoodCollectionViewCell.swift; sourceTree = "<group>"; };
 		31E21F422C117B94007B74B5 /* AddMyFoodCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddMyFoodCollectionViewCell.xib; sourceTree = "<group>"; };
 		31E983BB2A53FAF0006FD303 /* OldMyFoodRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldMyFoodRouter.swift; sourceTree = "<group>"; };
@@ -498,6 +500,7 @@
 			isa = PBXGroup;
 			children = (
 				3133D59A2C9AC6B5004A7C31 /* AddFoodMenu.swift */,
+				31DB563D2CB4556E00514101 /* AddFoodMenu + Extension.swift */,
 				3133D59C2C9AC6CB004A7C31 /* AddFoodMenu.xib */,
 			);
 			path = AddFoodMenuView;
@@ -1054,6 +1057,7 @@
 				31C6246D2C7DBABC004E83B7 /* ChoiseFoodInteractor.swift in Sources */,
 				3139EE5C2C4D2D8D00AEC1F2 /* CategoryDetailsRouter.swift in Sources */,
 				3139EE5D2C4D2D8D00AEC1F2 /* CategoryDetailsModels.swift in Sources */,
+				31DB563E2CB4556E00514101 /* AddFoodMenu + Extension.swift in Sources */,
 				3139EE5E2C4D2D8D00AEC1F2 /* CategoryDetailsViewController.swift in Sources */,
 				3139EE5F2C4D2D8D00AEC1F2 /* CategoryDetailsInteractor.swift in Sources */,
 				314CA49B2A7A52EE002D4680 /* FoodListRouterProtocol.swift in Sources */,

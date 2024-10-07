@@ -41,9 +41,13 @@ class ChoiseFoodInteractor: ChoiseFoodBusinessLogic, ChoiseFoodDataStore {
             let responce = ChoiseFood.ShowFood.Response(food: food)
             presenter?.presentFood(response: responce)
         } else if request.name != nil {
-            guard let serachText = request.name else { return }
+            guard let searchText = request.name else { return }
             let filteredFoodList = FoodManager.shared.allFood.filter { (food: FoodRealm) in
-                return food.name.localized().lowercased().contains(serachText.lowercased())
+                if !searchText.isEmpty {
+                    return food.name.localized().lowercased().hasPrefix(searchText.lowercased())
+                } else {
+                    return false
+                }
             }
             let array = Array(filteredFoodList)
             let responce = ChoiseFood.ShowFood.Response(food: array)
