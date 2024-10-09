@@ -95,14 +95,19 @@ extension FoodRealm {
     
     func consumeUpString() -> String? {
         guard let consumeUp = consumeUp else { return nil }
-        let fullDate = "\(consumeUp.months ?? 0)м. \(consumeUp.days ?? 0)д."
+        let fullDate = "\(consumeUp.months ?? 0)" + "m.".localized() + "\(consumeUp.days ?? 0)" + "d.".localized()
         return fullDate
     }
     
     func daysLeftString() -> String? {
         guard let expirationDate = expirationDate else { return nil }
         dateComponents = calendar.dateComponents([.month, .day], from: Date(), to: expirationDate)
-        let daysLeftString = "\(dateComponents.month ?? 0)м. \(dateComponents.day ?? 0)д."
+        var daysLeftString = String()
+        if dateComponents.month! < 0 || dateComponents.day! < 0 {
+            daysLeftString = "Overdue".localized()
+        } else {
+            daysLeftString = "\(dateComponents.month ?? 0)" + "m.".localized() + "\(dateComponents.day ?? 0)" + "д.".localized()
+        }
         return daysLeftString
     }
     

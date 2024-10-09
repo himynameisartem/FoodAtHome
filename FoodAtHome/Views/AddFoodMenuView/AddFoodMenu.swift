@@ -70,10 +70,7 @@ class AddFoodMenu: UIView {
     }
     
     func addFood() {
-        if food?.unit == nil {
-            food?.unit = "kg.".localized()
-        }
-        
+        checkUnit()
         guard let food = food else { return }
         DataManager.shared.writeFood(food)
     }
@@ -93,8 +90,9 @@ class AddFoodMenu: UIView {
         }
     }
     
-    func showAddFoodMenu(for view: UIViewController) {
-        guard let view = view.view else { return }
+    func showAddFoodMenu() {
+        let viewController = getTopViewController()
+        guard let view = viewController?.view else { return }
         let width = view.frame.width - 40
         let height = width * 1.7
         self.frame = CGRect(x: view.center.x - width / 2, y: -900, width: width, height: height)

@@ -11,9 +11,11 @@ class MyFoodCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var foodImage: UIImageView!
     @IBOutlet weak var foodName: UILabel!
+    @IBOutlet weak var indicatorView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        indicatorView.isHidden = true
         makeShadow(opacity: 0.4)
         configureText()
     }
@@ -25,5 +27,10 @@ class MyFoodCollectionViewCell: UICollectionViewCell {
     func setData(viewModel: MyFood.ShowMyFood.ViewModel.DisplayedMyFood) {
         foodImage.image = UIImage(named: viewModel.imageName)
         foodName.text = viewModel.name
+        if viewModel.daysLeftIndicator {
+            indicatorView.isHidden = false
+        } else {
+            indicatorView.isHidden = true
+        }
     }
 }

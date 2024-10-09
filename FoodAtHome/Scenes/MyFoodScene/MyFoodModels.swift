@@ -22,6 +22,7 @@ enum MyFood {
             struct DisplayedMyFood {
                 let name: String
                 let imageName: String
+                let daysLeftIndicator: Bool
             }
             let displayedMyFood: [DisplayedMyFood]
         }
@@ -47,6 +48,7 @@ enum MyFood {
     
     enum showDetailFood {
         struct Request{
+            
         }
         
         struct Responce {
@@ -57,12 +59,22 @@ enum MyFood {
             struct DiplayedDetails {
                 let name: String
                 let weight: String
+                let unit: String
                 let productionDate: String
                 let expirationDate: String
-                let consumeUp: String
+                let daysLeft: String
                 let distaceIndicator: CGFloat?
             }
             let DiplayedDetails: DiplayedDetails
+        }
+    }
+    
+    enum DeleteFood {
+        struct Request{
+            let indexPath: IndexPath
+        }
+        
+        struct Responce {
         }
     }
 }

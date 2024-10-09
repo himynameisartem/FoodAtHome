@@ -285,8 +285,8 @@ extension ChoiseFoodViewController: ChoiseFoodDisplayLogic {
     func displayAddFoodMenu(viewModel: ChoiseFood.AddFood.ViewModel) {
         addFoodMenu = Bundle.main.loadNibNamed("AddFoodMenu", owner: ChoiseFoodViewController.self)?.first as! AddFoodMenu
         addFoodMenu.configure(from: viewModel.displayedFood)
-        if let viewController = self.navigationController {
-            addFoodMenu.showAddFoodMenu(for: viewController)
+        if self.navigationController != nil {
+            addFoodMenu.showAddFoodMenu()
             addFoodMenu.delegate = self
         }
     }

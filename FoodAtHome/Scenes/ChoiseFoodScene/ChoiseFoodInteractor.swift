@@ -44,7 +44,7 @@ class ChoiseFoodInteractor: ChoiseFoodBusinessLogic, ChoiseFoodDataStore {
             guard let searchText = request.name else { return }
             let filteredFoodList = FoodManager.shared.allFood.filter { (food: FoodRealm) in
                 if !searchText.isEmpty {
-                    return food.name.localized().lowercased().hasPrefix(searchText.lowercased())
+                    return food.name.localized().lowercased().contains(searchText.lowercased())
                 } else {
                     return false
                 }

@@ -69,6 +69,8 @@ class ChoiseFoodWorker {
         FoodManager.shared.allFood.forEach { foodStorage in
             if food.name.localized() == foodStorage.name.localized() {
                 foodRealm.name = foodStorage.name
+                foodRealm.type = foodStorage.type
+                foodRealm.calories = foodStorage.calories
             }
         }
         return foodRealm

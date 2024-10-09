@@ -105,22 +105,12 @@ extension MyFoodDetailsPopupMenu {
         }
     }
     
-//    func configure(viewModel: [MyFood.showDetailFood.ViewModel.DiplayedDetails], at indexPath: IndexPath) {
-//        let viewModel = viewModel[indexPath.row]
-//        nameLabel.text = viewModel.name
-//        weightValueLabel.text = viewModel.weight
-//        productionDateValueLabel.text = viewModel.productionDate
-//        expirationDateValueLabel.text = viewModel.expirationDate
-//        consumeUpValueLabel.text = viewModel.consumeUp
-//        setupCircleView(indicator: viewModel.distaceIndicator)
-//    }
-    
     func configure(viewModel: MyFood.showDetailFood.ViewModel.DiplayedDetails) {
         nameLabel.text = viewModel.name
-        weightValueLabel.text = viewModel.weight
+        weightValueLabel.text = viewModel.weight + " " + viewModel.unit.localized()
         productionDateValueLabel.text = viewModel.productionDate
         expirationDateValueLabel.text = viewModel.expirationDate
-        consumeUpValueLabel.text = viewModel.consumeUp
+        consumeUpValueLabel.text = viewModel.daysLeft
         setupCircleView(indicator: viewModel.distaceIndicator)
     }
     

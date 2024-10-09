@@ -11,6 +11,7 @@ protocol MyFoodDisplayLogic: AnyObject {
     func displayCategories(viewModel: MyFood.ShowCategories.ViewModel)
     func displayMyFood(viewModel: MyFood.ShowMyFood.ViewModel)
     func displayFoodDetails(viewModel: MyFood.showDetailFood.ViewModel)
+    func deleteFood()
 }
 
 class MyFoodViewController: UIViewController {
@@ -155,6 +156,25 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        if collectionView == myFoodCollectionView {
+            let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { action in
+                let changeFood = UIAction(title: "Edit".localized()) { action in
+                    print("changeFood")
+                }
+                let deleteFood = UIAction(title: "Delete".localized(), attributes: .destructive) { action in
+                    let request = MyFood.DeleteFood.Request(indexPath: indexPath)
+                    self.interactor?.deleteFood(request: request)
+                }
+                return UIMenu(title: "", children: [changeFood, deleteFood])
+            }
+            return configuration
+        } else {
+            return nil
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == categoryMyFoodCollectionView {
             collectionView.cellForItem(at: indexPath)?.showAnimation(for: .withoutColor, {
@@ -206,5 +226,10 @@ extension MyFoodViewController: MyFoodDisplayLogic {
                                                               owner: MyFoodViewController.self)?.first as! MyFoodDetailsPopupMenu
         myFoodDetailsPopupMenu.openPopUpMenu(for: self.view, with: myFoodCollectionView)
         myFoodDetailsPopupMenu.configure(viewModel: viewModel.DiplayedDetails)
+    }
+    
+    func deleteFood() {
+        getMyFood()
+        myFoodCollectionView.reloadData()
     }
 }

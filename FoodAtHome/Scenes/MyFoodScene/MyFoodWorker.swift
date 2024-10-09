@@ -16,7 +16,15 @@ class MyFoodWorker {
         myFood.forEach { food in
             let name = food.name.localized()
             let imageName = food.name
-            let food = MyFood.ShowMyFood.ViewModel.DisplayedMyFood(name: name, imageName: imageName)
+            let indicator: Bool = {
+                guard let daysLeft = food.distanceBetweenProductionAndExpiration() else { return false}
+                if daysLeft <= 0.0 { return
+                    true
+                } else {
+                    return false
+                }
+            }()
+            let food = MyFood.ShowMyFood.ViewModel.DisplayedMyFood(name: name, imageName: imageName, daysLeftIndicator: indicator)
             displayedMyFood.append(food)
         }
         return displayedMyFood

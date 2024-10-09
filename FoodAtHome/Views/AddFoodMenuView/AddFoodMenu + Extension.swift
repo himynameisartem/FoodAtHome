@@ -9,6 +9,24 @@ import UIKit
 
 extension AddFoodMenu {
     
+    func getTopViewController() -> UIViewController? {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first(where: { $0.isKeyWindow }) {
+            var topController = window.rootViewController
+            while let presentedViewController = topController?.presentedViewController {
+                topController = presentedViewController
+            }
+            return topController
+        }
+        return nil
+    }
+    
+    func checkUnit() {
+        if food?.unit == "" {
+            food?.unit = "kg.".localized()
+        }
+    }
+    
     func checkWeightAdnDuplicate() {
         guard let food = food else { return }
         if self.food?.weight == "0.0" {
@@ -16,7 +34,7 @@ extension AddFoodMenu {
                                                           message: nil,
                                                           preferredStyle: .alert)
             weightAlertController.addAction(UIAlertAction(title: "OK".localized(), style: .default))
-            self.window?.rootViewController?.present(weightAlertController, animated: true, completion: nil)
+            getTopViewController()?.present(weightAlertController, animated: true, completion: nil)
         } else {
             if !DataManager.shared.checkFoDuplicates(food: food) {
                 self.closeAddFoodMenu()
@@ -33,7 +51,7 @@ extension AddFoodMenu {
                     self.addFood()
                 }))
                 changeFoodAlertController.addAction(UIAlertAction(title: "No".localized(), style: .cancel))
-                self.window?.rootViewController?.present(changeFoodAlertController, animated: true, completion: nil)
+                getTopViewController()?.present(changeFoodAlertController, animated: true, completion: nil)
             }
         }
     }

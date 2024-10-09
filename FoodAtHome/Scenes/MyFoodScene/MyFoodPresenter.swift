@@ -11,6 +11,7 @@ protocol MyFoodPresentationLogic {
     func presentCategories(responce: MyFood.ShowCategories.Responce)
     func presentMyFood(response: MyFood.ShowMyFood.Response)
     func presentDetailsFood(responce: MyFood.showDetailFood.Responce)
+    func presentDeleteFood(response: MyFood.DeleteFood.Responce)
 }
 
 class MyFoodPresenter: MyFoodPresentationLogic {
@@ -37,11 +38,16 @@ class MyFoodPresenter: MyFoodPresentationLogic {
         let displayedDetailsFood = MyFood.showDetailFood.ViewModel.DiplayedDetails(
                                     name: responce.foodDetails.name.localized(),
                                     weight: responce.foodDetails.weight,
+                                    unit: responce.foodDetails.unit,
                                     productionDate: responce.foodDetails.productionDateString() ?? "-",
                                     expirationDate: responce.foodDetails.expirationDateString() ?? "-",
-                                    consumeUp: responce.foodDetails.consumeUpString() ?? "-",
+                                    daysLeft: responce.foodDetails.daysLeftString() ?? "-",
                                     distaceIndicator: responce.foodDetails.distanceBetweenProductionAndExpiration())
         let viewModel = MyFood.showDetailFood.ViewModel(DiplayedDetails: displayedDetailsFood)
         viewController?.displayFoodDetails(viewModel: viewModel)
+    }
+    
+    func presentDeleteFood(response: MyFood.DeleteFood.Responce) {
+        viewController?.deleteFood()
     }
 }

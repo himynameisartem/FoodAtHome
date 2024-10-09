@@ -40,6 +40,8 @@ enum CategoryDetails {
             let imageName: String
             let weight: String
             let calories: String
+            let unit: String
+            let warningColor: UIColor?
         }
         
         let displayedCells: [DisplayedCells]
