@@ -16,7 +16,7 @@ class MyFoodCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         indicatorView.isHidden = true
-        makeShadow(opacity: 0.4)
+        makeShadow(opacity: 0.1)
         configureText()
     }
 

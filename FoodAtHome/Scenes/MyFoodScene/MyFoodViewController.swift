@@ -11,7 +11,9 @@ protocol MyFoodDisplayLogic: AnyObject {
     func displayCategories(viewModel: MyFood.ShowCategories.ViewModel)
     func displayMyFood(viewModel: MyFood.ShowMyFood.ViewModel)
     func displayFoodDetails(viewModel: MyFood.showDetailFood.ViewModel)
+    func displayChangeFood(viewModel: MyFood.ChangeFood.ViewModel)
     func deleteFood()
+    func removeAllFood()
 }
 
 class MyFoodViewController: UIViewController {
@@ -26,6 +28,8 @@ class MyFoodViewController: UIViewController {
     
     var interactor: MyFoodBusinessLogic?
     var router: (NSObjectProtocol & MyFoodRoutingLogic & MyFoodDataPassing)?
+    
+    private var addFoodMenu = AddFoodMenu()
     
     private var categoryMyFoodCollectionAnimationIsComlete = false
     
@@ -44,7 +48,15 @@ class MyFoodViewController: UIViewController {
     }
     
     @IBAction func deleteFoodTapped(_ sender: UIBarButtonItem) {
-        print(#function)
+        let alertController = UIAlertController(title: "Delete All Products?".localized(), message: "This action will delete all your products, are you sure you want to continue?".localized(), preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes".localized(), style: .destructive) { _ in
+            let request = MyFood.RemoveAllFood.Request()
+            self.interactor?.removeAllFood(request: request)
+        }
+        let noAction = UIAlertAction(title: "No".localized(), style: .cancel)
+        alertController.addAction(yesAction)
+        alertController.addAction(noAction)
+        self.present(alertController, animated: true)
     }
     
     @IBAction func shareFoodTapped(_ sender: UIBarButtonItem) {
@@ -161,7 +173,8 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
         if collectionView == myFoodCollectionView {
             let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { action in
                 let changeFood = UIAction(title: "Edit".localized()) { action in
-                    print("changeFood")
+                    let request = MyFood.ChangeFood.Request(indexPath: indexPath.row)
+                    self.interactor?.showChangeFoodMenu(request: request)
                 }
                 let deleteFood = UIAction(title: "Delete".localized(), attributes: .destructive) { action in
                     let request = MyFood.DeleteFood.Request(indexPath: indexPath)
@@ -228,8 +241,28 @@ extension MyFoodViewController: MyFoodDisplayLogic {
         myFoodDetailsPopupMenu.configure(viewModel: viewModel.DiplayedDetails)
     }
     
+    func displayChangeFood(viewModel: MyFood.ChangeFood.ViewModel) {
+        addFoodMenu = Bundle.main.loadNibNamed("AddFoodMenu", owner: ChoiseFoodViewController.self)?.first as! AddFoodMenu
+        addFoodMenu.configure(from: viewModel.food)
+        addFoodMenu.showAddFoodMenu()
+        addFoodMenu.delegate = self
+    }
+    
     func deleteFood() {
         getMyFood()
-        myFoodCollectionView.reloadData()
+    }
+    
+    func removeAllFood() {
+        getMyFood()
+    }
+}
+
+//MARK: - AddFoodMenuDelegate
+
+extension MyFoodViewController: AddFoodMenuDelegate {
+    func didCloseAddFood() {
+        DispatchQueue.main.async{
+            self.getMyFood()
+        }
     }
 }

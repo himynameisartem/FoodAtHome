@@ -43,6 +43,27 @@ extension DataManager {
                     localRealm.delete(foodName)
                 }
             }
+            localRealm.add(food)
+        }
+    }
+    
+    func updateFood(_ food: FoodRealm) {
+        let allFood = Array(localRealm.objects(FoodRealm.self))
+        var index = Int()
+        for (i, j) in allFood.enumerated() {
+            if j.name == food.name {
+                index = i
+            }
+        }
+        let update = allFood[index]
+        try! localRealm.write {
+            update.weight = food.weight
+            update.productionDate = food.productionDate
+            if food.expirationDate != nil {
+                update.expirationDate = food.expirationDate
+                update.consumeUp = food.consumeUp
+            }
+            update.unit = food.unit
         }
     }
     
@@ -54,6 +75,12 @@ extension DataManager {
     func delete(food: FoodRealm) {
         try! localRealm.write({
             localRealm.delete(food)
+        })
+    }
+    
+    func removeAll() {
+        try! localRealm.write({
+            localRealm.deleteAll()
         })
     }
 }

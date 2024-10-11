@@ -42,6 +42,11 @@ class MyFoodWorker {
         return displayedCategories
     }
     
+    func getChange(food: [FoodRealm], at indexPath: Int) -> FoodRealm {
+        let foodForChange = food[indexPath]
+        return foodForChange
+    }
+    
     func getFoodForRouting(source: [FoodRealm], type: String) -> [FoodRealm] {
         source.filter { $0.type == type }
     }

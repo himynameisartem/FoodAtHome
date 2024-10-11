@@ -12,7 +12,9 @@ protocol MyFoodBusinessLogic {
     func showCategories(request: MyFood.ShowCategories.Request)
     func showMyFood(request: MyFood.ShowMyFood.Request)
     func showDetailsFood(request: MyFood.showDetailFood.Request, at index: Int)
+    func showChangeFoodMenu(request: MyFood.ChangeFood.Request)
     func deleteFood(request: MyFood.DeleteFood.Request)
+    func removeAllFood(request: MyFood.RemoveAllFood.Request)
 }
 
 protocol MyFoodDataStore {
@@ -25,6 +27,7 @@ class MyFoodInteractor: MyFoodBusinessLogic, MyFoodDataStore {
     var myFood: [FoodRealm] = []
     var categories: [String] = []
     var presenter: MyFoodPresentationLogic?
+    var worker: MyFoodWorker?
     
     func showCategories(request: MyFood.ShowCategories.Request) {
         categories = FoodType.allCases.map {$0.rawValue}
@@ -43,10 +46,25 @@ class MyFoodInteractor: MyFoodBusinessLogic, MyFoodDataStore {
         presenter?.presentDetailsFood(responce: responce)
     }
     
+    func showChangeFoodMenu(request: MyFood.ChangeFood.Request) {
+        worker = MyFoodWorker()
+        myFood = DataManager.shared.fetchMyFood().reversed()
+        let food = worker?.getChange(food: myFood, at: request.indexPath)
+        guard let food = food else { return }
+        let responce = MyFood.ChangeFood.Responce(food: food)
+        presenter?.presentChangeFoodMenu(response: responce)
+    }
+    
     func deleteFood(request: MyFood.DeleteFood.Request) {
         myFood = DataManager.shared.fetchMyFood().reversed()
         DataManager.shared.delete(food: myFood[request.indexPath.row])
         let responce = MyFood.DeleteFood.Responce()
         presenter?.presentDeleteFood(response: responce)
+    }
+    
+    func removeAllFood(request: MyFood.RemoveAllFood.Request) {
+        DataManager.shared.removeAll()
+        let responce = MyFood.RemoveAllFood.Responce()
+        self.presenter?.presentRemoveAllFood(response: responce)
     }
 }

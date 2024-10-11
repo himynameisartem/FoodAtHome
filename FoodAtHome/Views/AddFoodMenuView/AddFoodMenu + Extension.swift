@@ -27,8 +27,11 @@ extension AddFoodMenu {
         }
     }
     
-    func checkWeightAdnDuplicate() {
+    func checkWeightAndDuplicate() {
         guard let food = food else { return }
+        
+        let vc = getTopViewController() as? UINavigationController
+        
         if self.food?.weight == "0.0" {
             let weightAlertController = UIAlertController(title: "Enter the weight of the product".localized(),
                                                           message: nil,
@@ -37,21 +40,26 @@ extension AddFoodMenu {
             getTopViewController()?.present(weightAlertController, animated: true, completion: nil)
         } else {
             if !DataManager.shared.checkFoDuplicates(food: food) {
+                self.addFood()
                 self.closeAddFoodMenu()
                 self.delegate?.didCloseAddFood()
-                self.addFood()
             } else {
-                let changeFoodAlertController = UIAlertController(title: "You already have this product".localized(),
-                                                                  message: "Do you want to replace it?".localized(),
-                                                                  preferredStyle: .alert)
-                changeFoodAlertController.addAction(UIAlertAction(title: "Yes".localized(), style: .destructive, handler: { _ in
-                    DataManager.shared.changeFood(food)
+                if vc?.viewControllers.last is MyFoodViewController {
+                    self.updateFood()
                     self.closeAddFoodMenu()
                     self.delegate?.didCloseAddFood()
-                    self.addFood()
-                }))
-                changeFoodAlertController.addAction(UIAlertAction(title: "No".localized(), style: .cancel))
-                getTopViewController()?.present(changeFoodAlertController, animated: true, completion: nil)
+                } else {
+                    let changeFoodAlertController = UIAlertController(title: "You already have this product".localized(),
+                                                                      message: "Do you want to replace it?".localized(),
+                                                                      preferredStyle: .alert)
+                    changeFoodAlertController.addAction(UIAlertAction(title: "Yes".localized(), style: .destructive, handler: { _ in
+                        self.changeFood()
+                        self.closeAddFoodMenu()
+                        self.delegate?.didCloseAddFood()
+                    }))
+                    changeFoodAlertController.addAction(UIAlertAction(title: "No".localized(), style: .cancel))
+                    getTopViewController()?.present(changeFoodAlertController, animated: true, completion: nil)
+                }
             }
         }
     }

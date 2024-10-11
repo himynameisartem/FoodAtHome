@@ -69,9 +69,32 @@ enum MyFood {
         }
     }
     
+    enum ChangeFood {
+        struct Request{
+            let indexPath: Int
+        }
+        
+        struct Responce {
+            let food: FoodRealm
+        }
+        
+        struct ViewModel {
+            let food: FoodRealm
+        }
+        
+    }
+    
     enum DeleteFood {
         struct Request{
             let indexPath: IndexPath
+        }
+        
+        struct Responce {
+        }
+    }
+    
+    enum RemoveAllFood {
+        struct Request{
         }
         
         struct Responce {

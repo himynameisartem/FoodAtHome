@@ -47,13 +47,14 @@ class AddFoodMenu: UIView {
     @IBAction func exitButtonTapped(_ sender: UIButton) {
         closeAddFoodMenu()
     }
+    
     @IBAction func swipeToClose(_ sender: Any) {
         closeAddFoodMenu()
     }
     
     @IBAction func addFoodButtonTapped(_ sender: UIButton) {
         sender.showAnimation(for: .withoutColor) {
-            self.checkWeightAdnDuplicate()
+                self.checkWeightAndDuplicate()
         }
     }
     
@@ -73,6 +74,17 @@ class AddFoodMenu: UIView {
         checkUnit()
         guard let food = food else { return }
         DataManager.shared.writeFood(food)
+    }
+    
+    func changeFood() {
+        checkUnit()
+        guard let food = food else { return }
+        DataManager.shared.changeFood(food)
+    }
+    
+    func updateFood() {
+        guard let food = food else { return }
+        DataManager.shared.updateFood(food)
     }
     
     func closeAddFoodMenu() {
