@@ -24,6 +24,12 @@ extension DataManager {
         let results = localRealm.objects(FoodRealm.self)
         return Array(results).filter { !$0.isShoppingList }
     }
+    
+    func fetchMyShoppingList() -> [FoodRealm] {
+//        print(localRealm.configuration.fileURL!.path)
+        let results = localRealm.objects(FoodRealm.self)
+        return Array(results).filter { $0.isShoppingList }
+    }
 }
 
 //MARK: - write change and delete food

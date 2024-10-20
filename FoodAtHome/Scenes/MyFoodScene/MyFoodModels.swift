@@ -100,4 +100,18 @@ enum MyFood {
         struct Responce {
         }
     }
+    
+    enum SharedFood {
+        struct Request {
+            
+        }
+        
+        struct Responce {
+            let sharedFood: [FoodRealm]
+        }
+        
+        struct ViewModel {
+            let foodList: String
+        }
+    }
 }

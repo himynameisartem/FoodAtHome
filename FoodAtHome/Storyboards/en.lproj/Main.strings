@@ -1,0 +1,21 @@
+
+/* Class = "UITabBarItem"; title = "Settings"; ObjectID = "E3Y-fX-VHy"; */
+"E3Y-fX-VHy.title" = "Settings";
+
+/* Class = "UITabBarItem"; title = "Shopping List"; ObjectID = "I3E-CG-OAO"; */
+"I3E-CG-OAO.title" = "Shopping List";
+
+/* Class = "UITabBarItem"; title = "Food at Home"; ObjectID = "Qi6-R9-dss"; */
+"Еда Дома" = "Food at Home";
+
+/* Class = "UILabel"; text = "FOOD AT HOME"; ObjectID = "fi9-ra-43R"; */
+"fi9-ra-43R.text" = "FOOD AT HOME";
+
+/* Class = "UINavigationItem"; title = "Root View Controller"; ObjectID = "r8o-na-56x"; */
+"r8o-na-56x.title" = "Root View Controller";
+
+/* Class = "UINavigationItem"; title = "Root View Controller"; ObjectID = "ykH-Yo-jux"; */
+"ykH-Yo-jux.title" = "Root View Controller";
+
+
+"Food at Home" = "Еда Дома";

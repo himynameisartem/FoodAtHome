@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol ShoppingListRouterProtocol: AnyObject {
+protocol OldShoppingListRouterProtocol: AnyObject {
     func openFoodListViewController()
 }

@@ -14,6 +14,7 @@ protocol MyFoodDisplayLogic: AnyObject {
     func displayChangeFood(viewModel: MyFood.ChangeFood.ViewModel)
     func deleteFood()
     func removeAllFood()
+    func getSharedFood(viewModel: MyFood.SharedFood.ViewModel)
 }
 
 class MyFoodViewController: UIViewController {
@@ -21,6 +22,8 @@ class MyFoodViewController: UIViewController {
     @IBOutlet weak var titleBarLabel: UILabel!
     @IBOutlet weak var categoryMyFoodCollectionView: UICollectionView!
     @IBOutlet weak var myFoodCollectionView: UICollectionView!
+    
+    private var sharedActivitiIndicator: UIActivityIndicatorView!
     
     private var myFood: [MyFood.ShowMyFood.ViewModel.DisplayedMyFood] = []
     private var categories: [MyFood.ShowCategories.ViewModel.DiplayedCategories] = []
@@ -45,9 +48,10 @@ class MyFoodViewController: UIViewController {
         navigationBarSetup()
         setupCollectionViewCells()
         getCategories()
+        setupActivitiIndicator()
     }
     
-    @IBAction func deleteFoodTapped(_ sender: UIBarButtonItem) {
+    @IBAction func deleteFoodTapped(_ sender: Any) {
         let alertController = UIAlertController(title: "Delete All Products?".localized(), message: "This action will delete all your products, are you sure you want to continue?".localized(), preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Yes".localized(), style: .destructive) { _ in
             let request = MyFood.RemoveAllFood.Request()
@@ -59,8 +63,10 @@ class MyFoodViewController: UIViewController {
         self.present(alertController, animated: true)
     }
     
-    @IBAction func shareFoodTapped(_ sender: UIBarButtonItem) {
-        print(#function)
+    @IBAction func sharedFoodTapped(_ sender: Any) {
+        sharedActivitiIndicator.startAnimating()
+        let request = MyFood.SharedFood.Request()
+        interactor?.showSharedSoodList(request: request)
     }
     
     // MARK: Setup
@@ -90,6 +96,14 @@ class MyFoodViewController: UIViewController {
         categoryMyFoodCollectionView.register(UINib(nibName: "CategoryMyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "categoryMyFoodCell")
         myFoodCollectionView.register(UINib(nibName: "MyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "myFoodCell")
         myFoodCollectionView.register(UINib(nibName: "AddMyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "addMyFoodCell")
+    }
+    
+    func setupActivitiIndicator() {
+        sharedActivitiIndicator = UIActivityIndicatorView(frame: view.bounds)
+        view.addSubview(sharedActivitiIndicator)
+        sharedActivitiIndicator.center = view.center
+        sharedActivitiIndicator.style = .large
+        sharedActivitiIndicator.hidesWhenStopped = true
     }
     
     // MARK: Routing
@@ -195,7 +209,7 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
             })
         } else {
             if indexPath.row < myFood.count {
-                getDetailsFood(at: indexPath.row)
+                getDetailsFood(at: indexPath.row)                
             }
         }
     }
@@ -254,6 +268,19 @@ extension MyFoodViewController: MyFoodDisplayLogic {
     
     func removeAllFood() {
         getMyFood()
+    }
+    
+    func getSharedFood(viewModel: MyFood.SharedFood.ViewModel) {
+        let controller = UIActivityViewController(
+            activityItems: [viewModel.foodList],
+          applicationActivities: nil
+        )
+        DispatchQueue.main.async{
+            self.present(controller, animated: true, completion: nil)
+            if controller.isViewLoaded  {
+                self.sharedActivitiIndicator.stopAnimating()
+            }
+        }
     }
 }
 

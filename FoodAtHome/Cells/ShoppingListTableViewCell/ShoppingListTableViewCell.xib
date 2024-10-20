@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ShoppingListCell" rowHeight="110" id="KGk-i7-Jjw" customClass="ShoppingListTableViewCell" customModule="FoodAtHome" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="110"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="393" height="110"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleAspectFill" id="Nf7-U7-kMU">
+                        <rect key="frame" x="55" y="10" width="318" height="90"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1bA-Af-RO6" userLabel="Calories Label">
+                                <rect key="frame" x="37" y="60" width="42" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9p-hx-LUy">
+                                <rect key="frame" x="266" y="60" width="42" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="exclamationmark" catalog="system" id="zS1-f7-PFG">
+                                <rect key="frame" x="286" y="7" width="24" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="12"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aFy-pI-a5t">
+                                <rect key="frame" x="-38" y="13" width="65" height="65"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="aFy-pI-a5t" secondAttribute="height" multiplier="1:1" id="4kt-QW-RXV"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <view alpha="0.30000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RqX-xw-ztw">
+                                <rect key="frame" x="-38" y="13" width="65" height="65"/>
+                                <color key="backgroundColor" systemColor="systemGray3Color"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Wi-hb-HoT" userLabel="Food Label">
+                                <rect key="frame" x="37" y="10" width="39.333333333333343" height="16"/>
+                                <fontDescription key="fontDescription" name="Symbol" family="Symbol" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="1bA-Af-RO6" secondAttribute="bottom" constant="10" id="5FE-6o-0Uh"/>
+                            <constraint firstItem="aFy-pI-a5t" firstAttribute="leading" secondItem="Nf7-U7-kMU" secondAttribute="leading" constant="-38" id="9aa-sl-s7h"/>
+                            <constraint firstItem="RqX-xw-ztw" firstAttribute="trailing" secondItem="aFy-pI-a5t" secondAttribute="trailing" id="B0D-7j-y81"/>
+                            <constraint firstItem="2Wi-hb-HoT" firstAttribute="leading" secondItem="RqX-xw-ztw" secondAttribute="trailing" constant="10" id="CHx-4P-d2s"/>
+                            <constraint firstItem="RqX-xw-ztw" firstAttribute="leading" secondItem="aFy-pI-a5t" secondAttribute="leading" id="K3e-56-S4s"/>
+                            <constraint firstAttribute="bottom" secondItem="aFy-pI-a5t" secondAttribute="bottom" constant="12" id="LbH-Fo-rGI"/>
+                            <constraint firstItem="1bA-Af-RO6" firstAttribute="leading" secondItem="RqX-xw-ztw" secondAttribute="trailing" constant="10" id="a5m-GX-0ZN"/>
+                            <constraint firstItem="RqX-xw-ztw" firstAttribute="top" secondItem="aFy-pI-a5t" secondAttribute="top" id="dRz-pd-l31"/>
+                            <constraint firstAttribute="trailing" secondItem="m9p-hx-LUy" secondAttribute="trailing" constant="10" id="h6W-S4-LnN"/>
+                            <constraint firstItem="RqX-xw-ztw" firstAttribute="bottom" secondItem="aFy-pI-a5t" secondAttribute="bottom" id="l7S-oJ-pk8"/>
+                            <constraint firstItem="zS1-f7-PFG" firstAttribute="leading" secondItem="2Wi-hb-HoT" secondAttribute="trailing" constant="10" id="pW9-go-EXW"/>
+                            <constraint firstItem="aFy-pI-a5t" firstAttribute="top" secondItem="Nf7-U7-kMU" secondAttribute="top" constant="13" id="rZx-vi-74h"/>
+                            <constraint firstAttribute="bottom" secondItem="m9p-hx-LUy" secondAttribute="bottom" constant="10" id="yah-ff-PAM"/>
+                            <constraint firstItem="2Wi-hb-HoT" firstAttribute="top" secondItem="Nf7-U7-kMU" secondAttribute="top" constant="10" id="zJv-j1-msE"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="zS1-f7-PFG"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="caloriesLabel" destination="1bA-Af-RO6" id="dUP-cx-iF1"/>
+                <outlet property="foodImageView" destination="aFy-pI-a5t" id="Dxn-7j-UdB"/>
+                <outlet property="foodNameLabel" destination="2Wi-hb-HoT" id="lSM-hs-arN"/>
+                <outlet property="weightLabel" destination="m9p-hx-LUy" id="wEP-W2-HiX"/>
+            </connections>
+            <point key="canvasLocation" x="171.75572519083968" y="23.239436619718312"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="exclamationmark" catalog="system" width="47" height="128"/>
+        <systemColor name="systemGray3Color">
+            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

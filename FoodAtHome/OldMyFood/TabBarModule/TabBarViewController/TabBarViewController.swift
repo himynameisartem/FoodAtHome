@@ -54,7 +54,7 @@ extension TabBarViewController {
 //        navVC.viewControllers = [MyFoodViewController()]
         navVC.viewControllers = [availableFoodVC]
         let shoppingListNavVC = UINavigationController()
-        shoppingListNavVC.viewControllers = [ShoppingListViewController()]
+        shoppingListNavVC.viewControllers = [OldShoppingListViewController()]
         
         viewControllers = [
                            generateViewController(viewController: shoppingListNavVC,

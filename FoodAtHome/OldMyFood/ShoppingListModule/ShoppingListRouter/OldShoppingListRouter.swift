@@ -7,17 +7,17 @@
 
 import Foundation
 
-class ShoppingListRouter {
+class OldShoppingListRouter {
     
-    weak var viewController: ShoppingListViewController!
+    weak var viewController: OldShoppingListViewController!
     
-    init(viewController: ShoppingListViewController = ShoppingListViewController()) {
+    init(viewController: OldShoppingListViewController = OldShoppingListViewController()) {
         self.viewController = viewController
     }
     
 }
 
-extension ShoppingListRouter: ShoppingListRouterProtocol {
+extension OldShoppingListRouter: OldShoppingListRouterProtocol {
     func openFoodListViewController() {
         let listVC = FoodListViewController()
         listVC.modalPresentationStyle = .fullScreen

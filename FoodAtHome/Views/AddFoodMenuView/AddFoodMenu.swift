@@ -66,25 +66,35 @@ class AddFoodMenu: UIView {
         productionDateTextField.text = food.productionDateString()
         expirationDateTextField.text = food.expirationDateString()
         consumeUpTextField.text = food.consumeUpString()
-        
         self.food = food
     }
     
     func addFood() {
         checkUnit()
         guard let food = food else { return }
+        if isShoppingList() {
+            print("hey")
+            food.isShoppingList = true
+        }
         DataManager.shared.writeFood(food)
+        self.closeAddFoodMenu()
+        self.delegate?.didCloseAddFood()
     }
     
     func changeFood() {
         checkUnit()
         guard let food = food else { return }
         DataManager.shared.changeFood(food)
+        self.closeAddFoodMenu()
+        self.delegate?.didCloseAddFood()
     }
     
     func updateFood() {
+        checkUnit()
         guard let food = food else { return }
         DataManager.shared.updateFood(food)
+        self.closeAddFoodMenu()
+        self.delegate?.didCloseAddFood()
     }
     
     func closeAddFoodMenu() {
@@ -103,12 +113,16 @@ class AddFoodMenu: UIView {
     }
     
     func showAddFoodMenu() {
-        let viewController = getTopViewController()
-        guard let view = viewController?.view else { return }
+        guard let view = getTopViewController()?.view else { return }
         let width = view.frame.width - 40
-        let height = width * 1.7
-        self.frame = CGRect(x: view.center.x - width / 2, y: -900, width: width, height: height)
+        var height = width * 1.7
+                
+        if isShoppingList() {
+            height = width
+            layoutForShoppingList()
+        }
         
+        self.frame = CGRect(x: view.center.x - width / 2, y: -900, width: width, height: height)
         blurEffect = UIBlurEffect(style: .dark)
         dimmingView = UIVisualEffectView(frame: view.bounds)
         setupUI()

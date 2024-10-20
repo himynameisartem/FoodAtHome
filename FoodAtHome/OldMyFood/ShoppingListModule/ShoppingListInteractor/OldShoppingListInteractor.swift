@@ -7,16 +7,16 @@
 
 import Foundation
 
-class ShoppingListInteractor {
+class OldShoppingListInteractor {
     
-    weak var presenter: ShoppingListInteractorOutputProtocol!
+    weak var presenter: OldShoppingListInteractorOutputProtocol!
     
-    required init(presenter: ShoppingListInteractorOutputProtocol) {
+    required init(presenter: OldShoppingListInteractorOutputProtocol) {
         self.presenter = presenter
     }
 }
 
-extension ShoppingListInteractor: ShoppingListInteractorProtocol {
+extension OldShoppingListInteractor: OldShoppingListInteractorProtocol {
     func fetchShoppingList() {
 //        presenter.shoppingListDidRecieve(FoodManager.shared.fetchMyShoppingList())
     }

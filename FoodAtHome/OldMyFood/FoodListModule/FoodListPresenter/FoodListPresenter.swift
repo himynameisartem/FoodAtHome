@@ -55,7 +55,7 @@ extension FoodListPresenter: FoodListPresenterProtocol {
     func addAndChangeFood(_ food: FoodRealm, viewController: UIViewController, closedView: @escaping () -> Void) {
         if viewController.navigationController?.viewControllers.first(where: { $0 is OldMyFoodViewController }) is OldMyFoodViewController {
             FoodManager.shared.addFood(food, myFood: myFood, check: .check, viewController: viewController, closedFunction: closedView)
-        } else if viewController.navigationController?.viewControllers.first(where: { $0 is ShoppingListViewController }) is ShoppingListViewController {
+        } else if viewController.navigationController?.viewControllers.first(where: { $0 is OldShoppingListViewController }) is OldShoppingListViewController {
             let shoppingListFood = food
             shoppingListFood.isShoppingList = true
             FoodManager.shared.addFood(shoppingListFood, myFood: shoppingList, check: .check, viewController: viewController, closedFunction: closedView)

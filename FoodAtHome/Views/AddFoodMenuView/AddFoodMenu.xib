@@ -93,7 +93,6 @@
                                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0.0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hye-ju-6Gc">
                                             <rect key="frame" x="0.0" y="0.0" width="69.666666666666671" height="27"/>
                                             <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                            <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                                             <userDefinedRuntimeAttributes>
@@ -120,7 +119,6 @@
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="x2L-1h-G16">
                                     <rect key="frame" x="0.0" y="47" width="149" height="27"/>
                                     <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                    <nil key="textColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <userDefinedRuntimeAttributes>

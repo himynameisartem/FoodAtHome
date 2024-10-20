@@ -15,6 +15,7 @@ protocol MyFoodBusinessLogic {
     func showChangeFoodMenu(request: MyFood.ChangeFood.Request)
     func deleteFood(request: MyFood.DeleteFood.Request)
     func removeAllFood(request: MyFood.RemoveAllFood.Request)
+    func showSharedSoodList(request: MyFood.SharedFood.Request)
 }
 
 protocol MyFoodDataStore {
@@ -66,5 +67,11 @@ class MyFoodInteractor: MyFoodBusinessLogic, MyFoodDataStore {
         DataManager.shared.removeAll()
         let responce = MyFood.RemoveAllFood.Responce()
         self.presenter?.presentRemoveAllFood(response: responce)
+    }
+    
+    func showSharedSoodList(request: MyFood.SharedFood.Request) {
+        myFood = DataManager.shared.fetchMyFood()
+        let responce = MyFood.SharedFood.Responce(sharedFood: myFood.reversed())
+        presenter?.presentSharedList(response: responce)
     }
 }

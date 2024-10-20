@@ -43,14 +43,13 @@ class CategoryDetailsViewController: UIViewController {
         setupNavigationBar()
         setupUI()
         getFoodDetails()
-        
     }
     
     @IBAction func returnTapped(_ sender: UIButton) {
-        
         sender.showAnimation(for: .withoutColor) {
             self.navigationController?.navigationBar.isHidden = false
             self.navigationController?.popToRootViewController(animated: true)
+            self.tabBarController?.tabBar.isHidden = false
         }
     }
     
@@ -77,6 +76,7 @@ class CategoryDetailsViewController: UIViewController {
     }
     
     private func setupUI() {
+        tabBarController?.tabBar.isHidden = true
         header = CategoryDetailsHeaderView(frame: CGRect(x: 0, y: 0,
                                             width: view.frame.size.width, height: view.frame.size.width / 1.2))
         foodListTableView.tableHeaderView = header

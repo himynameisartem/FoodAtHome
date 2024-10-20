@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ShoppingListTableViewCell: UITableViewCell {
+class OldShoppingListTableViewCell: UITableViewCell {
     
     private var shadowView: UIView!
     private var containerView: UIView!

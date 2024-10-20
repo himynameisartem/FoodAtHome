@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class ShoppingListPresenter {
+class OldShoppingListPresenter {
     
     let localRealm = FoodManager.shared.getRealm()
     
@@ -21,16 +21,16 @@ class ShoppingListPresenter {
 
     var addAndChangeFoodView = AddAndChangeFoodView()
     
-    weak var view: ShoppingListViewProtocol!
-    var interactor: ShoppingListInteractorProtocol!
-    var router: ShoppingListRouterProtocol!
+    weak var view: OldShoppingListViewProtocol!
+    var interactor: OldShoppingListInteractorProtocol!
+    var router: OldShoppingListRouterProtocol!
     
-    init(view: ShoppingListViewProtocol!) {
+    init(view: OldShoppingListViewProtocol!) {
         self.view = view
     }
 }
 
-extension ShoppingListPresenter: ShoppingListPresenterProtocol {
+extension OldShoppingListPresenter: OldShoppingListPresenterProtocol {
     
     
     func viewDidLoad() {
@@ -109,7 +109,7 @@ extension ShoppingListPresenter: ShoppingListPresenterProtocol {
     }
 }
 
-extension ShoppingListPresenter: ShoppingListInteractorOutputProtocol {
+extension OldShoppingListPresenter: OldShoppingListInteractorOutputProtocol {
     func shoppingListDidRecieve(_ food: [FoodRealm]) {
         self.shoppingList = food
         view.reloadData()

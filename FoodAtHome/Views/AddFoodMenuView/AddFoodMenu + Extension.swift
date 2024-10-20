@@ -20,6 +20,19 @@ extension AddFoodMenu {
         }
         return nil
     }
+
+    func isShoppingList() -> Bool {
+        
+        let tabBarController = getTopViewController() as? TabBarController
+        let selectedItem = tabBarController?.selectedViewController as? UINavigationController
+        
+        if tabBarController?.tabBar.selectedItem?.title == "Shopping List" {
+            if selectedItem?.viewControllers.last is ChoiseFoodViewController {
+                return true
+            }
+        }
+        return false
+    }
     
     func checkUnit() {
         if food?.unit == "" {
@@ -29,8 +42,8 @@ extension AddFoodMenu {
     
     func checkWeightAndDuplicate() {
         guard let food = food else { return }
-        
-        let vc = getTopViewController() as? UINavigationController
+        let selectedItem = getTopViewController() as? TabBarController
+        let vc = selectedItem?.selectedViewController as? UINavigationController
         
         if self.food?.weight == "0.0" {
             let weightAlertController = UIAlertController(title: "Enter the weight of the product".localized(),
@@ -41,21 +54,15 @@ extension AddFoodMenu {
         } else {
             if !DataManager.shared.checkFoDuplicates(food: food) {
                 self.addFood()
-                self.closeAddFoodMenu()
-                self.delegate?.didCloseAddFood()
             } else {
                 if vc?.viewControllers.last is MyFoodViewController {
                     self.updateFood()
-                    self.closeAddFoodMenu()
-                    self.delegate?.didCloseAddFood()
                 } else {
                     let changeFoodAlertController = UIAlertController(title: "You already have this product".localized(),
                                                                       message: "Do you want to replace it?".localized(),
                                                                       preferredStyle: .alert)
                     changeFoodAlertController.addAction(UIAlertAction(title: "Yes".localized(), style: .destructive, handler: { _ in
                         self.changeFood()
-                        self.closeAddFoodMenu()
-                        self.delegate?.didCloseAddFood()
                     }))
                     changeFoodAlertController.addAction(UIAlertAction(title: "No".localized(), style: .cancel))
                     getTopViewController()?.present(changeFoodAlertController, animated: true, completion: nil)
@@ -95,9 +102,48 @@ extension AddFoodMenu {
         expirationDateTextField.delegate = self
         expirationDateTextField.addDoneButtonToKeyboard()
         consumeUpTextField.addDoneButtonToKeyboard()
-        expirationDateTextField.isEnabled = false
-        consumeUpTextField.isEnabled = false
         consumeUpTextField.inputView = consumeUPPicker
         consumeUpTextField.delegate = self
+        
+        if food?.productionDate != nil {
+            expirationDateTextField.isEnabled = true
+            consumeUpTextField.isEnabled = true
+        } else {
+            expirationDateTextField.isEnabled = false
+            consumeUpTextField.isEnabled = false
+        }
+    }
+}
+
+//MARK: - layoutForShoppingList
+ 
+extension AddFoodMenu {
+    
+    func layoutForShoppingList() {
+        productionDateTextField.isHidden = true
+        productionDateLabel.isHidden = true
+        expirationDateTextField.isHidden = true
+        expirationDateLabel.isHidden = true
+        consumeUpLabel.isHidden = true
+        consumeUpTextField.isHidden = true
+                
+        stackViewContainer.translatesAutoresizingMaskIntoConstraints = false
+        foodImageView.translatesAutoresizingMaskIntoConstraints = false
+        addFoodButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            
+            foodImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            foodImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            foodImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            stackViewContainer.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            stackViewContainer.heightAnchor.constraint(equalToConstant: 30),
+            addFoodButton.topAnchor.constraint(equalTo: stackViewContainer.bottomAnchor, constant: 20),
+            addFoodButton.heightAnchor.constraint(equalToConstant: 40),
+            addFoodButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
+            addFoodButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            addFoodButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+            foodImageView.bottomAnchor.constraint(equalTo: stackViewContainer.topAnchor, constant: -20)
+        ])
     }
 }

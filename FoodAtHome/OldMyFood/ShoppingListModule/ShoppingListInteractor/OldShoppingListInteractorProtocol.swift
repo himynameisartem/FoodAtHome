@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol ShoppingListInteractorProtocol: AnyObject {
+protocol OldShoppingListInteractorProtocol: AnyObject {
     func fetchShoppingList()
     func fetchFoodList()
     func fetchAllFood()
 }
 
-protocol ShoppingListInteractorOutputProtocol: AnyObject {
+protocol OldShoppingListInteractorOutputProtocol: AnyObject {
     func shoppingListDidRecieve(_ food: [FoodRealm])
     func foodListDidRecieve(_ food: [FoodRealm])
     func allFoodDidRecieve(_ food: [FoodRealm])

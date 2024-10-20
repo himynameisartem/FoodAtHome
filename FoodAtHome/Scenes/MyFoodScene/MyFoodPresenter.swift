@@ -14,6 +14,7 @@ protocol MyFoodPresentationLogic {
     func presentChangeFoodMenu(response: MyFood.ChangeFood.Responce)
     func presentDeleteFood(response: MyFood.DeleteFood.Responce)
     func presentRemoveAllFood(response: MyFood.RemoveAllFood.Responce)
+    func presentSharedList(response: MyFood.SharedFood.Responce)
 }
 
 class MyFoodPresenter: MyFoodPresentationLogic {
@@ -73,5 +74,12 @@ class MyFoodPresenter: MyFoodPresentationLogic {
     
     func presentRemoveAllFood(response: MyFood.RemoveAllFood.Responce) {
         self.viewController?.removeAllFood()
+    }
+    
+    func presentSharedList(response: MyFood.SharedFood.Responce) {
+        worker = MyFoodWorker()
+        guard let worker = worker else { return }
+        let viewModel = MyFood.SharedFood.ViewModel(foodList: worker.getShared(food: response.sharedFood))
+        viewController?.getSharedFood(viewModel: viewModel)
     }
 }

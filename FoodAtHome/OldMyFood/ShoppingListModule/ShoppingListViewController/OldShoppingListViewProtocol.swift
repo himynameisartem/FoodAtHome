@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol ShoppingListViewProtocol: AnyObject {
+protocol OldShoppingListViewProtocol: AnyObject {
     func reloadData()
 }

@@ -30,7 +30,7 @@ extension FoodListRouter: FoodListRouterProtocol {
             addAndChangeFoodView.showOptionsMenu(for: viewController, choiseType: .foodList)
         }
         
-        if viewController.navigationController?.viewControllers.first(where: { $0 is ShoppingListViewController }) is ShoppingListViewController {
+        if viewController.navigationController?.viewControllers.first(where: { $0 is OldShoppingListViewController }) is OldShoppingListViewController {
             addAndChangeFoodView.showOptionsMenu(for: viewController, choiseType: .shoppingList)
         }
 
@@ -43,7 +43,7 @@ extension FoodListRouter: FoodListRouterProtocol {
             myFoodViewController.reloadData()
         }
         
-        if let shoppingListViewController = viewController.navigationController?.viewControllers.first(where: { $0 is ShoppingListViewController }) as? ShoppingListViewController {
+        if let shoppingListViewController = viewController.navigationController?.viewControllers.first(where: { $0 is OldShoppingListViewController }) as? OldShoppingListViewController {
             shoppingListViewController.presenter.viewDidLoad()
         }
         

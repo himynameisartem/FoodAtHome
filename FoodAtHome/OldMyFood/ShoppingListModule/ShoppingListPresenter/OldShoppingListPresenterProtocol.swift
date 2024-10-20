@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ShoppingListPresenterProtocol: AnyObject {
+protocol OldShoppingListPresenterProtocol: AnyObject {
     var shoppingList: [FoodRealm] { get }
     var foodList: [FoodRealm] { get }
     var allFood: [FoodRealm] { get }

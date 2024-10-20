@@ -7,10 +7,10 @@
 
 import UIKit
 
-class ShoppingListViewController: UIViewController {
+class OldShoppingListViewController: UIViewController {
         
-    var presenter: ShoppingListPresenterProtocol!
-    private let configurator: ShoppingListConfiguratorProtocol = ShoppingListConfigurator()
+    var presenter: OldShoppingListPresenterProtocol!
+    private let configurator: OldShoppingListConfiguratorProtocol = OldShoppingListConfigurator()
     
     private var openAnimation = true
     
@@ -46,7 +46,7 @@ class ShoppingListViewController: UIViewController {
 
 //MARK: - SetupUI
 
-extension ShoppingListViewController {
+extension OldShoppingListViewController {
     
     private func setupUI() {
         
@@ -85,7 +85,7 @@ extension ShoppingListViewController {
         shoppingListTableView.translatesAutoresizingMaskIntoConstraints = false
         shoppingListTableView.delegate = self
         shoppingListTableView.dataSource = self
-        shoppingListTableView.register(ShoppingListTableViewCell.self, forCellReuseIdentifier: "shoppingListTableViewCell")
+        shoppingListTableView.register(OldShoppingListTableViewCell.self, forCellReuseIdentifier: "shoppingListTableViewCell")
         shoppingListTableView.showsVerticalScrollIndicator = false
         shoppingListTableView.backgroundColor = .clear
         shoppingListTableView.separatorStyle = .none
@@ -131,7 +131,7 @@ extension ShoppingListViewController {
 
 //MARK: Targets
 
-extension ShoppingListViewController {
+extension OldShoppingListViewController {
     
     @objc func removeAllButtonTapped(_ sender: UIButton) {
         sender.showAnimation(for: .withoutColor) {
@@ -160,13 +160,13 @@ extension ShoppingListViewController {
 
 //MARK: - UITableViewDelegate
 
-extension ShoppingListViewController: UITableViewDelegate, UITableViewDataSource {
+extension OldShoppingListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         presenter.shoppingListCounter
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "shoppingListTableViewCell", for: indexPath) as! ShoppingListTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "shoppingListTableViewCell", for: indexPath) as! OldShoppingListTableViewCell
         
         let food = presenter.food(at: indexPath)
         cell.configure(food)
@@ -279,7 +279,7 @@ extension ShoppingListViewController: UITableViewDelegate, UITableViewDataSource
 
 //MARK: - PickerView DataSource
 
-extension ShoppingListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension OldShoppingListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         if pickerView.tag == 0 {
             return 1
@@ -323,7 +323,7 @@ extension ShoppingListViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
 }
 
-extension ShoppingListViewController: AddAndChangeFoodDelegate {
+extension OldShoppingListViewController: AddAndChangeFoodDelegate {
     func didAddNewFood(_ food: FoodRealm) {
         if isEditingFromList {
             presenter.addFoodForFoodList(food: food, viewController: self)
@@ -338,7 +338,7 @@ extension ShoppingListViewController: AddAndChangeFoodDelegate {
     }
 }
 
-extension ShoppingListViewController: ShoppingListViewProtocol {
+extension OldShoppingListViewController: OldShoppingListViewProtocol {
     func reloadData() {
         shoppingListTableView.reloadData()
     }

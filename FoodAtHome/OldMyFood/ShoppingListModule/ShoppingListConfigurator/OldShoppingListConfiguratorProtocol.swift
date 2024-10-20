@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol ShoppingListConfiguratorProtocol: AnyObject {
-    func configure(with viewController: ShoppingListViewController)
+protocol OldShoppingListConfiguratorProtocol: AnyObject {
+    func configure(with viewController: OldShoppingListViewController)
 }

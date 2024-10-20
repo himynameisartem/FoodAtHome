@@ -100,6 +100,7 @@ class ChoiseFoodViewController: UIViewController {
         searchButton.target = self
         searchButton.action = #selector(searchButtonTapped(sender:))
         setupSearchBar()
+        tabBarController?.tabBar.isHidden = true
     }
     
     private func setupSearchBar() {
@@ -158,6 +159,7 @@ class ChoiseFoodViewController: UIViewController {
     
     @objc private func backButtonTapped(sender: UIBarButtonItem) {
         self.navigationController?.popToRootViewController(animated: true)
+        tabBarController?.tabBar.isHidden = false
     }
     
     @objc private func tapForCloseSearchBar() {
@@ -297,5 +299,6 @@ extension ChoiseFoodViewController: ChoiseFoodDisplayLogic {
 extension ChoiseFoodViewController: AddFoodMenuDelegate {
     func didCloseAddFood() {
         self.navigationController?.popToRootViewController(animated: true)
+        tabBarController?.tabBar.isHidden = false
     }
 }

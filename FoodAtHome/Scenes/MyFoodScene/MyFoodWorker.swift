@@ -50,4 +50,14 @@ class MyFoodWorker {
     func getFoodForRouting(source: [FoodRealm], type: String) -> [FoodRealm] {
         source.filter { $0.type == type }
     }
+    
+    func getShared(food: [FoodRealm]) -> String {
+        var sharedFood = String()
+        for i in food {
+            if !i.isShoppingList {
+                sharedFood += ("\(i.name.localized()): \(i.weight.localized()) \(i.unit.localized()) \n")
+            }
+        }
+        return sharedFood
+    }
 }
