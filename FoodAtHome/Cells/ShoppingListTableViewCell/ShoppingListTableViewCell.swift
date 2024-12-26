@@ -9,6 +9,7 @@ import UIKit
 
 class ShoppingListTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var foodImageView: UIImageView!
     @IBOutlet weak var foodNameLabel: UILabel!
     @IBOutlet weak var weightLabel: UILabel!
@@ -16,13 +17,21 @@ class ShoppingListTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        setupUI()
     }
     
+    func configure(viewModel: ShoppingList.ShoppingListModel.ViewModel.DisplayedFood) {
+        foodImageView.image = UIImage(named: viewModel.imageName)
+        foodNameLabel.text = viewModel.name
+        weightLabel.text = viewModel.weight + " " + viewModel.unit
+        caloriesLabel.text = viewModel.calories + " " + "kCal".localized() + "/" + "100g.".localized()
+    }
+    
+    private func setupUI() {
+        containerView.makeShadow(opacity: 0.3)
+        foodNameLabel.font = UIFont(name: "Inter", size: 17)
+        caloriesLabel.font = UIFont(name: "Inter-ExtraLight", size: 14)
+        weightLabel.font = UIFont(name: "Inter", size: 17)
+        foodImageView.clipsToBounds = true
+    }
 }

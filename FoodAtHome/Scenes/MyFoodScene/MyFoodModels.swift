@@ -81,7 +81,6 @@ enum MyFood {
         struct ViewModel {
             let food: FoodRealm
         }
-        
     }
     
     enum DeleteFood {

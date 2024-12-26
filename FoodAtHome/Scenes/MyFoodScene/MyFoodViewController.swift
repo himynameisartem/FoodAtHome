@@ -132,7 +132,6 @@ class MyFoodViewController: UIViewController {
     }
 }
 
-
 //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
 extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -209,7 +208,7 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
             })
         } else {
             if indexPath.row < myFood.count {
-                getDetailsFood(at: indexPath.row)                
+                getDetailsFood(at: indexPath.row)
             }
         }
     }
@@ -258,7 +257,7 @@ extension MyFoodViewController: MyFoodDisplayLogic {
     func displayChangeFood(viewModel: MyFood.ChangeFood.ViewModel) {
         addFoodMenu = Bundle.main.loadNibNamed("AddFoodMenu", owner: ChoiseFoodViewController.self)?.first as! AddFoodMenu
         addFoodMenu.configure(from: viewModel.food)
-        addFoodMenu.showAddFoodMenu()
+        addFoodMenu.showMenu(size: nil)
         addFoodMenu.delegate = self
     }
     

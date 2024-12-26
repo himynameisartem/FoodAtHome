@@ -42,7 +42,19 @@ extension DataManager {
     }
     
     func changeFood(_ food: FoodRealm) {
-        let allFood = Array(localRealm.objects(FoodRealm.self))
+        let allFood = Array(localRealm.objects(FoodRealm.self)).filter {!$0.isShoppingList}
+        try! localRealm.write {
+            allFood.forEach { foodName in
+                if foodName.name == food.name {
+                    localRealm.delete(foodName)
+                }
+            }
+            localRealm.add(food)
+        }
+    }
+    
+    func changeFoodForShoppingList(_ food: FoodRealm) {
+        let allFood = Array(localRealm.objects(FoodRealm.self)).filter {$0.isShoppingList}
         try! localRealm.write {
             allFood.forEach { foodName in
                 if foodName.name == food.name {
@@ -54,7 +66,27 @@ extension DataManager {
     }
     
     func updateFood(_ food: FoodRealm) {
-        let allFood = Array(localRealm.objects(FoodRealm.self))
+        let allFood = Array(localRealm.objects(FoodRealm.self)).filter {!$0.isShoppingList}
+        var index = Int()
+        for (i, j) in allFood.enumerated() {
+            if j.name == food.name {
+                index = i
+            }
+        }
+        let update = allFood[index]
+        try! localRealm.write {
+            update.weight = food.weight
+            update.productionDate = food.productionDate
+            if food.expirationDate != nil {
+                update.expirationDate = food.expirationDate
+                update.consumeUp = food.consumeUp
+            }
+            update.unit = food.unit
+        }
+    }
+    
+    func updateFoodForShoppingList(_ food: FoodRealm) {
+        let allFood = Array(localRealm.objects(FoodRealm.self)).filter {$0.isShoppingList}
         var index = Int()
         for (i, j) in allFood.enumerated() {
             if j.name == food.name {
@@ -74,7 +106,12 @@ extension DataManager {
     }
     
     func checkFoDuplicates(food: FoodRealm) -> Bool {
-        let results = Array(localRealm.objects(FoodRealm.self))
+        let results = Array(localRealm.objects(FoodRealm.self)).filter {!$0.isShoppingList}
+        return results.contains(where: { $0.name == food.name })
+    }
+    
+    func checkShoppingListDuplicate(food: FoodRealm) -> Bool {
+        let results = Array(localRealm.objects(FoodRealm.self)).filter {$0.isShoppingList}
         return results.contains(where: { $0.name == food.name })
     }
     

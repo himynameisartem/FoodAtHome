@@ -115,7 +115,8 @@ extension CategoryDetailsViewController: UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        (view.frame.width - 30) / 3.55 + 20
+        let height = view.frame.width / 3.9
+        return height
     }
     
 }

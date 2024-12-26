@@ -3,13 +3,15 @@
 //  FoodAtHome
 //
 //  Created by Артем Кудрявцев on 15.10.2024.
-//  Copyright (c) 2024 ___ORGANIZATIONNAME___. All rights reserved.
 //
 
 import UIKit
 
 protocol ShoppingListBusinessLogic {
     func showFoodList(request: ShoppingList.ShoppingListModel.Request)
+    func showAddToMyFood(request: ShoppingList.AddToMyFood.Request)
+    func showChangeFood(request: ShoppingList.ChangeFood.Request)
+    func deleteFood(request: ShoppingList.DeleteFood.Request)
 }
 
 protocol ShoppingListDataStore {
@@ -25,9 +27,33 @@ class ShoppingListInteractor: ShoppingListBusinessLogic, ShoppingListDataStore {
     func showFoodList(request: ShoppingList.ShoppingListModel.Request) {
         worker = ShoppingListWorker()
         guard let worker = worker else { return }
-        foodList = worker.getShoppintList()
+        foodList = worker.getShoppintList().reversed()
         let responce = ShoppingList.ShoppingListModel.Response(food: foodList)
         presenter?.presentData(response: responce)
-        
+    }
+    
+    func showAddToMyFood(request: ShoppingList.AddToMyFood.Request) {
+        worker = ShoppingListWorker()
+        guard let worker = worker else { return }
+        foodList = worker.getShoppintList().reversed()
+        let foodFromShoppingList = foodList[request.indexPath.row]
+        let responce = ShoppingList.AddToMyFood.Responce(food: worker.prepareToMyFoodList(from: foodFromShoppingList, and: foodList))
+        presenter?.presentAddtoMyFood(responce: responce)
+    }
+    
+    func showChangeFood(request: ShoppingList.ChangeFood.Request) {
+        worker = ShoppingListWorker()
+        guard let worker = worker else { return }
+        foodList = worker.getShoppintList().reversed()
+        let foodFromShoppingList = foodList[request.indexPath.row]
+        let responce = ShoppingList.ChangeFood.Responce(food: worker.prepareToMyFoodList(from: foodFromShoppingList, and: foodList))
+        presenter?.presentChangeFood(response: responce)
+    }
+    
+    func deleteFood(request: ShoppingList.DeleteFood.Request) {
+        foodList = DataManager.shared.fetchMyShoppingList().reversed()
+        DataManager.shared.delete(food: foodList[request.indexPath.row])
+        let responce = ShoppingList.DeleteFood.Responce()
+        presenter?.presentDeleteFood(response: responce)
     }
 }

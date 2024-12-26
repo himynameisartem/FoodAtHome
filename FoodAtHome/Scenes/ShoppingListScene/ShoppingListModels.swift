@@ -22,8 +22,46 @@ enum ShoppingList {
                 let imageName: String
                 let calories: String
                 let weight: String
+                let unit: String
             }
             let displayedFood: [DisplayedFood]
+        }
+    }
+    
+    enum AddToMyFood {
+        struct Request{
+            let indexPath: IndexPath
+        }
+        
+        struct Responce {
+            let food: FoodRealm
+        }
+        
+        struct ViewModel {
+            let food: FoodRealm
+        }
+    }
+    
+    enum ChangeFood {
+        struct Request{
+            let indexPath: IndexPath
+        }
+        
+        struct Responce {
+            let food: FoodRealm
+        }
+        
+        struct ViewModel {
+            let food: FoodRealm
+        }
+    }
+    
+    enum DeleteFood {
+        struct Request{
+            let indexPath: IndexPath
+        }
+        
+        struct Responce {
         }
     }
 }

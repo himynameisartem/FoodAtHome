@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol AddFoodMenuDisplayLogic {
+    func displayFood(viewModel: AddFoodMenuModel.ShowFood.ViewModel)
+}
+
 protocol AddFoodMenuDelegate: AnyObject {
     func didCloseAddFood()
 }
@@ -38,6 +42,7 @@ class AddFoodMenu: UIView {
     var food: FoodRealm?
     private let monthWheel: [Int] = Array(0...48)
     private let daysWheel: [Int] = Array(0...31)
+    var rootVC: CheckRootViewContrller?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -54,7 +59,8 @@ class AddFoodMenu: UIView {
     
     @IBAction func addFoodButtonTapped(_ sender: UIButton) {
         sender.showAnimation(for: .withoutColor) {
-                self.checkWeightAndDuplicate()
+//                self.checkWeightAndDuplicate()
+            self.checkWeightAndDuplicateTest()
         }
     }
     
@@ -73,7 +79,6 @@ class AddFoodMenu: UIView {
         checkUnit()
         guard let food = food else { return }
         if isShoppingList() {
-            print("hey")
             food.isShoppingList = true
         }
         DataManager.shared.writeFood(food)
@@ -89,10 +94,26 @@ class AddFoodMenu: UIView {
         self.delegate?.didCloseAddFood()
     }
     
+    func changeFoodForShoppingList() {
+        checkUnit()
+        guard let food = food else { return }
+        DataManager.shared.changeFoodForShoppingList(food)
+        self.closeAddFoodMenu()
+        self.delegate?.didCloseAddFood()
+    }
+    
     func updateFood() {
         checkUnit()
         guard let food = food else { return }
         DataManager.shared.updateFood(food)
+        self.closeAddFoodMenu()
+        self.delegate?.didCloseAddFood()
+    }
+    
+    func updateFoodForShoppingList() {
+        checkUnit()
+        guard let food = food else { return }
+        DataManager.shared.updateFoodForShoppingList(food)
         self.closeAddFoodMenu()
         self.delegate?.didCloseAddFood()
     }
@@ -112,16 +133,22 @@ class AddFoodMenu: UIView {
         }
     }
     
-    func showAddFoodMenu() {
+    func showFullMenu() {
         guard let view = getTopViewController()?.view else { return }
         let width = view.frame.width - 40
-        var height = width * 1.7
-                
-        if isShoppingList() {
-            height = width
-            layoutForShoppingList()
-        }
-        
+        let height = width * 1.7
+        settingsFrameMenu(from: view, width: width, height: height)
+    }
+    
+    func showSmallMenu() {
+        guard let view = getTopViewController()?.view else { return }
+        let width = view.frame.width - 40
+        let height = width
+        layoutForShoppingList()
+        settingsFrameMenu(from: view, width: width, height: height)
+    }
+    
+    func settingsFrameMenu(from view: UIView, width: CGFloat, height: CGFloat) {
         self.frame = CGRect(x: view.center.x - width / 2, y: -900, width: width, height: height)
         blurEffect = UIBlurEffect(style: .dark)
         dimmingView = UIVisualEffectView(frame: view.bounds)
@@ -172,13 +199,20 @@ class AddFoodMenu: UIView {
         popupMenuButton.showsMenuAsPrimaryAction = true
         popupMenuButton.changesSelectionAsPrimaryAction = true
     }
-    
-    
 }
 
 //MARK: - UITextFieldDelegate
 
 extension AddFoodMenu: UITextFieldDelegate {
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let text = textField.text else { return }
+        if textField == weightTextField {
+            if text.count > 5 {
+                print(text)
+            }
+        }
+    }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         
@@ -250,12 +284,21 @@ extension AddFoodMenu: UIPickerViewDelegate, UIPickerViewDataSource {
         }
     }
     
-    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if component == 0 {
             return monthWheel.count
         } else {
             return daysWheel.count
         }
+    }
+}
+
+
+// MARK: - AddFoodMenuDisplayLogic
+
+extension AddFoodMenu: AddFoodMenuDisplayLogic {
+    
+    func displayFood(viewModel: AddFoodMenuModel.ShowFood.ViewModel) {
+        
     }
 }
