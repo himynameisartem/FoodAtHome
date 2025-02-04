@@ -11,7 +11,7 @@ import UIKit
 protocol ChoiseFoodPresentationLogic {
     func presentCategories(responce: ChoiseFood.ShowCategoriesFood.Response)
     func presentFood(response: ChoiseFood.ShowFood.Response)
-    func presentAddFoodMenu(response: ChoiseFood.AddFood.Response)
+//    func presentAddFoodMenu(response: ChoiseFood.AddFood.Response)
 }
 
 class ChoiseFoodPresenter: ChoiseFoodPresentationLogic {
@@ -31,8 +31,8 @@ class ChoiseFoodPresenter: ChoiseFoodPresentationLogic {
         viewController?.displayFood(viewModel: viewModel)
     }
     
-    func presentAddFoodMenu(response: ChoiseFood.AddFood.Response) {
-        let viewModel = ChoiseFood.AddFood.ViewModel(displayedFood: response.food)
-        viewController?.displayAddFoodMenu(viewModel: viewModel)
-    }
+//    func presentAddFoodMenu(response: ChoiseFood.AddFood.Response) {
+//        let viewModel = ChoiseFood.AddFood.ViewModel(displayedFood: response.food)
+//        viewController?.displayAddFoodMenu(viewModel: viewModel)
+//    }
 }

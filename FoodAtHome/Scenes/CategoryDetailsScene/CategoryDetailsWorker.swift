@@ -9,6 +9,8 @@ import UIKit
 
 class CategoryDetailsWorker {
     
+    var dateCalculate: DateCalculatorManagerProtocol?
+    
     func getDisplayedFood(food: [FoodRealm]) -> [CategoryDetails.ShowFood.ViewModel.DisplayedCells] {
         var displayedFood: [CategoryDetails.ShowFood.ViewModel.DisplayedCells] = []
         
@@ -19,7 +21,9 @@ class CategoryDetailsWorker {
             let calories = food.calories
             let unit = food.unit
             let color: UIColor? = {
-                guard let indicator = food.distanceBetweenProductionAndExpiration() else { return nil }
+//                guard let indicator = food.distanceBetweenProductionAndExpiration() else { return nil }
+                guard let productionDate = food.productionDate, let expirationDate = food.expirationDate else { return nil }
+                guard let indicator = dateCalculate?.calculateExpirationDistance(productionDate: productionDate, expirationDate: expirationDate) else { return nil }
                 if indicator < 1 && indicator > 0.4 {
                     return nil
                 } else if indicator <= 0.4 && indicator > 0.0 {

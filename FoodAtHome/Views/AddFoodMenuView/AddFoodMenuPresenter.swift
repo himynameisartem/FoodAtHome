@@ -16,7 +16,13 @@ class AddFoodMenuPresenter: AddFoodMenuPresentationLogic {
     weak var view: AddFoodMenu?
     
     func presentFood(responce: AddFoodMenuModel.ShowFood.Responce) {
-        let viewModel = AddFoodMenuModel.ShowFood.ViewModel(viewModel: responce.food)
+        let displayedFood = AddFoodMenuModel.ShowFood.ViewModel.DisplayedFood(
+            imageName: responce.food.name,
+            weight: responce.food.weight,
+            productionDate:  "",
+            expirationDate:  "",
+            consumeUp:  "")
+        let viewModel = AddFoodMenuModel.ShowFood.ViewModel(displayedFood: displayedFood)
         view?.displayFood(viewModel: viewModel)
     }
 }

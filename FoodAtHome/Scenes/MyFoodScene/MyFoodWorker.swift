@@ -10,6 +10,8 @@ import RealmSwift
 
 class MyFoodWorker {
     
+    var dateCalculator: DateCalculatorManagerProtocol?
+    
     func getDisplayedMyFood(from myFood: [FoodRealm]) -> [MyFood.ShowMyFood.ViewModel.DisplayedMyFood] {
         
         var displayedMyFood: [MyFood.ShowMyFood.ViewModel.DisplayedMyFood] = []
@@ -17,7 +19,9 @@ class MyFoodWorker {
             let name = food.name.localized()
             let imageName = food.name
             let indicator: Bool = {
-                guard let daysLeft = food.distanceBetweenProductionAndExpiration() else { return false}
+                guard let productionDate = food.productionDate, let expirationDate = food.expirationDate else { return false }
+                guard let daysLeft = dateCalculator?.calculateExpirationDistance(productionDate: productionDate, expirationDate: expirationDate) else { return false }
+
                 if daysLeft <= 0.0 { return
                     true
                 } else {

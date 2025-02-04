@@ -11,12 +11,12 @@ import UIKit
 protocol ChoiseFoodBusinessLogic {
     func showCategories(request: ChoiseFood.ShowCategoriesFood.Request)
     func showFoodList(request: ChoiseFood.ShowFood.Request)
-    func showAddFoodMenu(request: ChoiseFood.AddFood.Request)
+//    func showAddFoodMenu(request: ChoiseFood.AddFood.Request)
 }
 
 protocol ChoiseFoodDataStore {
     var categoriesName: [String] { get }
-    var food: [FoodRealm] { get }
+    var food: [FoodItem] { get }
     var addFood: FoodRealm { get }
 }
 
@@ -26,7 +26,7 @@ class ChoiseFoodInteractor: ChoiseFoodBusinessLogic, ChoiseFoodDataStore {
     var worker: ChoiseFoodWorker?
     
     var categoriesName = FoodType.allCases.map {$0.rawValue.localized()}
-    var food: [FoodRealm] = []
+    var food: [FoodItem] = []
     var addFood = FoodRealm()
     
     func showCategories(request: ChoiseFood.ShowCategoriesFood.Request) {
@@ -35,30 +35,31 @@ class ChoiseFoodInteractor: ChoiseFoodBusinessLogic, ChoiseFoodDataStore {
     }
     
     func showFoodList(request: ChoiseFood.ShowFood.Request) {
-        worker = ChoiseFoodWorker()
         if request.category != nil  {
-            guard let food = worker?.showFood(from: request.category) else { return }
+            guard let category = request.category?.rawValue else { return }
+            DataManager.shared.fetchFoodData { food in
+                self.food = food.filter {$0.type == category}
+            }
             let responce = ChoiseFood.ShowFood.Response(food: food)
             presenter?.presentFood(response: responce)
-        } else if request.name != nil {
+        }  else if request.name != nil {
             guard let searchText = request.name else { return }
-            let filteredFoodList = FoodManager.shared.allFood.filter { (food: FoodRealm) in
+                let filteredFoodList = food.filter { (food: FoodItem) in
                 if !searchText.isEmpty {
                     return food.name.localized().lowercased().contains(searchText.lowercased())
                 } else {
                     return false
                 }
             }
-            let array = Array(filteredFoodList)
-            let responce = ChoiseFood.ShowFood.Response(food: array)
+            let responce = ChoiseFood.ShowFood.Response(food: filteredFoodList)
             presenter?.presentFood(response: responce)
         }
     }
     
-    func showAddFoodMenu(request: ChoiseFood.AddFood.Request) {
-        worker = ChoiseFoodWorker()
-        guard let food = worker?.getFood(from: request.food) else { return }
-        let responce = ChoiseFood.AddFood.Response(food: food)
-        presenter?.presentAddFoodMenu(response: responce)
-    }
+//    func showAddFoodMenu(request: ChoiseFood.AddFood.Request) {
+//        worker = ChoiseFoodWorker()
+//        guard let food = worker?.getFood(from: request.food) else { return }
+//        let responce = ChoiseFood.AddFood.Response(food: food)
+//        presenter?.presentAddFoodMenu(response: responce)
+//    }
 }

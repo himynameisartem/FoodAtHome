@@ -21,6 +21,8 @@ class MyFoodPresenter: MyFoodPresentationLogic {
     
     weak var viewController: MyFoodDisplayLogic?
     var worker: MyFoodWorker?
+    var foodManager: FoodManager?
+    var dateCalculator: DateCalculatorManager?
     
     func presentCategories(responce: MyFood.ShowCategories.Responce) {
         worker = MyFoodWorker()
@@ -38,14 +40,18 @@ class MyFoodPresenter: MyFoodPresentationLogic {
     
     func presentDetailsFood(responce: MyFood.showDetailFood.Responce) {
         worker = MyFoodWorker()
+        foodManager = FoodManager()
+        dateCalculator = DateCalculatorManager()
         let displayedDetailsFood = MyFood.showDetailFood.ViewModel.DiplayedDetails(
                                     name: responce.foodDetails.name.localized(),
                                     weight: responce.foodDetails.weight,
                                     unit: responce.foodDetails.unit,
-                                    productionDate: responce.foodDetails.productionDateString() ?? "-",
-                                    expirationDate: responce.foodDetails.expirationDateString() ?? "-",
-                                    daysLeft: responce.foodDetails.daysLeftString() ?? "-",
-                                    distaceIndicator: responce.foodDetails.distanceBetweenProductionAndExpiration())
+                                    productionDate: foodManager?.getFormattedProductionDate(for: responce.foodDetails) ?? "-",
+                                    expirationDate: foodManager?.getFormattedExpirationDate(for: responce.foodDetails) ?? "-",
+                                    daysLeft: foodManager?.getFormattedDaysLeft(for: responce.foodDetails) ?? "-",
+                                    distaceIndicator: dateCalculator?.calculateExpirationDistance(
+                                        productionDate: responce.foodDetails.productionDate,
+                                        expirationDate: responce.foodDetails.expirationDate))
         let viewModel = MyFood.showDetailFood.ViewModel(DiplayedDetails: displayedDetailsFood)
         viewController?.displayFoodDetails(viewModel: viewModel)
     }

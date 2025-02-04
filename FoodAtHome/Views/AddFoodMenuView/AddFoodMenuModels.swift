@@ -11,7 +11,7 @@ enum AddFoodMenuModel {
     
     enum ShowFood {
         struct Request {
-            
+            let food: FoodRealm
         }
         
         struct Responce {
@@ -19,7 +19,14 @@ enum AddFoodMenuModel {
         }
         
         struct ViewModel {
-            let viewModel: FoodRealm
+            struct DisplayedFood {
+                let imageName: String
+                let weight: String
+                let productionDate: String
+                let expirationDate: String
+                let consumeUp: String
+            }
+            let displayedFood: DisplayedFood
         }
     }
 }

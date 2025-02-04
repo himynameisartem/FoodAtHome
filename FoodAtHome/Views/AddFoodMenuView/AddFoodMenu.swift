@@ -18,6 +18,12 @@ protocol AddFoodMenuDelegate: AnyObject {
 class AddFoodMenu: UIView {
     
     weak var delegate: AddFoodMenuDelegate?
+    var interactor: AddFoodMenuBusinessLogic?
+    
+    var food: FoodRealm?
+    private let monthWheel: [Int] = Array(0...48)
+    private let daysWheel: [Int] = Array(0...31)
+    var rootVC: CheckRootViewContrller?
     
     private var dimmingView: UIVisualEffectView!
     private var blurEffect: UIVisualEffect!
@@ -39,14 +45,21 @@ class AddFoodMenu: UIView {
     @IBOutlet weak var labelsStackView: UIStackView!
     @IBOutlet weak var swipeGestureRecognizer: UISwipeGestureRecognizer!
     
-    var food: FoodRealm?
-    private let monthWheel: [Int] = Array(0...48)
-    private let daysWheel: [Int] = Array(0...31)
-    var rootVC: CheckRootViewContrller?
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        setup()
+        getFood()
         setupPopupMenu()
+    }
+    
+    private func setup() {
+        let view = self
+        let interactor = AddFoodMenuInteractor()
+        let presenter = AddFoodMenuPresenter()
+        view.interactor = interactor
+        interactor.presenter = presenter
+        presenter.view = view
     }
     
     @IBAction func exitButtonTapped(_ sender: UIButton) {
@@ -64,16 +77,22 @@ class AddFoodMenu: UIView {
         }
     }
     
-    func configure(from food: FoodRealm) {
-        foodImageView.image = UIImage(named: food.name)
-        if food.weight != "0.0" {
-            weightTextField.text = food.weight
-        }
-        productionDateTextField.text = food.productionDateString()
-        expirationDateTextField.text = food.expirationDateString()
-        consumeUpTextField.text = food.consumeUpString()
-        self.food = food
+    private func getFood() {
+        guard let food = food else { return }
+        let request = AddFoodMenuModel.ShowFood.Request(food: food)
+        interactor?.showFood(request: request)
     }
+    
+//    func configure(from food: FoodRealm) {
+//        foodImageView.image = UIImage(named: food.name)
+//        if food.weight != "0.0" {
+//            weightTextField.text = food.weight
+//        }
+//        productionDateTextField.text = food.productionDateString()
+//        expirationDateTextField.text = food.expirationDateString()
+//        consumeUpTextField.text = food.consumeUpString()
+//        self.food = food
+//    }
     
     func addFood() {
         checkUnit()
@@ -237,9 +256,9 @@ extension AddFoodMenu: UITextFieldDelegate {
                 food?.weight = weightTextField.text ?? "0.0"
             }
         }
-        productionDateTextField.text = food?.productionDateString()
-        expirationDateTextField.text = food?.expirationDateString()
-        consumeUpTextField.text = food?.consumeUpString()
+//        productionDateTextField.text = food?.productionDateString()
+//        expirationDateTextField.text = food?.expirationDateString()
+//        consumeUpTextField.text = food?.consumeUpString()
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -299,6 +318,10 @@ extension AddFoodMenu: UIPickerViewDelegate, UIPickerViewDataSource {
 extension AddFoodMenu: AddFoodMenuDisplayLogic {
     
     func displayFood(viewModel: AddFoodMenuModel.ShowFood.ViewModel) {
-        
+        foodImageView.image = UIImage(named: viewModel.displayedFood.imageName)
+        weightTextField.text = viewModel.displayedFood.weight
+        productionDateTextField.text = viewModel.displayedFood.productionDate
+        expirationDateTextField.text = viewModel.displayedFood.expirationDate
+        consumeUpTextField.text = viewModel.displayedFood.consumeUp
     }
 }

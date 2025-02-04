@@ -28,7 +28,7 @@ enum ChoiseFood {
         let name: String?
     }
     struct Response {
-        let food: [FoodRealm]
+        let food: [FoodItem]
     }
     struct ViewModel {
         struct DispalyedFood {
@@ -40,17 +40,17 @@ enum ChoiseFood {
     }
   }
     
-    enum AddFood {
-        struct Request {
-            let food: ChoiseFood.ShowFood.ViewModel.DispalyedFood
-        }
-        
-        struct Response {
-            let food: FoodRealm
-        }
-        
-        struct ViewModel {
-            let displayedFood: FoodRealm
-        }
-    }
+//    enum AddFood {
+//        struct Request {
+//            let index: ChoiseFood.ShowFood.ViewModel.DispalyedFood
+//        }
+//        
+//        struct Response {
+//            let food: FoodRealm
+//        }
+//        
+//        struct ViewModel {
+//            let displayedFood: FoodRealm
+//        }
+//    }
 }

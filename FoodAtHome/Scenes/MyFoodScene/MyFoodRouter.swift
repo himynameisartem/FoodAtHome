@@ -9,6 +9,7 @@ import UIKit
 
 @objc protocol MyFoodRoutingLogic {
     func routeToCategoryDetails(segue: UIStoryboardSegue?)
+    func passFoodToEdit()
 }
 
 protocol MyFoodDataPassing {
@@ -20,6 +21,7 @@ class MyFoodRouter: NSObject, MyFoodRoutingLogic, MyFoodDataPassing {
     weak var viewController: MyFoodViewController?
     var dataStore: MyFoodDataStore?
     var worker = MyFoodWorker()
+    var addFoodMenu = AddFoodMenu()
     
     // MARK: Routing
     
@@ -51,5 +53,12 @@ class MyFoodRouter: NSObject, MyFoodRoutingLogic, MyFoodDataPassing {
         let food = worker.getFoodForRouting(source: source.myFood, type: category)
         destination.category = category
         destination.food = food
+    }
+    
+    func passFoodToEdit() {
+        addFoodMenu = Bundle.main.loadNibNamed("AddFoodMenu", owner: ChoiseFoodViewController.self)?.first as! AddFoodMenu
+//        addFoodMenu.configure(from: viewModel.food)
+        addFoodMenu.showMenu(size: nil)
+        addFoodMenu.delegate = viewController
     }
 }

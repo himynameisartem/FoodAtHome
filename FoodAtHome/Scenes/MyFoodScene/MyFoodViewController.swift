@@ -92,6 +92,16 @@ class MyFoodViewController: UIViewController {
         router.dataStore = interactor
     }
     
+    private func didTapContextualEditButton(at indexPath: IndexPath) {
+        let request = MyFood.ChangeFood.Request(indexPath: indexPath.row)
+        self.interactor?.showChangeFoodMenu(request: request)
+    }
+    
+    private func didTapContextualDeleteButton(at indexPath: IndexPath) {
+        let request = MyFood.DeleteFood.Request(indexPath: indexPath)
+        self.interactor?.deleteFood(request: request)
+    }
+    
     func setupCollectionViewCells() {
         categoryMyFoodCollectionView.register(UINib(nibName: "CategoryMyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "categoryMyFoodCell")
         myFoodCollectionView.register(UINib(nibName: "MyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "myFoodCell")
@@ -186,12 +196,10 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
         if collectionView == myFoodCollectionView {
             let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { action in
                 let changeFood = UIAction(title: "Edit".localized()) { action in
-                    let request = MyFood.ChangeFood.Request(indexPath: indexPath.row)
-                    self.interactor?.showChangeFoodMenu(request: request)
+                    self.didTapContextualEditButton(at: indexPath)
                 }
                 let deleteFood = UIAction(title: "Delete".localized(), attributes: .destructive) { action in
-                    let request = MyFood.DeleteFood.Request(indexPath: indexPath)
-                    self.interactor?.deleteFood(request: request)
+                    self.didTapContextualDeleteButton(at: indexPath)
                 }
                 return UIMenu(title: "", children: [changeFood, deleteFood])
             }
@@ -255,10 +263,7 @@ extension MyFoodViewController: MyFoodDisplayLogic {
     }
     
     func displayChangeFood(viewModel: MyFood.ChangeFood.ViewModel) {
-        addFoodMenu = Bundle.main.loadNibNamed("AddFoodMenu", owner: ChoiseFoodViewController.self)?.first as! AddFoodMenu
-        addFoodMenu.configure(from: viewModel.food)
-        addFoodMenu.showMenu(size: nil)
-        addFoodMenu.delegate = self
+        router?.passFoodToEdit()
     }
     
     func deleteFood() {

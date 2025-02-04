@@ -176,13 +176,13 @@ extension ShoppingListViewController: ShoppingListDisplayLogic {
     }
     
     func addToMyFood(viewModel: ShoppingList.AddToMyFood.ViewModel) {
-        addFoodMenu.configure(from: viewModel.food)
+//        addFoodMenu.configure(from: viewModel.food)
         addFoodMenu.showMenu(size: .full)
         addFoodMenu.delegate = self
     }
     
     func changeFood(viewModel: ShoppingList.ChangeFood.ViewModel) {
-        addFoodMenu.configure(from: viewModel.food)
+//        addFoodMenu.configure(from: viewModel.food)
         addFoodMenu.showMenu(size: .small)
         addFoodMenu.delegate = self
     }

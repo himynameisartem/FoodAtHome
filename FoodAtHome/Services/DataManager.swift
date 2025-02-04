@@ -8,28 +8,41 @@
 import Foundation
 import RealmSwift
 
+
+struct FoodItem: Codable {
+    let name: String
+    let type: String
+    let calories: String
+}
+
 struct DataManager {
-    
     static let shared = DataManager()
-    
     private let localRealm = try! Realm()
-    
 }
 //MARK: - fetchMyFood
 
 extension DataManager {
     
+    func fetchFoodData(completion: @escaping (_ food: [FoodItem])->()) {
+        guard let url = Bundle.main.url(forResource: "food_database", withExtension: "json"),
+        let data = try? Data(contentsOf: url) else { return }
+        let decoder = JSONDecoder()
+        guard let allItems = try? decoder.decode([FoodItem].self, from: data) else { return }
+        completion(allItems)
+    }
+    
     func fetchMyFood() -> [FoodRealm] {
-//        print(localRealm.configuration.fileURL!.path)
+        //        print(localRealm.configuration.fileURL!.path)
         let results = localRealm.objects(FoodRealm.self)
         return Array(results).filter { !$0.isShoppingList }
     }
     
     func fetchMyShoppingList() -> [FoodRealm] {
-//        print(localRealm.configuration.fileURL!.path)
+        //        print(localRealm.configuration.fileURL!.path)
         let results = localRealm.objects(FoodRealm.self)
         return Array(results).filter { $0.isShoppingList }
     }
+    
 }
 
 //MARK: - write change and delete food

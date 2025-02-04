@@ -10,7 +10,7 @@ import UIKit
 protocol ChoiseFoodDisplayLogic: AnyObject {
     func displayCategories(viewModel: ChoiseFood.ShowCategoriesFood.ViewModel)
     func displayFood(viewModel: ChoiseFood.ShowFood.ViewModel)
-    func displayAddFoodMenu(viewModel: ChoiseFood.AddFood.ViewModel)
+    //    func displayAddFoodMenu(viewModel: ChoiseFood.AddFood.ViewModel)
 }
 
 class ChoiseFoodViewController: UIViewController {
@@ -23,7 +23,7 @@ class ChoiseFoodViewController: UIViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private let hideSearchBarGesture = UITapGestureRecognizer()
     private var collectionViewHeightConstraint = NSLayoutConstraint()
-    private var openAnimation = true
+    private var isOpenAnimation = true
     
     private var categoriesName: [String] = []
     private var foodList: [ChoiseFood.ShowFood.ViewModel.DispalyedFood] = []
@@ -33,6 +33,8 @@ class ChoiseFoodViewController: UIViewController {
     var interactor: ChoiseFoodBusinessLogic?
     var router: (NSObjectProtocol & ChoiseFoodRoutingLogic)?
     
+    private var dimmingView: UIVisualEffectView!
+    private var blurEffect: UIVisualEffect!
     
     // MARK: Object lifecycle
     
@@ -53,12 +55,12 @@ class ChoiseFoodViewController: UIViewController {
         let viewController = self
         let interactor = ChoiseFoodInteractor()
         let presenter = ChoiseFoodPresenter()
-        let router = ChoiseFoodRouter()
+        //        let router = ChoiseFoodRouter()
         viewController.interactor = interactor
-        viewController.router = router
+        //        viewController.router = router
         interactor.presenter = presenter
         presenter.viewController = viewController
-        router.viewController = viewController
+        //        router.viewController = viewController
     }
     
     // MARK: Routing
@@ -74,8 +76,9 @@ class ChoiseFoodViewController: UIViewController {
         setupCollectionView()
         getFoodList()
         setupTableView()
+        setupDimmingView()
     }
-
+    
     private func getCategories() {
         let request = ChoiseFood.ShowCategoriesFood.Request()
         interactor?.showCategories(request: request)
@@ -86,7 +89,19 @@ class ChoiseFoodViewController: UIViewController {
         let request = ChoiseFood.ShowFood.Request(category: FoodType.allCases[indexPath.row], name: nil)
         interactor?.showFoodList(request: request)
     }
-
+    
+    private func getAddFoodMenu(at indexPath: IndexPath) {
+        //        let request = ChoiseFood.AddFood.Request(food: foodList[indexPath.row])
+        //        interactor?.showAddFoodMenu(request: request)
+    }
+    
+    private func setupDimmingView() {
+        blurEffect = UIBlurEffect(style: .dark)
+        dimmingView = UIVisualEffectView(frame: view.bounds)
+        dimmingView.effect = blurEffect
+        dimmingView.alpha = 0
+    }
+    
     private func setupNavigationView() {
         backButton.tintColor = .black
         backButton.image = UIImage(systemName: "chevron.backward")
@@ -113,7 +128,7 @@ class ChoiseFoodViewController: UIViewController {
         searchController.searchBar.placeholder = "Search".localized()
         searchController.searchBar.setValue("Cancel".localized(), forKey: "cancelButtonText")
         searchController.searchBar.tintColor = .black
-
+        
     }
     
     private func setupCollectionView() {
@@ -137,33 +152,14 @@ class ChoiseFoodViewController: UIViewController {
         foodListTableView.dataSource = self
         foodListTableView.register(UINib(nibName: "FoodListTableViewCell", bundle: nil), forCellReuseIdentifier: "foodListCell")
     }
-
-    @objc private func searchButtonTapped(sender: UIBarButtonItem) {
-        navigationItem.titleView = searchController.searchBar
-        navigationItem.leftBarButtonItem = .none
-        navigationItem.rightBarButtonItem = .none
-        searchController.searchBar.becomeFirstResponder()
-        hideSearchBarGesture.addTarget(self, action: #selector(tapForCloseSearchBar))
-        view.addGestureRecognizer(hideSearchBarGesture)
-
-
-        UIView.animate(withDuration: 0.1) {
-            self.categoriesFoodCollectionView.alpha = 0
-        } completion: { done in
-            UIView.animate(withDuration: 0.3, delay: 0.1, options: .curveEaseIn) {
-                self.collectionViewHeightConstraint.constant -= 50
-                self.view.layoutIfNeeded()
-            }
-        }
-    }
     
-    @objc private func backButtonTapped(sender: UIBarButtonItem) {
-        self.navigationController?.popToRootViewController(animated: true)
-        tabBarController?.tabBar.isHidden = false
-    }
-    
-    @objc private func tapForCloseSearchBar() {
-        hideSearchBar()
+    private func didTapAddFoodButtion(at indexPath: IndexPath) {
+        let addFoodVC = AddFoodViewController()
+        addFoodVC.modalPresentationStyle = .custom
+        addFoodVC.transitioningDelegate = self
+        self.present(addFoodVC, animated: true, completion: nil)
+        getAddFoodMenu(at: indexPath)
+        searchController.searchBar.resignFirstResponder()
     }
     
     private func hideSearchBar() {
@@ -182,6 +178,34 @@ class ChoiseFoodViewController: UIViewController {
             }
         }
     }
+    
+    @objc private func searchButtonTapped(sender: UIBarButtonItem) {
+        navigationItem.titleView = searchController.searchBar
+        navigationItem.leftBarButtonItem = .none
+        navigationItem.rightBarButtonItem = .none
+        searchController.searchBar.becomeFirstResponder()
+        hideSearchBarGesture.addTarget(self, action: #selector(tapForCloseSearchBar))
+        view.addGestureRecognizer(hideSearchBarGesture)
+        
+        
+        UIView.animate(withDuration: 0.1) {
+            self.categoriesFoodCollectionView.alpha = 0
+        } completion: { done in
+            UIView.animate(withDuration: 0.3, delay: 0.1, options: .curveEaseIn) {
+                self.collectionViewHeightConstraint.constant -= 50
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+    
+    @objc private func backButtonTapped(sender: UIBarButtonItem) {
+        self.navigationController?.popToRootViewController(animated: true)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
+    @objc private func tapForCloseSearchBar() {
+        hideSearchBar()
+    }
 }
 
 //MARK: - UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating
@@ -190,7 +214,7 @@ extension ChoiseFoodViewController: UISearchBarDelegate, UISearchControllerDeleg
     func updateSearchResults(for searchController: UISearchController) {
         let request = ChoiseFood.ShowFood.Request(category: nil, name: searchController.searchBar.text)
         interactor?.showFoodList(request: request)
-        openAnimation = false
+        isOpenAnimation = false
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -241,11 +265,9 @@ extension ChoiseFoodViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "foodListCell", for: indexPath) as! FoodListTableViewCell
         cell.configure(from: foodList[indexPath.row])
-        let request = ChoiseFood.AddFood.Request(food: foodList[indexPath.row])
         cell.buttonAction = { [weak self] in
             cell.addFoodButton.showAnimation(for: .withColor) {
-                self?.interactor?.showAddFoodMenu(request: request)
-                self?.searchController.searchBar.resignFirstResponder()
+                self?.didTapAddFoodButtion(at: indexPath)
             }
         }
         return cell
@@ -257,13 +279,13 @@ extension ChoiseFoodViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if openAnimation {
+        if isOpenAnimation {
             cell.transform = CGAffineTransform(translationX: 0, y: cell.contentView.frame.height)
             UIView.animate(withDuration: 0.3, delay: 0.05 * Double(indexPath.row)) {
                 cell.transform = CGAffineTransform(translationX: cell.contentView.frame.width, y: cell.contentView.frame.height)
             } completion: { done in
                 if done {
-                    self.openAnimation = false
+                    self.isOpenAnimation = false
                 }
             }
         }
@@ -280,16 +302,81 @@ extension ChoiseFoodViewController: ChoiseFoodDisplayLogic {
     
     func displayFood(viewModel: ChoiseFood.ShowFood.ViewModel) {
         foodList = viewModel.displayedFood
-        openAnimation = true
+        isOpenAnimation = true
         foodListTableView.reloadData()
     }
     
-    func displayAddFoodMenu(viewModel: ChoiseFood.AddFood.ViewModel) {
-        addFoodMenu = Bundle.main.loadNibNamed("AddFoodMenu", owner: ChoiseFoodViewController.self)?.first as! AddFoodMenu
-        addFoodMenu.configure(from: viewModel.displayedFood)
-        if self.navigationController != nil {
-            addFoodMenu.showMenu(size: nil)
-            addFoodMenu.delegate = self
+    //    func displayAddFoodMenu(viewModel: ChoiseFood.AddFood.ViewModel) {
+    //        router?.showAddFoodMenu(with: viewModel)
+    //    }
+}
+
+//MARK: - UIViewControllerTransitioningDelegate
+
+extension ChoiseFoodViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return self
+    }
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return self
+    }
+}
+
+extension ChoiseFoodViewController: UIViewControllerAnimatedTransitioning {
+    func transitionDuration(using transitionContext: (any UIViewControllerContextTransitioning)?) -> TimeInterval {
+        return 0.5
+    }
+    
+    func animateTransition(using transitionContext: any UIViewControllerContextTransitioning) {
+        guard let fromView = transitionContext.viewController(forKey: .from)?.view,
+              let toView = transitionContext.viewController(forKey: .to)?.view else { return }
+        
+        let isPresenting = transitionContext.view(forKey: .to) != nil
+        let presentingView = isPresenting ? toView : fromView
+        
+        if isPresenting {
+            transitionContext.containerView.addSubview(presentingView)
+        }
+        
+        let screenSize = UIScreen.main.bounds.size
+        let size = CGSize(width: screenSize.width - 40,
+                          height: screenSize.height / 1.5)
+        let offScreenFrame = CGRect(origin: CGPoint(x: (screenSize.width / 2) - (size.width / 2),
+                                                    y: -screenSize.height), size: size)
+        let onScreenFrame = CGRect(origin: CGPoint(x: (screenSize.width / 2) - (size.width / 2) ,
+                                                   y: (screenSize.height / 2) - (size.height / 2)), size: size)
+        
+        presentingView.frame = isPresenting ? offScreenFrame : onScreenFrame
+        
+        let animationDuration = transitionDuration(using: transitionContext)
+        
+        if isPresenting {
+            UIView.animate(withDuration: 0.3) {
+                self.navigationController?.view.addSubview(self.dimmingView)
+                self.dimmingView.alpha = 1
+            } completion: { isDone in
+                if isDone {
+                    UIView.animate(withDuration: animationDuration) {
+                        presentingView.frame = onScreenFrame
+                    }
+                    transitionContext.completeTransition(isDone)
+                }
+            }
+        } else {
+            UIView.animate(withDuration: animationDuration) {
+                presentingView.frame = offScreenFrame
+            } completion: { isDone in
+                if isDone {
+                    UIView.animate(withDuration: 0.3) {
+                        self.dimmingView.alpha = 0
+                    } completion: { isDone in
+                        presentingView.removeFromSuperview()
+                        self.dimmingView.removeFromSuperview()
+                        transitionContext.completeTransition(isDone)
+                    }
+                }
+            }
         }
     }
 }
