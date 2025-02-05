@@ -340,8 +340,9 @@ extension ChoiseFoodViewController: UIViewControllerAnimatedTransitioning {
         }
         
         let screenSize = UIScreen.main.bounds.size
+        let heightSize = ((screenSize.width - 40) / 2) + 350
         let size = CGSize(width: screenSize.width - 40,
-                          height: screenSize.height / 1.5)
+                          height: heightSize)
         let offScreenFrame = CGRect(origin: CGPoint(x: (screenSize.width / 2) - (size.width / 2),
                                                     y: -screenSize.height), size: size)
         let onScreenFrame = CGRect(origin: CGPoint(x: (screenSize.width / 2) - (size.width / 2) ,
