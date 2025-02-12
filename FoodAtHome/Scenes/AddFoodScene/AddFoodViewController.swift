@@ -13,7 +13,7 @@ protocol AddFoodDisplayLogic: AnyObject {
 
 class AddFoodViewController: UIViewController {
     
-    let closeButton: UIButton = {
+    private let closeButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
@@ -21,7 +21,7 @@ class AddFoodViewController: UIViewController {
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         return button
     }()
-    let foodImageView: UIImageView = {
+    private let foodImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "Absinthe")
         imageView.contentMode = .scaleAspectFit
@@ -29,7 +29,7 @@ class AddFoodViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    let leftStackView: UIStackView = {
+    private let leftStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .leading
@@ -37,14 +37,14 @@ class AddFoodViewController: UIViewController {
         stackView.spacing = 8
         return stackView
     }()
-    let weightStackView: UIStackView = {
+    private let weightStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         stackView.spacing = 10
         return stackView
     }()
-    let rightStackView: UIStackView = {
+    private let rightStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .fill
@@ -52,7 +52,7 @@ class AddFoodViewController: UIViewController {
         stackView.spacing = 10
         return stackView
     }()
-    let mainStackView: UIStackView = {
+    private let mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -60,57 +60,90 @@ class AddFoodViewController: UIViewController {
         stackView.spacing = 0
         return stackView
     }()
-    var weightLabel = UILabel()
-    var productionDateLabel = UILabel()
-    var expirationDateLabel = UILabel()
-    var consumeUpLabel = UILabel()
-    let weightUnitButton: UIButton = {
+    private let weightLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Weight:".localized()
+        return label
+    }()
+    private let productionDateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Manufacturing Date:".localized()
+        return label
+    }()
+    private let expirationDateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Expires on:".localized()
+        return label
+    }()
+    private let consumeUpLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Shelf Life:".localized()
+        return label
+    }()
+    private let weightUnitButton: UIButton = {
         let button = UIButton()
+        button.setTitleColor(.black, for: .normal)
         button.backgroundColor = .systemGray6
+        button.setTitle("kg.".localized(), for: .normal)
         button.layer.cornerRadius = 5
         return button
     }()
-    let weightTextField: UITextField = {
+    private let weightTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "0.0"
         textField.textAlignment = .center
         textField.backgroundColor = .systemGray6
         textField.layer.cornerRadius = 5
+        textField.keyboardType = .decimalPad
+        textField.addDoneButtonToKeyboard()
         return textField
     }()
-    let productionDateTextField: UITextField = {
+    private let datePickerView: UIDatePicker = {
+        let picker = UIDatePicker()
+        picker.datePickerMode = .date
+        picker.preferredDatePickerStyle = .wheels
+        return picker
+    }()
+    private let productionDateTextField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .systemGray6
         textField.textAlignment = .center
         textField.layer.cornerRadius = 5
+        textField.addDoneButtonToKeyboard()
         return textField
     }()
-    let expirationDateTextField: UITextField = {
+    private let expirationDateTextField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .systemGray6
         textField.textAlignment = .center
         textField.layer.cornerRadius = 5
+        textField.addDoneButtonToKeyboard()
         return textField
     }()
-    let consumeUpTextField: UITextField = {
+    private let consumeUpPickerView = UIPickerView()
+    private let consumeUpTextField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .systemGray6
         textField.textAlignment = .center
         textField.layer.cornerRadius = 5
+        textField.addDoneButtonToKeyboard()
         return textField
     }()
-    
-    let addButton: UIButton = {
+    private let addButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = #colorLiteral(red: 0.7329999804, green: 0.6669999957, blue: 1, alpha: 1)
         button.backgroundColor = #colorLiteral(red: 0.7329999804, green: 0.6669999957, blue: 1, alpha: 1)
         button.layer.cornerRadius = 10
-        button.setTitle("Add", for: .normal)
+        button.setTitle("Add".localized(), for: .normal)
         return button
     }()
     
+    private var panGestureRecognizer = UIPanGestureRecognizer()
+    private var initialY: CGFloat = 0
     
+    private let monthWheel: [Int] = Array(0...48)
+    private let daysWheel: [Int] = Array(0...31)
     
     var interactor: AddFoodBusinessLogic?
     var router: (NSObjectProtocol & AddFoodRoutingLogic)?
@@ -137,17 +170,10 @@ class AddFoodViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupConstraints()
-        configure()
     }
     
     // MARK: Setup
     
-    private func configure() {
-        weightLabel.text = "Weight: "
-        productionDateLabel.text = "Production date: "
-        expirationDateLabel.text = "Expiration date: "
-        consumeUpLabel.text = "Consume up: "
-    }
     
     private func setup() {
         let viewController = self
@@ -167,6 +193,11 @@ class AddFoodViewController: UIViewController {
         self.view.layer.masksToBounds = true
         closeButton.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
         weightUnitButton.addTarget(self, action: #selector(showMenu), for: .touchUpInside)
+        productionDateTextField.inputView = datePickerView
+        expirationDateTextField.inputView = datePickerView
+        consumeUpPickerView.delegate = self
+        consumeUpPickerView.dataSource = self
+        consumeUpTextField.inputView = consumeUpPickerView
         view.addSubview(closeButton)
         view.addSubview(foodImageView)
         view.addSubview(mainStackView)
@@ -183,11 +214,48 @@ class AddFoodViewController: UIViewController {
         rightStackView.addArrangedSubview(expirationDateTextField)
         rightStackView.addArrangedSubview(consumeUpTextField)
         
+        panGestureRecognizer.addTarget(self, action: #selector(handlePanGestureRecognizer))
+        view.addGestureRecognizer(panGestureRecognizer)
         view.addSubview(addButton)
     }
     
     @objc private func didTapCloseButton() {
-        presentingViewController?.dismiss(animated: true)
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = -self.view.frame.height
+        } completion: { _ in
+            self.presentingViewController?.dismiss(animated: true)
+        }
+    }
+    
+    @objc private func handlePanGestureRecognizer(_ gesture: UIPanGestureRecognizer) {
+        let screenSize = UIScreen.main.bounds.size
+        let positionY = (screenSize.height - view.frame.height) / 2
+        let translation = gesture.translation(in: view)
+        
+        switch gesture.state {
+        case .began:
+            initialY = view.frame.origin.y
+        case .changed:
+            let newY = initialY + translation.y
+            if newY < positionY {
+                view.frame.origin.y = newY
+            }
+        case .ended:
+            let dismissThreshold = 0 - (view.frame.height / 4)
+            if view.frame.origin.y < dismissThreshold {
+                UIView.animate(withDuration: 0.3) {
+                    self.view.frame.origin.y = -self.view.frame.height
+                } completion: { _ in
+                    self.presentingViewController?.dismiss(animated: true)
+                }
+            } else {
+                UIView.animate(withDuration: 0.3) {
+                    self.view.frame.origin.y = positionY
+                }
+            }
+        default:
+            break
+        }
     }
     
     private func setupConstraints() {
@@ -217,27 +285,46 @@ class AddFoodViewController: UIViewController {
     }
 }
 
-extension AddFoodViewController: AddFoodDisplayLogic {
-    
-    func displayData(viewModel: AddFood.Model.ViewModel.ViewModelData) {
-        
+//MARK: - UIPickerViewDelegate
+
+extension AddFoodViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        2
     }
     
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        if component == 0 {
+            let firstComponent = String(monthWheel[row]) + "m.".localized()
+            return firstComponent
+        } else {
+            let secondComponent = String(daysWheel[row]) + "d.".localized()
+            return secondComponent
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if component == 0 {
+            return monthWheel.count
+        } else {
+            return daysWheel.count
+        }
+    }
 }
 
+//MARK: - UIPopoverPresentationControllerDelegate
+
 extension AddFoodViewController: UIPopoverPresentationControllerDelegate {
-    func showPopUpMenu(sender: UIButton) {
+    private func showPopUpMenu(sender: UIButton) {
         let menuVC = UIViewController()
         menuVC.modalPresentationStyle = .popover
         menuVC.preferredContentSize = CGSize(width: 100, height: 240)
         
-        // Создаем стек с кнопками меню
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 8
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        // Добавляем кнопки в стек
         let kgOption = UIButton(type: .system)
         kgOption.setTitle("kg.".localized(), for: .normal)
         kgOption.addTarget(self, action: #selector(kgOptionTapped), for: .touchUpInside)
@@ -277,13 +364,11 @@ extension AddFoodViewController: UIPopoverPresentationControllerDelegate {
         
         menuVC.view.addSubview(stackView)
         
-        // Констрейнты для стека
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: menuVC.view.topAnchor, constant: 10),
             stackView.centerXAnchor.constraint(equalTo: menuVC.view.centerXAnchor, constant: -5)
         ])
         
-        // Настройка PopoverPresentationController
         if let popover = menuVC.popoverPresentationController {
             popover.sourceView = sender
             popover.sourceRect = sender.bounds
@@ -294,40 +379,49 @@ extension AddFoodViewController: UIPopoverPresentationControllerDelegate {
         present(menuVC, animated: true)
     }
     
-    // Делегат для поддержки стиля popover на iPhone
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
     
-    @objc func kgOptionTapped() {
-        // Действие для первой опции
+    @objc private func kgOptionTapped() {
+        weightUnitButton.setTitle("kg.".localized(), for: .normal)
         dismiss(animated: true)
     }
     
-    @objc func gOptionTapped() {
-        // Действие для второй опции
+    @objc private func gOptionTapped() {
+        weightUnitButton.setTitle("g.".localized(), for: .normal)
         dismiss(animated: true)
     }
-    @objc func lOptionTapped() {
-        // Действие для первой опции
-        dismiss(animated: true)
-    }
-    
-    @objc func mlOptionTapped() {
-        // Действие для второй опции
-        dismiss(animated: true)
-    }
-    @objc func pkOptionTapped() {
-        // Действие для первой опции
+    @objc private func lOptionTapped() {
+        weightUnitButton.setTitle("l.".localized(), for: .normal)
         dismiss(animated: true)
     }
     
-    @objc func pcsOptionTapped() {
-        // Действие для второй опции
+    @objc private func mlOptionTapped() {
+        weightUnitButton.setTitle("ml.".localized(), for: .normal)
+        dismiss(animated: true)
+    }
+    @objc private func pkOptionTapped() {
+        weightUnitButton.setTitle("pk.".localized(), for: .normal)
         dismiss(animated: true)
     }
     
-    @objc func showMenu(sender: UIButton) {
+    @objc private func pcsOptionTapped() {
+        weightUnitButton.setTitle("pcs.".localized(), for: .normal)
+        dismiss(animated: true)
+    }
+    
+    @objc private func showMenu(sender: UIButton) {
         showPopUpMenu(sender: sender)
     }
+}
+
+//MARK: - AddFoodDisplayLogic
+
+extension AddFoodViewController: AddFoodDisplayLogic {
+    
+    func displayData(viewModel: AddFood.Model.ViewModel.ViewModelData) {
+        weightUnitButton.setTitle("kg".localized(), for: .normal)
+    }
+    
 }

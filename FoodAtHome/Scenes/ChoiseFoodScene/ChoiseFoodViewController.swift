@@ -366,13 +366,12 @@ extension ChoiseFoodViewController: UIViewControllerAnimatedTransitioning {
             }
         } else {
             UIView.animate(withDuration: animationDuration) {
-                presentingView.frame = offScreenFrame
+                presentingView.removeFromSuperview()
             } completion: { isDone in
                 if isDone {
                     UIView.animate(withDuration: 0.3) {
                         self.dimmingView.alpha = 0
                     } completion: { isDone in
-                        presentingView.removeFromSuperview()
                         self.dimmingView.removeFromSuperview()
                         transitionContext.completeTransition(isDone)
                     }

@@ -9,6 +9,17 @@ import UIKit
 
 extension UITextField {
     
+    func addPointToDecimalKeyboard() {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+
+        let decimalButton = UIBarButtonItem(title: ".", style: .plain, target: self, action: #selector(addDecimalPoint))
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+
+        toolbar.items = [flexSpace, decimalButton, flexSpace]
+        self.inputAccessoryView = toolbar
+    }
+    
     func addDoneButtonToKeyboard() {
         
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 300, height: 40))
@@ -39,5 +50,9 @@ extension UITextField {
     
     @objc func doneButtonAction() {
         self.resignFirstResponder()
+    }
+    
+    @objc func addDecimalPoint() {
+        self.text = (self.text ?? "") + "."
     }
 }
