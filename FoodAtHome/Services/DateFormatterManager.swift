@@ -26,12 +26,12 @@ class DateFormatterManager: DateFormatterManagerProtocol {
     }
 
     func formatConsumeUp(_ consumeUp: ConsumeUp?) -> String {
-        guard let consumeUp = consumeUp else { return "N/A" }
+        guard let consumeUp = consumeUp else { return "" }
         return "\(consumeUp.months ?? 0)m. \(consumeUp.days ?? 0)d."
     }
 
     func formatDaysLeft(_ daysLeft: (months: Int, days: Int, isOverdue: Bool)?) -> String {
-        guard let daysLeft = daysLeft else { return "N/A" }
+        guard let daysLeft = daysLeft else { return "" }
         return daysLeft.isOverdue ? "Overdue" : "\(daysLeft.months)m. \(daysLeft.days)d."
     }
 }

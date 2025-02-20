@@ -17,7 +17,7 @@ class FoodManager {
         self.dateCalculator = dateCalculator
         self.dateFormatter = dateFormatter
     }
-
+    
     func getFormattedProductionDate(for food: FoodRealm) -> String? {
         guard let productionDate = food.productionDate else { return nil }
         return dateFormatter.formatDate(productionDate)

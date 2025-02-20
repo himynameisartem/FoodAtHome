@@ -3,11 +3,14 @@
 //  FoodAtHome
 //
 //  Created by Артем Кудрявцев on 13.01.2025.
-//  Copyright (c) 2025 ___ORGANIZATIONNAME___. All rights reserved.
 //
 
 import UIKit
 
-class AddFoodService {
-
+class AddFoodWorker {
+    
+    func getImage(from foodName: String) -> UIImage {
+        let image = UIImage(named: foodName) ?? UIImage()
+        return image
+    }
 }

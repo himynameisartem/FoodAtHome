@@ -11,11 +11,11 @@ protocol AddFoodMenuBusinessLogic {
     func showFood(request: AddFoodMenuModel.ShowFood.Request)
 }
 
-protocol AddFoodMenuDataStore {
-    var food: FoodRealm { get }
-}
+//protocol AddFoodMenuDataStore {
+//    var food: FoodRealm { get }
+//}
 
-class AddFoodMenuInteractor: AddFoodMenuBusinessLogic, AddFoodMenuDataStore {
+class AddFoodMenuInteractor: AddFoodMenuBusinessLogic {
     
     var food = FoodRealm()
     var presenter: AddFoodMenuPresentationLogic?

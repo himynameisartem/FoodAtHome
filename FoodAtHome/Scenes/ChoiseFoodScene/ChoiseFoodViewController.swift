@@ -10,7 +10,6 @@ import UIKit
 protocol ChoiseFoodDisplayLogic: AnyObject {
     func displayCategories(viewModel: ChoiseFood.ShowCategoriesFood.ViewModel)
     func displayFood(viewModel: ChoiseFood.ShowFood.ViewModel)
-    //    func displayAddFoodMenu(viewModel: ChoiseFood.AddFood.ViewModel)
 }
 
 class ChoiseFoodViewController: UIViewController {
@@ -31,7 +30,7 @@ class ChoiseFoodViewController: UIViewController {
     private var addFoodMenu = AddFoodMenu()
     
     var interactor: ChoiseFoodBusinessLogic?
-    var router: (NSObjectProtocol & ChoiseFoodRoutingLogic)?
+    var router: (NSObjectProtocol & ChoiseFoodRoutingLogic & ChoiseFoodDataPassing)?
     
     private var dimmingView: UIVisualEffectView!
     private var blurEffect: UIVisualEffect!
@@ -55,17 +54,24 @@ class ChoiseFoodViewController: UIViewController {
         let viewController = self
         let interactor = ChoiseFoodInteractor()
         let presenter = ChoiseFoodPresenter()
-        //        let router = ChoiseFoodRouter()
+        let router = ChoiseFoodRouter()
         viewController.interactor = interactor
-        //        viewController.router = router
+        viewController.router = router
         interactor.presenter = presenter
         presenter.viewController = viewController
-        //        router.viewController = viewController
+        router.viewController = viewController
+        router.dataStore = interactor
     }
     
     // MARK: Routing
     
-    
+    private func didTapAddFoodButtion(at indexPath: IndexPath) {
+        let request = ChoiseFood.AddFood.Request(foodName: foodList[indexPath.row].name)
+        print(request)
+        interactor?.getFood(request: request)
+        router?.routeToAddFood()
+        searchController.searchBar.resignFirstResponder()
+    }
     
     // MARK: View lifecycle
     
@@ -88,11 +94,6 @@ class ChoiseFoodViewController: UIViewController {
         guard let indexPath = categoriesFoodCollectionView.indexPathsForSelectedItems?.first else { return }
         let request = ChoiseFood.ShowFood.Request(category: FoodType.allCases[indexPath.row], name: nil)
         interactor?.showFoodList(request: request)
-    }
-    
-    private func getAddFoodMenu(at indexPath: IndexPath) {
-        //        let request = ChoiseFood.AddFood.Request(food: foodList[indexPath.row])
-        //        interactor?.showAddFoodMenu(request: request)
     }
     
     private func setupDimmingView() {
@@ -153,15 +154,6 @@ class ChoiseFoodViewController: UIViewController {
         foodListTableView.register(UINib(nibName: "FoodListTableViewCell", bundle: nil), forCellReuseIdentifier: "foodListCell")
     }
     
-    private func didTapAddFoodButtion(at indexPath: IndexPath) {
-        let addFoodVC = AddFoodViewController()
-        addFoodVC.modalPresentationStyle = .custom
-        addFoodVC.transitioningDelegate = self
-        self.present(addFoodVC, animated: true, completion: nil)
-        getAddFoodMenu(at: indexPath)
-        searchController.searchBar.resignFirstResponder()
-    }
-    
     private func hideSearchBar() {
         navigationItem.titleView = .none
         navigationItem.leftBarButtonItem = backButton
@@ -170,10 +162,10 @@ class ChoiseFoodViewController: UIViewController {
         
         UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseInOut) {
             self.collectionViewHeightConstraint.constant += 50
+            self.categoriesFoodCollectionView.alpha = 1
             self.view.layoutIfNeeded()
         } completion: { done in
             UIView.animate(withDuration: 0.1) {
-                self.categoriesFoodCollectionView.alpha = 1
                 self.getFoodList()
             }
         }
@@ -267,6 +259,7 @@ extension ChoiseFoodViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configure(from: foodList[indexPath.row])
         cell.buttonAction = { [weak self] in
             cell.addFoodButton.showAnimation(for: .withColor) {
+
                 self?.didTapAddFoodButtion(at: indexPath)
             }
         }
@@ -305,10 +298,6 @@ extension ChoiseFoodViewController: ChoiseFoodDisplayLogic {
         isOpenAnimation = true
         foodListTableView.reloadData()
     }
-    
-    //    func displayAddFoodMenu(viewModel: ChoiseFood.AddFood.ViewModel) {
-    //        router?.showAddFoodMenu(with: viewModel)
-    //    }
 }
 
 //MARK: - UIViewControllerTransitioningDelegate

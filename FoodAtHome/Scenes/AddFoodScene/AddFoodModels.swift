@@ -8,23 +8,23 @@
 
 import UIKit
 
-enum AddFood {
+enum AddFoodModel {
    
-  enum Model {
+  enum ShowFood {
     struct Request {
-      enum RequestType {
-        case some
-      }
     }
     struct Response {
-      enum ResponseType {
-        case some
-      }
+        let food: FoodRealm
     }
     struct ViewModel {
-      enum ViewModelData {
-        case some
-      }
+        struct DisplayedFood {
+            let image: UIImage
+            let weight: String
+            let productionDate: String?
+            let expirationDate: String?
+            let consumeUp: String?
+        }
+        let displayedFood: DisplayedFood
     }
   }
   

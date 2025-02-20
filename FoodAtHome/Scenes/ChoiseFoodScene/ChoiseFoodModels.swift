@@ -40,17 +40,15 @@ enum ChoiseFood {
     }
   }
     
-//    enum AddFood {
-//        struct Request {
-//            let index: ChoiseFood.ShowFood.ViewModel.DispalyedFood
-//        }
-//        
-//        struct Response {
-//            let food: FoodRealm
-//        }
-//        
-//        struct ViewModel {
-//            let displayedFood: FoodRealm
-//        }
-//    }
+    enum AddFood {
+        struct Request {
+            let foodName: String
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
 }

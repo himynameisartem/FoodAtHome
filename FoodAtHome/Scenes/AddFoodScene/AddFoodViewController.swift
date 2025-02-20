@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AddFoodDisplayLogic: AnyObject {
-    func displayData(viewModel: AddFood.Model.ViewModel.ViewModelData)
+    func displayData(viewModel: AddFoodModel.ShowFood.ViewModel)
 }
 
 class AddFoodViewController: UIViewController {
@@ -146,7 +146,7 @@ class AddFoodViewController: UIViewController {
     private let daysWheel: [Int] = Array(0...31)
     
     var interactor: AddFoodBusinessLogic?
-    var router: (NSObjectProtocol & AddFoodRoutingLogic)?
+    var router: (NSObjectProtocol & AddFoodRoutingLogic & AddFoodDataPassing)?
     
     // MARK: Object lifecycle
     
@@ -170,6 +170,7 @@ class AddFoodViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupConstraints()
+        getFood()
     }
     
     // MARK: Setup
@@ -185,6 +186,12 @@ class AddFoodViewController: UIViewController {
         interactor.presenter = presenter
         presenter.viewController = viewController
         router.viewController = viewController
+        router.dataStore = interactor
+    }
+    
+    private func getFood() {
+        let request = AddFoodModel.ShowFood.Request()
+        interactor?.showFood(request: request)
     }
     
     private func setupUI() {
@@ -420,8 +427,13 @@ extension AddFoodViewController: UIPopoverPresentationControllerDelegate {
 
 extension AddFoodViewController: AddFoodDisplayLogic {
     
-    func displayData(viewModel: AddFood.Model.ViewModel.ViewModelData) {
-        weightUnitButton.setTitle("kg".localized(), for: .normal)
+    func displayData(viewModel: AddFoodModel.ShowFood.ViewModel) {
+        foodImageView.image = viewModel.displayedFood.image
+        weightTextField.text = viewModel.displayedFood.weight
+        productionDateTextField.text = viewModel.displayedFood.productionDate
+        expirationDateTextField.text = viewModel.displayedFood.expirationDate
+        consumeUpTextField.text = viewModel.displayedFood.consumeUp
+        weightUnitButton.setTitle("kg.".localized(), for: .normal)
     }
     
 }

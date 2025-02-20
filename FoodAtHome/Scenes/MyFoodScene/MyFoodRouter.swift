@@ -53,11 +53,11 @@ class MyFoodRouter: NSObject, MyFoodRoutingLogic, MyFoodDataPassing {
         let food = worker.getFoodForRouting(source: source.myFood, type: category)
         destination.category = category
         destination.food = food
+        print(food)
     }
     
     func passFoodToEdit() {
         addFoodMenu = Bundle.main.loadNibNamed("AddFoodMenu", owner: ChoiseFoodViewController.self)?.first as! AddFoodMenu
-//        addFoodMenu.configure(from: viewModel.food)
         addFoodMenu.showMenu(size: nil)
         addFoodMenu.delegate = viewController
     }

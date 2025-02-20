@@ -3,19 +3,23 @@
 //  FoodAtHome
 //
 //  Created by Артем Кудрявцев on 13.01.2025.
-//  Copyright (c) 2025 ___ORGANIZATIONNAME___. All rights reserved.
 //
 
 import UIKit
 
-protocol AddFoodRoutingLogic {
-
+@objc protocol AddFoodRoutingLogic {
+    
 }
 
-class AddFoodRouter: NSObject, AddFoodRoutingLogic {
+protocol AddFoodDataPassing {
+    var dataStore: AddFoodDataStore? { get set }
+}
 
-  weak var viewController: AddFoodViewController?
-  
-  // MARK: Routing
-  
+class AddFoodRouter: NSObject, AddFoodRoutingLogic, AddFoodDataPassing {
+    
+    weak var viewController: AddFoodViewController?
+    var dataStore: AddFoodDataStore?
+    
+    // MARK: Routing
+    
 }

@@ -9,65 +9,26 @@ import UIKit
 
 class ChoiseFoodWorker {
     
-//    func showFood(from categories: FoodType?) -> [FoodRealm] {
-//        var foodList: [FoodRealm] = []
-//        
-//        guard let categories = categories else { return foodList }
-//        
-//        switch categories {
-//        case .vegetables:
-//            foodList = vegitables
-//        case .fruitsAndBerries:
-//            foodList = fruitsAndBerries
-//        case .mushrooms:
-//            foodList = mushrooms
-//        case .eggsAndDairyProducts:
-//            foodList = eggsAndDairyProducts
-//        case .meatProducts:
-//            foodList = meatProducts
-//        case .fishAndSeafood:
-//            foodList = fishAndSeafood
-//        case .nutsAndDriedFruits:
-//            foodList = nutsAndDriedFruits
-//        case .flourAndBakeryProducts:
-//            foodList = flourAndBakeryProducts
-//        case .grainsAndPorridge:
-//            foodList = grainsAndPorridge
-//        case .sweetsAndConfectionery:
-//            foodList = sweetsAndConfectionery
-//        case .greensAndHerbs:
-//                foodList = greensAndHerbs
-//        case .spicesAndSeasonings:
-//            foodList = spicesAndSeasonings
-//        case .rawMaterialsAndAdditives:
-//            foodList = rawMaterialsAndAdditives
-//        case .babyFood:
-//            foodList = babyFood
-//        case.softDrinks:
-//            foodList = softDrinks
-//        case.alcoholicDrinks:
-//            foodList = alcoholicDrinks
-//        }
-//        
-//        return foodList
-//    }
-    
     func displayedFood(from foodList: [FoodItem]) -> [ChoiseFood.ShowFood.ViewModel.DispalyedFood] {
         var displayedFood = [ChoiseFood.ShowFood.ViewModel.DispalyedFood]()
         foodList.forEach { food in
-            let name = food.name.localized()
+            let name = food.name
             let imageName = food.name
             let calories = food.calories
             let buildFood = ChoiseFood.ShowFood.ViewModel.DispalyedFood(name: name, imageName: imageName, calories: calories)
             displayedFood.append(buildFood)
         }
-        return displayedFood.sorted {$0.name < $1.name}
+        return displayedFood.sorted {$0.name.localized() < $1.name.localized()}
     }
     
-//    func getFood(from food: ChoiseFood.ShowFood.ViewModel.DispalyedFood) -> FoodRealm {
-////        let foodRealm = FoodRealm(name: food.name,
-////                                  type: ,
-////                                  calories: <#T##String#>)
-//        return foodRealm
-//    }
+    func getFoodForAddFoodMenu(from foodName: String) -> FoodRealm {
+        let responce = FoodRealm()
+        DataManager.shared.fetchFoodData { food in
+            guard let food = food.first(where: {$0.name == foodName}) else { return }
+            responce.name = food.name
+            responce.type = food.type
+            responce.calories = food.calories
+        }
+        return responce
+    }
 }

@@ -11,7 +11,7 @@ import UIKit
 protocol ChoiseFoodBusinessLogic {
     func showCategories(request: ChoiseFood.ShowCategoriesFood.Request)
     func showFoodList(request: ChoiseFood.ShowFood.Request)
-//    func showAddFoodMenu(request: ChoiseFood.AddFood.Request)
+    func getFood(request: ChoiseFood.AddFood.Request)
 }
 
 protocol ChoiseFoodDataStore {
@@ -35,12 +35,13 @@ class ChoiseFoodInteractor: ChoiseFoodBusinessLogic, ChoiseFoodDataStore {
     }
     
     func showFoodList(request: ChoiseFood.ShowFood.Request) {
+        worker = ChoiseFoodWorker()
+        DataManager.shared.fetchFoodData { food in
+            self.food = food
+        }
         if request.category != nil  {
             guard let category = request.category?.rawValue else { return }
-            DataManager.shared.fetchFoodData { food in
-                self.food = food.filter {$0.type == category}
-            }
-            let responce = ChoiseFood.ShowFood.Response(food: food)
+            let responce = ChoiseFood.ShowFood.Response(food: food.filter {$0.type == category})
             presenter?.presentFood(response: responce)
         }  else if request.name != nil {
             guard let searchText = request.name else { return }
@@ -56,10 +57,9 @@ class ChoiseFoodInteractor: ChoiseFoodBusinessLogic, ChoiseFoodDataStore {
         }
     }
     
-//    func showAddFoodMenu(request: ChoiseFood.AddFood.Request) {
-//        worker = ChoiseFoodWorker()
-//        guard let food = worker?.getFood(from: request.food) else { return }
-//        let responce = ChoiseFood.AddFood.Response(food: food)
-//        presenter?.presentAddFoodMenu(response: responce)
-//    }
+    func getFood(request: ChoiseFood.AddFood.Request) {
+        worker = ChoiseFoodWorker()
+        guard let food = worker?.getFoodForAddFoodMenu(from: request.foodName) else { return }
+        addFood = food
+    }
 }
