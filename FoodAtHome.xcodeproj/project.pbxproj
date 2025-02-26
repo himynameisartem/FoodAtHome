@@ -100,6 +100,7 @@
 		31FA891C2BC90DD5005EA855 /* MyFoodModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA89152BC90DD5005EA855 /* MyFoodModels.swift */; };
 		31FA891D2BC90DD5005EA855 /* MyFoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA89162BC90DD5005EA855 /* MyFoodViewController.swift */; };
 		31FA891E2BC90DD5005EA855 /* MyFoodInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA89172BC90DD5005EA855 /* MyFoodInteractor.swift */; };
+		31FD7DEC2D6E4D76001E07DA /* UIViewControllerAnimatedTransitioning + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FD7DEB2D6E4D76001E07DA /* UIViewControllerAnimatedTransitioning + Extension.swift */; };
 		6ECD83FB85B2923A8084AE34 /* Pods_FoodAtHome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBF55CC3095E30758618C3E1 /* Pods_FoodAtHome.framework */; };
 /* End PBXBuildFile section */
 
@@ -200,6 +201,7 @@
 		31FA89152BC90DD5005EA855 /* MyFoodModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFoodModels.swift; sourceTree = "<group>"; };
 		31FA89162BC90DD5005EA855 /* MyFoodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFoodViewController.swift; sourceTree = "<group>"; };
 		31FA89172BC90DD5005EA855 /* MyFoodInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFoodInteractor.swift; sourceTree = "<group>"; };
+		31FD7DEB2D6E4D76001E07DA /* UIViewControllerAnimatedTransitioning + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewControllerAnimatedTransitioning + Extension.swift"; sourceTree = "<group>"; };
 		5B5B4EBF3CEE5A3EC63BC9B2 /* Pods-FoodAtHome.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodAtHome.debug.xcconfig"; path = "Target Support Files/Pods-FoodAtHome/Pods-FoodAtHome.debug.xcconfig"; sourceTree = "<group>"; };
 		67C74604784AE7BBE71EB589 /* Pods-FoodAtHome.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodAtHome.release.xcconfig"; path = "Target Support Files/Pods-FoodAtHome/Pods-FoodAtHome.release.xcconfig"; sourceTree = "<group>"; };
 		DBF55CC3095E30758618C3E1 /* Pods_FoodAtHome.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FoodAtHome.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -415,6 +417,7 @@
 				31D0C4242A9A1AC200EDF32B /* StringExtensionLocalized.swift */,
 				31D0C42C2A9A767000EDF32B /* TextField + Extension.swift */,
 				31D43CA42D35A2D40068046E /* CustomPresentationController.swift */,
+				31FD7DEB2D6E4D76001E07DA /* UIViewControllerAnimatedTransitioning + Extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -715,6 +718,7 @@
 				31C6246B2C7DBABC004E83B7 /* ChoiseFoodModels.swift in Sources */,
 				31C624712C7EF5EC004E83B7 /* PopUpMenuPositionModel.swift in Sources */,
 				31C6246C2C7DBABC004E83B7 /* ChoiseFoodViewController.swift in Sources */,
+				31FD7DEC2D6E4D76001E07DA /* UIViewControllerAnimatedTransitioning + Extension.swift in Sources */,
 				31C6246D2C7DBABC004E83B7 /* ChoiseFoodInteractor.swift in Sources */,
 				3139EE5C2C4D2D8D00AEC1F2 /* CategoryDetailsRouter.swift in Sources */,
 				3139EE5D2C4D2D8D00AEC1F2 /* CategoryDetailsModels.swift in Sources */,

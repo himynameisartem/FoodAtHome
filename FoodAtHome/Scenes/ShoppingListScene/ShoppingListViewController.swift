@@ -10,8 +10,6 @@ import UIKit
 protocol ShoppingListDisplayLogic: AnyObject {
     func displayData(viewModel: ShoppingList.ShoppingListModel.ViewModel)
     func deleteFood()
-    func addToMyFood(viewModel: ShoppingList.AddToMyFood.ViewModel)
-    func changeFood(viewModel: ShoppingList.ChangeFood.ViewModel)
 //    func deleteAllFood()
 }
 
@@ -21,11 +19,12 @@ class ShoppingListViewController: UIViewController {
     @IBOutlet weak var titleBalLabel: UILabel!
     
     var interactor: ShoppingListBusinessLogic?
-    var router: (NSObjectProtocol & ShoppingListRoutingLogic)?
+    var router: (NSObjectProtocol & ShoppingListRoutingLogic & ShoppingListDataPassing)?
     
     var shoppingList: [ShoppingList.ShoppingListModel.ViewModel.DisplayedFood] = []
     
-    private var addFoodMenu = AddFoodMenu()
+    private var dimmingView: UIVisualEffectView!
+    private var blurEffect: UIVisualEffect!
     
     // MARK: Setup
     
@@ -39,6 +38,7 @@ class ShoppingListViewController: UIViewController {
         interactor.presenter = presenter
         presenter.viewController = viewController
         router.viewController = viewController
+        router.dataStore = interactor
     }
     
     // MARK: View lifecycle
@@ -53,7 +53,7 @@ class ShoppingListViewController: UIViewController {
         navigationBarSetup()
         getFoodList()
         setupTabluView()
-        setupAddFoodMenu()
+        setupDimmingView()
     }
         
     // MARK: Routing
@@ -88,8 +88,17 @@ class ShoppingListViewController: UIViewController {
         shoppingListTableView.register(UINib(nibName: "ShoppingListTableViewCell", bundle: nil), forCellReuseIdentifier: "ShoppingListCell")
     }
     
-    private func setupAddFoodMenu() {
-        addFoodMenu = Bundle.main.loadNibNamed("AddFoodMenu", owner: ChoiseFoodViewController.self)?.first as! AddFoodMenu
+    private func setupDimmingView() {
+        blurEffect = UIBlurEffect(style: .dark)
+        dimmingView = UIVisualEffectView(frame: view.bounds)
+        dimmingView.effect = blurEffect
+        dimmingView.alpha = 0
+    }
+    
+    private func editingExpirationDate(at indexPath: IndexPath) {
+        let request = ShoppingList.EditingFood.Request(indexPath: indexPath)
+        interactor?.getEditingFood(request: request)
+        router?.routeToAddFood()
     }
 }
 
@@ -114,8 +123,7 @@ extension ShoppingListViewController: UITableViewDelegate, UITableViewDataSource
         }
         let successItem = UIContextualAction(style: .normal, title: nil) { contextialAction, view, boolCompletion in
             let yesAction = UIAlertAction(title: "Yes".localized(), style: .default) { _ in
-                let request = ShoppingList.AddToMyFood.Request(indexPath: indexPath)
-                self.interactor?.showAddToMyFood(request: request)
+                self.editingExpirationDate(at: indexPath)
                 boolCompletion(true)
             }
             let noAction = UIAlertAction(title: "No".localized(), style: .cancel) { _ in
@@ -135,8 +143,7 @@ extension ShoppingListViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let editItem = UIContextualAction(style: .normal, title: nil) { contextialAction, view, boolCompletion in
-            let request = ShoppingList.ChangeFood.Request(indexPath: indexPath)
-            self.interactor?.showChangeFood(request: request)
+
             boolCompletion(true)
         }
         setupContextualMenu(action: editItem, "edit")
@@ -166,6 +173,30 @@ extension ShoppingListViewController: UITableViewDelegate, UITableViewDataSource
     }
 }
 
+//MARK: - UIViewControllerTransitioningDelegate
+
+extension ShoppingListViewController: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return self
+    }
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return self
+    }
+}
+
+extension ShoppingListViewController: UIViewControllerAnimatedTransitioning {
+    func transitionDuration(using transitionContext: (any UIViewControllerContextTransitioning)?) -> TimeInterval {
+        return 0.5
+    }
+    
+    func animateTransition(using transitionContext: any UIViewControllerContextTransitioning) {
+        openAndCloseCustomVC(for: self, using: transitionContext, and: dimmingView)
+    }
+    
+}
+
 //MARK: - ShoppingListDisplayLogic
 
 extension ShoppingListViewController: ShoppingListDisplayLogic {
@@ -175,30 +206,8 @@ extension ShoppingListViewController: ShoppingListDisplayLogic {
         shoppingListTableView.reloadData()
     }
     
-    func addToMyFood(viewModel: ShoppingList.AddToMyFood.ViewModel) {
-//        addFoodMenu.configure(from: viewModel.food)
-        addFoodMenu.showMenu(size: .full)
-        addFoodMenu.delegate = self
-    }
-    
-    func changeFood(viewModel: ShoppingList.ChangeFood.ViewModel) {
-//        addFoodMenu.configure(from: viewModel.food)
-        addFoodMenu.showMenu(size: .small)
-        addFoodMenu.delegate = self
-    }
-    
     func deleteFood() {
         DispatchQueue.main.async {
-            self.getFoodList()
-        }
-    }
-}
-
-//MARK: - AddFoodMenuDelegate
-
-extension ShoppingListViewController: AddFoodMenuDelegate {
-    func didCloseAddFood() {
-        DispatchQueue.main.async{
             self.getFoodList()
         }
     }

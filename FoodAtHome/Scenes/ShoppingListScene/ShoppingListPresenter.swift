@@ -11,8 +11,6 @@ import UIKit
 protocol ShoppingListPresentationLogic {
     func presentData(response: ShoppingList.ShoppingListModel.Response)
     func presentDeleteFood(response: ShoppingList.DeleteFood.Responce)
-    func presentAddtoMyFood(responce: ShoppingList.AddToMyFood.Responce)
-    func presentChangeFood(response: ShoppingList.ChangeFood.Responce)
 }
 
 class ShoppingListPresenter: ShoppingListPresentationLogic {
@@ -25,16 +23,6 @@ class ShoppingListPresenter: ShoppingListPresentationLogic {
         let food = worker.prepareShoppingList(from: response.food)
         let viewModel = ShoppingList.ShoppingListModel.ViewModel(displayedFood: food)
         viewController?.displayData(viewModel: viewModel)
-    }
-    
-    func presentAddtoMyFood(responce: ShoppingList.AddToMyFood.Responce) {
-        let viewModel = ShoppingList.AddToMyFood.ViewModel(food: responce.food)
-        viewController?.addToMyFood(viewModel: viewModel)
-    }
-    
-    func presentChangeFood(response: ShoppingList.ChangeFood.Responce) {
-        let viewModel = ShoppingList.ChangeFood.ViewModel(food: response.food)
-        viewController?.changeFood(viewModel: viewModel)
     }
     
     func presentDeleteFood(response: ShoppingList.DeleteFood.Responce) {

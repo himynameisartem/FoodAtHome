@@ -9,10 +9,11 @@ import UIKit
 
 protocol AddFoodDisplayLogic: AnyObject {
     func displayData(viewModel: AddFoodModel.ShowFood.ViewModel)
+    func performCloseAnimation()
 }
 
 class AddFoodViewController: UIViewController {
-    
+
     private let closeButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -160,10 +161,6 @@ class AddFoodViewController: UIViewController {
         setup()
     }
     
-    // MARK: Routing
-    
-    
-    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
@@ -200,6 +197,7 @@ class AddFoodViewController: UIViewController {
         self.view.layer.masksToBounds = true
         closeButton.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
         weightUnitButton.addTarget(self, action: #selector(showMenu), for: .touchUpInside)
+        addButton.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
         productionDateTextField.inputView = datePickerView
         expirationDateTextField.inputView = datePickerView
         consumeUpPickerView.delegate = self
@@ -264,7 +262,13 @@ class AddFoodViewController: UIViewController {
             break
         }
     }
-    
+
+    @objc func didTapAddButton(_ sender: UIButton) {
+        sender.showAnimation(for: .withoutColor) {
+            self.interactor?.handleCloseRequest()
+        }
+    }
+        
     private func setupConstraints() {
         let heightForMainStackView = (view.frame.height - view.frame.width / 2) - 170
         NSLayoutConstraint.activate([
@@ -436,4 +440,11 @@ extension AddFoodViewController: AddFoodDisplayLogic {
         weightUnitButton.setTitle("kg.".localized(), for: .normal)
     }
     
+    func performCloseAnimation() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.view.frame.origin.y = -self.view.frame.height
+        }, completion: { _ in
+            self.router?.navigateToTabBarController(window: self.view.window!)
+        })
+    }
 }

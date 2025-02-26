@@ -12,7 +12,7 @@ protocol MyFoodBusinessLogic {
     func showCategories(request: MyFood.ShowCategories.Request)
     func showMyFood(request: MyFood.ShowMyFood.Request)
     func showDetailsFood(request: MyFood.showDetailFood.Request, at index: Int)
-    func showChangeFoodMenu(request: MyFood.ChangeFood.Request)
+    func getEditingFood(request: MyFood.EdidtingFood.Request)
     func deleteFood(request: MyFood.DeleteFood.Request)
     func removeAllFood(request: MyFood.RemoveAllFood.Request)
     func showSharedSoodList(request: MyFood.SharedFood.Request)
@@ -20,6 +20,7 @@ protocol MyFoodBusinessLogic {
 
 protocol MyFoodDataStore {
     var myFood: [FoodRealm] { get }
+    var editingFood: FoodRealm { get }
     var categories: [String] { get }
 }
 
@@ -27,6 +28,7 @@ class MyFoodInteractor: MyFoodBusinessLogic, MyFoodDataStore {
     
     var myFood: [FoodRealm] = []
     var categories: [String] = []
+    var editingFood = FoodRealm()
     var presenter: MyFoodPresentationLogic?
     var worker: MyFoodWorker?
     
@@ -47,13 +49,8 @@ class MyFoodInteractor: MyFoodBusinessLogic, MyFoodDataStore {
         presenter?.presentDetailsFood(responce: responce)
     }
     
-    func showChangeFoodMenu(request: MyFood.ChangeFood.Request) {
-        worker = MyFoodWorker()
-        myFood = DataManager.shared.fetchMyFood().reversed()
-        let food = worker?.getChange(food: myFood, at: request.indexPath)
-        guard let food = food else { return }
-        let responce = MyFood.ChangeFood.Responce(food: food)
-        presenter?.presentChangeFoodMenu(response: responce)
+    func getEditingFood(request: MyFood.EdidtingFood.Request) {
+        editingFood = myFood[request.indexPath.row]
     }
     
     func deleteFood(request: MyFood.DeleteFood.Request) {

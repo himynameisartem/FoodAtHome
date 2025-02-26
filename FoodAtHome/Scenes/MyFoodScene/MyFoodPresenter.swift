@@ -11,7 +11,6 @@ protocol MyFoodPresentationLogic {
     func presentCategories(responce: MyFood.ShowCategories.Responce)
     func presentMyFood(response: MyFood.ShowMyFood.Response)
     func presentDetailsFood(responce: MyFood.showDetailFood.Responce)
-    func presentChangeFoodMenu(response: MyFood.ChangeFood.Responce)
     func presentDeleteFood(response: MyFood.DeleteFood.Responce)
     func presentRemoveAllFood(response: MyFood.RemoveAllFood.Responce)
     func presentSharedList(response: MyFood.SharedFood.Responce)
@@ -54,24 +53,6 @@ class MyFoodPresenter: MyFoodPresentationLogic {
                                         expirationDate: responce.foodDetails.expirationDate))
         let viewModel = MyFood.showDetailFood.ViewModel(DiplayedDetails: displayedDetailsFood)
         viewController?.displayFoodDetails(viewModel: viewModel)
-    }
-    
-    func presentChangeFoodMenu(response: MyFood.ChangeFood.Responce) {
-        let food = FoodRealm()
-        food.name = response.food.name
-        food.type = response.food.type
-        food.weight = response.food.weight
-        food.unit = response.food.unit
-        food.calories = response.food.calories
-        food.productionDate = response.food.productionDate
-        if response.food.expirationDate != nil {
-            food.expirationDate = response.food.expirationDate
-        }
-        if response.food.consumeUp != nil {
-            food.consumeUp = response.food.consumeUp
-        }
-        let viewModel = MyFood.ChangeFood.ViewModel(food: food)
-        viewController?.displayChangeFood(viewModel: viewModel)
     }
     
     func presentDeleteFood(response: MyFood.DeleteFood.Responce) {

@@ -9,6 +9,7 @@ import UIKit
 
 protocol AddFoodPresentationLogic {
     func presentData(response: AddFoodModel.ShowFood.Response)
+    func presentCloseAnimation()
 }
 
 class AddFoodPresenter: AddFoodPresentationLogic {
@@ -30,5 +31,9 @@ class AddFoodPresenter: AddFoodPresentationLogic {
         let viewModel = AddFoodModel.ShowFood.ViewModel(displayedFood: displayedFood)
         viewController?.displayData(viewModel: viewModel)
   }
+    
+    func presentCloseAnimation() {
+        viewController?.performCloseAnimation()
+    }
   
 }

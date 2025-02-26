@@ -9,7 +9,7 @@ import UIKit
 
 @objc protocol MyFoodRoutingLogic {
     func routeToCategoryDetails(segue: UIStoryboardSegue?)
-    func passFoodToEdit()
+    func routeToAddFood(segue: UIStoryboardSegue?)
 }
 
 protocol MyFoodDataPassing {
@@ -39,11 +39,26 @@ class MyFoodRouter: NSObject, MyFoodRoutingLogic, MyFoodDataPassing {
         }
     }
     
+    func routeToAddFood(segue: UIStoryboardSegue?) {
+        let destinationVC = AddFoodViewController()
+        if let sourceDS = dataStore, var destinationDS = destinationVC.router?.dataStore {
+            passDataToEditFood(source: sourceDS, destination: &destinationDS)
+        }
+        navigationToEditFood(source: viewController!, destination: destinationVC)
+    }
+    
 //MARK: Navigation
     
     func navigateToCategoryDetails(source: MyFoodViewController, destination: CategoryDetailsViewController) {
         source.show(destination, sender: nil)
     }
+    
+    func navigationToEditFood(source: MyFoodViewController, destination: AddFoodViewController) {
+        destination.transitioningDelegate = viewController
+        destination.modalPresentationStyle = .custom
+        source.present(destination, animated: true)
+    }
+    
     
 //MARK: Passing data
     
@@ -53,12 +68,9 @@ class MyFoodRouter: NSObject, MyFoodRoutingLogic, MyFoodDataPassing {
         let food = worker.getFoodForRouting(source: source.myFood, type: category)
         destination.category = category
         destination.food = food
-        print(food)
     }
     
-    func passFoodToEdit() {
-        addFoodMenu = Bundle.main.loadNibNamed("AddFoodMenu", owner: ChoiseFoodViewController.self)?.first as! AddFoodMenu
-        addFoodMenu.showMenu(size: nil)
-        addFoodMenu.delegate = viewController
+    func passDataToEditFood(source: MyFoodDataStore, destination: inout AddFoodDataStore) {
+        destination.food = source.editingFood
     }
 }

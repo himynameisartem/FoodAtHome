@@ -26,9 +26,7 @@ class ChoiseFoodViewController: UIViewController {
     
     private var categoriesName: [String] = []
     private var foodList: [ChoiseFood.ShowFood.ViewModel.DispalyedFood] = []
-    
-    private var addFoodMenu = AddFoodMenu()
-    
+        
     var interactor: ChoiseFoodBusinessLogic?
     var router: (NSObjectProtocol & ChoiseFoodRoutingLogic & ChoiseFoodDataPassing)?
     
@@ -67,7 +65,6 @@ class ChoiseFoodViewController: UIViewController {
     
     private func didTapAddFoodButtion(at indexPath: IndexPath) {
         let request = ChoiseFood.AddFood.Request(foodName: foodList[indexPath.row].name)
-        print(request)
         interactor?.getFood(request: request)
         router?.routeToAddFood()
         searchController.searchBar.resignFirstResponder()
@@ -259,7 +256,6 @@ extension ChoiseFoodViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configure(from: foodList[indexPath.row])
         cell.buttonAction = { [weak self] in
             cell.addFoodButton.showAnimation(for: .withColor) {
-
                 self?.didTapAddFoodButtion(at: indexPath)
             }
         }
@@ -318,63 +314,6 @@ extension ChoiseFoodViewController: UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(using transitionContext: any UIViewControllerContextTransitioning) {
-        guard let fromView = transitionContext.viewController(forKey: .from)?.view,
-              let toView = transitionContext.viewController(forKey: .to)?.view else { return }
-        
-        let isPresenting = transitionContext.view(forKey: .to) != nil
-        let presentingView = isPresenting ? toView : fromView
-        
-        if isPresenting {
-            transitionContext.containerView.addSubview(presentingView)
-        }
-        
-        let screenSize = UIScreen.main.bounds.size
-        let heightSize = ((screenSize.width - 40) / 2) + 350
-        let size = CGSize(width: screenSize.width - 40,
-                          height: heightSize)
-        let offScreenFrame = CGRect(origin: CGPoint(x: (screenSize.width / 2) - (size.width / 2),
-                                                    y: -screenSize.height), size: size)
-        let onScreenFrame = CGRect(origin: CGPoint(x: (screenSize.width / 2) - (size.width / 2) ,
-                                                   y: (screenSize.height / 2) - (size.height / 2)), size: size)
-        
-        presentingView.frame = isPresenting ? offScreenFrame : onScreenFrame
-        
-        let animationDuration = transitionDuration(using: transitionContext)
-        
-        if isPresenting {
-            UIView.animate(withDuration: 0.3) {
-                self.navigationController?.view.addSubview(self.dimmingView)
-                self.dimmingView.alpha = 1
-            } completion: { isDone in
-                if isDone {
-                    UIView.animate(withDuration: animationDuration) {
-                        presentingView.frame = onScreenFrame
-                    }
-                    transitionContext.completeTransition(isDone)
-                }
-            }
-        } else {
-            UIView.animate(withDuration: animationDuration) {
-                presentingView.removeFromSuperview()
-            } completion: { isDone in
-                if isDone {
-                    UIView.animate(withDuration: 0.3) {
-                        self.dimmingView.alpha = 0
-                    } completion: { isDone in
-                        self.dimmingView.removeFromSuperview()
-                        transitionContext.completeTransition(isDone)
-                    }
-                }
-            }
-        }
-    }
-}
-
-//MARK: - AddFoodMenuDelegate
-
-extension ChoiseFoodViewController: AddFoodMenuDelegate {
-    func didCloseAddFood() {
-        self.navigationController?.popToRootViewController(animated: true)
-        tabBarController?.tabBar.isHidden = false
+        openAndCloseCustomVC(for: self, using: transitionContext, and: dimmingView)
     }
 }

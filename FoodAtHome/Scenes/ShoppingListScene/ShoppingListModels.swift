@@ -42,17 +42,15 @@ enum ShoppingList {
         }
     }
     
-    enum ChangeFood {
+    enum EditingFood {
         struct Request{
             let indexPath: IndexPath
         }
         
         struct Responce {
-            let food: FoodRealm
         }
         
         struct ViewModel {
-            let food: FoodRealm
         }
     }
     

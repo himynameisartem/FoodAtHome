@@ -11,7 +11,6 @@ protocol MyFoodDisplayLogic: AnyObject {
     func displayCategories(viewModel: MyFood.ShowCategories.ViewModel)
     func displayMyFood(viewModel: MyFood.ShowMyFood.ViewModel)
     func displayFoodDetails(viewModel: MyFood.showDetailFood.ViewModel)
-    func displayChangeFood(viewModel: MyFood.ChangeFood.ViewModel)
     func deleteFood()
     func removeAllFood()
     func getSharedFood(viewModel: MyFood.SharedFood.ViewModel)
@@ -31,8 +30,9 @@ class MyFoodViewController: UIViewController {
     
     var interactor: MyFoodBusinessLogic?
     var router: (NSObjectProtocol & MyFoodRoutingLogic & MyFoodDataPassing)?
-    
-    private var addFoodMenu = AddFoodMenu()
+        
+    private var dimmingView: UIVisualEffectView!
+    private var blurEffect: UIVisualEffect!
     
     private var categoryMyFoodCollectionAnimationIsComlete = false
     
@@ -49,6 +49,7 @@ class MyFoodViewController: UIViewController {
         setupCollectionViewCells()
         getCategories()
         setupActivitiIndicator()
+        setupDimmingView()
     }
     
     @IBAction func deleteFoodTapped(_ sender: Any) {
@@ -92,9 +93,17 @@ class MyFoodViewController: UIViewController {
         router.dataStore = interactor
     }
     
+    private func setupDimmingView() {
+        blurEffect = UIBlurEffect(style: .dark)
+        dimmingView = UIVisualEffectView(frame: view.bounds)
+        dimmingView.effect = blurEffect
+        dimmingView.alpha = 0
+    }
+    
     private func didTapContextualEditButton(at indexPath: IndexPath) {
-        let request = MyFood.ChangeFood.Request(indexPath: indexPath.row)
-        self.interactor?.showChangeFoodMenu(request: request)
+        let request = MyFood.EdidtingFood.Request(indexPath: indexPath)
+        interactor?.getEditingFood(request: request)
+        router?.routeToAddFood(segue: nil)
     }
     
     private func didTapContextualDeleteButton(at indexPath: IndexPath) {
@@ -242,6 +251,29 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
 }
 
+//MARK: - UIViewControllerTransitioningDelegate
+
+extension MyFoodViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return self
+    }
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return self
+    }
+}
+
+extension MyFoodViewController: UIViewControllerAnimatedTransitioning {
+    func transitionDuration(using transitionContext: (any UIViewControllerContextTransitioning)?) -> TimeInterval {
+        return 0.5
+    }
+    
+    func animateTransition(using transitionContext: any UIViewControllerContextTransitioning) {
+        openAndCloseCustomVC(for: self, using: transitionContext, and: dimmingView)
+    }
+}
+
+
 // MARK: - MyFoodDisplayLogic
 
 extension MyFoodViewController: MyFoodDisplayLogic {
@@ -256,14 +288,11 @@ extension MyFoodViewController: MyFoodDisplayLogic {
     }
     
     func displayFoodDetails(viewModel: MyFood.showDetailFood.ViewModel) {
+        guard let view = self.navigationController?.tabBarController?.view else { return }
         let myFoodDetailsPopupMenu = Bundle.main.loadNibNamed("MyFoodDetailsPopupMenu",
                                                               owner: MyFoodViewController.self)?.first as! MyFoodDetailsPopupMenu
-        myFoodDetailsPopupMenu.openPopUpMenu(for: self.view, with: myFoodCollectionView)
+        myFoodDetailsPopupMenu.openPopUpMenu(for: view, with: myFoodCollectionView)
         myFoodDetailsPopupMenu.configure(viewModel: viewModel.DiplayedDetails)
-    }
-    
-    func displayChangeFood(viewModel: MyFood.ChangeFood.ViewModel) {
-        router?.passFoodToEdit()
     }
     
     func deleteFood() {
@@ -284,16 +313,6 @@ extension MyFoodViewController: MyFoodDisplayLogic {
             if controller.isViewLoaded  {
                 self.sharedActivitiIndicator.stopAnimating()
             }
-        }
-    }
-}
-
-//MARK: - AddFoodMenuDelegate
-
-extension MyFoodViewController: AddFoodMenuDelegate {
-    func didCloseAddFood() {
-        DispatchQueue.main.async{
-            self.getMyFood()
         }
     }
 }

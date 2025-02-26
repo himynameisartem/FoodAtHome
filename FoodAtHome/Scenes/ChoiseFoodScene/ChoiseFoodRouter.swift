@@ -23,19 +23,19 @@ class ChoiseFoodRouter: NSObject, ChoiseFoodRoutingLogic, ChoiseFoodDataPassing 
     func routeToAddFood() {
         let destinationVC = AddFoodViewController()
         if let sourceDS = dataStore, var destinationDS = destinationVC.router?.dataStore {
-            passDataToAddFood(source: sourceDS, destenation: &destinationDS)
+            passDataToAddFood(source: sourceDS, destination: &destinationDS)
         }
-        navigateToAddFood(source: viewController!, destenation: destinationVC)
+        navigateToAddFood(source: viewController!, destination: destinationVC)
     }
     
-    func navigateToAddFood(source: ChoiseFoodViewController, destenation: AddFoodViewController) {
-        destenation.modalPresentationStyle = .custom
-        destenation.transitioningDelegate = source
-        source.present(destenation, animated: true)
+    func navigateToAddFood(source: ChoiseFoodViewController, destination: AddFoodViewController) {
+        destination.modalPresentationStyle = .custom
+        destination.transitioningDelegate = source
+        source.navigationController?.present(destination, animated: true)
     }
     
-    func passDataToAddFood(source: ChoiseFoodDataStore, destenation: inout AddFoodDataStore) {
+    func passDataToAddFood(source: ChoiseFoodDataStore, destination: inout AddFoodDataStore) {
         let food = source.addFood
-        destenation.food = food
+        destination.food = food
     }
 }
