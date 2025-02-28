@@ -3,13 +3,13 @@
 //  FoodAtHome
 //
 //  Created by Артем Кудрявцев on 15.10.2024.
-//  Copyright (c) 2024 ___ORGANIZATIONNAME___. All rights reserved.
 //
 
 import UIKit
 
 protocol ShoppingListRoutingLogic {
     func routeToAddFood()
+    func routeToEditShoppingList()
 }
 
 protocol ShoppingListDataPassing {
@@ -31,13 +31,31 @@ class ShoppingListRouter: NSObject, ShoppingListRoutingLogic, ShoppingListDataPa
         navigateToAddFood(source: viewController!, destination: destinationVC)
     }
     
+    func routeToEditShoppingList() {
+        let destinationVC = AddShoppingListViewController()
+        if let sourceDS = dataStore, var destinationDS = destinationVC.router?.dataStore {
+            passDataToEditShoppingList(source: sourceDS, destination: &destinationDS)
+        }
+        navigateToEditShoppingList(source: viewController!, destination: destinationVC)
+    }
+    
     func navigateToAddFood(source: ShoppingListViewController, destination: AddFoodViewController) {
         destination.transitioningDelegate = source
         destination.modalPresentationStyle = .custom
         source.present(destination, animated: true)
     }
     
+    func navigateToEditShoppingList(source: ShoppingListViewController, destination: AddShoppingListViewController) {
+        destination.transitioningDelegate = source
+        destination.modalPresentationStyle = .custom
+        source.present(destination, animated: true)
+    }
+    
     func passDataToAddFood(source: ShoppingListDataStore, destination: inout AddFoodDataStore) {
+        destination.food = source.editingFood
+    }
+    
+    func passDataToEditShoppingList(source: ShoppingListDataStore, destination: inout AddShoppingListDataStore) {
         destination.food = source.editingFood
     }
 }

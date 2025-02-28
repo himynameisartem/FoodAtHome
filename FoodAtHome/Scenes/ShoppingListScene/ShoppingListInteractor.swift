@@ -46,15 +46,6 @@ class ShoppingListInteractor: ShoppingListBusinessLogic, ShoppingListDataStore {
         editingFood = foodList[request.indexPath.row]
     }
     
-//    func showChangeFood(request: ShoppingList.ChangeFood.Request) {
-//        worker = ShoppingListWorker()
-//        guard let worker = worker else { return }
-//        foodList = worker.getShoppintList().reversed()
-//        let foodFromShoppingList = foodList[request.indexPath.row]
-//        let responce = ShoppingList.ChangeFood.Responce(food: worker.prepareToMyFoodList(from: foodFromShoppingList, and: foodList))
-//        presenter?.presentChangeFood(response: responce)
-//    }
-    
     func deleteFood(request: ShoppingList.DeleteFood.Request) {
         foodList = DataManager.shared.fetchMyShoppingList().reversed()
         DataManager.shared.delete(food: foodList[request.indexPath.row])

@@ -9,7 +9,7 @@ import UIKit
 
 extension UIViewControllerAnimatedTransitioning {
     
-    func openAndCloseCustomVC(for viewController: UIViewController, using transitionContext: any UIViewControllerContextTransitioning, and dimmingView: UIVisualEffectView) {
+    func trasitionAnimationForAddFoodVC(for viewController: UIViewController, height: CGFloat, using transitionContext: any UIViewControllerContextTransitioning, and dimmingView: UIVisualEffectView) {
         guard let fromView = transitionContext.viewController(forKey: .from)?.view,
               let toView = transitionContext.viewController(forKey: .to)?.view else { return }
         
@@ -21,7 +21,7 @@ extension UIViewControllerAnimatedTransitioning {
         }
         
         let screenSize = UIScreen.main.bounds.size
-        let heightSize = ((screenSize.width - 40) / 2) + 350
+        let heightSize = ((screenSize.width - 40) / 2) + height
         let size = CGSize(width: screenSize.width - 40,
                           height: heightSize)
         let offScreenFrame = CGRect(origin: CGPoint(x: (screenSize.width / 2) - (size.width / 2),

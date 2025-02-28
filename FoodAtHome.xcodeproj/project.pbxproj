@@ -101,6 +101,12 @@
 		31FA891D2BC90DD5005EA855 /* MyFoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA89162BC90DD5005EA855 /* MyFoodViewController.swift */; };
 		31FA891E2BC90DD5005EA855 /* MyFoodInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FA89172BC90DD5005EA855 /* MyFoodInteractor.swift */; };
 		31FD7DEC2D6E4D76001E07DA /* UIViewControllerAnimatedTransitioning + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FD7DEB2D6E4D76001E07DA /* UIViewControllerAnimatedTransitioning + Extension.swift */; };
+		31FD7DF62D706586001E07DA /* AddShoppingListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FD7DF02D706586001E07DA /* AddShoppingListPresenter.swift */; };
+		31FD7DF72D706586001E07DA /* AddShoppingListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FD7DF12D706586001E07DA /* AddShoppingListRouter.swift */; };
+		31FD7DF82D706586001E07DA /* AddShoppingListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FD7DEE2D706586001E07DA /* AddShoppingListInteractor.swift */; };
+		31FD7DF92D706586001E07DA /* AddShoppingListWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FD7DF42D706586001E07DA /* AddShoppingListWorker.swift */; };
+		31FD7DFA2D706586001E07DA /* AddShoppingListModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FD7DEF2D706586001E07DA /* AddShoppingListModels.swift */; };
+		31FD7DFB2D706586001E07DA /* AddShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31FD7DF22D706586001E07DA /* AddShoppingListViewController.swift */; };
 		6ECD83FB85B2923A8084AE34 /* Pods_FoodAtHome.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBF55CC3095E30758618C3E1 /* Pods_FoodAtHome.framework */; };
 /* End PBXBuildFile section */
 
@@ -202,6 +208,12 @@
 		31FA89162BC90DD5005EA855 /* MyFoodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFoodViewController.swift; sourceTree = "<group>"; };
 		31FA89172BC90DD5005EA855 /* MyFoodInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFoodInteractor.swift; sourceTree = "<group>"; };
 		31FD7DEB2D6E4D76001E07DA /* UIViewControllerAnimatedTransitioning + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewControllerAnimatedTransitioning + Extension.swift"; sourceTree = "<group>"; };
+		31FD7DEE2D706586001E07DA /* AddShoppingListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShoppingListInteractor.swift; sourceTree = "<group>"; };
+		31FD7DEF2D706586001E07DA /* AddShoppingListModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShoppingListModels.swift; sourceTree = "<group>"; };
+		31FD7DF02D706586001E07DA /* AddShoppingListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShoppingListPresenter.swift; sourceTree = "<group>"; };
+		31FD7DF12D706586001E07DA /* AddShoppingListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShoppingListRouter.swift; sourceTree = "<group>"; };
+		31FD7DF22D706586001E07DA /* AddShoppingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShoppingListViewController.swift; sourceTree = "<group>"; };
+		31FD7DF42D706586001E07DA /* AddShoppingListWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShoppingListWorker.swift; sourceTree = "<group>"; };
 		5B5B4EBF3CEE5A3EC63BC9B2 /* Pods-FoodAtHome.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodAtHome.debug.xcconfig"; path = "Target Support Files/Pods-FoodAtHome/Pods-FoodAtHome.debug.xcconfig"; sourceTree = "<group>"; };
 		67C74604784AE7BBE71EB589 /* Pods-FoodAtHome.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodAtHome.release.xcconfig"; path = "Target Support Files/Pods-FoodAtHome/Pods-FoodAtHome.release.xcconfig"; sourceTree = "<group>"; };
 		DBF55CC3095E30758618C3E1 /* Pods_FoodAtHome.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FoodAtHome.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -372,6 +384,7 @@
 				31C624602C7DBA81004E83B7 /* ChoiseFoodScene */,
 				3123E30F2CBD5B8D00ACE2AC /* ShoppingListScene */,
 				31D43C952D3596A00068046E /* AddFoodScene */,
+				31FD7DED2D706544001E07DA /* AddShoppingListScene */,
 				3123E3102CBD5BF600ACE2AC /* SettingsScene */,
 			);
 			path = Scenes;
@@ -570,6 +583,19 @@
 				31FA89142BC90DD5005EA855 /* MyFoodRouter.swift */,
 			);
 			path = MyFoodScene;
+			sourceTree = "<group>";
+		};
+		31FD7DED2D706544001E07DA /* AddShoppingListScene */ = {
+			isa = PBXGroup;
+			children = (
+				31FD7DF22D706586001E07DA /* AddShoppingListViewController.swift */,
+				31FD7DEE2D706586001E07DA /* AddShoppingListInteractor.swift */,
+				31FD7DF02D706586001E07DA /* AddShoppingListPresenter.swift */,
+				31FD7DEF2D706586001E07DA /* AddShoppingListModels.swift */,
+				31FD7DF12D706586001E07DA /* AddShoppingListRouter.swift */,
+				31FD7DF42D706586001E07DA /* AddShoppingListWorker.swift */,
+			);
+			path = AddShoppingListScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -777,6 +803,12 @@
 				31B1C5ED2BC7F5E300C6D43F /* AppDelegate.swift in Sources */,
 				31BA2CF52D16B3EE00E3D904 /* AddFoodMenuPresenter.swift in Sources */,
 				318701A12A4E019C0079848C /* FoodManager.swift in Sources */,
+				31FD7DF62D706586001E07DA /* AddShoppingListPresenter.swift in Sources */,
+				31FD7DF72D706586001E07DA /* AddShoppingListRouter.swift in Sources */,
+				31FD7DF82D706586001E07DA /* AddShoppingListInteractor.swift in Sources */,
+				31FD7DF92D706586001E07DA /* AddShoppingListWorker.swift in Sources */,
+				31FD7DFA2D706586001E07DA /* AddShoppingListModels.swift in Sources */,
+				31FD7DFB2D706586001E07DA /* AddShoppingListViewController.swift in Sources */,
 				310AC9E42A6D7A2F0055E013 /* PickerPropertiesManager.swift in Sources */,
 				31DA20D62839553600DCE421 /* FoodModel.swift in Sources */,
 			);

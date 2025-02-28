@@ -269,7 +269,8 @@ extension MyFoodViewController: UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(using transitionContext: any UIViewControllerContextTransitioning) {
-        openAndCloseCustomVC(for: self, using: transitionContext, and: dimmingView)
+        let height: CGFloat = 350
+        trasitionAnimationForAddFoodVC(for: self, height: height, using: transitionContext, and: dimmingView)
     }
 }
 

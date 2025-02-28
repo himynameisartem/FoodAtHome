@@ -9,6 +9,7 @@ import UIKit
 
 @objc protocol ChoiseFoodRoutingLogic {
     func routeToAddFood()
+    func routeToAddShoppingList()
 }
 
 protocol ChoiseFoodDataPassing {
@@ -28,7 +29,21 @@ class ChoiseFoodRouter: NSObject, ChoiseFoodRoutingLogic, ChoiseFoodDataPassing 
         navigateToAddFood(source: viewController!, destination: destinationVC)
     }
     
+    func routeToAddShoppingList() {
+        let destinationVC = AddShoppingListViewController()
+        if let sourceDS = dataStore, var destinationDS = destinationVC.router?.dataStore {
+            passDataToShoppingList(source: sourceDS, destination: &destinationDS)
+        }
+        navigateToAddShoppingList(source: viewController!, destination: destinationVC)
+    }
+    
     func navigateToAddFood(source: ChoiseFoodViewController, destination: AddFoodViewController) {
+        destination.modalPresentationStyle = .custom
+        destination.transitioningDelegate = source
+        source.navigationController?.present(destination, animated: true)
+    }
+    
+    func navigateToAddShoppingList(source: ChoiseFoodViewController, destination: AddShoppingListViewController) {
         destination.modalPresentationStyle = .custom
         destination.transitioningDelegate = source
         source.navigationController?.present(destination, animated: true)
@@ -37,5 +52,9 @@ class ChoiseFoodRouter: NSObject, ChoiseFoodRoutingLogic, ChoiseFoodDataPassing 
     func passDataToAddFood(source: ChoiseFoodDataStore, destination: inout AddFoodDataStore) {
         let food = source.addFood
         destination.food = food
+    }
+    
+    func passDataToShoppingList(source: ChoiseFoodDataStore, destination: inout AddShoppingListDataStore) {
+        
     }
 }

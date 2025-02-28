@@ -60,6 +60,10 @@ enum ShoppingList {
         }
         
         struct Responce {
+
+        }
+        struct ViewModel {
+
         }
     }
 }

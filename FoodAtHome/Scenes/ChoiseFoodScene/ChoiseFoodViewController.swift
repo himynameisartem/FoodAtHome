@@ -26,7 +26,7 @@ class ChoiseFoodViewController: UIViewController {
     
     private var categoriesName: [String] = []
     private var foodList: [ChoiseFood.ShowFood.ViewModel.DispalyedFood] = []
-        
+    
     var interactor: ChoiseFoodBusinessLogic?
     var router: (NSObjectProtocol & ChoiseFoodRoutingLogic & ChoiseFoodDataPassing)?
     
@@ -66,7 +66,11 @@ class ChoiseFoodViewController: UIViewController {
     private func didTapAddFoodButtion(at indexPath: IndexPath) {
         let request = ChoiseFood.AddFood.Request(foodName: foodList[indexPath.row].name)
         interactor?.getFood(request: request)
-        router?.routeToAddFood()
+        if self.tabBarController?.selectedIndex == 0 {
+            router?.routeToAddShoppingList()
+        } else if self.tabBarController?.selectedIndex == 1 {
+            router?.routeToAddFood()
+        }
         searchController.searchBar.resignFirstResponder()
     }
     
@@ -314,6 +318,12 @@ extension ChoiseFoodViewController: UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(using transitionContext: any UIViewControllerContextTransitioning) {
-        openAndCloseCustomVC(for: self, using: transitionContext, and: dimmingView)
+        var height: CGFloat = 350
+        if self.navigationController?.tabBarController?.selectedIndex == 0 {
+            height = 150
+        } else if self.navigationController?.tabBarController?.selectedIndex == 1 {
+            height = 350
+        }
+        trasitionAnimationForAddFoodVC(for: self, height: height, using: transitionContext, and: dimmingView)
     }
 }

@@ -23,6 +23,8 @@ class ShoppingListViewController: UIViewController {
     
     var shoppingList: [ShoppingList.ShoppingListModel.ViewModel.DisplayedFood] = []
     
+    var menuType: ShoppingList.EditingFood.ViewModel?
+    
     private var dimmingView: UIVisualEffectView!
     private var blurEffect: UIVisualEffect!
     
@@ -143,7 +145,7 @@ extension ShoppingListViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let editItem = UIContextualAction(style: .normal, title: nil) { contextialAction, view, boolCompletion in
-
+            self.router?.routeToEditShoppingList()
             boolCompletion(true)
         }
         setupContextualMenu(action: editItem, "edit")
@@ -192,9 +194,15 @@ extension ShoppingListViewController: UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(using transitionContext: any UIViewControllerContextTransitioning) {
-        openAndCloseCustomVC(for: self, using: transitionContext, and: dimmingView)
+        
+        var height = CGFloat()
+        if transitionContext.viewController(forKey: .to)! is AddFoodViewController {
+            height = 350
+        } else if transitionContext.viewController(forKey: .to)! is AddShoppingListViewController {
+            height = 150
+        }
+        trasitionAnimationForAddFoodVC(for: self, height: height, using: transitionContext, and: dimmingView)
     }
-    
 }
 
 //MARK: - ShoppingListDisplayLogic
@@ -205,7 +213,7 @@ extension ShoppingListViewController: ShoppingListDisplayLogic {
         shoppingList = viewModel.displayedFood
         shoppingListTableView.reloadData()
     }
-    
+        
     func deleteFood() {
         DispatchQueue.main.async {
             self.getFoodList()
