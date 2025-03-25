@@ -199,7 +199,7 @@ extension ShoppingListViewController: UIViewControllerAnimatedTransitioning {
         if transitionContext.viewController(forKey: .to)! is AddFoodViewController {
             height = 350
         } else if transitionContext.viewController(forKey: .to)! is AddShoppingListViewController {
-            height = 150
+            height = 200
         }
         trasitionAnimationForAddFoodVC(for: self, height: height, using: transitionContext, and: dimmingView)
     }

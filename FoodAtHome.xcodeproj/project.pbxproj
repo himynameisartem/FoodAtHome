@@ -41,6 +41,7 @@
 		3139EE9B2C66575A00AEC1F2 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 3139EE9A2C66575A00AEC1F2 /* .gitignore */; };
 		3148F8492D16C38B00167A32 /* AddFoodMenuModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3148F8482D16C38B00167A32 /* AddFoodMenuModels.swift */; };
 		314CA4A12A7A58C5002D4680 /* FoodListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4A02A7A58C5002D4680 /* FoodListManager.swift */; };
+		314ECCA12D9151900047EDBB /* Date + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314ECCA02D9151900047EDBB /* Date + Extension.swift */; };
 		317F50E6286DB4C90049B64B /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317F50E5286DB4C90049B64B /* UIColor + Extension.swift */; };
 		318701A12A4E019C0079848C /* FoodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318701A02A4E019C0079848C /* FoodManager.swift */; };
 		3188955D2BC479EA00ABD040 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3188955C2BC479EA00ABD040 /* Assets.xcassets */; };
@@ -146,6 +147,7 @@
 		3139EE9A2C66575A00AEC1F2 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		3148F8482D16C38B00167A32 /* AddFoodMenuModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFoodMenuModels.swift; sourceTree = "<group>"; };
 		314CA4A02A7A58C5002D4680 /* FoodListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListManager.swift; sourceTree = "<group>"; };
+		314ECCA02D9151900047EDBB /* Date + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Extension.swift"; sourceTree = "<group>"; };
 		317F50E5286DB4C90049B64B /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
 		318701A02A4E019C0079848C /* FoodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodManager.swift; sourceTree = "<group>"; };
 		3188955C2BC479EA00ABD040 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -431,6 +433,7 @@
 				31D0C42C2A9A767000EDF32B /* TextField + Extension.swift */,
 				31D43CA42D35A2D40068046E /* CustomPresentationController.swift */,
 				31FD7DEB2D6E4D76001E07DA /* UIViewControllerAnimatedTransitioning + Extension.swift */,
+				314ECCA02D9151900047EDBB /* Date + Extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -776,6 +779,7 @@
 				310D686A2C8DF07A001D791E /* CategoriesCollectionViewCell.swift in Sources */,
 				31C7B02E2C81A6D100C41CE3 /* FoodListTableViewCell.swift in Sources */,
 				31D43C852D35527E0068046E /* DateFormatterManager.swift in Sources */,
+				314ECCA12D9151900047EDBB /* Date + Extension.swift in Sources */,
 				31FA89192BC90DD5005EA855 /* MyFoodPresenter.swift in Sources */,
 				3139EE512C4A68D100AEC1F2 /* CategoriesManager.swift in Sources */,
 				31FA891A2BC90DD5005EA855 /* MyFoodWorker.swift in Sources */,

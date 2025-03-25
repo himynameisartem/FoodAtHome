@@ -5,7 +5,7 @@
 //  Created by Артем Кудрявцев on 26.08.2023.
 //
 
-import Foundation
+import UIKit
 
 extension String {
     func localized() -> String {
@@ -15,5 +15,11 @@ extension String {
             bundle: .main,
             value: self,
             comment: self)
+    }
+    
+    func toDate() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        return dateFormatter.date(from: self)
     }
 }

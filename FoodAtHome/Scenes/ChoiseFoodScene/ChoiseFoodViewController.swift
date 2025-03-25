@@ -320,7 +320,7 @@ extension ChoiseFoodViewController: UIViewControllerAnimatedTransitioning {
     func animateTransition(using transitionContext: any UIViewControllerContextTransitioning) {
         var height: CGFloat = 350
         if self.navigationController?.tabBarController?.selectedIndex == 0 {
-            height = 150
+            height = 200
         } else if self.navigationController?.tabBarController?.selectedIndex == 1 {
             height = 350
         }

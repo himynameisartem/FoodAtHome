@@ -9,11 +9,13 @@ import UIKit
 
 protocol AddFoodDisplayLogic: AnyObject {
     func displayData(viewModel: AddFoodModel.ShowFood.ViewModel)
+    func displayUpdatedDates(viewModel: AddFoodModel.DateUpdate.ViewModel)
+    func displayUpdatePickerValues(viewModel: AddFoodModel.DatePickerValueUpdate.ViewModel)
     func performCloseAnimation()
 }
 
 class AddFoodViewController: UIViewController {
-
+    
     private let closeButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -118,6 +120,7 @@ class AddFoodViewController: UIViewController {
         textField.backgroundColor = .systemGray6
         textField.textAlignment = .center
         textField.layer.cornerRadius = 5
+        textField.isEnabled = false
         textField.addDoneButtonToKeyboard()
         return textField
     }()
@@ -127,6 +130,7 @@ class AddFoodViewController: UIViewController {
         textField.backgroundColor = .systemGray6
         textField.textAlignment = .center
         textField.layer.cornerRadius = 5
+        textField.isEnabled = false
         textField.addDoneButtonToKeyboard()
         return textField
     }()
@@ -188,7 +192,7 @@ class AddFoodViewController: UIViewController {
     
     private func getFood() {
         let request = AddFoodModel.ShowFood.Request()
-        interactor?.showFood(request: request)
+        interactor?.showSelectedFood(request: request)
     }
     
     private func setupUI() {
@@ -219,9 +223,20 @@ class AddFoodViewController: UIViewController {
         rightStackView.addArrangedSubview(expirationDateTextField)
         rightStackView.addArrangedSubview(consumeUpTextField)
         
+        weightTextField.delegate = self
+        productionDateTextField.delegate = self
+        expirationDateTextField.delegate = self
+        consumeUpTextField.delegate = self
+        
         panGestureRecognizer.addTarget(self, action: #selector(handlePanGestureRecognizer))
         view.addGestureRecognizer(panGestureRecognizer)
         view.addSubview(addButton)
+        
+        guard let productionDateString = productionDateTextField.text else { return }
+        if !productionDateString.isEmpty {
+            expirationDateTextField.isEnabled = true
+            consumeUpTextField.isEnabled = true
+        }
     }
     
     @objc private func didTapCloseButton() {
@@ -262,13 +277,14 @@ class AddFoodViewController: UIViewController {
             break
         }
     }
-
+    
     @objc func didTapAddButton(_ sender: UIButton) {
         sender.showAnimation(for: .withoutColor) {
             self.interactor?.handleCloseRequest()
+            
         }
     }
-        
+    
     private func setupConstraints() {
         let heightForMainStackView = (view.frame.height - view.frame.width / 2) - 170
         NSLayoutConstraint.activate([
@@ -427,6 +443,75 @@ extension AddFoodViewController: UIPopoverPresentationControllerDelegate {
     }
 }
 
+//MARK: - UITextFieldDelegate
+
+extension AddFoodViewController: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {        
+        var request: AddFoodModel.DateUpdate.Request
+        
+        if textField == productionDateTextField {
+            request = AddFoodModel.DateUpdate.Request(productionDate: textField.text,
+                                                      expirationDate: expirationDateTextField.text,
+                                                      consumeUpMonths: nil,
+                                                      consumeUpDays: nil,
+                                                      activeField: .productionDate,
+                                                      datePickerDate: datePickerView.date
+            )
+                expirationDateTextField.isEnabled = true
+                consumeUpTextField.isEnabled = true
+        } else if textField == expirationDateTextField {
+            request = AddFoodModel.DateUpdate.Request(productionDate: productionDateTextField.text,
+                                                      expirationDate: textField.text,
+                                                      consumeUpMonths: nil,
+                                                      consumeUpDays: nil,
+                                                      activeField: .expirationDate,
+                                                      datePickerDate: datePickerView.date
+            )
+        } else if textField == consumeUpTextField {
+            request = AddFoodModel.DateUpdate.Request(productionDate: productionDateTextField.text,
+                                                      expirationDate: expirationDateTextField.text,
+                                                      consumeUpMonths: consumeUpPickerView.selectedRow(inComponent: 0),
+                                                      consumeUpDays: consumeUpPickerView.selectedRow(inComponent: 1),
+                                                      activeField: .consumeUp,
+                                                      datePickerDate: nil
+            )
+        } else {
+            return
+        }
+        
+        interactor?.updateDates(request: request)
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        var request: AddFoodModel.DatePickerValueUpdate.Request
+        if textField == productionDateTextField {
+            request = AddFoodModel.DatePickerValueUpdate.Request(activeField: .productionDate,
+                                                                 productionDate: textField.text,
+                                                                 expirationDate: nil,
+                                                                 consumeUpDate: nil)
+        } else if textField == expirationDateTextField {
+            request = AddFoodModel.DatePickerValueUpdate.Request(activeField: .expirationDate,
+                                                                 productionDate: productionDateTextField.text,
+                                                                 expirationDate: textField.text,
+                                                                 consumeUpDate: nil)
+            
+        } else if textField == consumeUpTextField {
+            request = AddFoodModel.DatePickerValueUpdate.Request(activeField: .consumeUp,
+                                                                 productionDate: productionDateTextField.text,
+                                                                 expirationDate: expirationDateTextField.text,
+                                                                 consumeUpDate: ConsumeUp(months: consumeUpPickerView.selectedRow(inComponent: 0),
+                                                                                          days: consumeUpPickerView.selectedRow(inComponent: 1)))
+            
+        } else {
+            return
+        }
+        
+        interactor?.updatePickerValues(request: request)
+    }
+}
+
 //MARK: - AddFoodDisplayLogic
 
 extension AddFoodViewController: AddFoodDisplayLogic {
@@ -438,6 +523,28 @@ extension AddFoodViewController: AddFoodDisplayLogic {
         expirationDateTextField.text = viewModel.displayedFood.expirationDate
         consumeUpTextField.text = viewModel.displayedFood.consumeUp
         weightUnitButton.setTitle("kg.".localized(), for: .normal)
+    }
+    
+    func displayUpdatedDates(viewModel: AddFoodModel.DateUpdate.ViewModel) {
+        if let productionDate = viewModel.productionDate {
+            productionDateTextField.text = productionDate
+        }
+        
+        if let expirationDate = viewModel.expirationDate {
+            expirationDateTextField.text = expirationDate
+        }
+        
+        if let consumeUpText = viewModel.consumeUpText {
+            consumeUpTextField.text = consumeUpText
+        }
+    }
+    
+    func displayUpdatePickerValues(viewModel: AddFoodModel.DatePickerValueUpdate.ViewModel) {
+        datePickerView.date = viewModel.displayedValues.pickerCurrentValue
+        datePickerView.minimumDate = viewModel.displayedValues.pickerMinValue
+        datePickerView.maximumDate = viewModel.displayedValues.pickerMaxValue
+        consumeUpPickerView.selectRow(viewModel.displayedValues.currentMonthsPicker, inComponent: 0, animated: false)
+        consumeUpPickerView.selectRow(viewModel.displayedValues.currentDaysPicker, inComponent: 1, animated: false)
     }
     
     func performCloseAnimation() {

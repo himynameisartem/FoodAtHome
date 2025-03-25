@@ -9,23 +9,90 @@
 import UIKit
 
 enum AddFoodModel {
-   
-  enum ShowFood {
-    struct Request {
+    
+    enum ActiveField {
+        case productionDate
+        case expirationDate
+        case consumeUp
     }
-    struct Response {
-        let food: FoodRealm
+    
+    enum ShowFood {
+        struct Request {
+        }
+        struct Response {
+            let food: FoodRealm
+        }
+        struct ViewModel {
+            struct DisplayedFood {
+                let image: UIImage
+                let weight: String
+                let productionDate: String?
+                let expirationDate: String?
+                let consumeUp: String?
+            }
+            let displayedFood: DisplayedFood
+        }
     }
-    struct ViewModel {
-        struct DisplayedFood {
-            let image: UIImage
-            let weight: String
+    
+    enum DateUpdate {
+        struct Request {
             let productionDate: String?
             let expirationDate: String?
-            let consumeUp: String?
+            let consumeUpMonths: Int?
+            let consumeUpDays: Int?
+            let activeField: ActiveField
+            let datePickerDate: Date?
         }
-        let displayedFood: DisplayedFood
+        
+        struct Response {
+            let productionDate: String?
+            let expirationDate: String?
+            let consumeUpMonths: Int?
+            let consumeUpDays: Int?
+        }
+        
+        struct ViewModel {
+            let productionDate: String?
+            let expirationDate: String?
+            let consumeUpText: String?
+        }
     }
-  }
-  
+    
+    enum DatePickerValueUpdate {
+        struct Request {
+            let activeField: ActiveField
+            let productionDate: String?
+            let expirationDate: String?
+            let consumeUpDate: ConsumeUp?
+        }
+        
+        struct Response {
+            let pickerCurrentValue: Date?
+            let pickerMinValue: Date?
+            let pickerMaxValue: Date?
+            let consumeUpDate: ConsumeUp?
+        }
+        struct ViewModel {
+            struct DisplayedValues {
+                let pickerCurrentValue: Date
+                let pickerMinValue: Date?
+                let pickerMaxValue: Date?
+                let currentMonthsPicker: Int
+                let currentDaysPicker: Int
+            }
+            let displayedValues: DisplayedValues
+        }
+    }
+    
+    enum AddFood {
+        struct Request {
+            let food: ShowFood.ViewModel.DisplayedFood
+        }
+        struct Response {
+            let food: FoodRealm
+        }
+        struct ViewModel {
+        }
+    }
+    
 }

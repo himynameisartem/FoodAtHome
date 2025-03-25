@@ -37,12 +37,16 @@ class ConsumeUp: Object {
         self.months = months
         self.days = days
     }
+    
+    func getString() -> String {
+        return "\(months ?? 0)\("m.".localized()) \(days ?? 0)\("d.".localized())"
+    }
 }
 
 class FoodRealm: Object {
     @Persisted var name: String
     @Persisted var type: FoodType.RawValue
-    @Persisted var weight: String = "0.0"
+    @Persisted var weight: String = ""
     @Persisted var unit: String = ""
     @Persisted var calories: String = "0"
     @Persisted var isShoppingList: Bool = false
@@ -54,6 +58,15 @@ class FoodRealm: Object {
         self.init()
         self.name = name
         self.type = type.rawValue
+        self.calories = calories
+    }
+    
+    convenience init(name: String, type: FoodType, weight: String, unit: String, calories: String, isShoppingList: Bool = false, productionDate: Date? = nil, expirationDate: Date? = nil) {
+        self.init()
+        self.name = name
+        self.type = type.rawValue
+        self.weight = weight
+        self.unit = unit
         self.calories = calories
     }
 }

@@ -14,6 +14,9 @@ protocol DateFormatterManagerProtocol {
 }
 
 class DateFormatterManager: DateFormatterManagerProtocol {
+    
+    static let shared = DateFormatterManager()
+    
     private let dateFormatter: DateFormatter
 
     init() {
@@ -23,6 +26,10 @@ class DateFormatterManager: DateFormatterManagerProtocol {
 
     func formatDate(_ date: Date) -> String {
         return dateFormatter.string(from: date)
+    }
+    
+    func formatDateFrom(string: String) -> Date? {
+        return dateFormatter.date(from: string)
     }
 
     func formatConsumeUp(_ consumeUp: ConsumeUp?) -> String {
