@@ -8,11 +8,11 @@
 import UIKit
 
 protocol AddShoppingListRoutingLogic {
-    
+    func navigateToTabBarController(window: UIWindow)
 }
 
 protocol AddShoppingListDataPassing {
-    var dataStore: AddShoppingListDataStore? { get }
+    var dataStore: AddShoppingListDataStore? { get set }
 }
 
 class AddShoppingListRouter: NSObject, AddShoppingListRoutingLogic, AddShoppingListDataPassing {
@@ -21,5 +21,15 @@ class AddShoppingListRouter: NSObject, AddShoppingListRoutingLogic, AddShoppingL
     var dataStore: AddShoppingListDataStore?
     
     // MARK: Routing
-    
+    func navigateToTabBarController(window: UIWindow) {
+        viewController?.dismiss(animated: true) {
+            if let tabBarController = window.rootViewController as? UITabBarController {
+                tabBarController.selectedIndex = 1
+                if let nav = tabBarController.viewControllers?[0] as? UINavigationController {
+                    nav.tabBarController?.tabBar.isHidden = false
+                    nav.popToRootViewController(animated: true)
+                }
+            }
+        }
+    }
 }

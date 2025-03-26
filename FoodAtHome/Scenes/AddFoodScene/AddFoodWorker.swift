@@ -14,6 +14,20 @@ class AddFoodWorker {
         return image
     }
     
+    func getFoodForAdding(from dataRequest: AddFoodModel.AddFood.Request, and food: FoodRealm) -> FoodRealm {
+        let productionDate = dataRequest.prductionDate?.toDate()
+        let expirationDate = dataRequest.expirationDate?.toDate()
+        let food: FoodRealm = FoodRealm(name: food.name,
+                                        type: FoodType(rawValue: food.type)!,
+                                        weight: dataRequest.weight!,
+                                        unit: dataRequest.unit,
+                                        calories: food.calories,
+                                        productionDate: productionDate,
+                                        expirationDate: expirationDate
+        )
+        return food
+    }
+    
     func calculateConsumeUp(productionDate: String?, expirationDate: String?) -> ConsumeUp? {
         let calendar: Calendar = .current
         let dateFormatter = DateFormatter()

@@ -39,7 +39,7 @@ class MyFoodInteractor: MyFoodBusinessLogic, MyFoodDataStore {
     }
     
     func showMyFood(request: MyFood.ShowMyFood.Request) {
-        myFood = DataManager.shared.fetchMyFood().reversed()
+        myFood = DataManager.shared.fetchMyFood()
         let responce = MyFood.ShowMyFood.Response(food: myFood)
         presenter?.presentMyFood(response: responce)
     }

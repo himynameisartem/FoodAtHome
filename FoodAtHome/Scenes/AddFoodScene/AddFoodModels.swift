@@ -3,7 +3,6 @@
 //  FoodAtHome
 //
 //  Created by Артем Кудрявцев on 13.01.2025.
-//  Copyright (c) 2025 ___ORGANIZATIONNAME___. All rights reserved.
 //
 
 import UIKit
@@ -86,12 +85,16 @@ enum AddFoodModel {
     
     enum AddFood {
         struct Request {
-            let food: ShowFood.ViewModel.DisplayedFood
+            let weight: String?
+            let unit: String
+            let prductionDate: String?
+            let expirationDate: String?
         }
         struct Response {
-            let food: FoodRealm
+            let alertController: UIAlertController?
         }
         struct ViewModel {
+            let alertController: UIAlertController?
         }
     }
     

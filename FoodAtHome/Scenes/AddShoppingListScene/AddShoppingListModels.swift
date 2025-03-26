@@ -7,17 +7,21 @@
 
 import UIKit
 
-enum AddShoppingList {
+enum AddShoppingListModel {
     
-    enum Model {
+    enum ShowFood {
         struct Request {
         }
         struct Response {
-            
+            let image: UIImage
+            let weight: String?
+            let unit: String?
         }
         struct ViewModel {
-            
+            let image: UIImage
+            let weight: String?
+            let unit: String?
         }
     }
-    
 }
+

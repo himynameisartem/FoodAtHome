@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AddShoppingListDisplayLogic: AnyObject {
-    func displayData(viewModel: AddShoppingList.Model.ViewModel)
+    func displayData(viewModel: AddShoppingListModel.ShowFood.ViewModel)
 }
 
 class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLogic {
@@ -83,6 +83,19 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
     private var panGestureRecognizer = UIPanGestureRecognizer()
     private var initialY: CGFloat = 0
     
+    // MARK: Object lifecycle
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    
     // MARK: Setup
     
     private func setup() {
@@ -105,6 +118,7 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        getFoodData()
         setupUI()
         setupConstraints()
     }
@@ -130,6 +144,11 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
         view.addGestureRecognizer(panGestureRecognizer)
     }
     
+    private func getFoodData() {
+        let request = AddShoppingListModel.ShowFood.Request()
+        interactor?.showSelectedFood(request: request)
+    }
+    
     @objc private func didTapCloseButton() {
         UIView.animate(withDuration: 0.3) {
             self.view.frame.origin.y = -self.view.frame.height
@@ -137,6 +156,15 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
             self.presentingViewController?.dismiss(animated: true)
         }
     }
+    
+    private func performCloseAnimation() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.view.frame.origin.y = -self.view.frame.height
+        }, completion: { _ in
+            self.router?.navigateToTabBarController(window: self.view.window!)
+        })
+    }
+
     
     @objc private func handlePanGestureRecognizer(_ gesture: UIPanGestureRecognizer) {
         let screenSize = UIScreen.main.bounds.size
@@ -171,12 +199,11 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
     
     @objc func didTapAddButton(_ sender: UIButton) {
         sender.showAnimation(for: .withoutColor) {
-//            self.interactor?.handleCloseRequest()
+
         }
     }
     
     private func setupConstraints() {
-//        let heightForMainStackView = (view.frame.height - view.frame.width / 2) - 170
         NSLayoutConstraint.activate([
             closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
             closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
@@ -189,15 +216,11 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
             mainStackView.topAnchor.constraint(equalTo: foodImageView.bottomAnchor, constant: 20),
             mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//            mainStackView.heightAnchor.constraint(equalToConstant: heightForMainStackView),
             
             addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
             addButton.heightAnchor.constraint(equalToConstant: 60),
-            
-//            mainStackView.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: -40),
-            
         ])
     }
 }
@@ -309,7 +332,9 @@ extension AddShoppingListViewController: UIPopoverPresentationControllerDelegate
 //MARK: - AddShoppingListDisplayLogic
 
 extension AddShoppingListViewController {
-    func displayData(viewModel: AddShoppingList.Model.ViewModel) {
-        
+    func displayData(viewModel: AddShoppingListModel.ShowFood.ViewModel) {
+        foodImageView.image = viewModel.image
+        weightTextField.text = viewModel.weight
+        weightUnitButton.setTitle(viewModel.unit, for: .normal)
     }
 }

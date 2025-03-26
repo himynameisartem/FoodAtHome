@@ -9,10 +9,9 @@ import UIKit
 
 protocol AddFoodBusinessLogic {
     func showSelectedFood(request: AddFoodModel.ShowFood.Request)
-    func addSelectedFood(request: AddFoodModel.ShowFood.Request)
+    func addSelectedFood(request: AddFoodModel.AddFood.Request)
     func updateDates(request: AddFoodModel.DateUpdate.Request)
     func updatePickerValues(request: AddFoodModel.DatePickerValueUpdate.Request)
-    func handleCloseRequest()
 }
 
 protocol AddFoodDataStore {
@@ -30,9 +29,43 @@ class AddFoodInteractor: AddFoodBusinessLogic, AddFoodDataStore {
         presenter?.presentData(response: responce)
     }
     
-    func addSelectedFood(request: AddFoodModel.ShowFood.Request) {
-        let responce = AddFoodModel.AddFood.Response(food: food)
-        presenter?.presentAddSelectedFood(responce: responce)
+    func addSelectedFood(request: AddFoodModel.AddFood.Request) {
+        worker = AddFoodWorker()
+        guard let worker = worker else { return }
+        let food = worker.getFoodForAdding(from: request, and: food)
+        let isDuplicate = DataManager.shared.checkFoDuplicates(food: food)
+        
+        if request.weight == "" {
+            
+            let weigtCheckAlertController = UIAlertController(title: "Enter the weight of the product".localized(),
+                                                          message: nil,
+                                                          preferredStyle: .alert)
+            weigtCheckAlertController.addAction(UIAlertAction(title: "OK".localized(), style: .default))
+            let response = AddFoodModel.AddFood.Response(alertController: weigtCheckAlertController)
+            self.presenter?.presentAddSelectedFood(responce: response)
+            
+        } else {
+            
+            if isDuplicate {
+                let changeFoodAlertController = UIAlertController(title: "You already have this product".localized(),
+                                                                  message: "Do you want to replace it?".localized(),
+                                                                  preferredStyle: .alert)
+                changeFoodAlertController.addAction(UIAlertAction(title: "Yes".localized(), style: .destructive, handler: { _ in
+                    DataManager.shared.changeFood(food)
+                    let response = AddFoodModel.AddFood.Response(alertController: nil)
+                    self.presenter?.presentAddSelectedFood(responce: response)
+                }))
+                changeFoodAlertController.addAction(UIAlertAction(title: "No".localized(), style: .cancel))
+                
+                let response = AddFoodModel.AddFood.Response(alertController: changeFoodAlertController)
+                presenter?.presentAddSelectedFood(responce: response)
+            } else {
+                DataManager.shared.writeFood(food)
+                let response = AddFoodModel.AddFood.Response(alertController: nil)
+                presenter?.presentAddSelectedFood(responce: response)
+            }
+            
+        }
     }
     
     func updateDates(request: AddFoodModel.DateUpdate.Request) {
@@ -115,9 +148,4 @@ class AddFoodInteractor: AddFoodBusinessLogic, AddFoodDataStore {
         
         presenter?.presentPickerValues(response: response)
     }
-    
-    func handleCloseRequest() {
-        presenter?.presentCloseAnimation()
-    }
-    
 }

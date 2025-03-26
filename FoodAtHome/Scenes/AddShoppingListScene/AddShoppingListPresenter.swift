@@ -3,20 +3,21 @@
 //  FoodAtHome
 //
 //  Created by Артем Кудрявцев on 27.02.2025.
-//  Copyright (c) 2025 ___ORGANIZATIONNAME___. All rights reserved.
 //
 
 import UIKit
 
 protocol AddShoppingListPresentationLogic {
-    func presentData(response: AddShoppingList.Model.Response)
+    func presentSelectedFood(response: AddShoppingListModel.ShowFood.Response)
 }
 
 class AddShoppingListPresenter: AddShoppingListPresentationLogic {
     weak var viewController: AddShoppingListDisplayLogic?
     
-    func presentData(response: AddShoppingList.Model.Response) {
-        
+    func presentSelectedFood(response: AddShoppingListModel.ShowFood.Response) {
+        let viewModel = AddShoppingListModel.ShowFood.ViewModel(image: response.image, weight: response.weight, unit: response.unit)
+        viewController?.displayData(viewModel: viewModel)
     }
     
 }
+

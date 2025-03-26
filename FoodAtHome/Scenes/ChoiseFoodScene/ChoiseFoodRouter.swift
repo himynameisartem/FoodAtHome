@@ -55,6 +55,7 @@ class ChoiseFoodRouter: NSObject, ChoiseFoodRoutingLogic, ChoiseFoodDataPassing 
     }
     
     func passDataToShoppingList(source: ChoiseFoodDataStore, destination: inout AddShoppingListDataStore) {
-        
+        let food = source.addFood
+        destination.food = food
     }
 }

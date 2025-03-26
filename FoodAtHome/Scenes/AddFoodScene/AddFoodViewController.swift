@@ -11,7 +11,7 @@ protocol AddFoodDisplayLogic: AnyObject {
     func displayData(viewModel: AddFoodModel.ShowFood.ViewModel)
     func displayUpdatedDates(viewModel: AddFoodModel.DateUpdate.ViewModel)
     func displayUpdatePickerValues(viewModel: AddFoodModel.DatePickerValueUpdate.ViewModel)
-    func performCloseAnimation()
+    func displayAlert(viewModel: AddFoodModel.AddFood.ViewModel)
 }
 
 class AddFoodViewController: UIViewController {
@@ -247,6 +247,15 @@ class AddFoodViewController: UIViewController {
         }
     }
     
+    
+    private func performCloseAnimation() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.view.frame.origin.y = -self.view.frame.height
+        }, completion: { _ in
+            self.router?.navigateToTabBarController(window: self.view.window!)
+        })
+    }
+    
     @objc private func handlePanGestureRecognizer(_ gesture: UIPanGestureRecognizer) {
         let screenSize = UIScreen.main.bounds.size
         let positionY = (screenSize.height - view.frame.height) / 2
@@ -279,9 +288,12 @@ class AddFoodViewController: UIViewController {
     }
     
     @objc func didTapAddButton(_ sender: UIButton) {
+            let request = AddFoodModel.AddFood.Request(weight: weightTextField.text,
+                                                   unit: weightUnitButton.titleLabel?.text ?? "kg.".localized(),
+                                                   prductionDate: productionDateTextField.text,
+                                                   expirationDate: expirationDateTextField.text)
         sender.showAnimation(for: .withoutColor) {
-            self.interactor?.handleCloseRequest()
-            
+            self.interactor?.addSelectedFood(request: request)
         }
     }
     
@@ -547,11 +559,11 @@ extension AddFoodViewController: AddFoodDisplayLogic {
         consumeUpPickerView.selectRow(viewModel.displayedValues.currentDaysPicker, inComponent: 1, animated: false)
     }
     
-    func performCloseAnimation() {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.view.frame.origin.y = -self.view.frame.height
-        }, completion: { _ in
-            self.router?.navigateToTabBarController(window: self.view.window!)
-        })
+    func displayAlert(viewModel: AddFoodModel.AddFood.ViewModel) {
+        if let alert = viewModel.alertController {
+            self.present(alert, animated: true)
+        } else {
+            performCloseAnimation()
+        }
     }
 }

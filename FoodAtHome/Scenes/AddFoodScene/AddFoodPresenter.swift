@@ -12,7 +12,6 @@ protocol AddFoodPresentationLogic {
     func presentUpdatedDates(response: AddFoodModel.DateUpdate.Response)
     func presentPickerValues(response: AddFoodModel.DatePickerValueUpdate.Response)
     func presentAddSelectedFood(responce: AddFoodModel.AddFood.Response)
-    func presentCloseAnimation()
 }
 
 class AddFoodPresenter: AddFoodPresentationLogic {
@@ -60,11 +59,8 @@ class AddFoodPresenter: AddFoodPresentationLogic {
     }
     
     func presentAddSelectedFood(responce: AddFoodModel.AddFood.Response) {
-        
+        let viewModelResponse = AddFoodModel.AddFood.Response(alertController: responce.alertController)
+        let viewModel = AddFoodModel.AddFood.ViewModel(alertController: viewModelResponse.alertController)
+        viewController?.displayAlert(viewModel: viewModel)
     }
-    
-    func presentCloseAnimation() {
-        viewController?.performCloseAnimation()
-    }
-    
 }

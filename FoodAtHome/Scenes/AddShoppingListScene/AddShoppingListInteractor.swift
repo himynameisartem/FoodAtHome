@@ -8,7 +8,7 @@
 import UIKit
 
 protocol AddShoppingListBusinessLogic {
-    func makeRequest(request: AddShoppingList.Model.Request)
+    func showSelectedFood(request: AddShoppingListModel.ShowFood.Request)
 }
 
 protocol AddShoppingListDataStore {
@@ -21,7 +21,15 @@ class AddShoppingListInteractor: AddShoppingListBusinessLogic, AddShoppingListDa
     var worker: AddShoppingListWorker?
     var food = FoodRealm()
     
-    func makeRequest(request: AddShoppingList.Model.Request) {
-        
+    func showSelectedFood(request: AddShoppingListModel.ShowFood.Request) {
+        worker = AddShoppingListWorker()
+        guard let worker = worker else { return }
+        let image = worker.getImage(from: food.name)
+        let weight = food.weight
+        let unit = food.unit
+        let response = AddShoppingListModel.ShowFood.Response(image: image, weight: weight, unit: unit)
+        print(food)
+        presenter?.presentSelectedFood(response: response)
     }
+    
 }

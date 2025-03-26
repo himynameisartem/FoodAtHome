@@ -8,5 +8,8 @@
 import UIKit
 
 class AddShoppingListWorker {
-    
+    func getImage(from foodName: String) -> UIImage {
+        let image = UIImage(named: foodName) ?? UIImage()
+        return image
+    }
 }

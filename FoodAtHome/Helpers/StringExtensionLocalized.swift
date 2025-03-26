@@ -20,6 +20,7 @@ extension String {
     func toDate() -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
+        dateFormatter.timeZone = (TimeZone(secondsFromGMT: 0))
         return dateFormatter.date(from: self)
     }
 }

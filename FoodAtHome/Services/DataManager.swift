@@ -48,6 +48,7 @@ extension DataManager {
 //MARK: - write change and delete food
 
 extension DataManager {
+    
     func writeFood(_ food: FoodRealm) {
         try! localRealm.write {
             localRealm.add(food)
