@@ -3,14 +3,13 @@
 //  FoodAtHome
 //
 //  Created by Артем Кудрявцев on 15.10.2024.
-//  Copyright (c) 2024 ___ORGANIZATIONNAME___. All rights reserved.
 //
 
 import UIKit
 
-enum ShoppingList {
+enum ShoppingListModel {
     
-    enum ShoppingListModel {
+    enum ShowFood {
         struct Request {
         }
         struct Response {
@@ -21,6 +20,7 @@ enum ShoppingList {
                 let name: String
                 let imageName: String
                 let calories: String
+                let isShoppingList: Bool
                 let weight: String
                 let unit: String
             }
@@ -34,11 +34,9 @@ enum ShoppingList {
         }
         
         struct Responce {
-            let food: FoodRealm
         }
         
         struct ViewModel {
-            let food: FoodRealm
         }
     }
     

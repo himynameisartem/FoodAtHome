@@ -86,6 +86,11 @@ class ChoiseFoodViewController: UIViewController {
         setupDimmingView()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchController.isActive = false
+    }
+    
     private func getCategories() {
         let request = ChoiseFood.ShowCategoriesFood.Request()
         interactor?.showCategories(request: request)
@@ -146,6 +151,7 @@ class ChoiseFoodViewController: UIViewController {
         categoriesFoodCollectionView.selectItem(at: [0,0], animated: true, scrollPosition: [])
         collectionViewHeightConstraint = categoriesFoodCollectionView.heightAnchor.constraint(equalToConstant: 50)
         collectionViewHeightConstraint.isActive = true
+        categoriesFoodCollectionView.clipsToBounds = true
         
     }
     

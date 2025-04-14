@@ -8,12 +8,12 @@
 import UIKit
 
 protocol MyFoodPresentationLogic {
-    func presentCategories(responce: MyFood.ShowCategories.Responce)
-    func presentMyFood(response: MyFood.ShowMyFood.Response)
-    func presentDetailsFood(responce: MyFood.showDetailFood.Responce)
-    func presentDeleteFood(response: MyFood.DeleteFood.Responce)
-    func presentRemoveAllFood(response: MyFood.RemoveAllFood.Responce)
-    func presentSharedList(response: MyFood.SharedFood.Responce)
+    func presentCategories(responce: MyFoodModel.FetchCategories.Responce)
+    func presentMyFood(response: MyFoodModel.FetchFoodList.Response)
+    func presentFoodDetails(responce: MyFoodModel.FetchFoodDetails.Responce)
+    func presentSharedFood(response: MyFoodModel.FetchSharedFood.Responce)
+    func presentFoodItemDeletion(response: MyFoodModel.DeleteFood.Responce)
+    func presentAllMyFoodRemoving(response: MyFoodModel.RemoveAllMyFood.Responce)
 }
 
 class MyFoodPresenter: MyFoodPresentationLogic {
@@ -23,50 +23,51 @@ class MyFoodPresenter: MyFoodPresentationLogic {
     var foodManager: FoodManager?
     var dateCalculator: DateCalculatorManager?
     
-    func presentCategories(responce: MyFood.ShowCategories.Responce) {
+    func presentCategories(responce: MyFoodModel.FetchCategories.Responce) {
         worker = MyFoodWorker()
-        guard let displayedCategories = worker?.getDisplayedCategories(from: responce.categories) else { return }
-        let viewModel = MyFood.ShowCategories.ViewModel(displayedCategories: displayedCategories)
+        guard let displayedCategories = worker?.prepareCategoriesForDisplay(responce.categories) else { return }
+        let viewModel = MyFoodModel.FetchCategories.ViewModel(displayedCategories: displayedCategories)
         viewController?.displayCategories(viewModel: viewModel)
     }
     
-    func presentMyFood(response: MyFood.ShowMyFood.Response) {
+    func presentMyFood(response: MyFoodModel.FetchFoodList.Response) {
         worker = MyFoodWorker()
-        guard let displayedMyFood = worker?.getDisplayedMyFood(from: response.food) else { return }
-        let viewModel = MyFood.ShowMyFood.ViewModel(displayedMyFood: displayedMyFood)
-        viewController?.displayMyFood(viewModel: viewModel)
+        guard let displayedMyFood = worker?.prepareFoodForDisplay(response.food) else { return }
+        let viewModel = MyFoodModel.FetchFoodList.ViewModel(displayedMyFood: displayedMyFood)
+        viewController?.displayFoodList(viewModel: viewModel)
     }
     
-    func presentDetailsFood(responce: MyFood.showDetailFood.Responce) {
+    func presentFoodDetails(responce: MyFoodModel.FetchFoodDetails.Responce) {
         worker = MyFoodWorker()
         foodManager = FoodManager()
         dateCalculator = DateCalculatorManager()
-        let displayedDetailsFood = MyFood.showDetailFood.ViewModel.DiplayedDetails(
+        let displayedDetailsFood = MyFoodModel.FetchFoodDetails.ViewModel.DiplayedDetails(
                                     name: responce.foodDetails.name.localized(),
                                     weight: responce.foodDetails.weight,
                                     unit: responce.foodDetails.unit,
                                     productionDate: foodManager?.getFormattedProductionDate(for: responce.foodDetails) ?? "-",
                                     expirationDate: foodManager?.getFormattedExpirationDate(for: responce.foodDetails) ?? "-",
                                     daysLeft: foodManager?.getFormattedDaysLeft(for: responce.foodDetails) ?? "-",
-                                    distaceIndicator: dateCalculator?.calculateExpirationDistance(
+                                    expirationProgress: dateCalculator?.calculateExpirationDistance(
                                         productionDate: responce.foodDetails.productionDate,
                                         expirationDate: responce.foodDetails.expirationDate))
-        let viewModel = MyFood.showDetailFood.ViewModel(DiplayedDetails: displayedDetailsFood)
+        let viewModel = MyFoodModel.FetchFoodDetails.ViewModel(DiplayedDetails: displayedDetailsFood)
         viewController?.displayFoodDetails(viewModel: viewModel)
     }
     
-    func presentDeleteFood(response: MyFood.DeleteFood.Responce) {
-        viewController?.deleteFood()
+    func presentFoodItemDeletion(response: MyFoodModel.DeleteFood.Responce) {
+        viewController?.didRemoveFoodItem()
     }
     
-    func presentRemoveAllFood(response: MyFood.RemoveAllFood.Responce) {
-        self.viewController?.removeAllFood()
+    func presentAllMyFoodRemoving(response: MyFoodModel.RemoveAllMyFood.Responce) {
+        let viewModel = MyFoodModel.RemoveAllMyFood.ViewModel(alertController: response.alertController)
+        viewController?.didRemoveAllMyFood(viewModel: viewModel)
     }
     
-    func presentSharedList(response: MyFood.SharedFood.Responce) {
+    func presentSharedFood(response: MyFoodModel.FetchSharedFood.Responce) {
         worker = MyFoodWorker()
         guard let worker = worker else { return }
-        let viewModel = MyFood.SharedFood.ViewModel(foodList: worker.getShared(food: response.sharedFood))
-        viewController?.getSharedFood(viewModel: viewModel)
+        let viewModel = MyFoodModel.FetchSharedFood.ViewModel(foodList: worker.formatFoodForSharing(response.sharedFood))
+        viewController?.displaySharedFood(viewModel: viewModel)
     }
 }

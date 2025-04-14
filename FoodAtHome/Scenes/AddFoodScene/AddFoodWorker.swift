@@ -17,15 +17,42 @@ class AddFoodWorker {
     func getFoodForAdding(from dataRequest: AddFoodModel.AddFood.Request, and food: FoodRealm) -> FoodRealm {
         let productionDate = dataRequest.prductionDate?.toDate()
         let expirationDate = dataRequest.expirationDate?.toDate()
+        var consumeUp: ConsumeUp?
+        if dataRequest.prductionDate != "" && dataRequest.expirationDate != "" {
+            consumeUp = calculateConsumeUp(productionDate: dataRequest.prductionDate, expirationDate: dataRequest.expirationDate)
+        }
         let food: FoodRealm = FoodRealm(name: food.name,
                                         type: FoodType(rawValue: food.type)!,
                                         weight: dataRequest.weight!,
                                         unit: dataRequest.unit,
                                         calories: food.calories,
+                                        isShoppingList: food.isShoppingList,
                                         productionDate: productionDate,
-                                        expirationDate: expirationDate
+                                        expirationDate: expirationDate,
+                                        consumeUp: consumeUp
         )
         return food
+    }
+    
+    func isEditingFood(_ view: UIView) -> Bool {
+        var isEditing = Bool()
+        if let tabBarController = view.window?.rootViewController as? UITabBarController {
+            switch tabBarController.selectedIndex {
+            case 0:
+                isEditing = false
+            case 1:
+                if let navigationController = tabBarController.selectedViewController as? UINavigationController {
+                    if navigationController.viewControllers.count < 2 {
+                        isEditing = true
+                    } else {
+                        isEditing = false
+                    }
+                }
+            default:
+                break
+            }
+        }
+        return isEditing
     }
     
     func calculateConsumeUp(productionDate: String?, expirationDate: String?) -> ConsumeUp? {

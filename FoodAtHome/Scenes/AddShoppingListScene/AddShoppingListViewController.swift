@@ -9,6 +9,7 @@ import UIKit
 
 protocol AddShoppingListDisplayLogic: AnyObject {
     func displayData(viewModel: AddShoppingListModel.ShowFood.ViewModel)
+    func displayAlertController(viewModel: AddShoppingListModel.AddFood.ViewModel)
 }
 
 class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLogic {
@@ -95,7 +96,6 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
         setup()
     }
     
-    
     // MARK: Setup
     
     private func setup() {
@@ -117,12 +117,10 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
         getFoodData()
         setupUI()
         setupConstraints()
     }
-    
     
     private func setupUI() {
         view.backgroundColor = .white
@@ -199,7 +197,9 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
     
     @objc func didTapAddButton(_ sender: UIButton) {
         sender.showAnimation(for: .withoutColor) {
-
+            let request = AddShoppingListModel.AddFood.Request(weight: self.weightTextField.text ?? "",
+                                                               unit: self.weightUnitButton.titleLabel?.text ?? "kg.".localized())
+            self.interactor?.addSelectedFoodToShoppingList(request: request)
         }
     }
     
@@ -335,6 +335,18 @@ extension AddShoppingListViewController {
     func displayData(viewModel: AddShoppingListModel.ShowFood.ViewModel) {
         foodImageView.image = viewModel.image
         weightTextField.text = viewModel.weight
-        weightUnitButton.setTitle(viewModel.unit, for: .normal)
+        if viewModel.unit != "" {
+            weightUnitButton.setTitle(viewModel.unit, for: .normal)
+        } else {
+            weightUnitButton.setTitle("kg.".localized(), for: .normal)
+        }
+    }
+    
+    func displayAlertController(viewModel: AddShoppingListModel.AddFood.ViewModel) {
+        if let alertConroller = viewModel.alert {
+            self.present(alertConroller, animated: true)
+        } else {
+            performCloseAnimation()
+        }
     }
 }

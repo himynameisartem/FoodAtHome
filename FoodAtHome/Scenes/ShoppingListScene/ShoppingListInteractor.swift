@@ -8,10 +8,10 @@
 import UIKit
 
 protocol ShoppingListBusinessLogic {
-    func showFoodList(request: ShoppingList.ShoppingListModel.Request)
-    func showAddToMyFood(request: ShoppingList.AddToMyFood.Request)
-    func getEditingFood(request: ShoppingList.EditingFood.Request)
-    func deleteFood(request: ShoppingList.DeleteFood.Request)
+    func showFoodList(request: ShoppingListModel.ShowFood.Request)
+    func moveToMyFood(request: ShoppingListModel.AddToMyFood.Request)
+    func getEditingFood(request: ShoppingListModel.EditingFood.Request)
+    func deleteFood(request: ShoppingListModel.DeleteFood.Request)
 }
 
 protocol ShoppingListDataStore {
@@ -26,30 +26,27 @@ class ShoppingListInteractor: ShoppingListBusinessLogic, ShoppingListDataStore {
     var foodList: [FoodRealm] = []
     var editingFood = FoodRealm()
     
-    func showFoodList(request: ShoppingList.ShoppingListModel.Request) {
-        worker = ShoppingListWorker()
-        guard let worker = worker else { return }
-        foodList = worker.getShoppintList().reversed()
-        let responce = ShoppingList.ShoppingListModel.Response(food: foodList)
+    func showFoodList(request: ShoppingListModel.ShowFood.Request) {
+        foodList = DataManager.shared.fetchMyShoppingList()
+        let responce = ShoppingListModel.ShowFood.Response(food: foodList)
         presenter?.presentData(response: responce)
     }
     
-    func showAddToMyFood(request: ShoppingList.AddToMyFood.Request) {
-        worker = ShoppingListWorker()
-        guard let worker = worker else { return }
-        foodList = worker.getShoppintList().reversed()
-        let foodFromShoppingList = foodList[request.indexPath.row]
-        let responce = ShoppingList.AddToMyFood.Responce(food: worker.prepareToMyFoodList(from: foodFromShoppingList, and: foodList))
+    func moveToMyFood(request: ShoppingListModel.AddToMyFood.Request) {
+        editingFood = foodList[request.indexPath.row]
+        DataManager.shared.changeAndEdit(editingFood)
+//        let response = ShoppingListModel.AddToMyFood.Responce()
+//        presenter?.presentMoveToMyFood(response: response)
     }
     
-    func getEditingFood(request: ShoppingList.EditingFood.Request) {
+    func getEditingFood(request: ShoppingListModel.EditingFood.Request) {
         editingFood = foodList[request.indexPath.row]
     }
     
-    func deleteFood(request: ShoppingList.DeleteFood.Request) {
-        foodList = DataManager.shared.fetchMyShoppingList().reversed()
+    func deleteFood(request: ShoppingListModel.DeleteFood.Request) {
+        foodList = DataManager.shared.fetchMyShoppingList()
         DataManager.shared.delete(food: foodList[request.indexPath.row])
-        let responce = ShoppingList.DeleteFood.Responce()
+        let responce = ShoppingListModel.DeleteFood.Responce()
         presenter?.presentDeleteFood(response: responce)
     }
 }

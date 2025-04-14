@@ -61,14 +61,25 @@ class FoodRealm: Object {
         self.calories = calories
     }
     
-    convenience init(name: String, type: FoodType, weight: String, unit: String, calories: String, isShoppingList: Bool = false, productionDate: Date?, expirationDate: Date?) {
+    convenience init(name: String, type: FoodType, weight: String, unit: String, calories: String) {
         self.init()
         self.name = name
         self.type = type.rawValue
         self.weight = weight
         self.unit = unit
         self.calories = calories
+    }
+    
+    convenience init(name: String, type: FoodType, weight: String, unit: String, calories: String, isShoppingList: Bool, productionDate: Date?, expirationDate: Date?, consumeUp: ConsumeUp?) {
+        self.init()
+        self.name = name
+        self.type = type.rawValue
+        self.weight = weight
+        self.unit = unit
+        self.calories = calories
+        self.isShoppingList = isShoppingList
         self.productionDate = productionDate
         self.expirationDate = expirationDate
+        self.consumeUp = consumeUp
     }
 }

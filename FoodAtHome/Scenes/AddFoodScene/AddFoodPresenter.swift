@@ -25,9 +25,11 @@ class AddFoodPresenter: AddFoodPresentationLogic {
         let productionDate = foodManager.getFormattedProductionDate(for: response.food)
         let expirationDate = foodManager.getFormattedExpirationDate(for: response.food)
         let consumeUp = foodManager.getFormattedConsumeUp(for: response.food)
+        let unit = (response.food.unit == "") ? "kg.".localized() : response.food.unit.localized()
         guard let  image = worker?.getImage(from: response.food.name) else { return }
         let displayedFood = AddFoodModel.ShowFood.ViewModel.DisplayedFood(image: image,
                                                                           weight: response.food.weight,
+                                                                          unit: unit,
                                                                           productionDate: productionDate,
                                                                           expirationDate: expirationDate,
                                                                           consumeUp: consumeUp)

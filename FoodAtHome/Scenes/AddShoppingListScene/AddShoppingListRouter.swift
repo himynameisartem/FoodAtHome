@@ -24,7 +24,7 @@ class AddShoppingListRouter: NSObject, AddShoppingListRoutingLogic, AddShoppingL
     func navigateToTabBarController(window: UIWindow) {
         viewController?.dismiss(animated: true) {
             if let tabBarController = window.rootViewController as? UITabBarController {
-                tabBarController.selectedIndex = 1
+                tabBarController.selectedIndex = 0
                 if let nav = tabBarController.viewControllers?[0] as? UINavigationController {
                     nav.tabBarController?.tabBar.isHidden = false
                     nav.popToRootViewController(animated: true)

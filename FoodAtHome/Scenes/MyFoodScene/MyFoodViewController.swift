@@ -8,77 +8,20 @@
 import UIKit
 
 protocol MyFoodDisplayLogic: AnyObject {
-    func displayCategories(viewModel: MyFood.ShowCategories.ViewModel)
-    func displayMyFood(viewModel: MyFood.ShowMyFood.ViewModel)
-    func displayFoodDetails(viewModel: MyFood.showDetailFood.ViewModel)
-    func deleteFood()
-    func removeAllFood()
-    func getSharedFood(viewModel: MyFood.SharedFood.ViewModel)
+    func displayCategories(viewModel: MyFoodModel.FetchCategories.ViewModel)
+    func displayFoodList(viewModel: MyFoodModel.FetchFoodList.ViewModel)
+    func displayFoodDetails(viewModel: MyFoodModel.FetchFoodDetails.ViewModel)
+    func displaySharedFood(viewModel: MyFoodModel.FetchSharedFood.ViewModel)
+    func didRemoveFoodItem()
+    func didRemoveAllMyFood(viewModel: MyFoodModel.RemoveAllMyFood.ViewModel)
 }
 
 class MyFoodViewController: UIViewController {
     
-    @IBOutlet weak var titleBarLabel: UILabel!
-    @IBOutlet weak var categoryMyFoodCollectionView: UICollectionView!
-    @IBOutlet weak var myFoodCollectionView: UICollectionView!
-    
-    private var sharedActivitiIndicator: UIActivityIndicatorView!
-    
-    private var myFood: [MyFood.ShowMyFood.ViewModel.DisplayedMyFood] = []
-    private var categories: [MyFood.ShowCategories.ViewModel.DiplayedCategories] = []
-    private var foodDetails: MyFood.showDetailFood.ViewModel.DiplayedDetails?
-    
     var interactor: MyFoodBusinessLogic?
     var router: (NSObjectProtocol & MyFoodRoutingLogic & MyFoodDataPassing)?
-        
-    private var dimmingView: UIVisualEffectView!
-    private var blurEffect: UIVisualEffect!
-    
-    private var categoryMyFoodCollectionAnimationIsComlete = false
-    
-    // MARK: View lifecycle
-    
-    override func viewWillAppear(_ animated: Bool) {
-        getMyFood()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setup()
-        navigationBarSetup()
-        setupCollectionViewCells()
-        getCategories()
-        setupActivitiIndicator()
-        setupDimmingView()
-    }
-    
-    @IBAction func deleteFoodTapped(_ sender: Any) {
-        let alertController = UIAlertController(title: "Delete All Products?".localized(), message: "This action will delete all your products, are you sure you want to continue?".localized(), preferredStyle: .alert)
-        let yesAction = UIAlertAction(title: "Yes".localized(), style: .destructive) { _ in
-            let request = MyFood.RemoveAllFood.Request()
-            self.interactor?.removeAllFood(request: request)
-        }
-        let noAction = UIAlertAction(title: "No".localized(), style: .cancel)
-        alertController.addAction(yesAction)
-        alertController.addAction(noAction)
-        self.present(alertController, animated: true)
-    }
-    
-    @IBAction func sharedFoodTapped(_ sender: Any) {
-        sharedActivitiIndicator.startAnimating()
-        let request = MyFood.SharedFood.Request()
-        interactor?.showSharedSoodList(request: request)
-    }
     
     // MARK: Setup
-    
-    private func navigationBarSetup() {
-        let x = -(view.frame.width / 2) + 10
-        let y = view.frame.origin.y - ((navigationController?.navigationBar.frame.height ?? 0) / 2)
-        let height = navigationController?.navigationBar.frame.height ?? 0
-        let width = view.frame.width / 2
-        titleBarLabel.frame = CGRect(x: x, y: y, width: width, height: height)
-    }
     
     private func setup() {
         let viewController = self
@@ -93,26 +36,101 @@ class MyFoodViewController: UIViewController {
         router.dataStore = interactor
     }
     
-    private func setupDimmingView() {
+    // MARK: Routing
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let scene = segue.identifier {
+            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
+            if let router = router, router.responds(to: selector) {
+                router.perform(selector, with: segue)
+            }
+        }
+    }
+    
+    // MARK: View lifecycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        fetchMyFood()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setup()
+        configureNavigationBar()
+        setupCollectionViewCells()
+        fetchCategories()
+        setupActivitiIndicator()
+        configureDimmingView()
+    }
+    
+    @IBOutlet weak var titleBarLabel: UILabel!
+    @IBOutlet weak var categoryCollectionView: UICollectionView!
+    @IBOutlet weak var myFoodCollectionView: UICollectionView!
+    
+    private var myFood: [MyFoodModel.FetchFoodList.ViewModel.DisplayedMyFood] = []
+    private var categories: [MyFoodModel.FetchCategories.ViewModel.DiplayedCategories] = []
+    private var foodDetails: MyFoodModel.FetchFoodDetails.ViewModel.DiplayedDetails?
+    private var dimmingView: UIVisualEffectView!
+    private var blurEffect: UIVisualEffect!
+    private var sharedActivitiIndicator: UIActivityIndicatorView!
+    private var categoryMyFoodCollectionAnimationIsComlete = false
+    
+    
+    @IBAction func didTapDeleteAllMyFoodButton(_ sender: Any) {
+        let request = MyFoodModel.RemoveAllMyFood.Request()
+        interactor?.RemoveAllMyFood(request: request)
+    }
+    
+    @IBAction func didTapShareButton(_ sender: Any) {
+        let request = MyFoodModel.FetchSharedFood.Request()
+        interactor?.fetchSharedFoodList(request: request)
+    }
+    
+    private func fetchMyFood() {
+        let request = MyFoodModel.FetchFoodList.Request()
+        interactor?.fetchMyFood(request: request)
+    }
+    
+    private func fetchCategories() {
+        let request = MyFoodModel.FetchCategories.Request()
+        interactor?.fetchCategories(request: request)
+    }
+    
+    private func fetchDetailsFood(at index: Int) {
+        let request = MyFoodModel.FetchFoodDetails.Request()
+        interactor?.fetchFoodDetails(request: request, at: index)
+    }
+    
+    private func handleEditAction(at indexPath: IndexPath) {
+        let request = MyFoodModel.PrepareEditing.Request(indexPath: indexPath)
+        interactor?.prepareEditingFood(request: request)
+        router?.routeToAddFood(segue: nil)
+    }
+    
+    private func handleDeleteAction(at indexPath: IndexPath) {
+        let request = MyFoodModel.DeleteFood.Request(indexPath: indexPath)
+        self.interactor?.deleteFood(request: request)
+    }
+    
+    //MARK: Setup Views
+    
+    private func configureNavigationBar() {
+        let x = -(view.frame.width / 2) + 10
+        let y = view.frame.origin.y - ((navigationController?.navigationBar.frame.height ?? 0) / 2)
+        let height = navigationController?.navigationBar.frame.height ?? 0
+        let width = view.frame.width / 2
+        titleBarLabel.frame = CGRect(x: x, y: y, width: width, height: height)
+    }
+    
+    private func configureDimmingView() {
         blurEffect = UIBlurEffect(style: .dark)
         dimmingView = UIVisualEffectView(frame: view.bounds)
         dimmingView.effect = blurEffect
         dimmingView.alpha = 0
     }
     
-    private func didTapContextualEditButton(at indexPath: IndexPath) {
-        let request = MyFood.EdidtingFood.Request(indexPath: indexPath)
-        interactor?.getEditingFood(request: request)
-        router?.routeToAddFood(segue: nil)
-    }
-    
-    private func didTapContextualDeleteButton(at indexPath: IndexPath) {
-        let request = MyFood.DeleteFood.Request(indexPath: indexPath)
-        self.interactor?.deleteFood(request: request)
-    }
-    
     func setupCollectionViewCells() {
-        categoryMyFoodCollectionView.register(UINib(nibName: "CategoryMyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "categoryMyFoodCell")
+        categoryCollectionView.register(UINib(nibName: "CategoryMyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "categoryMyFoodCell")
         myFoodCollectionView.register(UINib(nibName: "MyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "myFoodCell")
         myFoodCollectionView.register(UINib(nibName: "AddMyFoodCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "addMyFoodCell")
     }
@@ -124,39 +142,14 @@ class MyFoodViewController: UIViewController {
         sharedActivitiIndicator.style = .large
         sharedActivitiIndicator.hidesWhenStopped = true
     }
-    
-    // MARK: Routing
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
-    }
-    
-    private func getMyFood() {
-        let request = MyFood.ShowMyFood.Request()
-        interactor?.showMyFood(request: request)
-    }
-    
-    private func getCategories() {
-        let request = MyFood.ShowCategories.Request()
-        interactor?.showCategories(request: request)
-    }
-    
-    private func getDetailsFood(at index: Int) {
-        let request = MyFood.showDetailFood.Request()
-        interactor?.showDetailsFood(request: request, at: index)
-    }
 }
 
-//MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+//MARK: - UICollectionViewDelegate
 
 extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == categoryMyFoodCollectionView {
+        if collectionView == categoryCollectionView {
             return categories.count
         } else {
             return myFood.count + 1
@@ -164,7 +157,7 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == categoryMyFoodCollectionView {
+        if collectionView == categoryCollectionView {
             let categoryMyFoodCell = collectionView.dequeueReusableCell(withReuseIdentifier: "categoryMyFoodCell", for: indexPath) as! CategoryMyFoodCollectionViewCell
             let categoryMyFoodViewModel = categories[indexPath.row]
             categoryMyFoodCell.setData(viewModel: categoryMyFoodViewModel)
@@ -188,7 +181,7 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == categoryMyFoodCollectionView {
+        if collectionView == categoryCollectionView {
             let width = (view.frame.width - 10) / 2
             let height = width / 1.7
             collectionView.heightAnchor.constraint(equalToConstant: height + 10).isActive = true
@@ -205,10 +198,10 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
         if collectionView == myFoodCollectionView {
             let configuration = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { action in
                 let changeFood = UIAction(title: "Edit".localized()) { action in
-                    self.didTapContextualEditButton(at: indexPath)
+                    self.handleEditAction(at: indexPath)
                 }
                 let deleteFood = UIAction(title: "Delete".localized(), attributes: .destructive) { action in
-                    self.didTapContextualDeleteButton(at: indexPath)
+                    self.handleDeleteAction(at: indexPath)
                 }
                 return UIMenu(title: "", children: [changeFood, deleteFood])
             }
@@ -219,22 +212,22 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == categoryMyFoodCollectionView {
+        if collectionView == categoryCollectionView {
             collectionView.cellForItem(at: indexPath)?.showAnimation(for: .withoutColor, {
                 self.performSegue(withIdentifier: "CategoryDetails", sender: nil)
             })
         } else {
             if indexPath.row < myFood.count {
-                getDetailsFood(at: indexPath.row)
+                fetchDetailsFood(at: indexPath.row)
             }
         }
     }
     
-    // MARK: Animation
+    // MARK: CollectionView Will Display
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if !categoryMyFoodCollectionAnimationIsComlete {
-            if collectionView == categoryMyFoodCollectionView {
+            if collectionView == categoryCollectionView {
                 cell.transform = CGAffineTransform(translationX: view.frame.width, y: 0)
                 UIView.animate(withDuration: 0.3, delay: 0.05 * Double(indexPath.row)) {
                     cell.transform = CGAffineTransform(translationX: 0, y: 0)
@@ -278,17 +271,16 @@ extension MyFoodViewController: UIViewControllerAnimatedTransitioning {
 // MARK: - MyFoodDisplayLogic
 
 extension MyFoodViewController: MyFoodDisplayLogic {
-    
-    func displayCategories(viewModel: MyFood.ShowCategories.ViewModel) {
+    func displayCategories(viewModel: MyFoodModel.FetchCategories.ViewModel) {
         categories = viewModel.displayedCategories
     }
     
-    func displayMyFood(viewModel: MyFood.ShowMyFood.ViewModel) {
+    func displayFoodList(viewModel: MyFoodModel.FetchFoodList.ViewModel) {
         myFood = viewModel.displayedMyFood
         myFoodCollectionView.reloadData()
     }
     
-    func displayFoodDetails(viewModel: MyFood.showDetailFood.ViewModel) {
+    func displayFoodDetails(viewModel: MyFoodModel.FetchFoodDetails.ViewModel) {
         guard let view = self.navigationController?.tabBarController?.view else { return }
         let myFoodDetailsPopupMenu = Bundle.main.loadNibNamed("MyFoodDetailsPopupMenu",
                                                               owner: MyFoodViewController.self)?.first as! MyFoodDetailsPopupMenu
@@ -296,15 +288,21 @@ extension MyFoodViewController: MyFoodDisplayLogic {
         myFoodDetailsPopupMenu.configure(viewModel: viewModel.DiplayedDetails)
     }
     
-    func deleteFood() {
-        getMyFood()
+    func didRemoveFoodItem() {
+        fetchMyFood()
     }
     
-    func removeAllFood() {
-        getMyFood()
+    func didRemoveAllMyFood(viewModel: MyFoodModel.RemoveAllMyFood.ViewModel) {
+        if let alertController = viewModel.alertController {
+            self.present(alertController, animated: true)
+            self.fetchMyFood()
+        } else {
+            self.fetchMyFood()
+        }
     }
     
-    func getSharedFood(viewModel: MyFood.SharedFood.ViewModel) {
+    func displaySharedFood(viewModel: MyFoodModel.FetchSharedFood.ViewModel) {
+        sharedActivitiIndicator.startAnimating()
         let controller = UIActivityViewController(
             activityItems: [viewModel.foodList],
           applicationActivities: nil

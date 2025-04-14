@@ -25,7 +25,7 @@ extension DataManager {
     
     func fetchFoodData(completion: @escaping (_ food: [FoodItem])->()) {
         guard let url = Bundle.main.url(forResource: "food_database", withExtension: "json"),
-        let data = try? Data(contentsOf: url) else { return }
+              let data = try? Data(contentsOf: url) else { return }
         let decoder = JSONDecoder()
         guard let allItems = try? decoder.decode([FoodItem].self, from: data) else { return }
         completion(allItems)
@@ -43,6 +43,15 @@ extension DataManager {
         return Array(results).filter { $0.isShoppingList }
     }
     
+    func checkFoDuplicates(food: FoodRealm) -> Bool {
+        let results = Array(localRealm.objects(FoodRealm.self)).filter {!$0.isShoppingList}
+        return results.contains(where: { $0.name == food.name })
+    }
+    
+    func checkShoppingListDuplicate(food: FoodRealm) -> Bool {
+        let results = Array(localRealm.objects(FoodRealm.self)).filter {$0.isShoppingList}
+        return results.contains(where: { $0.name == food.name })
+    }
 }
 
 //MARK: - write change and delete food
@@ -55,78 +64,28 @@ extension DataManager {
         }
     }
     
-    func changeFood(_ food: FoodRealm) {
-        let allFood = Array(localRealm.objects(FoodRealm.self)).filter {!$0.isShoppingList}
+    func changeAndEdit(_ food: FoodRealm) {
+        let myFood = fetchMyFood()
+        let shoppingList = fetchMyShoppingList()
         try! localRealm.write {
-            allFood.forEach { foodName in
-                if foodName.name == food.name {
-                    localRealm.delete(foodName)
+            if myFood.contains(where: { $0.name == food.name }) {
+                if let existingFood = myFood.first(where: { $0.name == food.name }) {
+                    existingFood.weight = food.weight
+                    existingFood.expirationDate = food.expirationDate
+                    existingFood.productionDate = food.productionDate
+                    existingFood.consumeUp = food.consumeUp
+                    existingFood.unit = food.unit
+                }
+                
+                if let shoppingItem = shoppingList.first(where: { $0.name == food.name }) {
+                    localRealm.delete(shoppingItem)
+                }
+            } else {
+                if shoppingList.contains(where: { $0.name == food.name }) {
+                    food.isShoppingList = false
                 }
             }
-            localRealm.add(food)
         }
-    }
-    
-    func changeFoodForShoppingList(_ food: FoodRealm) {
-        let allFood = Array(localRealm.objects(FoodRealm.self)).filter {$0.isShoppingList}
-        try! localRealm.write {
-            allFood.forEach { foodName in
-                if foodName.name == food.name {
-                    localRealm.delete(foodName)
-                }
-            }
-            localRealm.add(food)
-        }
-    }
-    
-    func updateFood(_ food: FoodRealm) {
-        let allFood = Array(localRealm.objects(FoodRealm.self)).filter {!$0.isShoppingList}
-        var index = Int()
-        for (i, j) in allFood.enumerated() {
-            if j.name == food.name {
-                index = i
-            }
-        }
-        let update = allFood[index]
-        try! localRealm.write {
-            update.weight = food.weight
-            update.productionDate = food.productionDate
-            if food.expirationDate != nil {
-                update.expirationDate = food.expirationDate
-                update.consumeUp = food.consumeUp
-            }
-            update.unit = food.unit
-        }
-    }
-    
-    func updateFoodForShoppingList(_ food: FoodRealm) {
-        let allFood = Array(localRealm.objects(FoodRealm.self)).filter {$0.isShoppingList}
-        var index = Int()
-        for (i, j) in allFood.enumerated() {
-            if j.name == food.name {
-                index = i
-            }
-        }
-        let update = allFood[index]
-        try! localRealm.write {
-            update.weight = food.weight
-            update.productionDate = food.productionDate
-            if food.expirationDate != nil {
-                update.expirationDate = food.expirationDate
-                update.consumeUp = food.consumeUp
-            }
-            update.unit = food.unit
-        }
-    }
-    
-    func checkFoDuplicates(food: FoodRealm) -> Bool {
-        let results = Array(localRealm.objects(FoodRealm.self)).filter {!$0.isShoppingList}
-        return results.contains(where: { $0.name == food.name })
-    }
-    
-    func checkShoppingListDuplicate(food: FoodRealm) -> Bool {
-        let results = Array(localRealm.objects(FoodRealm.self)).filter {$0.isShoppingList}
-        return results.contains(where: { $0.name == food.name })
     }
     
     func delete(food: FoodRealm) {
@@ -135,9 +94,17 @@ extension DataManager {
         })
     }
     
-    func removeAll() {
+    func reamoveAllMyFood() {
+        let myFood = fetchMyFood()
         try! localRealm.write({
-            localRealm.deleteAll()
+            myFood.forEach {$0.isShoppingList == false ? localRealm.delete($0) : ()}
         })
+    }
+    
+    func removeAllShoppingList() {
+        let shoppingList = fetchMyShoppingList()
+        try! localRealm.write {
+            shoppingList.forEach {$0.isShoppingList == true ? localRealm.delete($0) : ()}
+        }
     }
 }

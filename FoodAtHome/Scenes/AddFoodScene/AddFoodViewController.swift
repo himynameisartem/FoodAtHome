@@ -232,11 +232,11 @@ class AddFoodViewController: UIViewController {
         view.addGestureRecognizer(panGestureRecognizer)
         view.addSubview(addButton)
         
-        guard let productionDateString = productionDateTextField.text else { return }
-        if !productionDateString.isEmpty {
-            expirationDateTextField.isEnabled = true
-            consumeUpTextField.isEnabled = true
-        }
+//        guard let productionDateString = productionDateTextField.text else { return }
+//        if !productionDateString.isEmpty {
+//            expirationDateTextField.isEnabled = true
+//            consumeUpTextField.isEnabled = true
+//        }
     }
     
     @objc private func didTapCloseButton() {
@@ -288,10 +288,13 @@ class AddFoodViewController: UIViewController {
     }
     
     @objc func didTapAddButton(_ sender: UIButton) {
-            let request = AddFoodModel.AddFood.Request(weight: weightTextField.text,
+
+        let request = AddFoodModel.AddFood.Request(weight: weightTextField.text,
                                                    unit: weightUnitButton.titleLabel?.text ?? "kg.".localized(),
                                                    prductionDate: productionDateTextField.text,
-                                                   expirationDate: expirationDateTextField.text)
+                                                   expirationDate: expirationDateTextField.text,
+                                                   view: self.view
+        )
         sender.showAnimation(for: .withoutColor) {
             self.interactor?.addSelectedFood(request: request)
         }
@@ -459,7 +462,7 @@ extension AddFoodViewController: UIPopoverPresentationControllerDelegate {
 
 extension AddFoodViewController: UITextFieldDelegate {
     
-    func textFieldDidEndEditing(_ textField: UITextField) {        
+    func textFieldDidEndEditing(_ textField: UITextField) {
         var request: AddFoodModel.DateUpdate.Request
         
         if textField == productionDateTextField {
@@ -470,8 +473,8 @@ extension AddFoodViewController: UITextFieldDelegate {
                                                       activeField: .productionDate,
                                                       datePickerDate: datePickerView.date
             )
-                expirationDateTextField.isEnabled = true
-                consumeUpTextField.isEnabled = true
+            expirationDateTextField.isEnabled = true
+            consumeUpTextField.isEnabled = true
         } else if textField == expirationDateTextField {
             request = AddFoodModel.DateUpdate.Request(productionDate: productionDateTextField.text,
                                                       expirationDate: textField.text,
@@ -508,18 +511,15 @@ extension AddFoodViewController: UITextFieldDelegate {
                                                                  productionDate: productionDateTextField.text,
                                                                  expirationDate: textField.text,
                                                                  consumeUpDate: nil)
-            
         } else if textField == consumeUpTextField {
             request = AddFoodModel.DatePickerValueUpdate.Request(activeField: .consumeUp,
                                                                  productionDate: productionDateTextField.text,
                                                                  expirationDate: expirationDateTextField.text,
                                                                  consumeUpDate: ConsumeUp(months: consumeUpPickerView.selectedRow(inComponent: 0),
                                                                                           days: consumeUpPickerView.selectedRow(inComponent: 1)))
-            
         } else {
             return
         }
-        
         interactor?.updatePickerValues(request: request)
     }
 }
@@ -534,7 +534,11 @@ extension AddFoodViewController: AddFoodDisplayLogic {
         productionDateTextField.text = viewModel.displayedFood.productionDate
         expirationDateTextField.text = viewModel.displayedFood.expirationDate
         consumeUpTextField.text = viewModel.displayedFood.consumeUp
-        weightUnitButton.setTitle("kg.".localized(), for: .normal)
+        weightUnitButton.setTitle(viewModel.displayedFood.unit, for: .normal)
+        if viewModel.displayedFood.productionDate != nil {
+            expirationDateTextField.isEnabled = true
+            consumeUpTextField.isEnabled = true
+        }
     }
     
     func displayUpdatedDates(viewModel: AddFoodModel.DateUpdate.ViewModel) {

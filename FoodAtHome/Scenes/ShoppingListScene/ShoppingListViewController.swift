@@ -8,22 +8,23 @@
 import UIKit
 
 protocol ShoppingListDisplayLogic: AnyObject {
-    func displayData(viewModel: ShoppingList.ShoppingListModel.ViewModel)
+    func displayData(viewModel: ShoppingListModel.ShowFood.ViewModel)
     func deleteFood()
+    func displayMoveToMyFood(viewModel: ShoppingListModel.AddToMyFood.ViewModel)
 //    func deleteAllFood()
 }
 
 class ShoppingListViewController: UIViewController {
     
     @IBOutlet weak var shoppingListTableView: UITableView!
-    @IBOutlet weak var titleBalLabel: UILabel!
+    @IBOutlet weak var titleBalLabel: UILabel! //исправить название
     
     var interactor: ShoppingListBusinessLogic?
     var router: (NSObjectProtocol & ShoppingListRoutingLogic & ShoppingListDataPassing)?
     
-    var shoppingList: [ShoppingList.ShoppingListModel.ViewModel.DisplayedFood] = []
+    var shoppingListItems: [ShoppingListModel.ShowFood.ViewModel.DisplayedFood] = []
     
-    var menuType: ShoppingList.EditingFood.ViewModel?
+    var menuType: ShoppingListModel.EditingFood.ViewModel?
     
     private var dimmingView: UIVisualEffectView!
     private var blurEffect: UIVisualEffect!
@@ -46,16 +47,16 @@ class ShoppingListViewController: UIViewController {
     // MARK: View lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
-        getFoodList()
+        fetchShoppingList()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        navigationBarSetup()
-        getFoodList()
-        setupTabluView()
-        setupDimmingView()
+        configureNavigationBar()
+        fetchShoppingList()
+        configureTableView()
+        configureDimmingView()
     }
         
     // MARK: Routing
@@ -73,12 +74,12 @@ class ShoppingListViewController: UIViewController {
         performSegue(withIdentifier: "ChoiseFoodForShoppingList", sender: nil)
     }
     
-    private func getFoodList() {
-        let request = ShoppingList.ShoppingListModel.Request()
+    private func fetchShoppingList() {
+        let request = ShoppingListModel.ShowFood.Request()
         interactor?.showFoodList(request: request)
     }
     
-    private func navigationBarSetup() {
+    private func configureNavigationBar() {
         let x = -(view.frame.width / 2) + 10
         let y = view.frame.origin.y - ((navigationController?.navigationBar.frame.height ?? 0) / 2)
         let height = navigationController?.navigationBar.frame.height ?? 0
@@ -86,49 +87,55 @@ class ShoppingListViewController: UIViewController {
         titleBalLabel.frame = CGRect(x: x, y: y, width: width, height: height)
     }
     
-    private func setupTabluView() {
+    private func configureTableView() {
         shoppingListTableView.register(UINib(nibName: "ShoppingListTableViewCell", bundle: nil), forCellReuseIdentifier: "ShoppingListCell")
     }
     
-    private func setupDimmingView() {
+    private func configureDimmingView() {
         blurEffect = UIBlurEffect(style: .dark)
         dimmingView = UIVisualEffectView(frame: view.bounds)
         dimmingView.effect = blurEffect
         dimmingView.alpha = 0
     }
     
-    private func editingExpirationDate(at indexPath: IndexPath) {
-        let request = ShoppingList.EditingFood.Request(indexPath: indexPath)
+    private func editAndMoveItem(at indexPath: IndexPath) {
+        let request = ShoppingListModel.EditingFood.Request(indexPath: indexPath)
         interactor?.getEditingFood(request: request)
         router?.routeToAddFood()
     }
+    
+    private func moveItem(at indexPath: IndexPath) {
+        let request = ShoppingListModel.AddToMyFood.Request(indexPath: indexPath)
+        interactor?.moveToMyFood(request: request)
+    }
 }
 
-//MARK: -
+//MARK: - UITableViewDelegate
 
 extension ShoppingListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        shoppingList.count
+        shoppingListItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ShoppingListCell", for: indexPath) as! ShoppingListTableViewCell
-        let viewModel = shoppingList[indexPath.row]
+        let viewModel = shoppingListItems[indexPath.row]
         cell.configure(viewModel: viewModel)
         return cell
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteItem = UIContextualAction(style: .normal, title: nil) { contextialAction, view, boolCompletion in
-            let request = ShoppingList.DeleteFood.Request(indexPath: indexPath)
+            let request = ShoppingListModel.DeleteFood.Request(indexPath: indexPath)
             self.interactor?.deleteFood(request: request)
         }
         let successItem = UIContextualAction(style: .normal, title: nil) { contextialAction, view, boolCompletion in
             let yesAction = UIAlertAction(title: "Yes".localized(), style: .default) { _ in
-                self.editingExpirationDate(at: indexPath)
+                self.editAndMoveItem(at: indexPath)
                 boolCompletion(true)
             }
             let noAction = UIAlertAction(title: "No".localized(), style: .cancel) { _ in
+                self.moveItem(at: indexPath)
                 boolCompletion(true)
             }
             let alertController = UIAlertController(title: "Add an expiration date?".localized(), message: nil, preferredStyle: .alert)
@@ -209,14 +216,22 @@ extension ShoppingListViewController: UIViewControllerAnimatedTransitioning {
 
 extension ShoppingListViewController: ShoppingListDisplayLogic {
     
-    func displayData(viewModel: ShoppingList.ShoppingListModel.ViewModel) {
-        shoppingList = viewModel.displayedFood
+    func displayData(viewModel: ShoppingListModel.ShowFood.ViewModel) {
+        shoppingListItems = viewModel.displayedFood
         shoppingListTableView.reloadData()
+    }
+    
+    func displayMoveToMyFood(viewModel: ShoppingListModel.AddToMyFood.ViewModel) {
+        if let tabBarController = self.navigationController?.tabBarController as? UITabBarController {
+            if tabBarController.selectedIndex == 0 {
+                tabBarController.selectedIndex = 1
+            }
+        }
     }
         
     func deleteFood() {
         DispatchQueue.main.async {
-            self.getFoodList()
+            self.fetchShoppingList()
         }
     }
 }

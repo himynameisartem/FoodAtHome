@@ -12,4 +12,10 @@ class AddShoppingListWorker {
         let image = UIImage(named: foodName) ?? UIImage()
         return image
     }
+    
+    func getFoodForShoppingList(from food: FoodRealm, and request: AddShoppingListModel.AddFood.Request) -> FoodRealm {
+        let food = FoodRealm(name: food.name, type: FoodType(rawValue: food.type)!, weight: request.weight, unit: request.unit, calories: food.calories)
+        food.isShoppingList = true
+        return food
+    }
 }

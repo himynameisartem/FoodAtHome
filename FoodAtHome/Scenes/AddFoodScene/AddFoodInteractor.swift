@@ -34,37 +34,51 @@ class AddFoodInteractor: AddFoodBusinessLogic, AddFoodDataStore {
         guard let worker = worker else { return }
         let food = worker.getFoodForAdding(from: request, and: food)
         let isDuplicate = DataManager.shared.checkFoDuplicates(food: food)
-        
+        let isEditing = worker.isEditingFood(request.view)
+                
         if request.weight == "" {
-            
             let weigtCheckAlertController = UIAlertController(title: "Enter the weight of the product".localized(),
                                                           message: nil,
                                                           preferredStyle: .alert)
             weigtCheckAlertController.addAction(UIAlertAction(title: "OK".localized(), style: .default))
             let response = AddFoodModel.AddFood.Response(alertController: weigtCheckAlertController)
             self.presenter?.presentAddSelectedFood(responce: response)
-            
         } else {
-            
-            if isDuplicate {
-                let changeFoodAlertController = UIAlertController(title: "You already have this product".localized(),
-                                                                  message: "Do you want to replace it?".localized(),
-                                                                  preferredStyle: .alert)
-                changeFoodAlertController.addAction(UIAlertAction(title: "Yes".localized(), style: .destructive, handler: { _ in
-                    DataManager.shared.changeFood(food)
-                    let response = AddFoodModel.AddFood.Response(alertController: nil)
-                    self.presenter?.presentAddSelectedFood(responce: response)
-                }))
-                changeFoodAlertController.addAction(UIAlertAction(title: "No".localized(), style: .cancel))
-                
-                let response = AddFoodModel.AddFood.Response(alertController: changeFoodAlertController)
-                presenter?.presentAddSelectedFood(responce: response)
+            if !isEditing {
+                if isDuplicate {
+                    let changeFoodAlertController = UIAlertController(title: "You already have this product".localized(),
+                                                                      message: "Do you want to replace it?".localized(),
+                                                                      preferredStyle: .alert)
+                    changeFoodAlertController.addAction(UIAlertAction(title: "Yes".localized(), style: .destructive, handler: { _ in
+                        if food.isShoppingList {
+                            DataManager.shared.changeAndEdit(food)
+                            let response = AddFoodModel.AddFood.Response(alertController: nil)
+                            self.presenter?.presentAddSelectedFood(responce: response)
+                        } else {
+                            DataManager.shared.changeAndEdit(food)
+                            let response = AddFoodModel.AddFood.Response(alertController: nil)
+                            self.presenter?.presentAddSelectedFood(responce: response)
+                        }
+                    }))
+                    changeFoodAlertController.addAction(UIAlertAction(title: "No".localized(), style: .cancel))
+                        let response = AddFoodModel.AddFood.Response(alertController: changeFoodAlertController)
+                        presenter?.presentAddSelectedFood(responce: response)
+                } else {
+                    if food.isShoppingList {
+                        DataManager.shared.writeFood(food)
+                        let response = AddFoodModel.AddFood.Response(alertController: nil)
+                        self.presenter?.presentAddSelectedFood(responce: response)
+                    } else {
+                        DataManager.shared.writeFood(food)
+                        let response = AddFoodModel.AddFood.Response(alertController: nil)
+                        self.presenter?.presentAddSelectedFood(responce: response)
+                    }
+                }
             } else {
-                DataManager.shared.writeFood(food)
+                DataManager.shared.changeAndEdit(food)
                 let response = AddFoodModel.AddFood.Response(alertController: nil)
-                presenter?.presentAddSelectedFood(responce: response)
+                self.presenter?.presentAddSelectedFood(responce: response)
             }
-            
         }
     }
     

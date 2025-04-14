@@ -24,7 +24,7 @@ class MyFoodCollectionViewCell: UICollectionViewCell {
         foodName.font = UIFont(name: "Inter-ExtraLight", size: 12)
     }
     
-    func setData(viewModel: MyFood.ShowMyFood.ViewModel.DisplayedMyFood) {
+    func setData(viewModel: MyFoodModel.FetchFoodList.ViewModel.DisplayedMyFood) {
         foodImage.image = UIImage(named: viewModel.imageName)
         foodName.text = viewModel.name
         if viewModel.daysLeftIndicator {

@@ -63,9 +63,9 @@ class MyFoodRouter: NSObject, MyFoodRoutingLogic, MyFoodDataPassing {
 //MARK: Passing data
     
     func passDataToCategoryDetails(source: MyFoodDataStore, destination: inout CategoryDetailsDataStore) {
-        guard let indexPath = viewController?.categoryMyFoodCollectionView.indexPathsForSelectedItems?.first else { return }
+        guard let indexPath = viewController?.categoryCollectionView.indexPathsForSelectedItems?.first else { return }
         let category = source.categories[indexPath.row]
-        let food = worker.getFoodForRouting(source: source.myFood, type: category)
+        let food = worker.prepareFoodForRouting(source: source.myFood, type: category)
         destination.category = category
         destination.food = food
     }

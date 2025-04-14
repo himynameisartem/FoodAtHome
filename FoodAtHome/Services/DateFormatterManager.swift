@@ -18,7 +18,7 @@ class DateFormatterManager: DateFormatterManagerProtocol {
     static let shared = DateFormatterManager()
     
     private let dateFormatter: DateFormatter
-
+    
     init() {
         dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
@@ -34,11 +34,11 @@ class DateFormatterManager: DateFormatterManagerProtocol {
 
     func formatConsumeUp(_ consumeUp: ConsumeUp?) -> String {
         guard let consumeUp = consumeUp else { return "" }
-        return "\(consumeUp.months ?? 0)m. \(consumeUp.days ?? 0)d."
+        return "\(consumeUp.months ?? 0)\("m.".localized()) \(consumeUp.days ?? 0)\("d.".localized())"
     }
 
     func formatDaysLeft(_ daysLeft: (months: Int, days: Int, isOverdue: Bool)?) -> String {
         guard let daysLeft = daysLeft else { return "" }
-        return daysLeft.isOverdue ? "Overdue" : "\(daysLeft.months)m. \(daysLeft.days)d."
+        return daysLeft.isOverdue ? "Overdue".localized() : "\(daysLeft.months)\("m.".localized()) \(daysLeft.days)\("d.".localized())"
     }
 }

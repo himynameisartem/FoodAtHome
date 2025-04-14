@@ -100,41 +100,41 @@ class AddFoodMenu: UIView {
         if isShoppingList() {
             food.isShoppingList = true
         }
-        DataManager.shared.writeFood(food)
+//        DataManager.shared.writeFood(food)
         self.closeAddFoodMenu()
         self.delegate?.didCloseAddFood()
     }
     
     func changeFood() {
         checkUnit()
-        guard let food = food else { return }
-        DataManager.shared.changeFood(food)
-        self.closeAddFoodMenu()
-        self.delegate?.didCloseAddFood()
+//        guard let food = food else { return }
+//        DataManager.shared.changeFood(food)
+//        self.closeAddFoodMenu()
+//        self.delegate?.didCloseAddFood()
     }
     
     func changeFoodForShoppingList() {
         checkUnit()
-        guard let food = food else { return }
-        DataManager.shared.changeFoodForShoppingList(food)
-        self.closeAddFoodMenu()
-        self.delegate?.didCloseAddFood()
+//        guard let food = food else { return }
+//        DataManager.shared.changeFoodForShoppingList(food)
+//        self.closeAddFoodMenu()
+//        self.delegate?.didCloseAddFood()
     }
     
     func updateFood() {
         checkUnit()
-        guard let food = food else { return }
-        DataManager.shared.updateFood(food)
-        self.closeAddFoodMenu()
-        self.delegate?.didCloseAddFood()
+//        guard let food = food else { return }
+//        DataManager.shared.updateFood(food)
+//        self.closeAddFoodMenu()
+//        self.delegate?.didCloseAddFood()
     }
     
     func updateFoodForShoppingList() {
         checkUnit()
-        guard let food = food else { return }
-        DataManager.shared.updateFoodForShoppingList(food)
-        self.closeAddFoodMenu()
-        self.delegate?.didCloseAddFood()
+//        guard let food = food else { return }
+//        DataManager.shared.updateFoodForShoppingList(food)
+//        self.closeAddFoodMenu()
+//        self.delegate?.didCloseAddFood()
     }
     
     func closeAddFoodMenu() {

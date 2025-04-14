@@ -25,6 +25,7 @@ enum AddFoodModel {
             struct DisplayedFood {
                 let image: UIImage
                 let weight: String
+                let unit: String
                 let productionDate: String?
                 let expirationDate: String?
                 let consumeUp: String?
@@ -89,6 +90,7 @@ enum AddFoodModel {
             let unit: String
             let prductionDate: String?
             let expirationDate: String?
+            let view: UIView
         }
         struct Response {
             let alertController: UIAlertController?

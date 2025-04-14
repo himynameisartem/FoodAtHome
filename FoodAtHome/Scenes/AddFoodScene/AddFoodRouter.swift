@@ -23,7 +23,6 @@ class AddFoodRouter: NSObject, AddFoodRoutingLogic, AddFoodDataPassing {
     func navigateToTabBarController(window: UIWindow) {
         viewController?.dismiss(animated: true) {
             if let tabBarController = window.rootViewController as? UITabBarController {
-                tabBarController.selectedIndex = 1
                 if let nav = tabBarController.viewControllers?[1] as? UINavigationController {
                     nav.tabBarController?.tabBar.isHidden = false
                     nav.popToRootViewController(animated: true)

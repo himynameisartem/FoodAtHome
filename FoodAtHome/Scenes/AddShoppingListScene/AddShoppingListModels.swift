@@ -15,12 +15,25 @@ enum AddShoppingListModel {
         struct Response {
             let image: UIImage
             let weight: String?
-            let unit: String?
+            let unit: String
         }
         struct ViewModel {
             let image: UIImage
             let weight: String?
-            let unit: String?
+            let unit: String
+        }
+    }
+    
+    enum AddFood {
+        struct Request {
+            let weight: String
+            let unit: String
+        }
+        struct Response {
+            let alert: UIAlertController?
+        }
+        struct ViewModel {
+            let alert: UIAlertController?
         }
     }
 }
