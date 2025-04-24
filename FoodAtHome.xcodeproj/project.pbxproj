@@ -43,7 +43,7 @@
 		314CA4A12A7A58C5002D4680 /* FoodListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4A02A7A58C5002D4680 /* FoodListManager.swift */; };
 		314ECCA12D9151900047EDBB /* Date + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314ECCA02D9151900047EDBB /* Date + Extension.swift */; };
 		317F50E6286DB4C90049B64B /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317F50E5286DB4C90049B64B /* UIColor + Extension.swift */; };
-		318701A12A4E019C0079848C /* FoodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318701A02A4E019C0079848C /* FoodManager.swift */; };
+		318701A12A4E019C0079848C /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318701A02A4E019C0079848C /* DateManager.swift */; };
 		3188955D2BC479EA00ABD040 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3188955C2BC479EA00ABD040 /* Assets.xcassets */; };
 		31B1C5ED2BC7F5E300C6D43F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1C5EC2BC7F5E300C6D43F /* AppDelegate.swift */; };
 		31B1C5F02BC7FA5300C6D43F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31B1C5EE2BC7F5F800C6D43F /* Launch Screen.storyboard */; };
@@ -149,7 +149,7 @@
 		314CA4A02A7A58C5002D4680 /* FoodListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListManager.swift; sourceTree = "<group>"; };
 		314ECCA02D9151900047EDBB /* Date + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Extension.swift"; sourceTree = "<group>"; };
 		317F50E5286DB4C90049B64B /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
-		318701A02A4E019C0079848C /* FoodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodManager.swift; sourceTree = "<group>"; };
+		318701A02A4E019C0079848C /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		3188955C2BC479EA00ABD040 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3188955E2BC47F0B00ABD040 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		31B1C5EC2BC7F5E300C6D43F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -452,7 +452,7 @@
 			children = (
 				31CFBD3C2BD7DE51004C75A8 /* DataManager.swift */,
 				3139EE502C4A68D100AEC1F2 /* CategoriesManager.swift */,
-				318701A02A4E019C0079848C /* FoodManager.swift */,
+				318701A02A4E019C0079848C /* DateManager.swift */,
 				31D456A82A5D315200FDFDFB /* DateCalculatorManager.swift */,
 				31D43C842D35527E0068046E /* DateFormatterManager.swift */,
 				314CA4A02A7A58C5002D4680 /* FoodListManager.swift */,
@@ -698,9 +698,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-FoodAtHome/Pods-FoodAtHome-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-FoodAtHome/Pods-FoodAtHome-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -806,7 +810,7 @@
 				3123E3132CBE275600ACE2AC /* TabBarController.swift in Sources */,
 				31B1C5ED2BC7F5E300C6D43F /* AppDelegate.swift in Sources */,
 				31BA2CF52D16B3EE00E3D904 /* AddFoodMenuPresenter.swift in Sources */,
-				318701A12A4E019C0079848C /* FoodManager.swift in Sources */,
+				318701A12A4E019C0079848C /* DateManager.swift in Sources */,
 				31FD7DF62D706586001E07DA /* AddShoppingListPresenter.swift in Sources */,
 				31FD7DF72D706586001E07DA /* AddShoppingListRouter.swift in Sources */,
 				31FD7DF82D706586001E07DA /* AddShoppingListInteractor.swift in Sources */,

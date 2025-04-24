@@ -21,7 +21,7 @@ class AddFoodPresenter: AddFoodPresentationLogic {
     
     func presentData(response: AddFoodModel.ShowFood.Response) {
         worker = AddFoodWorker()
-        let foodManager = FoodManager()
+        let foodManager = DateManager()
         let productionDate = foodManager.getFormattedProductionDate(for: response.food)
         let expirationDate = foodManager.getFormattedExpirationDate(for: response.food)
         let consumeUp = foodManager.getFormattedConsumeUp(for: response.food)

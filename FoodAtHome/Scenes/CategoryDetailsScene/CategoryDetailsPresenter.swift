@@ -24,7 +24,6 @@ class CategoryDetailsPresenter: CategoryDetailsPresentationLogic {
     }
     
     func presentCells(response: CategoryDetails.ShowFood.Response) {
-        
         worker = CategoryDetailsWorker()
         guard let displayedDetails = worker?.getDisplayedFood(food: response.food) else { return }
         let viewModel = CategoryDetails.ShowFood.ViewModel(displayedCells: displayedDetails)

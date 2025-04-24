@@ -105,7 +105,7 @@ extension MyFoodDetailsPopupMenu {
         }
     }
     
-    func configure(viewModel: MyFoodModel.FetchFoodDetails.ViewModel.DiplayedDetails) {
+    func configure(viewModel: MyFoodModel.FetchFoodDetails.ViewModel.DisplayedDetails) {
         nameLabel.text = viewModel.name
         weightValueLabel.text = viewModel.weight + " " + viewModel.unit.localized()
         productionDateValueLabel.text = viewModel.productionDate

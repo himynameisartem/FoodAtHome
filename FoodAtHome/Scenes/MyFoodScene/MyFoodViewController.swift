@@ -11,8 +11,10 @@ protocol MyFoodDisplayLogic: AnyObject {
     func displayCategories(viewModel: MyFoodModel.FetchCategories.ViewModel)
     func displayFoodList(viewModel: MyFoodModel.FetchFoodList.ViewModel)
     func displayFoodDetails(viewModel: MyFoodModel.FetchFoodDetails.ViewModel)
+    func displayEditingFood(viewModel: MyFoodModel.PrepareEditing.ViewModel)
     func displaySharedFood(viewModel: MyFoodModel.FetchSharedFood.ViewModel)
-    func didRemoveFoodItem()
+    func displayConfirmRemoveAllMyFood(viewModel: MyFoodModel.ConfirmRemoveAllMyFood.ViewModel)
+    func didRemoveFoodItem(viewModel: MyFoodModel.DeleteFood.ViewModel)
     func didRemoveAllMyFood(viewModel: MyFoodModel.RemoveAllMyFood.ViewModel)
 }
 
@@ -25,8 +27,8 @@ class MyFoodViewController: UIViewController {
     
     private func setup() {
         let viewController = self
-        let interactor = MyFoodInteractor()
-        let presenter = MyFoodPresenter()
+        let interactor = MyFoodInteractor(worker: MyFoodWorker())
+        let presenter = MyFoodPresenter(dateManager: DateManager())
         let router = MyFoodRouter()
         viewController.interactor = interactor
         viewController.router = router
@@ -68,8 +70,8 @@ class MyFoodViewController: UIViewController {
     @IBOutlet weak var myFoodCollectionView: UICollectionView!
     
     private var myFood: [MyFoodModel.FetchFoodList.ViewModel.DisplayedMyFood] = []
-    private var categories: [MyFoodModel.FetchCategories.ViewModel.DiplayedCategories] = []
-    private var foodDetails: MyFoodModel.FetchFoodDetails.ViewModel.DiplayedDetails?
+    private var categories: [MyFoodModel.FetchCategories.ViewModel.DisplayedCategories] = []
+    private var foodDetails: MyFoodModel.FetchFoodDetails.ViewModel.DisplayedDetails?
     private var dimmingView: UIVisualEffectView!
     private var blurEffect: UIVisualEffect!
     private var sharedActivitiIndicator: UIActivityIndicatorView!
@@ -78,7 +80,7 @@ class MyFoodViewController: UIViewController {
     
     @IBAction func didTapDeleteAllMyFoodButton(_ sender: Any) {
         let request = MyFoodModel.RemoveAllMyFood.Request()
-        interactor?.RemoveAllMyFood(request: request)
+        interactor?.removeAllMyFood(request: request)
     }
     
     @IBAction func didTapShareButton(_ sender: Any) {
@@ -96,9 +98,9 @@ class MyFoodViewController: UIViewController {
         interactor?.fetchCategories(request: request)
     }
     
-    private func fetchDetailsFood(at index: Int) {
-        let request = MyFoodModel.FetchFoodDetails.Request()
-        interactor?.fetchFoodDetails(request: request, at: index)
+    private func fetchDetailsFood(at indexPath: IndexPath) {
+        let request = MyFoodModel.FetchFoodDetails.Request(indexPath: indexPath)
+        interactor?.fetchFoodDetails(request: request)
     }
     
     private func handleEditAction(at indexPath: IndexPath) {
@@ -218,7 +220,7 @@ extension MyFoodViewController: UICollectionViewDelegate, UICollectionViewDataSo
             })
         } else {
             if indexPath.row < myFood.count {
-                fetchDetailsFood(at: indexPath.row)
+                fetchDetailsFood(at: indexPath)
             }
         }
     }
@@ -280,26 +282,34 @@ extension MyFoodViewController: MyFoodDisplayLogic {
         myFoodCollectionView.reloadData()
     }
     
+    func displayEditingFood(viewModel: MyFoodModel.PrepareEditing.ViewModel) {}
+    
     func displayFoodDetails(viewModel: MyFoodModel.FetchFoodDetails.ViewModel) {
         guard let view = self.navigationController?.tabBarController?.view else { return }
         let myFoodDetailsPopupMenu = Bundle.main.loadNibNamed("MyFoodDetailsPopupMenu",
                                                               owner: MyFoodViewController.self)?.first as! MyFoodDetailsPopupMenu
         myFoodDetailsPopupMenu.openPopUpMenu(for: view, with: myFoodCollectionView)
-        myFoodDetailsPopupMenu.configure(viewModel: viewModel.DiplayedDetails)
+        myFoodDetailsPopupMenu.configure(viewModel: viewModel.displayedDetails)
     }
     
-    func didRemoveFoodItem() {
+    func didRemoveFoodItem(viewModel: MyFoodModel.DeleteFood.ViewModel) {
         fetchMyFood()
     }
     
     func didRemoveAllMyFood(viewModel: MyFoodModel.RemoveAllMyFood.ViewModel) {
-        if let alertController = viewModel.alertController {
-            self.present(alertController, animated: true)
+        let alertController = UIAlertController(title: viewModel.alertTitle,
+                                                message: viewModel.alertMessage,
+                                                preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: viewModel.confirmActionTitle, style: .destructive, handler: { _ in
+            let request = MyFoodModel.ConfirmRemoveAllMyFood.Request()
+            self.interactor?.confirmRemoveAllMyFood(request: request)
             self.fetchMyFood()
-        } else {
-            self.fetchMyFood()
-        }
+        }))
+        alertController.addAction(UIAlertAction(title: viewModel.cancelActionTitle, style: .cancel))
+        self.present(alertController, animated: true)
     }
+    
+    func displayConfirmRemoveAllMyFood(viewModel: MyFoodModel.ConfirmRemoveAllMyFood.ViewModel) {}
     
     func displaySharedFood(viewModel: MyFoodModel.FetchSharedFood.ViewModel) {
         sharedActivitiIndicator.startAnimating()

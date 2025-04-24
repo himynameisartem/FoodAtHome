@@ -33,7 +33,6 @@ class CategoryDetailsViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
-
     }
     
     // MARK: View lifecycle
@@ -83,8 +82,6 @@ class CategoryDetailsViewController: UIViewController {
         foodListTableView.register(UINib(nibName: "CategoryDetailsFoodCell", bundle: nil), forCellReuseIdentifier: "CategoryDetailsFoodCell")
         foodListTableView.delegate = self
         foodListTableView.dataSource = self
-        
-
     }
     
     private func setupNavigationBar() {
@@ -94,13 +91,11 @@ class CategoryDetailsViewController: UIViewController {
         } completion: { done in
             self.navigationController?.navigationBar.isHidden = true
             self.navigationController?.navigationBar.alpha = 1
-
         }
     }
 }
 
 extension CategoryDetailsViewController: UITableViewDelegate, UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         foodCells.count
     }
@@ -118,11 +113,9 @@ extension CategoryDetailsViewController: UITableViewDelegate, UITableViewDataSou
         let height = view.frame.width / 3.9
         return height
     }
-    
 }
 
 extension CategoryDetailsViewController: UIScrollViewDelegate {
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard let header = foodListTableView.tableHeaderView as? CategoryDetailsHeaderView else { return }
         header.scrollViewDidScroll(scrollView: foodListTableView)
@@ -130,7 +123,6 @@ extension CategoryDetailsViewController: UIScrollViewDelegate {
 }
 
 extension CategoryDetailsViewController: CategoryDetailsDisplayLogic {
-    
     func displayCategoryData(viewModel: CategoryDetails.ShowCategory.ViewModel) {
         header.categoryNameLabel.text = viewModel.displayedCategory.categoryName
         header.imageView.image = UIImage(named: viewModel.displayedCategory.categoryImage)

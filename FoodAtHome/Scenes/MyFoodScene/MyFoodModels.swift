@@ -26,26 +26,27 @@ enum MyFoodModel {
     
     enum FetchCategories {
         struct Request{}
-        struct Responce {
+        struct Response {
             let categories: [String]
         }
         struct ViewModel {
-            struct DiplayedCategories {
+            struct DisplayedCategories {
                 let name: String
                 let imageName: String
             }
-            let displayedCategories: [DiplayedCategories]
+            let displayedCategories: [DisplayedCategories]
         }
     }
     
     enum FetchFoodDetails {
         struct Request{
+            let indexPath: IndexPath
         }
-        struct Responce {
+        struct Response {
             let foodDetails: FoodRealm
         }
         struct ViewModel {
-            struct DiplayedDetails {
+            struct DisplayedDetails {
                 let name: String
                 let weight: String
                 let unit: String
@@ -54,7 +55,7 @@ enum MyFoodModel {
                 let daysLeft: String
                 let expirationProgress: CGFloat?
             }
-            let DiplayedDetails: DiplayedDetails
+            let displayedDetails: DisplayedDetails
         }
     }
     
@@ -62,23 +63,32 @@ enum MyFoodModel {
         struct Request{
             let indexPath: IndexPath
         }
-        struct Responce {}
+        struct Response {}
         struct ViewModel {}
     }
     
     enum RemoveAllMyFood {
         struct Request{}
-        struct Responce {
-            let alertController: UIAlertController?
+        struct Response {
+            let shouldConfirm: Bool
         }
         struct ViewModel {
-            let alertController: UIAlertController?
+            let alertTitle: String
+            let alertMessage: String
+            let confirmActionTitle: String
+            let cancelActionTitle: String
         }
+    }
+    
+    enum ConfirmRemoveAllMyFood {
+        struct Request {}
+        struct Response {}
+        struct ViewModel {}
     }
     
     enum FetchSharedFood {
         struct Request {}
-        struct Responce {
+        struct Response {
             let sharedFood: [FoodRealm]
         }
         struct ViewModel {
@@ -90,9 +100,7 @@ enum MyFoodModel {
         struct Request {
             let indexPath: IndexPath
         }
-        struct Responce {
-            let food: FoodRealm
-        }
+        struct Response {}
         struct ViewModel {}
     }
 }

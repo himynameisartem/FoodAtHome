@@ -22,7 +22,7 @@ class CategoryMyFoodCollectionViewCell: UICollectionViewCell {
         categoryName.font = UIFont(name: "Inter-Light", size: 16)
     }
     
-    func setData(viewModel: MyFoodModel.FetchCategories.ViewModel.DiplayedCategories) {
+    func setData(viewModel: MyFoodModel.FetchCategories.ViewModel.DisplayedCategories) {
         categoryImage.image = UIImage(named: viewModel.imageName)
         categoryName.text = viewModel.name
     }
