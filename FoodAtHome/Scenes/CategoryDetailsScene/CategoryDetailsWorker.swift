@@ -7,47 +7,29 @@
 
 import UIKit
 
-class CategoryDetailsWorker {
+protocol CategoryDetailsWorkerProtocol {
+    func getColor(_ expirationDate: Date?, _ productionDate: Date?) -> UIColor?
+}
+
+class CategoryDetailsWorker: CategoryDetailsWorkerProtocol {
     
-    var dateCalculate: DateCalculatorManagerProtocol?
+    var dateCalculate: DateCalculatorManagerProtocol
     
-    func getDisplayedFood(food: [FoodRealm]) -> [CategoryDetails.ShowFood.ViewModel.DisplayedCells] {
-        var displayedFood: [CategoryDetails.ShowFood.ViewModel.DisplayedCells] = []
-        
-        food.forEach { food in
-            let foodName = food.name
-            let imageName = food.name
-            let weight = food.weight
-            let calories = food.calories
-            let unit = food.unit
-            let color: UIColor? = {
-//                guard let indicator = food.distanceBetweenProductionAndExpiration() else { return nil }
-                guard let productionDate = food.productionDate, let expirationDate = food.expirationDate else { return nil }
-                guard let indicator = dateCalculate?.calculateExpirationDistance(productionDate: productionDate, expirationDate: expirationDate) else { return nil }
-                if indicator < 1 && indicator > 0.4 {
-                    return nil
-                } else if indicator <= 0.4 && indicator > 0.0 {
-                    return .orange
-                } else if indicator == 0.0 {
-                    return .red
-                } else {
-                    return nil
-                }
-            }()
-            
-            let foodDetails = CategoryDetails.ShowFood.ViewModel.DisplayedCells(
-                foodName: foodName.localized(),
-                imageName: imageName,
-                weight: weight,
-                calories: calories + " " + "kCal".localized() + " / " + "100g.".localized(),
-                unit: unit.localized(),
-                warningColor: color
-            )
-                
-            
-            displayedFood.append(foodDetails)
-        }
-        return displayedFood
+    init(dateCalculate: DateCalculatorManagerProtocol) {
+        self.dateCalculate = dateCalculate
     }
     
+    func getColor(_ expirationDate: Date?, _ productionDate: Date?) -> UIColor? {
+        guard let productionDate = productionDate, let expirationDate = expirationDate else { return nil }
+        guard let indicator = dateCalculate.calculateExpirationDistance(productionDate: productionDate, expirationDate: expirationDate) else { return nil }
+        if indicator < 1 && indicator > 0.4 {
+            return nil
+        } else if indicator <= 0.4 && indicator > 0.0 {
+            return .orange
+        } else if indicator <= 0.0 {
+            return .red
+        } else {
+            return nil
+        }
+    }
 }

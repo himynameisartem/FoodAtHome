@@ -8,15 +8,11 @@
 import UIKit
 
 enum CategoryDetails {
-    
     enum ShowCategory {
-        struct Request {
-        }
-        
-        struct Responce {
+        struct Request {}
+        struct Response {
             let category: String
         }
-        
         struct ViewModel {
             struct DisplayedCategory {
                 let categoryName: String
@@ -27,13 +23,11 @@ enum CategoryDetails {
     }
    
   enum ShowFood {
-    struct Request {
-    }
-      
+    struct Request {}
     struct Response {
         let food: [FoodRealm]
+        let color: [UIColor?]
     }
-      
     struct ViewModel {
         struct DisplayedCells {
             let foodName: String
@@ -43,7 +37,6 @@ enum CategoryDetails {
             let unit: String
             let warningColor: UIColor?
         }
-        
         let displayedCells: [DisplayedCells]
     }
   }

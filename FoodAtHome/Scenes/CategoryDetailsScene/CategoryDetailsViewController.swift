@@ -14,15 +14,25 @@ protocol CategoryDetailsDisplayLogic: AnyObject {
 
 class CategoryDetailsViewController: UIViewController {
     
-    @IBOutlet weak var foodListTableView: UITableView!
-    
     var interactor: CategoryDetailsBusinessLogic?
     var router: (NSObjectProtocol & CategoryDetailsRoutingLogic & CategoryDetailsDataPassing)?
     
-    var header = CategoryDetailsHeaderView()
+    // MARK: Setup
     
-    var foodCells: [CategoryDetails.ShowFood.ViewModel.DisplayedCells] = []
-        
+    private func setup() {
+        let viewController = self
+        let worker = CategoryDetailsWorker(dateCalculate: DateCalculatorManager())
+        let interactor = CategoryDetailsInteractor(worker: worker)
+        let presenter = CategoryDetailsPresenter()
+        let router = CategoryDetailsRouter()
+        viewController.interactor = interactor
+        viewController.router = router
+        interactor.presenter = presenter
+        presenter.viewController = viewController
+        router.viewController = viewController
+        router.dataStore = interactor
+    }
+    
     // MARK: Object lifecycle
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -39,11 +49,20 @@ class CategoryDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
-        setupUI()
-        getFoodDetails()
+        tabBarController?.tabBar.isHidden = true
+        configureNavigationBar()
+        configureHeaderView()
+        configereTableView()
+        fetchDetailsFood()
     }
     
+    // MARK: Outlets
+    
+    @IBOutlet weak var foodListTableView: UITableView!
+    
+    var header = CategoryDetailsHeaderView()
+    var foodCells: [CategoryDetails.ShowFood.ViewModel.DisplayedCells] = []
+
     @IBAction func returnTapped(_ sender: UIButton) {
         sender.showAnimation(for: .withoutColor) {
             self.navigationController?.navigationBar.isHidden = false
@@ -51,40 +70,27 @@ class CategoryDetailsViewController: UIViewController {
             self.tabBarController?.tabBar.isHidden = false
         }
     }
-    
-    // MARK: Setup
-    
-    private func setup() {
-        let viewController = self
-        let interactor = CategoryDetailsInteractor()
-        let presenter = CategoryDetailsPresenter()
-        let router = CategoryDetailsRouter()
-        viewController.interactor = interactor
-        viewController.router = router
-        interactor.presenter = presenter
-        presenter.viewController = viewController
-        router.viewController = viewController
-        router.dataStore = interactor
-    }
 
-    private func getFoodDetails() {
+    private func fetchDetailsFood() {
         let requestCategory = CategoryDetails.ShowCategory.Request()
-        interactor?.showCategory(request: requestCategory)
+        interactor?.fetchCategories(request: requestCategory)
         let requestCells = CategoryDetails.ShowFood.Request()
-        interactor?.showCells(request: requestCells)
+        interactor?.fetchCells(request: requestCells)
     }
     
-    private func setupUI() {
-        tabBarController?.tabBar.isHidden = true
+    private func configureHeaderView() {
         header = CategoryDetailsHeaderView(frame: CGRect(x: 0, y: 0,
                                             width: view.frame.size.width, height: view.frame.size.width / 1.2))
+    }
+    
+    private func configereTableView() {
         foodListTableView.tableHeaderView = header
         foodListTableView.register(UINib(nibName: "CategoryDetailsFoodCell", bundle: nil), forCellReuseIdentifier: "CategoryDetailsFoodCell")
         foodListTableView.delegate = self
         foodListTableView.dataSource = self
     }
     
-    private func setupNavigationBar() {
+    private func configureNavigationBar() {
         navigationItem.hidesBackButton = true
         UIView.animate(withDuration: 0.3) {
             self.navigationController?.navigationBar.alpha = 0.0
@@ -94,6 +100,8 @@ class CategoryDetailsViewController: UIViewController {
         }
     }
 }
+
+//MARK: - UITableViewDelegate
 
 extension CategoryDetailsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -115,12 +123,16 @@ extension CategoryDetailsViewController: UITableViewDelegate, UITableViewDataSou
     }
 }
 
+//MARK: - UIScrollViewDelegate
+
 extension CategoryDetailsViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard let header = foodListTableView.tableHeaderView as? CategoryDetailsHeaderView else { return }
         header.scrollViewDidScroll(scrollView: foodListTableView)
     }
 }
+
+//MARK: - CategoryDetailsDisplayLogic
 
 extension CategoryDetailsViewController: CategoryDetailsDisplayLogic {
     func displayCategoryData(viewModel: CategoryDetails.ShowCategory.ViewModel) {

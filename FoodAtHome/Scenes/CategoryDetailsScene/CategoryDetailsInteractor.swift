@@ -8,8 +8,8 @@
 import UIKit
 
 protocol CategoryDetailsBusinessLogic {
-    func showCategory(request: CategoryDetails.ShowCategory.Request)
-    func showCells(request: CategoryDetails.ShowFood.Request)
+    func fetchCategories(request: CategoryDetails.ShowCategory.Request)
+    func fetchCells(request: CategoryDetails.ShowFood.Request)
 }
 
 protocol CategoryDetailsDataStore {
@@ -19,18 +19,27 @@ protocol CategoryDetailsDataStore {
 
 class CategoryDetailsInteractor: CategoryDetailsBusinessLogic, CategoryDetailsDataStore {
     
+    private let worker: CategoryDetailsWorkerProtocol
+    
+    init (worker: CategoryDetailsWorkerProtocol) {
+        self.worker = worker
+    }
+    
     var category = String()
     var presenter: CategoryDetailsPresentationLogic?
     var food: [FoodRealm] = []
     
-    func showCategory(request: CategoryDetails.ShowCategory.Request) {
-        let responce = CategoryDetails.ShowCategory.Responce(category: category)
-        presenter?.presentCategory(responce: responce)
+    func fetchCategories(request: CategoryDetails.ShowCategory.Request) {
+        let response = CategoryDetails.ShowCategory.Response(category: category)
+        presenter?.presentCategory(response: response)
     }
     
-    func showCells(request: CategoryDetails.ShowFood.Request) {
-        let responce = CategoryDetails.ShowFood.Response(food: food)
-        presenter?.presentCells(response: responce)
+    func fetchCells(request: CategoryDetails.ShowFood.Request) {
+        let response = CategoryDetails.ShowFood.Response(food: food,
+                                                         color: food.map { food in
+            worker.getColor(food.expirationDate, food.productionDate)
+        })
+        presenter?.presentCells(response: response)
     }
     
 }
