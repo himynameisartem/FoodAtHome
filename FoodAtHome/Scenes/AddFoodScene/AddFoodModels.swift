@@ -7,17 +7,23 @@
 
 import UIKit
 
+protocol AddFoodProtocol {
+    var weight: String? { get }
+    var unit: String { get }
+    var prductionDate: String? { get }
+    var expirationDate: String? { get }
+    var view: UIView { get }
+}
+
 enum AddFoodModel {
-    
     enum ActiveField {
         case productionDate
         case expirationDate
         case consumeUp
     }
     
-    enum ShowFood {
-        struct Request {
-        }
+    enum FetchFood {
+        struct Request {}
         struct Response {
             let food: FoodRealm
         }
@@ -84,8 +90,48 @@ enum AddFoodModel {
         }
     }
     
-    enum AddFood {
+    enum CheckWeightField {
         struct Request {
+            let weight: String?
+        }
+        struct Response {
+            let shouldConfirm: Bool
+        }
+        struct ViewModel {
+            let isValid: Bool
+            let alertTitle: String?
+            let confirmActionTitle: String?
+        }
+    }
+    
+    enum CheckParent {
+        struct Request {
+            let view: UIView
+        }
+        struct Response {
+            let isEditing: Bool
+        }
+        struct ViewModel {
+            let isValid: Bool
+        }
+    }
+    
+    enum CheckDuplicateFood {
+        struct Request {}
+        struct Response {
+            let isDuplicate: Bool
+        }
+        struct ViewModel {
+            let isValid: Bool
+            let alertTitle: String?
+            let alertMessage: String?
+            let confirmActionTitle: String?
+            let cancelActionTitle: String?
+        }
+    }
+    
+    enum AddFood {
+        struct Request: AddFoodProtocol {
             let weight: String?
             let unit: String
             let prductionDate: String?
@@ -93,11 +139,22 @@ enum AddFoodModel {
             let view: UIView
         }
         struct Response {
-            let alertController: UIAlertController?
+            let shouldConfirm: Bool
         }
-        struct ViewModel {
-            let alertController: UIAlertController?
-        }
+        struct ViewModel {}
     }
     
+    enum ChangeFood {
+        struct Request: AddFoodProtocol {
+            let weight: String?
+            let unit: String
+            let prductionDate: String?
+            let expirationDate: String?
+            let view: UIView
+        }
+        struct Response {
+            let shouldConfirm: Bool
+        }
+        struct ViewModel {}
+    }
 }

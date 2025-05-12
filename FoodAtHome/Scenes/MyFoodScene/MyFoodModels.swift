@@ -82,8 +82,12 @@ enum MyFoodModel {
     
     enum ConfirmRemoveAllMyFood {
         struct Request {}
-        struct Response {}
-        struct ViewModel {}
+        struct Response {
+            let isConfirm: Bool
+        }
+        struct ViewModel {
+            let isSuccess: Bool
+        }
     }
     
     enum FetchSharedFood {

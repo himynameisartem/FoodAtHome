@@ -7,14 +7,31 @@
 
 import UIKit
 
-class AddFoodWorker {
+protocol AddFoodWorkerProtocol {
+    func getImage(from foodName: String) -> UIImage
+    func addFoodToMyFoodList(food: FoodRealm)
+    func changeDuplicateFood(food: FoodRealm)
+    func checkMyFoodListDuplicate(foodName: String) -> Bool
+    func fetchFoodForAdding(from dataRequest: AddFoodProtocol, and food: FoodRealm) -> FoodRealm
+    func isEditingFood(_ view: UIView) -> Bool
+    func calculateConsumeUp(productionDate: String?, expirationDate: String?) -> ConsumeUp?
+    func calculateExpirationDate(months: Int, days: Int, productionDate: String?) -> String?
+    func productionDatePickerValues(_ productionDate: String?) -> (maximumDate: Date, currentDate: Date)
+    func expirationDatePickerValues(_ productionDate: String?, _ expirationDate: String?) -> (minimumDate: Date, currentDate: Date)
+}
+
+class AddFoodWorker: AddFoodWorkerProtocol {
     
     func getImage(from foodName: String) -> UIImage {
         let image = UIImage(named: foodName) ?? UIImage()
         return image
     }
     
-    func getFoodForAdding(from dataRequest: AddFoodModel.AddFood.Request, and food: FoodRealm) -> FoodRealm {
+    func checkMyFoodListDuplicate(foodName: String) -> Bool {
+        DataManager.shared.checkMyFoodListDuplicate(foodName: foodName)
+    }
+    
+    func fetchFoodForAdding(from dataRequest: AddFoodProtocol, and food: FoodRealm) -> FoodRealm {
         let productionDate = dataRequest.prductionDate?.toDate()
         let expirationDate = dataRequest.expirationDate?.toDate()
         var consumeUp: ConsumeUp?
@@ -26,12 +43,20 @@ class AddFoodWorker {
                                         weight: dataRequest.weight!,
                                         unit: dataRequest.unit,
                                         calories: food.calories,
-                                        isShoppingList: food.isShoppingList,
+                                        isShoppingList: false,
                                         productionDate: productionDate,
                                         expirationDate: expirationDate,
                                         consumeUp: consumeUp
         )
         return food
+    }
+    
+    func addFoodToMyFoodList(food: FoodRealm) {
+        DataManager.shared.writeFood(food)
+    }
+    
+    func changeDuplicateFood(food: FoodRealm) {
+        DataManager.shared.changeAndEdit(food)
     }
     
     func isEditingFood(_ view: UIView) -> Bool {
@@ -91,10 +116,8 @@ class AddFoodWorker {
     func expirationDatePickerValues(_ productionDate: String?, _ expirationDate: String?) -> (minimumDate: Date, currentDate: Date) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
-        
         let currentDate = dateFormatter.date(from: expirationDate ?? "") ?? Date()
         let minimumDate = dateFormatter.date(from: productionDate ?? "") ?? Date()
-        
         return (minimumDate, currentDate)
     }
 }

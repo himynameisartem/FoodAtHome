@@ -29,7 +29,7 @@ class FoodListTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configure(from viewModel: ChoiseFood.ShowFood.ViewModel.DispalyedFood) {
+    func configure(from viewModel: ChoiseFoodModel.FetchFood.ViewModel.DispalyedFood) {
         foodImage.image = UIImage(named: viewModel.imageName)
         foodNameLabel.text = viewModel.name.localized()
         caloriesLabel.text = viewModel.calories + " " + "kCal".localized() + " / " + "100g.".localized()

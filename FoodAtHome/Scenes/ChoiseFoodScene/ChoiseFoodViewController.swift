@@ -2,37 +2,38 @@
 //  ChoiseFoodViewController.swift
 //  FoodAtHome
 //
-//  Created by Артем Кудрявцев on 27.08.2024.
+//  Created by Артем Кудрявцев
 //
 
 import UIKit
 
 protocol ChoiseFoodDisplayLogic: AnyObject {
-    func displayCategories(viewModel: ChoiseFood.ShowCategoriesFood.ViewModel)
-    func displayFood(viewModel: ChoiseFood.ShowFood.ViewModel)
+    func displayCategories(viewModel: ChoiseFoodModel.FetchCategories.ViewModel)
+    func displayFood(viewModel: ChoiseFoodModel.FetchFood.ViewModel)
+    func displayItem(viewModel: ChoiseFoodModel.FetchItem.ViewModel)
 }
 
 class ChoiseFoodViewController: UIViewController {
     
-    @IBOutlet weak var foodListTableView: UITableView!
-    @IBOutlet weak var categoriesFoodCollectionView: UICollectionView!
-    
-    private let backButton = UIBarButtonItem()
-    private let searchButton = UIBarButtonItem()
-    private let searchController = UISearchController(searchResultsController: nil)
-    private let hideSearchBarGesture = UITapGestureRecognizer()
-    private var collectionViewHeightConstraint = NSLayoutConstraint()
-    private var isOpenAnimation = true
-    
-    private var categoriesName: [String] = []
-    private var foodList: [ChoiseFood.ShowFood.ViewModel.DispalyedFood] = []
-    
     var interactor: ChoiseFoodBusinessLogic?
     var router: (NSObjectProtocol & ChoiseFoodRoutingLogic & ChoiseFoodDataPassing)?
     
-    private var dimmingView: UIVisualEffectView!
-    private var blurEffect: UIVisualEffect!
+    // MARK: Setup
     
+    private func setup() {
+        let viewController = self
+        let worker = ChoiseFoodWorker()
+        let interactor = ChoiseFoodInteractor(worker: worker)
+        let presenter = ChoiseFoodPresenter()
+        let router = ChoiseFoodRouter()
+        viewController.interactor = interactor
+        viewController.router = router
+        interactor.presenter = presenter
+        presenter.viewController = viewController
+        router.viewController = viewController
+        router.dataStore = interactor
+    }
+        
     // MARK: Object lifecycle
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -44,28 +45,42 @@ class ChoiseFoodViewController: UIViewController {
         super.init(coder: aDecoder)
         setup()
     }
+        
+    // MARK: View lifecycle
     
-    // MARK: Setup
-    
-    
-    private func setup() {
-        let viewController = self
-        let interactor = ChoiseFoodInteractor()
-        let presenter = ChoiseFoodPresenter()
-        let router = ChoiseFoodRouter()
-        viewController.interactor = interactor
-        viewController.router = router
-        interactor.presenter = presenter
-        presenter.viewController = viewController
-        router.viewController = viewController
-        router.dataStore = interactor
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        getCategories()
+        configureNavigationView()
+        configureCollectionView()
+        getFoodList()
+        configureTableView()
+        configureDimmingView()
     }
     
-    // MARK: Routing
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchController.isActive = false
+    }
+    
+    @IBOutlet weak var foodListTableView: UITableView!
+    @IBOutlet weak var categoriesFoodCollectionView: UICollectionView!
+    
+    private let backButton = UIBarButtonItem()
+    private let searchButton = UIBarButtonItem()
+    private let searchController = UISearchController(searchResultsController: nil)
+    private let hideSearchBarGesture = UITapGestureRecognizer()
+    private var collectionViewHeightConstraint = NSLayoutConstraint()
+    private var dimmingView: UIVisualEffectView!
+    private var blurEffect: UIVisualEffect!
+    private var isOpenAnimation = true
+    private var categoriesName: [String] = []
+    private var foodList: [ChoiseFoodModel.FetchFood.ViewModel.DispalyedFood] = []
+    
     
     private func didTapAddFoodButtion(at indexPath: IndexPath) {
-        let request = ChoiseFood.AddFood.Request(foodName: foodList[indexPath.row].name)
-        interactor?.getFood(request: request)
+        let request = ChoiseFoodModel.FetchItem.Request(foodName: foodList[indexPath.row].name)
+        interactor?.fetchItem(request: request)
         if self.tabBarController?.selectedIndex == 0 {
             router?.routeToAddShoppingList()
         } else if self.tabBarController?.selectedIndex == 1 {
@@ -74,91 +89,20 @@ class ChoiseFoodViewController: UIViewController {
         searchController.searchBar.resignFirstResponder()
     }
     
-    // MARK: View lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        getCategories()
-        setupNavigationView()
-        setupCollectionView()
-        getFoodList()
-        setupTableView()
-        setupDimmingView()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        searchController.isActive = false
+    private func didSelectCategoryItem(at indexPath: IndexPath) {
+        let request = ChoiseFoodModel.FetchFood.Request(category: FoodType.allCases[indexPath.row], name: nil)
+        interactor?.fetchFoodList(request: request)
     }
     
     private func getCategories() {
-        let request = ChoiseFood.ShowCategoriesFood.Request()
-        interactor?.showCategories(request: request)
+        let request = ChoiseFoodModel.FetchCategories.Request()
+        interactor?.fetchCategories(request: request)
     }
     
     private func getFoodList() {
         guard let indexPath = categoriesFoodCollectionView.indexPathsForSelectedItems?.first else { return }
-        let request = ChoiseFood.ShowFood.Request(category: FoodType.allCases[indexPath.row], name: nil)
-        interactor?.showFoodList(request: request)
-    }
-    
-    private func setupDimmingView() {
-        blurEffect = UIBlurEffect(style: .dark)
-        dimmingView = UIVisualEffectView(frame: view.bounds)
-        dimmingView.effect = blurEffect
-        dimmingView.alpha = 0
-    }
-    
-    private func setupNavigationView() {
-        backButton.tintColor = .black
-        backButton.image = UIImage(systemName: "chevron.backward")
-        searchButton.tintColor = .black
-        searchButton.image = UIImage(systemName: "magnifyingglass")
-        navigationItem.hidesBackButton = true
-        navigationItem.leftBarButtonItem = backButton
-        navigationItem.rightBarButtonItem = searchButton
-        backButton.target = self
-        backButton.action = #selector(backButtonTapped(sender:))
-        searchButton.target = self
-        searchButton.action = #selector(searchButtonTapped(sender:))
-        setupSearchBar()
-        tabBarController?.tabBar.isHidden = true
-    }
-    
-    private func setupSearchBar() {
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.delegate = self
-        searchController.delegate = self
-        searchController.searchResultsUpdater = self
-        searchController.resignFirstResponder()
-        searchController.searchBar.showsCancelButton = true
-        searchController.searchBar.placeholder = "Search".localized()
-        searchController.searchBar.setValue("Cancel".localized(), forKey: "cancelButtonText")
-        searchController.searchBar.tintColor = .black
-        
-    }
-    
-    private func setupCollectionView() {
-        let layoutCategoriesCollectionView = UICollectionViewFlowLayout()
-        layoutCategoriesCollectionView.scrollDirection = .horizontal
-        layoutCategoriesCollectionView.minimumInteritemSpacing = 20
-        categoriesFoodCollectionView.delegate = self
-        categoriesFoodCollectionView.dataSource = self
-        categoriesFoodCollectionView.collectionViewLayout = layoutCategoriesCollectionView
-        categoriesFoodCollectionView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        categoriesFoodCollectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: "CategoriesCell")
-        categoriesFoodCollectionView.bounces = true
-        categoriesFoodCollectionView.selectItem(at: [0,0], animated: true, scrollPosition: [])
-        collectionViewHeightConstraint = categoriesFoodCollectionView.heightAnchor.constraint(equalToConstant: 50)
-        collectionViewHeightConstraint.isActive = true
-        categoriesFoodCollectionView.clipsToBounds = true
-        
-    }
-    
-    private func setupTableView() {
-        foodListTableView.delegate = self
-        foodListTableView.dataSource = self
-        foodListTableView.register(UINib(nibName: "FoodListTableViewCell", bundle: nil), forCellReuseIdentifier: "foodListCell")
+        let request = ChoiseFoodModel.FetchFood.Request(category: FoodType.allCases[indexPath.row], name: nil)
+        interactor?.fetchFoodList(request: request)
     }
     
     private func hideSearchBar() {
@@ -186,7 +130,6 @@ class ChoiseFoodViewController: UIViewController {
         hideSearchBarGesture.addTarget(self, action: #selector(tapForCloseSearchBar))
         view.addGestureRecognizer(hideSearchBarGesture)
         
-        
         UIView.animate(withDuration: 0.1) {
             self.categoriesFoodCollectionView.alpha = 0
         } completion: { done in
@@ -205,14 +148,73 @@ class ChoiseFoodViewController: UIViewController {
     @objc private func tapForCloseSearchBar() {
         hideSearchBar()
     }
+    
+    //MARK: - Configure Views
+    
+    private func configureDimmingView() {
+        blurEffect = UIBlurEffect(style: .dark)
+        dimmingView = UIVisualEffectView(frame: view.bounds)
+        dimmingView.effect = blurEffect
+        dimmingView.alpha = 0
+    }
+    
+    private func configureNavigationView() {
+        backButton.tintColor = .black
+        backButton.image = UIImage(systemName: "chevron.backward")
+        searchButton.tintColor = .black
+        searchButton.image = UIImage(systemName: "magnifyingglass")
+        navigationItem.hidesBackButton = true
+        navigationItem.leftBarButtonItem = backButton
+        navigationItem.rightBarButtonItem = searchButton
+        backButton.target = self
+        backButton.action = #selector(backButtonTapped(sender:))
+        searchButton.target = self
+        searchButton.action = #selector(searchButtonTapped(sender:))
+        configureSearchBar()
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    private func configureSearchBar() {
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.delegate = self
+        searchController.delegate = self
+        searchController.searchResultsUpdater = self
+        searchController.resignFirstResponder()
+        searchController.searchBar.showsCancelButton = true
+        searchController.searchBar.placeholder = "Search".localized()
+        searchController.searchBar.setValue("Cancel".localized(), forKey: "cancelButtonText")
+        searchController.searchBar.tintColor = .black
+    }
+    
+    private func configureCollectionView() {
+        let layoutCategoriesCollectionView = UICollectionViewFlowLayout()
+        layoutCategoriesCollectionView.scrollDirection = .horizontal
+        layoutCategoriesCollectionView.minimumInteritemSpacing = 20
+        categoriesFoodCollectionView.delegate = self
+        categoriesFoodCollectionView.dataSource = self
+        categoriesFoodCollectionView.collectionViewLayout = layoutCategoriesCollectionView
+        categoriesFoodCollectionView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        categoriesFoodCollectionView.register(CategoriesCollectionViewCell.self, forCellWithReuseIdentifier: "CategoriesCell")
+        categoriesFoodCollectionView.bounces = true
+        categoriesFoodCollectionView.selectItem(at: [0,0], animated: true, scrollPosition: [])
+        collectionViewHeightConstraint = categoriesFoodCollectionView.heightAnchor.constraint(equalToConstant: 50)
+        collectionViewHeightConstraint.isActive = true
+        categoriesFoodCollectionView.clipsToBounds = true
+    }
+    
+    private func configureTableView() {
+        foodListTableView.delegate = self
+        foodListTableView.dataSource = self
+        foodListTableView.register(UINib(nibName: "FoodListTableViewCell", bundle: nil), forCellReuseIdentifier: "foodListCell")
+    }
 }
 
-//MARK: - UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating
+//MARK: - UISearchBarDelegate
 
 extension ChoiseFoodViewController: UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        let request = ChoiseFood.ShowFood.Request(category: nil, name: searchController.searchBar.text)
-        interactor?.showFoodList(request: request)
+        let request = ChoiseFoodModel.FetchFood.Request(category: nil, name: searchController.searchBar.text)
+        interactor?.fetchFoodList(request: request)
         isOpenAnimation = false
     }
     
@@ -221,7 +223,7 @@ extension ChoiseFoodViewController: UISearchBarDelegate, UISearchControllerDeleg
     }
 }
 
-//MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
+//MARK: - UICollectionViewDelegate
 
 extension ChoiseFoodViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -236,7 +238,6 @@ extension ChoiseFoodViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         let categoryFont = UIFont(name: "Inter-SemiBold", size: 24)
         let categoryAttributes = [NSAttributedString.Key.font : categoryFont as Any]
         let categoryWidth = FoodType.allCases[indexPath.item].rawValue.localized().size(withAttributes: categoryAttributes).width
@@ -248,13 +249,11 @@ extension ChoiseFoodViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         foodListTableView.scrollToRow(at: [0, 0], at: .top, animated: false)
-        
-        let request = ChoiseFood.ShowFood.Request(category: FoodType.allCases[indexPath.row], name: nil)
-        interactor?.showFoodList(request: request)
+        didSelectCategoryItem(at: indexPath)
     }
 }
 
-//MARK: - UITableViewDelegate, UITableViewDataSource
+//MARK: - UITableViewDelegate
 
 extension ChoiseFoodViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -291,21 +290,6 @@ extension ChoiseFoodViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-//MARK: - ChoiseFoodDisplayLogic
-
-extension ChoiseFoodViewController: ChoiseFoodDisplayLogic {
-    
-    func displayCategories(viewModel: ChoiseFood.ShowCategoriesFood.ViewModel) {
-        categoriesName = viewModel.categoriesName
-    }
-    
-    func displayFood(viewModel: ChoiseFood.ShowFood.ViewModel) {
-        foodList = viewModel.displayedFood
-        isOpenAnimation = true
-        foodListTableView.reloadData()
-    }
-}
-
 //MARK: - UIViewControllerTransitioningDelegate
 
 extension ChoiseFoodViewController: UIViewControllerTransitioningDelegate {
@@ -332,4 +316,21 @@ extension ChoiseFoodViewController: UIViewControllerAnimatedTransitioning {
         }
         trasitionAnimationForAddFoodVC(for: self, height: height, using: transitionContext, and: dimmingView)
     }
+}
+
+//MARK: - ChoiseFoodDisplayLogic
+
+extension ChoiseFoodViewController: ChoiseFoodDisplayLogic {
+    
+    func displayCategories(viewModel: ChoiseFoodModel.FetchCategories.ViewModel) {
+        categoriesName = viewModel.categoriesName
+    }
+    
+    func displayFood(viewModel: ChoiseFoodModel.FetchFood.ViewModel) {
+        foodList = viewModel.displayedFood
+        isOpenAnimation = true
+        foodListTableView.reloadData()
+    }
+    
+    func displayItem(viewModel: ChoiseFoodModel.FetchItem.ViewModel) {}
 }

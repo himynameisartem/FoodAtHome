@@ -82,7 +82,7 @@ class MyFoodPresenter: MyFoodPresentationLogic {
     }
     
     func presentConfirmRemoveAllMyFood(response: MyFoodModel.ConfirmRemoveAllMyFood.Response) {
-        let viewModel = MyFoodModel.ConfirmRemoveAllMyFood.ViewModel()
+        let viewModel = MyFoodModel.ConfirmRemoveAllMyFood.ViewModel(isSuccess: true)
         viewController?.displayConfirmRemoveAllMyFood(viewModel: viewModel)
     }
     

@@ -8,32 +8,28 @@
 import UIKit
 
 protocol ShoppingListDisplayLogic: AnyObject {
-    func displayData(viewModel: ShoppingListModel.ShowFood.ViewModel)
-    func deleteFood()
-    func displayMoveToMyFood(viewModel: ShoppingListModel.AddToMyFood.ViewModel)
-//    func deleteAllFood()
+    func displayData(viewModel: ShoppingListModel.FetchShoppingList.ViewModel)
+    func deleteFood(viewModel: ShoppingListModel.DeleteFood.ViewModel)
+    func displayAddToMyFood(viewModel: ShoppingListModel.AddToMyFood.ViewModel)
+    func displayConfirmEditingFood(viewModel: ShoppingListModel.ConfirmEditingFood.ViewModel)
+    func displayConfirmAddToMyFood(viewModel: ShoppingListModel.ConfirmAddToMyFood.ViewModel)
+    func displayEditingFood(viewModel: ShoppingListModel.PrepareEditing.ViewModel)
+    func displaySharedShoppingList(viewModel: ShoppingListModel.FetchSharedShoppingList.ViewModel)
+    func displayConfirmRemoveAllShoppingList(viewModel: ShoppingListModel.ConfirmRemoveAllShoppingList.ViewModel)
+    func displayRemoveAllShoppingList(viewModel: ShoppingListModel.RemoveAllShoppingList.ViewModel)
 }
 
 class ShoppingListViewController: UIViewController {
     
-    @IBOutlet weak var shoppingListTableView: UITableView!
-    @IBOutlet weak var titleBalLabel: UILabel! //исправить название
-    
     var interactor: ShoppingListBusinessLogic?
     var router: (NSObjectProtocol & ShoppingListRoutingLogic & ShoppingListDataPassing)?
-    
-    var shoppingListItems: [ShoppingListModel.ShowFood.ViewModel.DisplayedFood] = []
-    
-    var menuType: ShoppingListModel.EditingFood.ViewModel?
-    
-    private var dimmingView: UIVisualEffectView!
-    private var blurEffect: UIVisualEffect!
     
     // MARK: Setup
     
     private func setup() {
         let viewController = self
-        let interactor = ShoppingListInteractor()
+        let worker = ShoppingListWorker()
+        let interactor = ShoppingListInteractor(worker: worker)
         let presenter = ShoppingListPresenter()
         let router = ShoppingListRouter()
         viewController.interactor = interactor
@@ -42,6 +38,17 @@ class ShoppingListViewController: UIViewController {
         presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
+    }
+    
+    // MARK: Routing
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let scene = segue.identifier {
+            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
+            if let router = router, router.responds(to: selector) {
+                router.perform(selector, with: segue)
+            }
+        }
     }
     
     // MARK: View lifecycle
@@ -54,29 +61,43 @@ class ShoppingListViewController: UIViewController {
         super.viewDidLoad()
         setup()
         configureNavigationBar()
+        configureActivitiIndicator()
         fetchShoppingList()
         configureTableView()
         configureDimmingView()
     }
-        
-    // MARK: Routing
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
-    }
+    @IBOutlet weak var shoppingListTableView: UITableView!
+    @IBOutlet weak var titleBalLabel: UILabel! //исправить название
+    
+    private var shoppingListItems: [ShoppingListModel.FetchShoppingList.ViewModel.DisplayedFood] = []
+    private var sharedActivitiIndicator: UIActivityIndicatorView!
+    private var dimmingView: UIVisualEffectView!
+    private var blurEffect: UIVisualEffect!
     
     @IBAction func addFoodButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "ChoiseFoodForShoppingList", sender: nil)
     }
     
+    @IBAction func didTapDeleteButton(_ sender: Any) {
+        let request = ShoppingListModel.RemoveAllShoppingList.Request()
+        interactor?.removeAllShoppingList(request: request)
+    }
+    
+    @IBAction func didTapShareButton(_ sender: Any) {
+        let request = ShoppingListModel.FetchSharedShoppingList.Request()
+        interactor?.fetchSharedShoppingList(request: request)
+    }
+    
     private func fetchShoppingList() {
-        let request = ShoppingListModel.ShowFood.Request()
-        interactor?.showFoodList(request: request)
+        let request = ShoppingListModel.FetchShoppingList.Request()
+        interactor?.fetchFoodList(request: request)
+    }
+    
+    private func editAndMoveItem(at indexPath: IndexPath) {
+        let request = ShoppingListModel.PrepareEditing.Request(indexPath: indexPath)
+        interactor?.prepareEditingFood(request: request)
+        router?.routeToAddFood()
     }
     
     private func configureNavigationBar() {
@@ -85,6 +106,14 @@ class ShoppingListViewController: UIViewController {
         let height = navigationController?.navigationBar.frame.height ?? 0
         let width = view.frame.width / 2
         titleBalLabel.frame = CGRect(x: x, y: y, width: width, height: height)
+    }
+    
+    private func configureActivitiIndicator() {
+        sharedActivitiIndicator = UIActivityIndicatorView(frame: view.bounds)
+        view.addSubview(sharedActivitiIndicator)
+        sharedActivitiIndicator.center = view.center
+        sharedActivitiIndicator.style = .large
+        sharedActivitiIndicator.hidesWhenStopped = true
     }
     
     private func configureTableView() {
@@ -98,15 +127,17 @@ class ShoppingListViewController: UIViewController {
         dimmingView.alpha = 0
     }
     
-    private func editAndMoveItem(at indexPath: IndexPath) {
-        let request = ShoppingListModel.EditingFood.Request(indexPath: indexPath)
-        interactor?.getEditingFood(request: request)
-        router?.routeToAddFood()
-    }
-    
-    private func moveItem(at indexPath: IndexPath) {
-        let request = ShoppingListModel.AddToMyFood.Request(indexPath: indexPath)
-        interactor?.moveToMyFood(request: request)
+    private func configureContextualMenu(action: UIContextualAction,_ imageName: String) {
+        action.backgroundColor = .systemGray5
+        action.image = UIImage(named: imageName)
+        action.image?.withRenderingMode(.alwaysOriginal)
+        action.backgroundColor = .systemGray6
+        let buttonSize = CGSize(width: 50, height: 50)
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        action.image = UIGraphicsImageRenderer(size: buttonSize).image { _ in
+            UIBezierPath(roundedRect: CGRect(origin: CGPoint(x: 0, y: 0), size: buttonSize), cornerRadius: buttonSize.width / 2).addClip()
+            action.image?.draw(in: CGRect(origin: CGPoint(x: 0, y: 0), size: buttonSize).inset(by: insets))
+        }
     }
 }
 
@@ -130,21 +161,12 @@ extension ShoppingListViewController: UITableViewDelegate, UITableViewDataSource
             self.interactor?.deleteFood(request: request)
         }
         let successItem = UIContextualAction(style: .normal, title: nil) { contextialAction, view, boolCompletion in
-            let yesAction = UIAlertAction(title: "Yes".localized(), style: .default) { _ in
-                self.editAndMoveItem(at: indexPath)
-                boolCompletion(true)
-            }
-            let noAction = UIAlertAction(title: "No".localized(), style: .cancel) { _ in
-                self.moveItem(at: indexPath)
-                boolCompletion(true)
-            }
-            let alertController = UIAlertController(title: "Add an expiration date?".localized(), message: nil, preferredStyle: .alert)
-            alertController.addAction(yesAction)
-            alertController.addAction(noAction)
-            self.present(alertController, animated: true)
+            let request = ShoppingListModel.AddToMyFood.Request(indexPath: indexPath,
+                                                                completion: boolCompletion)
+            self.interactor?.addToMyFood(request: request)
         }
-        setupContextualMenu(action: deleteItem, "delete")
-        setupContextualMenu(action: successItem, "success")
+        configureContextualMenu(action: deleteItem, "delete")
+        configureContextualMenu(action: successItem, "success")
         let configuration = UISwipeActionsConfiguration(actions: [successItem, deleteItem])
         configuration.performsFirstActionWithFullSwipe = false
         return configuration
@@ -155,38 +177,23 @@ extension ShoppingListViewController: UITableViewDelegate, UITableViewDataSource
             self.router?.routeToEditShoppingList()
             boolCompletion(true)
         }
-        setupContextualMenu(action: editItem, "edit")
+        configureContextualMenu(action: editItem, "edit")
         let configuration = UISwipeActionsConfiguration(actions: [editItem])
         configuration.performsFirstActionWithFullSwipe = false
         return configuration
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        (view.frame.width - 30) / 3.6
         let height = view.frame.width / 3.9
         return height
-    }
-    
-    func setupContextualMenu(action: UIContextualAction,_ imageName: String) {
-        action.backgroundColor = .systemGray5
-        action.image = UIImage(named: imageName)
-
-        action.image?.withRenderingMode(.alwaysOriginal)
-        action.backgroundColor = .systemGray6
-        let buttonSize = CGSize(width: 50, height: 50)
-        let insets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        action.image = UIGraphicsImageRenderer(size: buttonSize).image { _ in
-            UIBezierPath(roundedRect: CGRect(origin: CGPoint(x: 0, y: 0), size: buttonSize), cornerRadius: buttonSize.width / 2).addClip()
-            action.image?.draw(in: CGRect(origin: CGPoint(x: 0, y: 0), size: buttonSize).inset(by: insets))
-        }
     }
 }
 
 //MARK: - UIViewControllerTransitioningDelegate
 
 extension ShoppingListViewController: UIViewControllerTransitioningDelegate {
-    
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        fetchShoppingList()
         return self
     }
     
@@ -216,21 +223,67 @@ extension ShoppingListViewController: UIViewControllerAnimatedTransitioning {
 
 extension ShoppingListViewController: ShoppingListDisplayLogic {
     
-    func displayData(viewModel: ShoppingListModel.ShowFood.ViewModel) {
+    func displayData(viewModel: ShoppingListModel.FetchShoppingList.ViewModel) {
         shoppingListItems = viewModel.displayedFood
         shoppingListTableView.reloadData()
     }
     
-    func displayMoveToMyFood(viewModel: ShoppingListModel.AddToMyFood.ViewModel) {
-        if let tabBarController = self.navigationController?.tabBarController as? UITabBarController {
-            if tabBarController.selectedIndex == 0 {
-                tabBarController.selectedIndex = 1
+    func displayAddToMyFood(viewModel: ShoppingListModel.AddToMyFood.ViewModel) {
+        let alertController = UIAlertController(title: viewModel.alerTitle, message: nil, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: viewModel.yesActionTitle, style: .default, handler: { _ in
+            viewModel.completion(true)
+            let request = ShoppingListModel.ConfirmEditingFood.Request(indexPath: viewModel.indexPath)
+            self.interactor?.confirmEditingFood(request: request)
+            self.router?.routeToAddFood()
+        }))
+        alertController.addAction(UIAlertAction(title: viewModel.noActionTitle, style: .cancel, handler: { _ in
+            viewModel.completion(true)
+            let request = ShoppingListModel.ConfirmAddToMyFood.Request()
+            self.interactor?.confirmAddToMyFood(request: request)
+        }))
+        self.present(alertController, animated: true)
+    }
+    
+    func displayConfirmEditingFood(viewModel: ShoppingListModel.ConfirmEditingFood.ViewModel) {}
+    
+    func displayConfirmAddToMyFood(viewModel: ShoppingListModel.ConfirmAddToMyFood.ViewModel) {}
+        
+    func deleteFood(viewModel: ShoppingListModel.DeleteFood.ViewModel) {
+        DispatchQueue.main.async {
+            self.fetchShoppingList()
+        }
+    }
+    
+    func displayEditingFood(viewModel: ShoppingListModel.PrepareEditing.ViewModel) {}
+    
+    func displaySharedShoppingList(viewModel: ShoppingListModel.FetchSharedShoppingList.ViewModel) {
+        sharedActivitiIndicator.startAnimating()
+        let controller = UIActivityViewController(
+            activityItems: [viewModel.foodList],
+          applicationActivities: nil
+        )
+        DispatchQueue.main.async{
+            self.present(controller, animated: true, completion: nil)
+            if controller.isViewLoaded  {
+                self.sharedActivitiIndicator.stopAnimating()
             }
         }
     }
-        
-    func deleteFood() {
-        DispatchQueue.main.async {
+    
+    func displayRemoveAllShoppingList(viewModel: ShoppingListModel.RemoveAllShoppingList.ViewModel) {
+        let alertController = UIAlertController(title: viewModel.alertTitle,
+                                                message: viewModel.alertMessage,
+                                                preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: viewModel.confirmActionTitle, style: .destructive, handler: { _ in
+            let request = ShoppingListModel.ConfirmRemoveAllShoppingList.Request()
+            self.interactor?.confirmRemoveAllShoppingList(request: request)
+        }))
+        alertController.addAction(UIAlertAction(title: viewModel.cancelActionTitle, style: .cancel))
+        self.present(alertController, animated: true)
+    }
+    
+    func displayConfirmRemoveAllShoppingList(viewModel: ShoppingListModel.ConfirmRemoveAllShoppingList.ViewModel) {
+        if viewModel.isSuccess {
             self.fetchShoppingList()
         }
     }

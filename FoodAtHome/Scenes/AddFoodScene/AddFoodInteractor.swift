@@ -8,8 +8,12 @@
 import UIKit
 
 protocol AddFoodBusinessLogic {
-    func showSelectedFood(request: AddFoodModel.ShowFood.Request)
+    func showSelectedFood(request: AddFoodModel.FetchFood.Request)
+    func checkWeigthField(request: AddFoodModel.CheckWeightField.Request)
+    func checkParent(request: AddFoodModel.CheckParent.Request)
+    func checkDuplicateFood(request: AddFoodModel.CheckDuplicateFood.Request)
     func addSelectedFood(request: AddFoodModel.AddFood.Request)
+    func changeSelectedFood(request: AddFoodModel.ChangeFood.Request)
     func updateDates(request: AddFoodModel.DateUpdate.Request)
     func updatePickerValues(request: AddFoodModel.DatePickerValueUpdate.Request)
 }
@@ -22,69 +26,56 @@ class AddFoodInteractor: AddFoodBusinessLogic, AddFoodDataStore {
     
     var presenter: AddFoodPresentationLogic?
     var food = FoodRealm()
-    var worker: AddFoodWorker?
+    var worker: AddFoodWorkerProtocol
     
-    func showSelectedFood(request: AddFoodModel.ShowFood.Request) {
-        let responce = AddFoodModel.ShowFood.Response(food: food)
+    init (worker: AddFoodWorkerProtocol) {
+        self.worker = worker
+    }
+    
+    func showSelectedFood(request: AddFoodModel.FetchFood.Request) {
+        let responce = AddFoodModel.FetchFood.Response(food: food)
         presenter?.presentData(response: responce)
     }
     
-    func addSelectedFood(request: AddFoodModel.AddFood.Request) {
-        worker = AddFoodWorker()
-        guard let worker = worker else { return }
-        let food = worker.getFoodForAdding(from: request, and: food)
-        let isDuplicate = DataManager.shared.checkFoDuplicates(food: food)
-        let isEditing = worker.isEditingFood(request.view)
-                
+    func checkWeigthField(request: AddFoodModel.CheckWeightField.Request) {
         if request.weight == "" {
-            let weigtCheckAlertController = UIAlertController(title: "Enter the weight of the product".localized(),
-                                                          message: nil,
-                                                          preferredStyle: .alert)
-            weigtCheckAlertController.addAction(UIAlertAction(title: "OK".localized(), style: .default))
-            let response = AddFoodModel.AddFood.Response(alertController: weigtCheckAlertController)
-            self.presenter?.presentAddSelectedFood(responce: response)
+            presenter?.presentCheckWeightField(response: AddFoodModel.CheckWeightField.Response(shouldConfirm: true))
         } else {
-            if !isEditing {
-                if isDuplicate {
-                    let changeFoodAlertController = UIAlertController(title: "You already have this product".localized(),
-                                                                      message: "Do you want to replace it?".localized(),
-                                                                      preferredStyle: .alert)
-                    changeFoodAlertController.addAction(UIAlertAction(title: "Yes".localized(), style: .destructive, handler: { _ in
-                        if food.isShoppingList {
-                            DataManager.shared.changeAndEdit(food)
-                            let response = AddFoodModel.AddFood.Response(alertController: nil)
-                            self.presenter?.presentAddSelectedFood(responce: response)
-                        } else {
-                            DataManager.shared.changeAndEdit(food)
-                            let response = AddFoodModel.AddFood.Response(alertController: nil)
-                            self.presenter?.presentAddSelectedFood(responce: response)
-                        }
-                    }))
-                    changeFoodAlertController.addAction(UIAlertAction(title: "No".localized(), style: .cancel))
-                        let response = AddFoodModel.AddFood.Response(alertController: changeFoodAlertController)
-                        presenter?.presentAddSelectedFood(responce: response)
-                } else {
-                    if food.isShoppingList {
-                        DataManager.shared.writeFood(food)
-                        let response = AddFoodModel.AddFood.Response(alertController: nil)
-                        self.presenter?.presentAddSelectedFood(responce: response)
-                    } else {
-                        DataManager.shared.writeFood(food)
-                        let response = AddFoodModel.AddFood.Response(alertController: nil)
-                        self.presenter?.presentAddSelectedFood(responce: response)
-                    }
-                }
-            } else {
-                DataManager.shared.changeAndEdit(food)
-                let response = AddFoodModel.AddFood.Response(alertController: nil)
-                self.presenter?.presentAddSelectedFood(responce: response)
-            }
+            presenter?.presentCheckWeightField(response: AddFoodModel.CheckWeightField.Response(shouldConfirm: false))
         }
     }
     
+    func checkParent(request: AddFoodModel.CheckParent.Request) {
+        if worker.isEditingFood(request.view) {
+            presenter?.presentCheckParent(response: AddFoodModel.CheckParent.Response(isEditing: true))
+        } else {
+            presenter?.presentCheckParent(response: AddFoodModel.CheckParent.Response(isEditing: false))
+        }
+    }
+    
+    func checkDuplicateFood(request: AddFoodModel.CheckDuplicateFood.Request) {
+        if worker.checkMyFoodListDuplicate(foodName: food.name) {
+            let response = AddFoodModel.CheckDuplicateFood.Response(isDuplicate: true)
+            presenter?.presentCheckDuplicateFood(response: response)
+        } else {
+            let response = AddFoodModel.CheckDuplicateFood.Response(isDuplicate: false)
+            presenter?.presentCheckDuplicateFood(response: response)
+        }
+    }
+    
+    func addSelectedFood(request: AddFoodModel.AddFood.Request) {
+        worker.addFoodToMyFoodList(food: worker.fetchFoodForAdding(from: request, and: food))
+        let response = AddFoodModel.AddFood.Response(shouldConfirm: true)
+        presenter?.presentAddSelectedFood(responce: response)
+    }
+    
+    func changeSelectedFood(request: AddFoodModel.ChangeFood.Request) {
+        worker.changeDuplicateFood(food: worker.fetchFoodForAdding(from: request, and: food))
+        let response = AddFoodModel.ChangeFood.Response(shouldConfirm: true)
+        presenter?.presentChangeSelectedFood(response: response)
+    }
+    
     func updateDates(request: AddFoodModel.DateUpdate.Request) {
-        worker = AddFoodWorker()
-        guard let worker = worker else { return }
         var productionDate = request.productionDate
         var expirationDate = request.expirationDate
         var consumeUpMonths = request.consumeUpMonths
@@ -119,19 +110,15 @@ class AddFoodInteractor: AddFoodBusinessLogic, AddFoodDataStore {
                 productionDate: productionDate
             )
         }
-        let response = AddFoodModel.DateUpdate.Response(
-            productionDate: productionDate,
-            expirationDate: expirationDate,
-            consumeUpMonths: consumeUpMonths,
-            consumeUpDays: consumeUpDays
+        let response = AddFoodModel.DateUpdate.Response(productionDate: productionDate,
+                                                        expirationDate: expirationDate,
+                                                        consumeUpMonths: consumeUpMonths,
+                                                        consumeUpDays: consumeUpDays
         )
-        
         presenter?.presentUpdatedDates(response: response)
     }
     
     func updatePickerValues(request: AddFoodModel.DatePickerValueUpdate.Request) {
-        worker = AddFoodWorker()
-        guard let worker = worker else { return }
         let productionDate = request.productionDate
         let expirationDate = request.expirationDate
         
@@ -157,9 +144,7 @@ class AddFoodInteractor: AddFoodBusinessLogic, AddFoodDataStore {
                                                                    pickerMinValue: nil,
                                                                    pickerMaxValue: nil,
                                                                    consumeUpDate: consumeUpDatePickerValues)
-            
         }
-        
         presenter?.presentPickerValues(response: response)
     }
 }

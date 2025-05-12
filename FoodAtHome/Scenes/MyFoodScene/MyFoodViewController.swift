@@ -303,13 +303,16 @@ extension MyFoodViewController: MyFoodDisplayLogic {
         alertController.addAction(UIAlertAction(title: viewModel.confirmActionTitle, style: .destructive, handler: { _ in
             let request = MyFoodModel.ConfirmRemoveAllMyFood.Request()
             self.interactor?.confirmRemoveAllMyFood(request: request)
-            self.fetchMyFood()
         }))
         alertController.addAction(UIAlertAction(title: viewModel.cancelActionTitle, style: .cancel))
         self.present(alertController, animated: true)
     }
     
-    func displayConfirmRemoveAllMyFood(viewModel: MyFoodModel.ConfirmRemoveAllMyFood.ViewModel) {}
+    func displayConfirmRemoveAllMyFood(viewModel: MyFoodModel.ConfirmRemoveAllMyFood.ViewModel) {
+        if viewModel.isSuccess {
+            self.fetchMyFood()
+        }
+    }
     
     func displaySharedFood(viewModel: MyFoodModel.FetchSharedFood.ViewModel) {
         sharedActivitiIndicator.startAnimating()

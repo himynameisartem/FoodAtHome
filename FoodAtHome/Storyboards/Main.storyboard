@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Th2-oB-Mdp">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -37,7 +38,7 @@
                 <navigationController toolbarHidden="NO" id="Mmu-Hz-9IK" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Food at Home" image="house.fill" catalog="system" id="Qi6-R9-dss"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9O1-YO-dYE">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <rect key="frame" x="0.0" y="118" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -56,11 +57,11 @@
                         <imageReference key="image" image="list.bullet.rectangle.portrait.fill" catalog="system" variableValue="0.0"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="uTx-SV-m9J">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <rect key="frame" x="0.0" y="118" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CNP-KT-2Qg">
-                        <rect key="frame" x="0.0" y="720" width="393" height="49"/>
+                        <rect key="frame" x="0.0" y="686" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -132,13 +133,13 @@
                             <barButtonItem image="trash" catalog="system" id="dV3-m5-TJa">
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
-                                    <action selector="didTapDeleteAllMyFoodButton:" destination="aSf-Dj-mpe" id="93C-V0-DwH"/>
+                                    <action selector="didTapDeleteButton:" destination="EE8-Vq-ohx" id="fGB-65-MdB"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem image="square.and.arrow.up" catalog="system" id="lse-hB-5fR">
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
-                                    <action selector="didTapShareButton:" destination="aSf-Dj-mpe" id="dia-CZ-q2m"/>
+                                    <action selector="didTapShareButton:" destination="EE8-Vq-ohx" id="j6a-bX-f4J"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -391,11 +392,11 @@
                 <navigationController toolbarHidden="NO" id="aCa-5p-aFo" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Settings" image="gearshape.fill" catalog="system" id="E3Y-fX-VHy"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="3mk-A3-0YS">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <rect key="frame" x="0.0" y="118" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ei5-on-lzl">
-                        <rect key="frame" x="0.0" y="720" width="393" height="49"/>
+                        <rect key="frame" x="0.0" y="686" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -462,10 +463,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBrownColor">
-            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

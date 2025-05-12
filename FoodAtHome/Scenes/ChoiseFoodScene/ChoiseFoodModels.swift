@@ -3,26 +3,23 @@
 //  FoodAtHome
 //
 //  Created by Артем Кудрявцев on 27.08.2024.
-//  Copyright (c) 2024 ___ORGANIZATIONNAME___. All rights reserved.
 //
 
 import UIKit
 
-enum ChoiseFood {
+enum ChoiseFoodModel {
     
-    enum ShowCategoriesFood {
-        struct Request {
-        }
+    enum FetchCategories {
+        struct Request {}
         struct Response {
             let categoriesName: [String]
         }
         struct ViewModel {
             let categoriesName: [String]
-
         }
     }
    
-  enum ShowFood {
+  enum FetchFood {
     struct Request {
         let category: FoodType?
         let name: String?
@@ -40,15 +37,11 @@ enum ChoiseFood {
     }
   }
     
-    enum AddFood {
+    enum FetchItem {
         struct Request {
             let foodName: String
         }
-        
-        struct Response {
-        }
-        
-        struct ViewModel {
-        }
+        struct Response {}
+        struct ViewModel {}
     }
 }

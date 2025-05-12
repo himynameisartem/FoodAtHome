@@ -20,7 +20,7 @@ class ShoppingListTableViewCell: UITableViewCell {
         setupUI()
     }
     
-    func configure(viewModel: ShoppingListModel.ShowFood.ViewModel.DisplayedFood) {
+    func configure(viewModel: ShoppingListModel.FetchShoppingList.ViewModel.DisplayedFood) {
         foodImageView.image = UIImage(named: viewModel.imageName)
         foodNameLabel.text = viewModel.name
         weightLabel.text = viewModel.weight + " " + viewModel.unit

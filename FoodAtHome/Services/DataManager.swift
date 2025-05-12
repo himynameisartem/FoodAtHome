@@ -76,16 +76,27 @@ extension DataManager {
                     existingFood.consumeUp = food.consumeUp
                     existingFood.unit = food.unit
                 }
-                
                 if let shoppingItem = shoppingList.first(where: { $0.name == food.name }) {
-                    localRealm.delete(shoppingItem)
+//                    localRealm.delete(shoppingItem)
                 }
             } else {
                 if shoppingList.contains(where: { $0.name == food.name }) {
-                    food.isShoppingList = false
+                    if let existingFood = shoppingList.first(where: { $0.name == food.name }) {
+                        existingFood.weight = food.weight
+                        existingFood.expirationDate = food.expirationDate
+                        existingFood.productionDate = food.productionDate
+                        existingFood.consumeUp = food.consumeUp
+                        existingFood.unit = food.unit
+                    }
+                    shoppingList.filter({$0.name == food.name}).first?.isShoppingList = false
                 }
             }
         }
+    }
+    
+    func checkMyFoodListDuplicate(foodName: String) -> Bool {
+        let results = Array(localRealm.objects(FoodRealm.self)).filter {!$0.isShoppingList}
+        return results.contains(where: { $0.name == foodName })
     }
     
     func delete(food: FoodRealm) {

@@ -73,7 +73,7 @@ class MyFoodInteractor: MyFoodBusinessLogic, MyFoodDataStore {
     
     func confirmRemoveAllMyFood(request: MyFoodModel.ConfirmRemoveAllMyFood.Request) {
         worker.removeAllFood()
-        let response = MyFoodModel.ConfirmRemoveAllMyFood.Response()
+        let response = MyFoodModel.ConfirmRemoveAllMyFood.Response(isConfirm: true)
         presenter?.presentConfirmRemoveAllMyFood(response: response)
     }
     

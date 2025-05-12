@@ -8,13 +8,57 @@
 import UIKit
 
 protocol AddFoodDisplayLogic: AnyObject {
-    func displayData(viewModel: AddFoodModel.ShowFood.ViewModel)
+    func displayData(viewModel: AddFoodModel.FetchFood.ViewModel)
+    func displayCheckWeightField(viewModel: AddFoodModel.CheckWeightField.ViewModel)
+    func displayCheckParent(viewModel: AddFoodModel.CheckParent.ViewModel)
+    func displayCheckDuplicateFood(viewModel: AddFoodModel.CheckDuplicateFood.ViewModel)
+    func displayAddSelectedFood(viewModel: AddFoodModel.AddFood.ViewModel)
+    func displayChangeSelectedFood(viewModel: AddFoodModel.ChangeFood.ViewModel)
     func displayUpdatedDates(viewModel: AddFoodModel.DateUpdate.ViewModel)
     func displayUpdatePickerValues(viewModel: AddFoodModel.DatePickerValueUpdate.ViewModel)
-    func displayAlert(viewModel: AddFoodModel.AddFood.ViewModel)
 }
 
 class AddFoodViewController: UIViewController {
+    
+    var interactor: AddFoodBusinessLogic?
+    var router: (NSObjectProtocol & AddFoodRoutingLogic & AddFoodDataPassing)?
+    
+    // MARK: Setup
+    
+    private func setup() {
+        let viewController = self
+        let worker = AddFoodWorker()
+        let interactor = AddFoodInteractor(worker: worker)
+        let presenter = AddFoodPresenter()
+        let router = AddFoodRouter()
+        viewController.interactor = interactor
+        viewController.router = router
+        interactor.presenter = presenter
+        presenter.viewController = viewController
+        router.viewController = viewController
+        router.dataStore = interactor
+    }
+    
+    // MARK: Object lifecycle
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    // MARK: View lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureUI()
+        setupConstraints()
+        getFood()
+    }
     
     private let closeButton: UIButton = {
         let button = UIButton()
@@ -143,59 +187,17 @@ class AddFoodViewController: UIViewController {
         button.setTitle("Add".localized(), for: .normal)
         return button
     }()
-    
     private var panGestureRecognizer = UIPanGestureRecognizer()
     private var initialY: CGFloat = 0
-    
     private let monthWheel: [Int] = Array(0...48)
     private let daysWheel: [Int] = Array(0...31)
-    
-    var interactor: AddFoodBusinessLogic?
-    var router: (NSObjectProtocol & AddFoodRoutingLogic & AddFoodDataPassing)?
-    
-    // MARK: Object lifecycle
-    
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    // MARK: View lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupUI()
-        setupConstraints()
-        getFood()
-    }
-    
-    // MARK: Setup
-    
-    
-    private func setup() {
-        let viewController = self
-        let interactor = AddFoodInteractor()
-        let presenter = AddFoodPresenter()
-        let router = AddFoodRouter()
-        viewController.interactor = interactor
-        viewController.router = router
-        interactor.presenter = presenter
-        presenter.viewController = viewController
-        router.viewController = viewController
-        router.dataStore = interactor
-    }
-    
+
     private func getFood() {
-        let request = AddFoodModel.ShowFood.Request()
+        let request = AddFoodModel.FetchFood.Request()
         interactor?.showSelectedFood(request: request)
     }
     
-    private func setupUI() {
+    private func configureUI() {
         self.view.backgroundColor = .white
         self.view.layer.cornerRadius = 10
         self.view.layer.masksToBounds = true
@@ -222,21 +224,42 @@ class AddFoodViewController: UIViewController {
         rightStackView.addArrangedSubview(productionDateTextField)
         rightStackView.addArrangedSubview(expirationDateTextField)
         rightStackView.addArrangedSubview(consumeUpTextField)
-        
         weightTextField.delegate = self
         productionDateTextField.delegate = self
         expirationDateTextField.delegate = self
         consumeUpTextField.delegate = self
-        
         panGestureRecognizer.addTarget(self, action: #selector(handlePanGestureRecognizer))
         view.addGestureRecognizer(panGestureRecognizer)
         view.addSubview(addButton)
-        
-//        guard let productionDateString = productionDateTextField.text else { return }
-//        if !productionDateString.isEmpty {
-//            expirationDateTextField.isEnabled = true
-//            consumeUpTextField.isEnabled = true
-//        }
+    }
+
+    private func performCloseAnimation() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.view.frame.origin.y = -self.view.frame.height
+        }, completion: { _ in
+            self.router?.navigateToTabBarController(window: self.view.window!)
+        })
+    }
+    
+    private func setupConstraints() {
+        let heightForMainStackView = (view.frame.height - view.frame.width / 2) - 170
+        NSLayoutConstraint.activate([
+            closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            foodImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            foodImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+            foodImageView.widthAnchor.constraint(equalToConstant: view.frame.width / 2),
+            foodImageView.heightAnchor.constraint(equalToConstant: view.frame.width / 2),
+            mainStackView.topAnchor.constraint(equalTo: foodImageView.bottomAnchor, constant: 40),
+            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            mainStackView.heightAnchor.constraint(equalToConstant: heightForMainStackView),
+            addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            addButton.heightAnchor.constraint(equalToConstant: 60),
+            mainStackView.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: -40),
+        ])
     }
     
     @objc private func didTapCloseButton() {
@@ -245,15 +268,6 @@ class AddFoodViewController: UIViewController {
         } completion: { _ in
             self.presentingViewController?.dismiss(animated: true)
         }
-    }
-    
-    
-    private func performCloseAnimation() {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.view.frame.origin.y = -self.view.frame.height
-        }, completion: { _ in
-            self.router?.navigateToTabBarController(window: self.view.window!)
-        })
     }
     
     @objc private func handlePanGestureRecognizer(_ gesture: UIPanGestureRecognizer) {
@@ -287,43 +301,11 @@ class AddFoodViewController: UIViewController {
         }
     }
     
-    @objc func didTapAddButton(_ sender: UIButton) {
-
-        let request = AddFoodModel.AddFood.Request(weight: weightTextField.text,
-                                                   unit: weightUnitButton.titleLabel?.text ?? "kg.".localized(),
-                                                   prductionDate: productionDateTextField.text,
-                                                   expirationDate: expirationDateTextField.text,
-                                                   view: self.view
-        )
+    @objc private func didTapAddButton(_ sender: UIButton) {
         sender.showAnimation(for: .withoutColor) {
-            self.interactor?.addSelectedFood(request: request)
+            let request = AddFoodModel.CheckWeightField.Request(weight: self.weightTextField.text)
+            self.interactor?.checkWeigthField(request: request)
         }
-    }
-    
-    private func setupConstraints() {
-        let heightForMainStackView = (view.frame.height - view.frame.width / 2) - 170
-        NSLayoutConstraint.activate([
-            closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
-            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            
-            foodImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            foodImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
-            foodImageView.widthAnchor.constraint(equalToConstant: view.frame.width / 2),
-            foodImageView.heightAnchor.constraint(equalToConstant: view.frame.width / 2),
-            
-            mainStackView.topAnchor.constraint(equalTo: foodImageView.bottomAnchor, constant: 40),
-            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            mainStackView.heightAnchor.constraint(equalToConstant: heightForMainStackView),
-            
-            addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-            addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
-            addButton.heightAnchor.constraint(equalToConstant: 60),
-            
-            mainStackView.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: -40),
-            
-        ])
     }
 }
 
@@ -335,7 +317,6 @@ extension AddFoodViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        
         if component == 0 {
             let firstComponent = String(monthWheel[row]) + "m.".localized()
             return firstComponent
@@ -417,7 +398,6 @@ extension AddFoodViewController: UIPopoverPresentationControllerDelegate {
             popover.permittedArrowDirections = .any
             popover.delegate = self
         }
-        
         present(menuVC, animated: true)
     }
     
@@ -464,7 +444,6 @@ extension AddFoodViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         var request: AddFoodModel.DateUpdate.Request
-        
         if textField == productionDateTextField {
             request = AddFoodModel.DateUpdate.Request(productionDate: textField.text,
                                                       expirationDate: expirationDateTextField.text,
@@ -494,12 +473,10 @@ extension AddFoodViewController: UITextFieldDelegate {
         } else {
             return
         }
-        
         interactor?.updateDates(request: request)
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        
         var request: AddFoodModel.DatePickerValueUpdate.Request
         if textField == productionDateTextField {
             request = AddFoodModel.DatePickerValueUpdate.Request(activeField: .productionDate,
@@ -528,7 +505,7 @@ extension AddFoodViewController: UITextFieldDelegate {
 
 extension AddFoodViewController: AddFoodDisplayLogic {
     
-    func displayData(viewModel: AddFoodModel.ShowFood.ViewModel) {
+    func displayData(viewModel: AddFoodModel.FetchFood.ViewModel) {
         foodImageView.image = viewModel.displayedFood.image
         weightTextField.text = viewModel.displayedFood.weight
         productionDateTextField.text = viewModel.displayedFood.productionDate
@@ -541,15 +518,71 @@ extension AddFoodViewController: AddFoodDisplayLogic {
         }
     }
     
+    func displayCheckWeightField(viewModel: AddFoodModel.CheckWeightField.ViewModel) {
+        if viewModel.isValid {
+            let alertController = UIAlertController(title: viewModel.alertTitle,
+                                                    message: nil,
+                                                    preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: viewModel.confirmActionTitle, style: .cancel))
+            self.present(alertController, animated: true)
+        } else {
+            let request = AddFoodModel.CheckParent.Request(view: self.view)
+            interactor?.checkParent(request: request)
+        }
+    }
+    
+    func displayCheckParent(viewModel: AddFoodModel.CheckParent.ViewModel) {
+        if viewModel.isValid {
+            let request = AddFoodModel.ChangeFood.Request(weight: self.weightTextField.text,
+                                                          unit: self.weightUnitButton.titleLabel?.text ?? "kg.".localized(),
+                                                          prductionDate: self.productionDateTextField.text,
+                                                          expirationDate: self.expirationDateTextField.text,
+                                                          view: self.view)
+            self.interactor?.changeSelectedFood(request: request)
+        } else {
+            let request = AddFoodModel.CheckDuplicateFood.Request()
+            interactor?.checkDuplicateFood(request: request)
+        }
+    }
+    
+    func displayCheckDuplicateFood(viewModel: AddFoodModel.CheckDuplicateFood.ViewModel) {
+        if viewModel.isValid {
+            let alertController = UIAlertController(title: viewModel.alertTitle, message: viewModel.alertMessage, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: viewModel.confirmActionTitle, style: .destructive, handler: { _ in
+                let request = AddFoodModel.ChangeFood.Request(weight: self.weightTextField.text,
+                                                              unit: self.weightUnitButton.titleLabel?.text ?? "kg.".localized(),
+                                                              prductionDate: self.productionDateTextField.text,
+                                                              expirationDate: self.expirationDateTextField.text,
+                                                              view: self.view)
+                self.interactor?.changeSelectedFood(request: request)
+            }))
+            alertController.addAction(UIAlertAction(title: viewModel.cancelActionTitle, style: .cancel))
+            self.present(alertController, animated: true)
+        } else {
+            let request = AddFoodModel.AddFood.Request(weight: weightTextField.text,
+                                                       unit: weightUnitButton.titleLabel?.text ?? "kg.".localized(),
+                                                       prductionDate: productionDateTextField.text,
+                                                       expirationDate: expirationDateTextField.text,
+                                                       view: self.view)
+            self.interactor?.addSelectedFood(request: request)
+        }
+    }
+    
+    func displayAddSelectedFood(viewModel: AddFoodModel.AddFood.ViewModel) {
+        performCloseAnimation()
+    }
+    
+    func displayChangeSelectedFood(viewModel: AddFoodModel.ChangeFood.ViewModel) {
+        performCloseAnimation()
+    }
+    
     func displayUpdatedDates(viewModel: AddFoodModel.DateUpdate.ViewModel) {
         if let productionDate = viewModel.productionDate {
             productionDateTextField.text = productionDate
         }
-        
         if let expirationDate = viewModel.expirationDate {
             expirationDateTextField.text = expirationDate
         }
-        
         if let consumeUpText = viewModel.consumeUpText {
             consumeUpTextField.text = consumeUpText
         }
@@ -561,13 +594,5 @@ extension AddFoodViewController: AddFoodDisplayLogic {
         datePickerView.maximumDate = viewModel.displayedValues.pickerMaxValue
         consumeUpPickerView.selectRow(viewModel.displayedValues.currentMonthsPicker, inComponent: 0, animated: false)
         consumeUpPickerView.selectRow(viewModel.displayedValues.currentDaysPicker, inComponent: 1, animated: false)
-    }
-    
-    func displayAlert(viewModel: AddFoodModel.AddFood.ViewModel) {
-        if let alert = viewModel.alertController {
-            self.present(alert, animated: true)
-        } else {
-            performCloseAnimation()
-        }
     }
 }

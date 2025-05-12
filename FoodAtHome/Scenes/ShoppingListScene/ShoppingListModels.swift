@@ -9,9 +9,8 @@ import UIKit
 
 enum ShoppingListModel {
     
-    enum ShowFood {
-        struct Request {
-        }
+    enum FetchShoppingList {
+        struct Request {}
         struct Response {
             let food: [FoodRealm]
         }
@@ -29,39 +28,92 @@ enum ShoppingListModel {
     }
     
     enum AddToMyFood {
-        struct Request{
+        struct Request {
             let indexPath: IndexPath
+            let completion: ((Bool) -> Void)
         }
-        
-        struct Responce {
+        struct Response {
+            let shouldConfirm: Bool
+            let indexPath: IndexPath
+            let completion: ((Bool) -> Void)
         }
-        
         struct ViewModel {
+            let alerTitle: String
+            let yesActionTitle: String
+            let noActionTitle: String
+            let indexPath: IndexPath
+            let completion: ((Bool) -> Void)
         }
     }
     
-    enum EditingFood {
+    enum ConfirmEditingFood {
+        struct Request {
+            let indexPath: IndexPath
+        }
+        struct Response {
+            let isConfirm: Bool
+        }
+        struct ViewModel {
+            let isSuccess: Bool
+        }
+    }
+    
+    enum ConfirmAddToMyFood {
+        struct Request {}
+        struct Response {
+            let isConfirm: Bool
+        }
+        struct ViewModel {
+            let isSuccess: Bool
+        }
+    }
+    
+    enum PrepareEditing {
         struct Request{
             let indexPath: IndexPath
         }
-        
-        struct Responce {
-        }
-        
-        struct ViewModel {
-        }
+        struct Response {}
+        struct ViewModel {}
     }
     
     enum DeleteFood {
         struct Request{
             let indexPath: IndexPath
         }
-        
-        struct Responce {
-
+        struct Response {}
+        struct ViewModel {}
+    }
+    
+    enum FetchSharedShoppingList {
+        struct Request {}
+        struct Response {
+            let sharedFood: [FoodRealm]
         }
         struct ViewModel {
-
+            let foodList: String
+        }
+    }
+    
+    enum RemoveAllShoppingList {
+        struct Request{}
+        struct Response {
+            let shouldConfirm: Bool
+        }
+        struct ViewModel {
+            let alertTitle: String
+            let alertMessage: String
+            let confirmActionTitle: String
+            let cancelActionTitle: String
+        }
+    }
+    
+    enum ConfirmRemoveAllShoppingList {
+        struct Request {}
+        struct Response {
+            let isConfirm: Bool
+        }
+        struct ViewModel {
+            let isSuccess: Bool
         }
     }
 }

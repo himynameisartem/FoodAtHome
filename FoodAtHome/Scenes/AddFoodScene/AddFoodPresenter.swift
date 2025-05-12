@@ -8,10 +8,14 @@
 import UIKit
 
 protocol AddFoodPresentationLogic {
-    func presentData(response: AddFoodModel.ShowFood.Response)
+    func presentData(response: AddFoodModel.FetchFood.Response)
+    func presentCheckWeightField(response: AddFoodModel.CheckWeightField.Response)
+    func presentCheckParent(response: AddFoodModel.CheckParent.Response)
+    func presentCheckDuplicateFood(response: AddFoodModel.CheckDuplicateFood.Response)
+    func presentAddSelectedFood(responce: AddFoodModel.AddFood.Response)
+    func presentChangeSelectedFood(response: AddFoodModel.ChangeFood.Response)
     func presentUpdatedDates(response: AddFoodModel.DateUpdate.Response)
     func presentPickerValues(response: AddFoodModel.DatePickerValueUpdate.Response)
-    func presentAddSelectedFood(responce: AddFoodModel.AddFood.Response)
 }
 
 class AddFoodPresenter: AddFoodPresentationLogic {
@@ -19,7 +23,7 @@ class AddFoodPresenter: AddFoodPresentationLogic {
     weak var viewController: AddFoodDisplayLogic?
     var worker: AddFoodWorker?
     
-    func presentData(response: AddFoodModel.ShowFood.Response) {
+    func presentData(response: AddFoodModel.FetchFood.Response) {
         worker = AddFoodWorker()
         let foodManager = DateManager()
         let productionDate = foodManager.getFormattedProductionDate(for: response.food)
@@ -27,14 +31,61 @@ class AddFoodPresenter: AddFoodPresentationLogic {
         let consumeUp = foodManager.getFormattedConsumeUp(for: response.food)
         let unit = (response.food.unit == "") ? "kg.".localized() : response.food.unit.localized()
         guard let  image = worker?.getImage(from: response.food.name) else { return }
-        let displayedFood = AddFoodModel.ShowFood.ViewModel.DisplayedFood(image: image,
+        let displayedFood = AddFoodModel.FetchFood.ViewModel.DisplayedFood(image: image,
                                                                           weight: response.food.weight,
                                                                           unit: unit,
                                                                           productionDate: productionDate,
                                                                           expirationDate: expirationDate,
                                                                           consumeUp: consumeUp)
-        let viewModel = AddFoodModel.ShowFood.ViewModel(displayedFood: displayedFood)
+        let viewModel = AddFoodModel.FetchFood.ViewModel(displayedFood: displayedFood)
         viewController?.displayData(viewModel: viewModel)
+    }
+    
+    func presentCheckWeightField(response: AddFoodModel.CheckWeightField.Response) {
+        if response.shouldConfirm {
+            let viewModel = AddFoodModel.CheckWeightField.ViewModel(isValid: true,
+                                                                    alertTitle: "Enter the weight of the product".localized(),
+                                                                    confirmActionTitle: "OK".localized())
+            viewController?.displayCheckWeightField(viewModel: viewModel)
+        } else {
+            let viewModel = AddFoodModel.CheckWeightField.ViewModel(isValid: false,
+                                                                    alertTitle: nil,
+                                                                    confirmActionTitle: nil)
+            viewController?.displayCheckWeightField(viewModel: viewModel)
+        }
+    }
+    
+    func presentCheckParent(response: AddFoodModel.CheckParent.Response) {
+        let viewModel = AddFoodModel.CheckParent.ViewModel(isValid: response.isEditing)
+        viewController?.displayCheckParent(viewModel: viewModel)
+    }
+    
+    func presentCheckDuplicateFood(response: AddFoodModel.CheckDuplicateFood.Response) {
+        if response.isDuplicate {
+            let viewModel = AddFoodModel.CheckDuplicateFood.ViewModel(isValid: true,
+                                                                      alertTitle: "You already have this product".localized(),
+                                                                      alertMessage: "Do you want to replace it?".localized(),
+                                                                      confirmActionTitle: "Yes".localized(),
+                                                                      cancelActionTitle: "No".localized())
+            viewController?.displayCheckDuplicateFood(viewModel: viewModel)
+        } else {
+            let viewModel = AddFoodModel.CheckDuplicateFood.ViewModel(isValid: false,
+                                                                      alertTitle: nil,
+                                                                      alertMessage: nil,
+                                                                      confirmActionTitle: nil,
+                                                                      cancelActionTitle: nil)
+            viewController?.displayCheckDuplicateFood(viewModel: viewModel)
+        }
+    }
+    
+    func presentAddSelectedFood(responce: AddFoodModel.AddFood.Response) {
+        let viewModel = AddFoodModel.AddFood.ViewModel()
+        viewController?.displayAddSelectedFood(viewModel: viewModel)
+    }
+    
+    func presentChangeSelectedFood(response: AddFoodModel.ChangeFood.Response) {
+        let viewModel = AddFoodModel.ChangeFood.ViewModel()
+        viewController?.displayChangeSelectedFood(viewModel: viewModel)
     }
     
     func presentUpdatedDates(response: AddFoodModel.DateUpdate.Response) {
@@ -60,9 +111,4 @@ class AddFoodPresenter: AddFoodPresentationLogic {
         viewController?.displayUpdatePickerValues(viewModel: viewModel)
     }
     
-    func presentAddSelectedFood(responce: AddFoodModel.AddFood.Response) {
-        let viewModelResponse = AddFoodModel.AddFood.Response(alertController: responce.alertController)
-        let viewModel = AddFoodModel.AddFood.ViewModel(alertController: viewModelResponse.alertController)
-        viewController?.displayAlert(viewModel: viewModel)
-    }
 }
