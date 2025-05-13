@@ -40,7 +40,6 @@
 		3139EE992C663E0C00AEC1F2 /* GradientForHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3139EE982C663E0C00AEC1F2 /* GradientForHeaderView.swift */; };
 		3139EE9B2C66575A00AEC1F2 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 3139EE9A2C66575A00AEC1F2 /* .gitignore */; };
 		3148F8492D16C38B00167A32 /* AddFoodMenuModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3148F8482D16C38B00167A32 /* AddFoodMenuModels.swift */; };
-		314CA4A12A7A58C5002D4680 /* FoodListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314CA4A02A7A58C5002D4680 /* FoodListManager.swift */; };
 		314ECCA12D9151900047EDBB /* Date + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314ECCA02D9151900047EDBB /* Date + Extension.swift */; };
 		317F50E6286DB4C90049B64B /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317F50E5286DB4C90049B64B /* UIColor + Extension.swift */; };
 		318701A12A4E019C0079848C /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318701A02A4E019C0079848C /* DateManager.swift */; };
@@ -88,9 +87,7 @@
 		31D43CA02D3596B70068046E /* AddFoodPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D43C982D3596B70068046E /* AddFoodPresenter.swift */; };
 		31D43CA12D3596B70068046E /* AddFoodModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D43C972D3596B70068046E /* AddFoodModels.swift */; };
 		31D43CA22D3596B70068046E /* AddFoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D43C9A2D3596B70068046E /* AddFoodViewController.swift */; };
-		31D43CA52D35A2D40068046E /* CustomPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D43CA42D35A2D40068046E /* CustomPresentationController.swift */; };
 		31D456A92A5D315200FDFDFB /* DateCalculatorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D456A82A5D315200FDFDFB /* DateCalculatorManager.swift */; };
-		31D456B22A5D753A00FDFDFB /* CategoryFoodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D456B12A5D753A00FDFDFB /* CategoryFoodManager.swift */; };
 		31DA20D62839553600DCE421 /* FoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA20D52839553600DCE421 /* FoodModel.swift */; };
 		31DB563E2CB4556E00514101 /* AddFoodMenu + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DB563D2CB4556E00514101 /* AddFoodMenu + Extension.swift */; };
 		31E21F432C117B94007B74B5 /* AddMyFoodCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31E21F422C117B94007B74B5 /* AddMyFoodCollectionViewCell.xib */; };
@@ -146,7 +143,6 @@
 		3139EE982C663E0C00AEC1F2 /* GradientForHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientForHeaderView.swift; sourceTree = "<group>"; };
 		3139EE9A2C66575A00AEC1F2 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		3148F8482D16C38B00167A32 /* AddFoodMenuModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFoodMenuModels.swift; sourceTree = "<group>"; };
-		314CA4A02A7A58C5002D4680 /* FoodListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListManager.swift; sourceTree = "<group>"; };
 		314ECCA02D9151900047EDBB /* Date + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Extension.swift"; sourceTree = "<group>"; };
 		317F50E5286DB4C90049B64B /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
 		318701A02A4E019C0079848C /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
@@ -195,9 +191,7 @@
 		31D43C992D3596B70068046E /* AddFoodRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFoodRouter.swift; sourceTree = "<group>"; };
 		31D43C9A2D3596B70068046E /* AddFoodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFoodViewController.swift; sourceTree = "<group>"; };
 		31D43C9C2D3596B70068046E /* AddFoodWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFoodWorker.swift; sourceTree = "<group>"; };
-		31D43CA42D35A2D40068046E /* CustomPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPresentationController.swift; sourceTree = "<group>"; };
 		31D456A82A5D315200FDFDFB /* DateCalculatorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculatorManager.swift; sourceTree = "<group>"; };
-		31D456B12A5D753A00FDFDFB /* CategoryFoodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFoodManager.swift; sourceTree = "<group>"; };
 		31DA20BE2839488900DCE421 /* FoodAtHome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodAtHome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31DA20D52839553600DCE421 /* FoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodModel.swift; sourceTree = "<group>"; };
 		31DB563D2CB4556E00514101 /* AddFoodMenu + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddFoodMenu + Extension.swift"; sourceTree = "<group>"; };
@@ -431,7 +425,6 @@
 				317F50E5286DB4C90049B64B /* UIColor + Extension.swift */,
 				31D0C4242A9A1AC200EDF32B /* StringExtensionLocalized.swift */,
 				31D0C42C2A9A767000EDF32B /* TextField + Extension.swift */,
-				31D43CA42D35A2D40068046E /* CustomPresentationController.swift */,
 				31FD7DEB2D6E4D76001E07DA /* UIViewControllerAnimatedTransitioning + Extension.swift */,
 				314ECCA02D9151900047EDBB /* Date + Extension.swift */,
 			);
@@ -455,8 +448,6 @@
 				318701A02A4E019C0079848C /* DateManager.swift */,
 				31D456A82A5D315200FDFDFB /* DateCalculatorManager.swift */,
 				31D43C842D35527E0068046E /* DateFormatterManager.swift */,
-				314CA4A02A7A58C5002D4680 /* FoodListManager.swift */,
-				31D456B12A5D753A00FDFDFB /* CategoryFoodManager.swift */,
 				310AC9E32A6D7A2F0055E013 /* PickerPropertiesManager.swift */,
 				313153352AB8D22F00A3E11D /* ContextualActionViewManager.swift */,
 			);
@@ -767,12 +758,10 @@
 				31D43C9E2D3596B70068046E /* AddFoodWorker.swift in Sources */,
 				31D43C9F2D3596B70068046E /* AddFoodRouter.swift in Sources */,
 				31D43CA02D3596B70068046E /* AddFoodPresenter.swift in Sources */,
-				31D43CA52D35A2D40068046E /* CustomPresentationController.swift in Sources */,
 				31D43CA12D3596B70068046E /* AddFoodModels.swift in Sources */,
 				31D43CA22D3596B70068046E /* AddFoodViewController.swift in Sources */,
 				31CFBD3B2BD130A0004C75A8 /* MyFoodCollectionViewCell.swift in Sources */,
 				31CFBD4D2BD93927004C75A8 /* MyFoodDetailsPopupMenu.swift in Sources */,
-				314CA4A12A7A58C5002D4680 /* FoodListManager.swift in Sources */,
 				3139EE702C52591000AEC1F2 /* CategoryDetailsHeaderView.swift in Sources */,
 				31D456A92A5D315200FDFDFB /* DateCalculatorManager.swift in Sources */,
 				31BA2CF32D16B3E000E3D904 /* AddFoodMenuInteractor.swift in Sources */,
@@ -806,7 +795,6 @@
 				3123E3262CBE6F1E00ACE2AC /* ShoppingListWorker.swift in Sources */,
 				3123E3272CBE6F1E00ACE2AC /* ShoppingListInteractor.swift in Sources */,
 				3123E3282CBE6F1E00ACE2AC /* ShoppingListViewController.swift in Sources */,
-				31D456B22A5D753A00FDFDFB /* CategoryFoodManager.swift in Sources */,
 				3123E3132CBE275600ACE2AC /* TabBarController.swift in Sources */,
 				31B1C5ED2BC7F5E300C6D43F /* AppDelegate.swift in Sources */,
 				31BA2CF52D16B3EE00E3D904 /* AddFoodMenuPresenter.swift in Sources */,

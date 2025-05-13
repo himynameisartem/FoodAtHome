@@ -25,7 +25,12 @@ enum AddFoodModel {
     enum FetchFood {
         struct Request {}
         struct Response {
-            let food: FoodRealm
+            let imageName: String
+            let weight: String
+            let unit: String
+            let productionDate: String?
+            let expirationDate: String?
+            let consumeUp: String?
         }
         struct ViewModel {
             struct DisplayedFood {

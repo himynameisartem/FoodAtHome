@@ -11,12 +11,14 @@ protocol ShoppingListBusinessLogic {
     func fetchFoodList(request: ShoppingListModel.FetchShoppingList.Request)
     func fetchSharedShoppingList(request: ShoppingListModel.FetchSharedShoppingList.Request)
     func addToMyFood(request: ShoppingListModel.AddToMyFood.Request)
+    func checkDuplicate(request: ShoppingListModel.CheckDuplicate.Request)
     func prepareEditingFood(request: ShoppingListModel.PrepareEditing.Request)
     func deleteFood(request: ShoppingListModel.DeleteFood.Request)
     func removeAllShoppingList(request: ShoppingListModel.RemoveAllShoppingList.Request)
     func confirmRemoveAllShoppingList(request: ShoppingListModel.ConfirmRemoveAllShoppingList.Request)
     func confirmEditingFood(request: ShoppingListModel.ConfirmEditingFood.Request)
     func confirmAddToMyFood(request: ShoppingListModel.ConfirmAddToMyFood.Request)
+    func confirmChangeMyFood(request: ShoppingListModel.ConfirmChangeMyFood.Request)
 }
 
 protocol ShoppingListDataStore {
@@ -49,16 +51,33 @@ class ShoppingListInteractor: ShoppingListBusinessLogic, ShoppingListDataStore {
         presenter?.presentAddToMyFood(response: response)
     }
     
-    func confirmEditingFood(request: ShoppingListModel.ConfirmEditingFood.Request) {
+    func checkDuplicate(request: ShoppingListModel.CheckDuplicate.Request) {
         editingFood = foodList[request.indexPath.row]
-//        worker.editingItemForMyFood(editingFood)
-        let response = ShoppingListModel.ConfirmEditingFood.Response(isConfirm: true)
-        presenter?.presentConfirmEditingFood(response: response)
+        if worker.checkDuplicate(food: editingFood) {
+            let response = ShoppingListModel.CheckDuplicate.Response(shouldConfirm: true, indexPath: request.indexPath, completion: request.completion)
+            presenter?.presentCheckDuplicate(response: response)
+        } else {
+            let response = ShoppingListModel.CheckDuplicate.Response(shouldConfirm: false, indexPath: request.indexPath, completion: request.completion)
+            presenter?.presentCheckDuplicate(response: response)
+        }
     }
     
     func confirmAddToMyFood(request: ShoppingListModel.ConfirmAddToMyFood.Request) {
+        worker.addToMyFoodList(foodList[request.indexPath.row])
         let response = ShoppingListModel.ConfirmAddToMyFood.Response(isConfirm: true)
         presenter?.presentConfirmAddToMyFood(response: response)
+    }
+    
+    func confirmChangeMyFood(request: ShoppingListModel.ConfirmChangeMyFood.Request) {
+        worker.changeMyFoodList(foodList[request.indexPath.row])
+        let response = ShoppingListModel.ConfirmChangeMyFood.Response(isConfirm: true)
+        presenter?.presentConfirmChangeMyFood(response: response)
+    }
+    
+    func confirmEditingFood(request: ShoppingListModel.ConfirmEditingFood.Request) {
+        editingFood = foodList[request.indexPath.row]
+        let response = ShoppingListModel.ConfirmEditingFood.Response(isConfirm: true)
+        presenter?.presentConfirmEditingFood(response: response)
     }
     
     func prepareEditingFood(request: ShoppingListModel.PrepareEditing.Request) {
@@ -80,7 +99,7 @@ class ShoppingListInteractor: ShoppingListBusinessLogic, ShoppingListDataStore {
     
     func fetchSharedShoppingList(request: ShoppingListModel.FetchSharedShoppingList.Request) {
         let response = ShoppingListModel.FetchSharedShoppingList.Response(sharedFood: worker.fetchMyShoppingList())
-        presenter?.presentShredShoppingList(response: response)
+        presenter?.presentSharedShoppingList(response: response)
     }
     
     func confirmRemoveAllShoppingList(request: ShoppingListModel.ConfirmRemoveAllShoppingList.Request) {

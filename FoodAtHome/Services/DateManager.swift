@@ -18,6 +18,7 @@ protocol DateManagerProtocol {
     
     func getFormattedProductionDate(for food: FoodRealm) -> String?
     func getFormattedExpirationDate(for food: FoodRealm) -> String?
+    func getFormattedConsumeUp(for food: FoodRealm) -> String?
     func getFormattedDaysLeft(for food: FoodRealm) -> String?
     
 }

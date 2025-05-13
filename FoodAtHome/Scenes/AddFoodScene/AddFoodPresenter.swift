@@ -21,22 +21,15 @@ protocol AddFoodPresentationLogic {
 class AddFoodPresenter: AddFoodPresentationLogic {
     
     weak var viewController: AddFoodDisplayLogic?
-    var worker: AddFoodWorker?
     
     func presentData(response: AddFoodModel.FetchFood.Response) {
-        worker = AddFoodWorker()
-        let foodManager = DateManager()
-        let productionDate = foodManager.getFormattedProductionDate(for: response.food)
-        let expirationDate = foodManager.getFormattedExpirationDate(for: response.food)
-        let consumeUp = foodManager.getFormattedConsumeUp(for: response.food)
-        let unit = (response.food.unit == "") ? "kg.".localized() : response.food.unit.localized()
-        guard let  image = worker?.getImage(from: response.food.name) else { return }
+        let image = UIImage(named: response.imageName) ?? UIImage()
         let displayedFood = AddFoodModel.FetchFood.ViewModel.DisplayedFood(image: image,
-                                                                          weight: response.food.weight,
-                                                                          unit: unit,
-                                                                          productionDate: productionDate,
-                                                                          expirationDate: expirationDate,
-                                                                          consumeUp: consumeUp)
+                                                                           weight: response.weight,
+                                                                           unit: response.unit,
+                                                                           productionDate: response.productionDate,
+                                                                           expirationDate: response.expirationDate,
+                                                                           consumeUp: response.consumeUp)
         let viewModel = AddFoodModel.FetchFood.ViewModel(displayedFood: displayedFood)
         viewController?.displayData(viewModel: viewModel)
     }

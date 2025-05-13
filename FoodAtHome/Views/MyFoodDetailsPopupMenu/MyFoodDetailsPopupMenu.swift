@@ -27,19 +27,7 @@ class MyFoodDetailsPopupMenu: UIView {
     private let arrowView = UIImageView()
     private let dimmingView = UIView()
     private let gestureForCloseMenu = UITapGestureRecognizer()
-    
-//    init(view: UIView, collectionView: UICollectionView, foodDetails: MyFood.showDetailFood.ViewModel.DiplayedDetails) {
-//        super.init(frame: .zero)
-//        setupUI()
-//        configure(viewModel: foodDetails)
-//        openPopUpMenu(for: view, with: collectionView)
-//        gestureForCloseMenu.addTarget(self, action: #selector(tapToClose))
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()

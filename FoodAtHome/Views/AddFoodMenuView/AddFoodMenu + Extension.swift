@@ -100,7 +100,7 @@ extension AddFoodMenu {
         } else {
             switch rootVC {
             case .addFromMyFoodVC:
-                if !DataManager.shared.checkFoDuplicates(food: food) {
+                if !DataManager.shared.checkFoodListDuplicates(food: food) {
                     self.addFood()
                 } else {
                     let changeFoodAlertController = UIAlertController(title: "You already have this product".localized(),
@@ -131,7 +131,7 @@ extension AddFoodMenu {
             case .editFromShoppingListVC:
                 updateFoodForShoppingList();
             case .addFromShoppingListVCtoMyfoodVC:
-                if !DataManager.shared.checkFoDuplicates(food: food) {
+                if !DataManager.shared.checkFoodListDuplicates(food: food) {
                     self.addFood()
                 } else {
                     let changeFoodAlertController = UIAlertController(title: "You already have this product".localized(),
@@ -162,7 +162,7 @@ extension AddFoodMenu {
             weightAlertController.addAction(UIAlertAction(title: "OK".localized(), style: .default))
             getTopViewController()?.present(weightAlertController, animated: true, completion: nil)
         } else {
-            if !DataManager.shared.checkFoDuplicates(food: food) {
+            if !DataManager.shared.checkFoodListDuplicates(food: food) {
                 self.addFood()
             } else {
                 if vc?.viewControllers.last is MyFoodViewController {

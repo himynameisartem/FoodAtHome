@@ -33,7 +33,12 @@ class AddFoodInteractor: AddFoodBusinessLogic, AddFoodDataStore {
     }
     
     func showSelectedFood(request: AddFoodModel.FetchFood.Request) {
-        let responce = AddFoodModel.FetchFood.Response(food: food)
+        let responce = AddFoodModel.FetchFood.Response(imageName: food.name,
+                                                       weight: food.weight,
+                                                       unit: (food.unit == "") ? "kg.".localized() : food.unit.localized(),
+                                                       productionDate: worker.getProductionDate(food),
+                                                       expirationDate: worker.getExpirationDate(food),
+                                                       consumeUp: worker.getConsumerUp(food))
         presenter?.presentData(response: responce)
     }
     
@@ -54,7 +59,7 @@ class AddFoodInteractor: AddFoodBusinessLogic, AddFoodDataStore {
     }
     
     func checkDuplicateFood(request: AddFoodModel.CheckDuplicateFood.Request) {
-        if worker.checkMyFoodListDuplicate(foodName: food.name) {
+        if worker.checkFoodListDuplicate(food) {
             let response = AddFoodModel.CheckDuplicateFood.Response(isDuplicate: true)
             presenter?.presentCheckDuplicateFood(response: response)
         } else {

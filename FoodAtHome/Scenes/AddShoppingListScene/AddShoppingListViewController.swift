@@ -9,10 +9,55 @@ import UIKit
 
 protocol AddShoppingListDisplayLogic: AnyObject {
     func displayData(viewModel: AddShoppingListModel.ShowFood.ViewModel)
-    func displayAlertController(viewModel: AddShoppingListModel.AddFood.ViewModel)
+    func displayCheckedWeightField(viewModel: AddShoppingListModel.CheckWeightField.ViewModel)
+    func displayCheckedDuplicate(viewModel: AddShoppingListModel.CheckDuplicate.ViewModel)
+    func displayCheckedEditAction(viewModel: AddShoppingListModel.CheckEditAction.ViewModel)
+    func displayConfirmAddFood(viewModel: AddShoppingListModel.ConfirmAddFood.ViewModel)
+    func displayConfirmChangeFood(viewModel: AddShoppingListModel.ConfirmChangeFood.ViewModel)
+    func displayConfirmEditAction(viewModel: AddShoppingListModel.ConfirmEditAction.ViewModel)
 }
 
 class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLogic {
+    
+    var interactor: AddShoppingListBusinessLogic?
+    var router: (NSObjectProtocol & AddShoppingListRoutingLogic & AddShoppingListDataPassing)?
+    
+    // MARK: Setup
+    
+    private func setup() {
+        let viewController = self
+        let worker = AddShoppingListWorker()
+        let interactor = AddShoppingListInteractor(worker: worker)
+        let presenter = AddShoppingListPresenter()
+        let router = AddShoppingListRouter()
+        viewController.interactor = interactor
+        viewController.router = router
+        interactor.presenter = presenter
+        presenter.viewController = viewController
+        router.viewController = viewController
+        router.dataStore = interactor
+    }
+    
+    // MARK: Object lifecycle
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    // MARK: View lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        fetchFoodData()
+        configureUI()
+        setupConstraints()
+    }
     
     private let closeButton: UIButton = {
         let button = UIButton()
@@ -77,52 +122,15 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
         button.setTitle("Add".localized(), for: .normal)
         return button
     }()
-    
-    var interactor: AddShoppingListBusinessLogic?
-    var router: (NSObjectProtocol & AddShoppingListRoutingLogic & AddShoppingListDataPassing)?
-    
     private var panGestureRecognizer = UIPanGestureRecognizer()
     private var initialY: CGFloat = 0
     
-    // MARK: Object lifecycle
-    
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        setup()
+    private func fetchFoodData() {
+        let request = AddShoppingListModel.ShowFood.Request()
+        interactor?.showSelectedFood(request: request)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    // MARK: Setup
-    
-    private func setup() {
-        let viewController = self
-        let interactor = AddShoppingListInteractor()
-        let presenter = AddShoppingListPresenter()
-        let router = AddShoppingListRouter()
-        viewController.interactor = interactor
-        viewController.router = router
-        interactor.presenter = presenter
-        presenter.viewController = viewController
-        router.viewController = viewController
-        router.dataStore = interactor
-    }
-    
-    // MARK: Routing
-        
-    // MARK: View lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        getFoodData()
-        setupUI()
-        setupConstraints()
-    }
-    
-    private func setupUI() {
+    private func configureUI() {
         view.backgroundColor = .white
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
@@ -142,9 +150,25 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
         view.addGestureRecognizer(panGestureRecognizer)
     }
     
-    private func getFoodData() {
-        let request = AddShoppingListModel.ShowFood.Request()
-        interactor?.showSelectedFood(request: request)
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            
+            foodImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            foodImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+            foodImageView.widthAnchor.constraint(equalToConstant: view.frame.width / 2),
+            foodImageView.heightAnchor.constraint(equalToConstant: view.frame.width / 2),
+            
+            mainStackView.topAnchor.constraint(equalTo: foodImageView.bottomAnchor, constant: 20),
+            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            addButton.heightAnchor.constraint(equalToConstant: 60),
+        ])
     }
     
     @objc private func didTapCloseButton() {
@@ -162,7 +186,7 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
             self.router?.navigateToTabBarController(window: self.view.window!)
         })
     }
-
+    
     
     @objc private func handlePanGestureRecognizer(_ gesture: UIPanGestureRecognizer) {
         let screenSize = UIScreen.main.bounds.size
@@ -197,31 +221,9 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
     
     @objc func didTapAddButton(_ sender: UIButton) {
         sender.showAnimation(for: .withoutColor) {
-            let request = AddShoppingListModel.AddFood.Request(weight: self.weightTextField.text ?? "",
-                                                               unit: self.weightUnitButton.titleLabel?.text ?? "kg.".localized())
-            self.interactor?.addSelectedFoodToShoppingList(request: request)
+            let request = AddShoppingListModel.CheckWeightField.Request(weight: self.weightTextField.text ?? "")
+            self.interactor?.checkWeightField(request: request)
         }
-    }
-    
-    private func setupConstraints() {
-        NSLayoutConstraint.activate([
-            closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
-            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            
-            foodImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            foodImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
-            foodImageView.widthAnchor.constraint(equalToConstant: view.frame.width / 2),
-            foodImageView.heightAnchor.constraint(equalToConstant: view.frame.width / 2),
-            
-            mainStackView.topAnchor.constraint(equalTo: foodImageView.bottomAnchor, constant: 20),
-            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            
-            addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-            addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
-            addButton.heightAnchor.constraint(equalToConstant: 60),
-        ])
     }
 }
 
@@ -342,11 +344,55 @@ extension AddShoppingListViewController {
         }
     }
     
-    func displayAlertController(viewModel: AddShoppingListModel.AddFood.ViewModel) {
-        if let alertConroller = viewModel.alert {
-            self.present(alertConroller, animated: true)
+    func displayCheckedWeightField(viewModel: AddShoppingListModel.CheckWeightField.ViewModel) {
+        if viewModel.isValid {
+            let alertController = UIAlertController(title: viewModel.aletrtTitle, message: nil, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: viewModel.okButtonTitle, style: .default))
+            self.present(alertController, animated: true)
         } else {
-            performCloseAnimation()
+            let request = AddShoppingListModel.CheckEditAction.Request()
+            interactor?.checkEditAction(request: request)
         }
     }
+    
+    func displayCheckedEditAction(viewModel: AddShoppingListModel.CheckEditAction.ViewModel) {
+        if viewModel.isValid {
+            let request = AddShoppingListModel.ConfirmEditAction.Request(weight: self.weightTextField.text ?? "",
+                                                                         unit: self.weightUnitButton.titleLabel?.text ?? "kg.".localized())
+            interactor?.confirmEditAction(request: request)
+        } else {
+            let request = AddShoppingListModel.CheckDuplicate.Request()
+            interactor?.checkDuplicate(request: request)
+        }
+    }
+    
+    func displayCheckedDuplicate(viewModel: AddShoppingListModel.CheckDuplicate.ViewModel) {
+        if viewModel.isValid {
+            let alertController = UIAlertController(title: viewModel.alertTitle, message: viewModel.alertMessage, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: viewModel.confirmActionTitle, style: .destructive, handler: { _ in
+                let request = AddShoppingListModel.ConfirmChangeFood.Request(weight: self.weightTextField.text ?? "",
+                                                                             unit: self.weightUnitButton.titleLabel?.text ?? "kg.".localized())
+                self.interactor?.confirmChangeFood(request: request)
+            }))
+            alertController.addAction(UIAlertAction(title: viewModel.cancelActionTitle, style: .cancel))
+            self.present(alertController, animated: true)
+        } else {
+            let request = AddShoppingListModel.ConfirmAddFood.Request(weight: self.weightTextField.text ?? "",
+                                                                      unit: self.weightUnitButton.titleLabel?.text ?? "kg.".localized())
+            interactor?.confirmAddItemToShoppingList(request: request)
+        }
+    }
+    
+    func displayConfirmAddFood(viewModel: AddShoppingListModel.ConfirmAddFood.ViewModel) {
+        performCloseAnimation()
+    }
+    
+    func displayConfirmChangeFood(viewModel: AddShoppingListModel.ConfirmChangeFood.ViewModel) {
+        performCloseAnimation()
+    }
+    
+    func displayConfirmEditAction(viewModel: AddShoppingListModel.ConfirmEditAction.ViewModel) {
+        performCloseAnimation()
+    }
 }
+

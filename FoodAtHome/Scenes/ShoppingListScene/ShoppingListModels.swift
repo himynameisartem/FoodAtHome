@@ -58,8 +58,43 @@ enum ShoppingListModel {
         }
     }
     
+    enum CheckDuplicate {
+        struct Request {
+            let indexPath: IndexPath
+            let completion: ((Bool) -> Void)
+        }
+        struct Response {
+            let shouldConfirm: Bool
+            let indexPath: IndexPath
+            let completion: ((Bool) -> Void)
+        }
+        struct ViewModel {
+            let isValid: Bool
+            let indexPath: IndexPath
+            let alertTitle: String?
+            let alertMessage: String?
+            let confirmActionTitle: String?
+            let cancelActionTitle: String?
+            let completion: ((Bool) -> Void)
+        }
+    }
+    
     enum ConfirmAddToMyFood {
-        struct Request {}
+        struct Request {
+            let indexPath: IndexPath
+        }
+        struct Response {
+            let isConfirm: Bool
+        }
+        struct ViewModel {
+            let isSuccess: Bool
+        }
+    }
+    
+    enum ConfirmChangeMyFood {
+        struct Request {
+            let indexPath: IndexPath
+        }
         struct Response {
             let isConfirm: Bool
         }

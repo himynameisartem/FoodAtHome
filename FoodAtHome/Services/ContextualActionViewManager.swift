@@ -23,5 +23,4 @@ class ContextualActionViewManager {
             action.image?.draw(in: CGRect(origin: CGPoint(x: 0, y: 0), size: buttonSize).inset(by: insets))
         }
     }
-    
 }

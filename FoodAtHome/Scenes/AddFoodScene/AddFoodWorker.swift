@@ -9,9 +9,12 @@ import UIKit
 
 protocol AddFoodWorkerProtocol {
     func getImage(from foodName: String) -> UIImage
+    func getProductionDate(_ food: FoodRealm) -> String?
+    func getExpirationDate(_ food: FoodRealm) -> String?
+    func getConsumerUp(_ food: FoodRealm) -> String?
     func addFoodToMyFoodList(food: FoodRealm)
     func changeDuplicateFood(food: FoodRealm)
-    func checkMyFoodListDuplicate(foodName: String) -> Bool
+    func checkFoodListDuplicate(_ food: FoodRealm) -> Bool
     func fetchFoodForAdding(from dataRequest: AddFoodProtocol, and food: FoodRealm) -> FoodRealm
     func isEditingFood(_ view: UIView) -> Bool
     func calculateConsumeUp(productionDate: String?, expirationDate: String?) -> ConsumeUp?
@@ -22,13 +25,31 @@ protocol AddFoodWorkerProtocol {
 
 class AddFoodWorker: AddFoodWorkerProtocol {
     
+    let dateManager: DateManagerProtocol
+    
+    init(dateManager: DateManagerProtocol) {
+        self.dateManager = dateManager
+    }
+    
     func getImage(from foodName: String) -> UIImage {
         let image = UIImage(named: foodName) ?? UIImage()
         return image
     }
     
-    func checkMyFoodListDuplicate(foodName: String) -> Bool {
-        DataManager.shared.checkMyFoodListDuplicate(foodName: foodName)
+    func getProductionDate(_ food: FoodRealm) -> String? {
+        dateManager.getFormattedProductionDate(for: food)
+    }
+    
+    func getExpirationDate(_ food: FoodRealm) -> String? {
+        dateManager.getFormattedExpirationDate(for: food)
+    }
+    
+    func getConsumerUp(_ food: FoodRealm) -> String? {
+        dateManager.getFormattedConsumeUp(for: food)
+    }
+    
+    func checkFoodListDuplicate(_ food: FoodRealm) -> Bool {
+        DataManager.shared.checkFoodListDuplicates(food: food)
     }
     
     func fetchFoodForAdding(from dataRequest: AddFoodProtocol, and food: FoodRealm) -> FoodRealm {
@@ -43,7 +64,7 @@ class AddFoodWorker: AddFoodWorkerProtocol {
                                         weight: dataRequest.weight!,
                                         unit: dataRequest.unit,
                                         calories: food.calories,
-                                        isShoppingList: false,
+                                        isShoppingList: food.isShoppingList,
                                         productionDate: productionDate,
                                         expirationDate: expirationDate,
                                         consumeUp: consumeUp
@@ -52,11 +73,11 @@ class AddFoodWorker: AddFoodWorkerProtocol {
     }
     
     func addFoodToMyFoodList(food: FoodRealm) {
-        DataManager.shared.writeFood(food)
+        DataManager.shared.addItemToFoodList(food)
     }
     
     func changeDuplicateFood(food: FoodRealm) {
-        DataManager.shared.changeAndEdit(food)
+        DataManager.shared.changeAndMoveItemToFoodList(food)
     }
     
     func isEditingFood(_ view: UIView) -> Bool {

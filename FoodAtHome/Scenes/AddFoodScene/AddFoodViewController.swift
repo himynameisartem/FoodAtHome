@@ -27,7 +27,7 @@ class AddFoodViewController: UIViewController {
     
     private func setup() {
         let viewController = self
-        let worker = AddFoodWorker()
+        let worker = AddFoodWorker(dateManager: DateManager())
         let interactor = AddFoodInteractor(worker: worker)
         let presenter = AddFoodPresenter()
         let router = AddFoodRouter()

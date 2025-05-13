@@ -35,8 +35,9 @@
         <!--Food at Home-->
         <scene sceneID="0Gl-aR-2IB">
             <objects>
-                <navigationController toolbarHidden="NO" id="Mmu-Hz-9IK" sceneMemberID="viewController">
+                <navigationController id="Mmu-Hz-9IK" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Food at Home" image="house.fill" catalog="system" id="Qi6-R9-dss"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9O1-YO-dYE">
                         <rect key="frame" x="0.0" y="118" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -52,16 +53,16 @@
         <!--Shopping List-->
         <scene sceneID="3ld-rL-gIM">
             <objects>
-                <navigationController toolbarHidden="NO" id="Hkz-9r-HqO" sceneMemberID="viewController">
+                <navigationController id="Hkz-9r-HqO" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Shopping List" id="I3E-CG-OAO">
                         <imageReference key="image" image="list.bullet.rectangle.portrait.fill" catalog="system" variableValue="0.0"/>
                     </tabBarItem>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="uTx-SV-m9J">
                         <rect key="frame" x="0.0" y="118" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CNP-KT-2Qg">
-                        <rect key="frame" x="0.0" y="686" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -146,7 +147,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="shoppingListTableView" destination="YW7-QS-fVy" id="d4i-Y2-7Qn"/>
-                        <outlet property="titleBalLabel" destination="1fl-KY-rnH" id="X2f-NZ-2Cy"/>
+                        <outlet property="titleLabel" destination="1fl-KY-rnH" id="X2f-NZ-2Cy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fPb-Dx-QMR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -389,14 +390,14 @@
         <!--Settings-->
         <scene sceneID="DZg-5u-TKU">
             <objects>
-                <navigationController toolbarHidden="NO" id="aCa-5p-aFo" sceneMemberID="viewController">
+                <navigationController id="aCa-5p-aFo" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Settings" image="gearshape.fill" catalog="system" id="E3Y-fX-VHy"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="3mk-A3-0YS">
                         <rect key="frame" x="0.0" y="118" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ei5-on-lzl">
-                        <rect key="frame" x="0.0" y="686" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -445,7 +446,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="sHt-g3-5Yo"/>
+        <segue reference="611-3j-3Rw"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="gearshape.fill" catalog="system" width="128" height="123"/>
@@ -463,10 +464,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBrownColor">
-            <color red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

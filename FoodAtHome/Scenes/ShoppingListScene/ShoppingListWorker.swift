@@ -9,7 +9,9 @@ import UIKit
 
 protocol ShoppingListWorkerProtocol {
     func fetchMyShoppingList() -> [FoodRealm]
-    func checkDiplicate(food: FoodRealm) -> Bool
+    func checkDuplicate(food: FoodRealm) -> Bool
+    func addToMyFoodList(_ food: FoodRealm)
+    func changeMyFoodList(_ food: FoodRealm)
     func deleteItem(at indexPath: IndexPath)
     func removeAllShoppingList()
 }
@@ -20,8 +22,16 @@ class ShoppingListWorker: ShoppingListWorkerProtocol {
         DataManager.shared.fetchMyShoppingList()
     }
     
-    func checkDiplicate(food: FoodRealm) -> Bool {
-        DataManager.shared.checkFoDuplicates(food: food)
+    func checkDuplicate(food: FoodRealm) -> Bool {
+        DataManager.shared.checkFoodListDuplicates(food: food)
+    }
+    
+    func addToMyFoodList(_ food: FoodRealm) {
+        DataManager.shared.addItemToFoodList(food)
+    }
+    
+    func changeMyFoodList(_ food: FoodRealm) {
+        DataManager.shared.changeAndMoveItemToFoodList(food)
     }
     
     func deleteItem(at indexPath: IndexPath) {

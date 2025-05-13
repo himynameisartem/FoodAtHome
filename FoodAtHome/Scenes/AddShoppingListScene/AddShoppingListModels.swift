@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol AddShoppingListItemProtocol {
+    var weight: String { get }
+    var unit: String { get }
+}
+
 enum AddShoppingListModel {
     
     enum ShowFood {
@@ -24,17 +29,69 @@ enum AddShoppingListModel {
         }
     }
     
-    enum AddFood {
+    enum CheckWeightField {
+        struct Request {
+            let weight: String
+        }
+        struct Response {
+            let shouldConfirm: Bool
+        }
+        struct ViewModel {
+            let isValid: Bool
+            let aletrtTitle: String?
+            let okButtonTitle: String?
+        }
+    }
+    
+    enum CheckDuplicate {
+        struct Request {}
+        struct Response {
+            let shouldConfirm: Bool
+        }
+        struct ViewModel {
+            let isValid: Bool
+            let alertTitle: String?
+            let alertMessage: String?
+            let confirmActionTitle: String?
+            let cancelActionTitle: String?
+        }
+    }
+    
+    enum CheckEditAction {
+        struct Request {}
+        struct Response {
+            let isEditActionValid: Bool
+        }
+        struct ViewModel {
+            let isValid: Bool
+        }
+    }
+    
+    enum ConfirmAddFood {
         struct Request {
             let weight: String
             let unit: String
         }
-        struct Response {
-            let alert: UIAlertController?
+        struct Response {}
+        struct ViewModel {}
+    }
+    
+    enum ConfirmChangeFood {
+        struct Request: AddShoppingListItemProtocol {
+            let weight: String
+            let unit: String
         }
-        struct ViewModel {
-            let alert: UIAlertController?
+        struct Response {}
+        struct ViewModel {}
+    }
+    
+    enum ConfirmEditAction {
+        struct Request: AddShoppingListItemProtocol {
+            let weight: String
+            let unit: String
         }
+        struct Response {}
+        struct ViewModel {}
     }
 }
 
