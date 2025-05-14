@@ -1,0 +1,126 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "1fl-KY-rnH.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"SHOPPING LIST\"; ObjectID = \"1fl-KY-rnH\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "SHOPPING LIST"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ПОКУПКИ"
+          }
+        }
+      }
+    },
+    "E3Y-fX-VHy.title" : {
+      "comment" : "Class = \"UITabBarItem\"; title = \"Settings\"; ObjectID = \"E3Y-fX-VHy\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Settings"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройки"
+          }
+        }
+      }
+    },
+    "fi9-ra-43R.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"FOOD AT HOME\"; ObjectID = \"fi9-ra-43R\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "FOOD AT HOME"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ЕДА ДОМА"
+          }
+        }
+      }
+    },
+    "I3E-CG-OAO.title" : {
+      "comment" : "Class = \"UITabBarItem\"; title = \"Shopping List\"; ObjectID = \"I3E-CG-OAO\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Shopping List"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Покупки"
+          }
+        }
+      }
+    },
+    "loI-XA-axb.title" : {
+      "comment" : "Class = \"UIBarButtonItem\"; title = \"Item\"; ObjectID = \"loI-XA-axb\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Item"
+          }
+        }
+      }
+    },
+    "Qi6-R9-dss.title" : {
+      "comment" : "Class = \"UITabBarItem\"; title = \"Food at Home\"; ObjectID = \"Qi6-R9-dss\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Food at Home"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Еда Дома"
+          }
+        }
+      }
+    },
+    "Y0G-Bz-6Al.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"SETTINGS\"; ObjectID = \"Y0G-Bz-6Al\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "SETTINGS"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "НАСТРОЙКИ"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

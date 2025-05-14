@@ -23,6 +23,8 @@ class MyFoodViewController: UIViewController {
     var interactor: MyFoodBusinessLogic?
     var router: (NSObjectProtocol & MyFoodRoutingLogic & MyFoodDataPassing)?
     
+    
+    
     // MARK: Setup
     
     private func setup() {

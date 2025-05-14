@@ -15,9 +15,7 @@ protocol DateCalculatorManagerProtocol {
 }
 
 class DateCalculatorManager: DateCalculatorManagerProtocol {
-    
-    static let shared = DateCalculatorManager()
-    
+        
     private let calendar: Calendar = .current
     
     func calculateConsumeUp(productionDate: Date, expirationDate: Date) -> ConsumeUp? {

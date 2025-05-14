@@ -38,6 +38,7 @@ class SettingsViewController: UIViewController {
     super.viewDidLoad()
       setup()
       navigationBarSetup()
+      darkTheme()
   }
     
     private func navigationBarSetup() {
@@ -46,6 +47,17 @@ class SettingsViewController: UIViewController {
         let height = navigationController?.navigationBar.frame.height ?? 0
         let width = view.frame.width / 2
         tabBarTitle.frame = CGRect(x: x, y: y, width: width, height: height)
+    }
+    
+    func darkTheme() {
+        guard let windowScene = UIApplication.shared.connectedScenes
+                 .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene else {
+             return
+         }
+         guard let window = windowScene.windows.first else {
+             return
+         }
+        window.overrideUserInterfaceStyle = .dark
     }
 }
 
