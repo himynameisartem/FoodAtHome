@@ -39,6 +39,9 @@
 		3139EE992C663E0C00AEC1F2 /* GradientForHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3139EE982C663E0C00AEC1F2 /* GradientForHeaderView.swift */; };
 		3139EE9B2C66575A00AEC1F2 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 3139EE9A2C66575A00AEC1F2 /* .gitignore */; };
 		3148F8492D16C38B00167A32 /* AddFoodMenuModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3148F8482D16C38B00167A32 /* AddFoodMenuModels.swift */; };
+		314E67E22DD4F45200EC6E78 /* SetLanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314E67E12DD4F45200EC6E78 /* SetLanguageCell.swift */; };
+		314E67E42DD4F46000EC6E78 /* SetAppearanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314E67E32DD4F46000EC6E78 /* SetAppearanceCell.swift */; };
+		314E67E62DD4F46800EC6E78 /* InformationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314E67E52DD4F46800EC6E78 /* InformationCell.swift */; };
 		314ECCA12D9151900047EDBB /* Date + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314ECCA02D9151900047EDBB /* Date + Extension.swift */; };
 		317F50E6286DB4C90049B64B /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317F50E5286DB4C90049B64B /* UIColor + Extension.swift */; };
 		318701A12A4E019C0079848C /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318701A02A4E019C0079848C /* DateManager.swift */; };
@@ -141,6 +144,9 @@
 		3139EE982C663E0C00AEC1F2 /* GradientForHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientForHeaderView.swift; sourceTree = "<group>"; };
 		3139EE9A2C66575A00AEC1F2 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		3148F8482D16C38B00167A32 /* AddFoodMenuModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFoodMenuModels.swift; sourceTree = "<group>"; };
+		314E67E12DD4F45200EC6E78 /* SetLanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetLanguageCell.swift; sourceTree = "<group>"; };
+		314E67E32DD4F46000EC6E78 /* SetAppearanceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAppearanceCell.swift; sourceTree = "<group>"; };
+		314E67E52DD4F46800EC6E78 /* InformationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationCell.swift; sourceTree = "<group>"; };
 		314ECCA02D9151900047EDBB /* Date + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Extension.swift"; sourceTree = "<group>"; };
 		317F50E5286DB4C90049B64B /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
 		318701A02A4E019C0079848C /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
@@ -321,6 +327,16 @@
 				31B1C6002BC8001B00C6D43F /* pobeda-regular.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		314E67E02DD4F42600EC6E78 /* SettingsTableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				314E67E12DD4F45200EC6E78 /* SetLanguageCell.swift */,
+				314E67E32DD4F46000EC6E78 /* SetAppearanceCell.swift */,
+				314E67E52DD4F46800EC6E78 /* InformationCell.swift */,
+			);
+			path = SettingsTableViewCells;
 			sourceTree = "<group>";
 		};
 		316D2A892C9AC11B00D6A54A /* CategoryDetailsFoodCell */ = {
@@ -515,6 +531,7 @@
 		31DC5BA32C9AAD2C00C0EB09 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				314E67E02DD4F42600EC6E78 /* SettingsTableViewCells */,
 				31BA20C62CC019ED00475B7A /* ShoppingListTableViewCell */,
 				31CFBD2F2BCEDAF7004C75A8 /* CategoryMyFoodCollectionViewCell */,
 				31CFBD372BD13073004C75A8 /* MyFoodCollectionViewCell */,
@@ -763,6 +780,7 @@
 				31CFBD3B2BD130A0004C75A8 /* MyFoodCollectionViewCell.swift in Sources */,
 				31CFBD4D2BD93927004C75A8 /* MyFoodDetailsPopupMenu.swift in Sources */,
 				3139EE702C52591000AEC1F2 /* CategoryDetailsHeaderView.swift in Sources */,
+				314E67E62DD4F46800EC6E78 /* InformationCell.swift in Sources */,
 				31D456A92A5D315200FDFDFB /* DateCalculatorManager.swift in Sources */,
 				31BA2CF32D16B3E000E3D904 /* AddFoodMenuInteractor.swift in Sources */,
 				31D0C4252A9A1AC200EDF32B /* StringExtensionLocalized.swift in Sources */,
@@ -779,6 +797,7 @@
 				31FA891B2BC90DD5005EA855 /* MyFoodRouter.swift in Sources */,
 				31FA891C2BC90DD5005EA855 /* MyFoodModels.swift in Sources */,
 				31FA891D2BC90DD5005EA855 /* MyFoodViewController.swift in Sources */,
+				314E67E22DD4F45200EC6E78 /* SetLanguageCell.swift in Sources */,
 				3123E3312CBE708400ACE2AC /* SettingsRouter.swift in Sources */,
 				3123E3322CBE708400ACE2AC /* SettingsPresenter.swift in Sources */,
 				3123E3332CBE708400ACE2AC /* SettingsInteractor.swift in Sources */,
@@ -792,6 +811,7 @@
 				3123E3232CBE6F1E00ACE2AC /* ShoppingListRouter.swift in Sources */,
 				3123E3242CBE6F1E00ACE2AC /* ShoppingListModels.swift in Sources */,
 				3123E3252CBE6F1E00ACE2AC /* ShoppingListPresenter.swift in Sources */,
+				314E67E42DD4F46000EC6E78 /* SetAppearanceCell.swift in Sources */,
 				3123E3262CBE6F1E00ACE2AC /* ShoppingListWorker.swift in Sources */,
 				3123E3272CBE6F1E00ACE2AC /* ShoppingListInteractor.swift in Sources */,
 				3123E3282CBE6F1E00ACE2AC /* ShoppingListViewController.swift in Sources */,

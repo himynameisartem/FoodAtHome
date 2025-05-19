@@ -3,11 +3,24 @@
 //  FoodAtHome
 //
 //  Created by Артем Кудрявцев on 15.10.2024.
-//  Copyright (c) 2024 ___ORGANIZATIONNAME___. All rights reserved.
 //
 
 import UIKit
 
-class SettingsService {
+protocol SettingsWorkerProtocol {
+    
+}
 
+class SettingsWorker: SettingsWorkerProtocol {
+    
+    private func darkTheme() {
+        guard let windowScene = UIApplication.shared.connectedScenes
+            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene else {
+            return
+        }
+        guard let window = windowScene.windows.first else {
+            return
+        }
+        window.overrideUserInterfaceStyle = .dark
+    }
 }
