@@ -9,6 +9,7 @@ import UIKit
 
 struct InformationCellViewModel {
     let title: String
+    let value: String
 }
 
 class InformationCell: UITableViewCell {
@@ -19,15 +20,17 @@ class InformationCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        configureUI()
-        setupConstraints()
-    }
+    let valueLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .label
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        configureUI()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -38,16 +41,20 @@ class InformationCell: UITableViewCell {
 extension InformationCell {
      func configure(with viewModel: InformationCellViewModel) {
          titleLabel.text = viewModel.title
+         valueLabel.text = viewModel.value
     }
     
     func configureUI() {
-        self.addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(valueLabel)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40)
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
+            valueLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            valueLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40)
         ])
     }
 }

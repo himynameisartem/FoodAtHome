@@ -14,10 +14,12 @@ enum SettingsModel {
         struct Response {
             let modes: [String]
             let selectedIndex: Int
+            let language: String
         }
         struct ViewModel {
             let modes: [String]
             let states: [Bool]
+            let language: String
         }
     }
     
@@ -31,6 +33,29 @@ enum SettingsModel {
         }
         struct ViewModel {
             let switchesState: [Bool]
+        }
+    }
+    
+    enum SetLanguage {
+        struct Request {}
+        struct Response {}
+        struct ViewModel {
+            let alertTitle: String
+            let cancelButtonTitle: String
+            let englishLanguageTitle: String
+            let russianLanguageTitle: String
+        }
+    }
+    
+    enum ConfirmChangeLanguage {
+        struct Request {
+            let languageCode: String
+        }
+        struct Response {
+            let language: String
+        }
+        struct ViewModel {
+            let language: String
         }
     }
 }

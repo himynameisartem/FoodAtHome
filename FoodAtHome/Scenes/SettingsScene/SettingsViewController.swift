@@ -10,13 +10,15 @@ import UIKit
 protocol SettingsDisplayLogic: AnyObject {
     func displayData(viewModel: SettingsModel.FetchData.ViewModel)
     func displaySwitchSelection(viewModel: SettingsModel.SwitchSelection.ViewModel)
+    func displaySetLanguage(viewModel: SettingsModel.SetLanguage.ViewModel)
+    func displayChangedLanguage(viewModel: SettingsModel.ConfirmChangeLanguage.ViewModel)
 }
 
 class SettingsViewController: UIViewController {
     
-    //временно
     private var modes: [String] = []
     private var switchStates: [Bool] = []
+    private var language = String()
     
     var interactor: SettingsBusinessLogic?
     var router: (NSObjectProtocol & SettingsRoutingLogic)?
@@ -57,6 +59,11 @@ class SettingsViewController: UIViewController {
     private func switchSelection(at indexPath: IndexPath) {
         let request = SettingsModel.SwitchSelection.Request(selectedIndex: indexPath.row)
         interactor?.selectSwitch(request: request)
+    }
+    
+    private func setLanguage() {
+        let request = SettingsModel.SetLanguage.Request()
+        interactor?.setLanguage(request: request)
     }
     
     private func navigationBarSetup() {
@@ -109,9 +116,14 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         switch indexPath.section {
         case 0:
             let setLanguageCell = tableView.dequeueReusableCell(withIdentifier: "SetLanguageCell", for: indexPath) as! SetLanguageCell
-            let viewModel = SetLanguageCellViewModel(title: "Set Language", language: "Русский")
+            let viewModel = SetLanguageCellViewModel(title: "Set Language", language: language)
             setLanguageCell.configure(with: viewModel)
-            setLanguageCell.awakeFromNib()
+            setLanguageCell.selectionStyle = .none
+            setLanguageCell.buttonTappedAction = { [weak self] in
+                setLanguageCell.titleButton.showAnimation(for: .withoutColor) {
+                    self?.setLanguage()
+                }
+            }
             return setLanguageCell
         case 1:
             let setAppearanceCell = tableView.dequeueReusableCell(withIdentifier: "SetAppearanceCell", for: indexPath) as! SetAppearanceCell
@@ -121,42 +133,11 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             setAppearanceCell.selectionStyle = .none
             setAppearanceCell.switchAction = { [weak self] isOn in
                 self?.switchSelection(at: indexPath)
-//                if indexPath.row == 0 && setAppearanceCell.switchMode.isOn {
-//                    guard let windowScene = UIApplication.shared.connectedScenes
-//                        .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene else {
-//                        return
-//                    }
-//                    guard let window = windowScene.windows.first else {
-//                        return
-//                    }
-//                    window.overrideUserInterfaceStyle = .unspecified
-//                    print("systemMode")
-//                } else if indexPath.row == 1 && setAppearanceCell.switchMode.isOn {
-//                    guard let windowScene = UIApplication.shared.connectedScenes
-//                        .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene else {
-//                        return
-//                    }
-//                    guard let window = windowScene.windows.first else {
-//                        return
-//                    }
-//                    window.overrideUserInterfaceStyle = .dark
-//                    print("darkMode")
-//                } else if indexPath.row == 2 && setAppearanceCell.switchMode.isOn {
-//                    guard let windowScene = UIApplication.shared.connectedScenes
-//                        .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene else {
-//                        return
-//                    }
-//                    guard let window = windowScene.windows.first else {
-//                        return
-//                    }
-//                    window.overrideUserInterfaceStyle = .light
-//                    print("lightMode")
-//                }
             }
             return setAppearanceCell
         case 2 :
             let informationCell = tableView.dequeueReusableCell(withIdentifier: "InformationCell", for: indexPath) as! InformationCell
-            let viewModel = InformationCellViewModel(title: "About Us")
+            let viewModel = InformationCellViewModel(title: "Version", value: "1.0.0")
             informationCell.configure(with: viewModel)
             informationCell.awakeFromNib()
             return informationCell
@@ -164,24 +145,16 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 0:
-            print("select language")
-        case 2:
-            print("information about us")
-        default :
-            break
-        }
-    }
 }
+
+//MARK: - SettingsDisplayLogic
 
 extension SettingsViewController: SettingsDisplayLogic {
     
     func displayData(viewModel: SettingsModel.FetchData.ViewModel) {
-        self.modes = viewModel.modes
-        self.switchStates = viewModel.states
+        modes = viewModel.modes
+        switchStates = viewModel.states
+        language = viewModel.language
         settingsTableView.reloadData()
     }
     
@@ -193,5 +166,24 @@ extension SettingsViewController: SettingsDisplayLogic {
                 cell.switchMode.setOn(switchStates[indexPath.row], animated: true)
             }
         }
+    }
+    
+    func displaySetLanguage(viewModel: SettingsModel.SetLanguage.ViewModel) {
+        let alert = UIAlertController(title: viewModel.alertTitle, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: viewModel.englishLanguageTitle, style: .default, handler: { _ in
+            let request = SettingsModel.ConfirmChangeLanguage.Request(languageCode: "en")
+            self.interactor?.confirmChangeLanguage(request: request)
+        }))
+        alert.addAction(UIAlertAction(title: viewModel.russianLanguageTitle, style: .default, handler: { _ in
+            let request = SettingsModel.ConfirmChangeLanguage.Request(languageCode: "ru")
+            self.interactor?.confirmChangeLanguage(request: request)
+        }))
+        alert.addAction(UIAlertAction(title: viewModel.cancelButtonTitle, style: .cancel))
+        self.present(alert, animated: true)
+    }
+    
+    func displayChangedLanguage(viewModel: SettingsModel.ConfirmChangeLanguage.ViewModel) {
+        language = viewModel.language
+        settingsTableView.reloadData()
     }
 }

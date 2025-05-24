@@ -42,6 +42,9 @@
 		314E67E22DD4F45200EC6E78 /* SetLanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314E67E12DD4F45200EC6E78 /* SetLanguageCell.swift */; };
 		314E67E42DD4F46000EC6E78 /* SetAppearanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314E67E32DD4F46000EC6E78 /* SetAppearanceCell.swift */; };
 		314E67E62DD4F46800EC6E78 /* InformationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314E67E52DD4F46800EC6E78 /* InformationCell.swift */; };
+		314E67EF2DDC8DA300EC6E78 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 314E67EE2DDC8DA300EC6E78 /* Launch Screen.storyboard */; };
+		314E67F32DDC995300EC6E78 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314E67F22DDC995300EC6E78 /* LanguageManager.swift */; };
+		314E67F72DDCB2D400EC6E78 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314E67F62DDCB2D400EC6E78 /* LaunchViewController.swift */; };
 		314ECCA12D9151900047EDBB /* Date + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314ECCA02D9151900047EDBB /* Date + Extension.swift */; };
 		317F50E6286DB4C90049B64B /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317F50E5286DB4C90049B64B /* UIColor + Extension.swift */; };
 		318701A12A4E019C0079848C /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318701A02A4E019C0079848C /* DateManager.swift */; };
@@ -49,7 +52,6 @@
 		31A545E52DD38FCC0051F1C4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 31A545E42DD38FCC0051F1C4 /* Localizable.strings */; };
 		31A545EE2DD390340051F1C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31A545ED2DD390340051F1C4 /* Main.storyboard */; };
 		31B1C5ED2BC7F5E300C6D43F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B1C5EC2BC7F5E300C6D43F /* AppDelegate.swift */; };
-		31B1C5F02BC7FA5300C6D43F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31B1C5EE2BC7F5F800C6D43F /* Launch Screen.storyboard */; };
 		31B1C6022BC8001B00C6D43F /* Inter-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 31B1C5FB2BC8001B00C6D43F /* Inter-SemiBold.otf */; };
 		31B1C6032BC8001B00C6D43F /* pobeda-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 31B1C5FC2BC8001B00C6D43F /* pobeda-bold.ttf */; };
 		31B1C6042BC8001B00C6D43F /* Inter-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 31B1C5FD2BC8001B00C6D43F /* Inter-Light.otf */; };
@@ -147,6 +149,10 @@
 		314E67E12DD4F45200EC6E78 /* SetLanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetLanguageCell.swift; sourceTree = "<group>"; };
 		314E67E32DD4F46000EC6E78 /* SetAppearanceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAppearanceCell.swift; sourceTree = "<group>"; };
 		314E67E52DD4F46800EC6E78 /* InformationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationCell.swift; sourceTree = "<group>"; };
+		314E67EE2DDC8DA300EC6E78 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		314E67F22DDC995300EC6E78 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
+		314E67F42DDC9AD500EC6E78 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		314E67F62DDCB2D400EC6E78 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		314ECCA02D9151900047EDBB /* Date + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Extension.swift"; sourceTree = "<group>"; };
 		317F50E5286DB4C90049B64B /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
 		318701A02A4E019C0079848C /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
@@ -156,7 +162,6 @@
 		31A545EC2DD390340051F1C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		31A545EF2DD390340051F1C4 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Main.xcstrings; sourceTree = "<group>"; };
 		31B1C5EC2BC7F5E300C6D43F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		31B1C5EE2BC7F5F800C6D43F /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		31B1C5FB2BC8001B00C6D43F /* Inter-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.otf"; sourceTree = "<group>"; };
 		31B1C5FC2BC8001B00C6D43F /* pobeda-bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pobeda-bold.ttf"; sourceTree = "<group>"; };
 		31B1C5FD2BC8001B00C6D43F /* Inter-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Light.otf"; sourceTree = "<group>"; };
@@ -309,7 +314,7 @@
 		3139EE642C4EAD0100AEC1F2 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				31B1C5EE2BC7F5F800C6D43F /* Launch Screen.storyboard */,
+				314E67EE2DDC8DA300EC6E78 /* Launch Screen.storyboard */,
 				31A545ED2DD390340051F1C4 /* Main.storyboard */,
 			);
 			path = Storyboards;
@@ -337,6 +342,14 @@
 				314E67E52DD4F46800EC6E78 /* InformationCell.swift */,
 			);
 			path = SettingsTableViewCells;
+			sourceTree = "<group>";
+		};
+		314E67F52DDCB2C400EC6E78 /* LaunchScene */ = {
+			isa = PBXGroup;
+			children = (
+				314E67F62DDCB2D400EC6E78 /* LaunchViewController.swift */,
+			);
+			path = LaunchScene;
 			sourceTree = "<group>";
 		};
 		316D2A892C9AC11B00D6A54A /* CategoryDetailsFoodCell */ = {
@@ -391,6 +404,7 @@
 		31C6245D2C772EB3004E83B7 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				314E67F52DDCB2C400EC6E78 /* LaunchScene */,
 				31FA89112BC90D50005EA855 /* MyFoodScene */,
 				3139EE522C4D2D5300AEC1F2 /* CategoryDetailsScene */,
 				31C624602C7DBA81004E83B7 /* ChoiseFoodScene */,
@@ -466,6 +480,7 @@
 				31D43C842D35527E0068046E /* DateFormatterManager.swift */,
 				310AC9E32A6D7A2F0055E013 /* PickerPropertiesManager.swift */,
 				313153352AB8D22F00A3E11D /* ContextualActionViewManager.swift */,
+				314E67F22DDC995300EC6E78 /* LanguageManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -670,7 +685,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31B1C5F02BC7FA5300C6D43F /* Launch Screen.storyboard in Resources */,
 				31E21F432C117B94007B74B5 /* AddMyFoodCollectionViewCell.xib in Resources */,
 				3133D59D2C9AC6CB004A7C31 /* AddFoodMenu.xib in Resources */,
 				31CFBD2A2BCED856004C75A8 /* CategoryMyFoodCollectionViewCell.xib in Resources */,
@@ -691,6 +705,7 @@
 				31B1C6062BC8001B00C6D43F /* Inter-ExtraLight.otf in Resources */,
 				31B1C6072BC8001B00C6D43F /* pobeda-regular.ttf in Resources */,
 				3139EE9B2C66575A00AEC1F2 /* .gitignore in Resources */,
+				314E67EF2DDC8DA300EC6E78 /* Launch Screen.storyboard in Resources */,
 				31B1C6082BC8001B00C6D43F /* Inter.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -827,6 +842,8 @@
 				31FD7DFB2D706586001E07DA /* AddShoppingListViewController.swift in Sources */,
 				310AC9E42A6D7A2F0055E013 /* PickerPropertiesManager.swift in Sources */,
 				31DA20D62839553600DCE421 /* FoodModel.swift in Sources */,
+				314E67F72DDCB2D400EC6E78 /* LaunchViewController.swift in Sources */,
+				314E67F32DDC995300EC6E78 /* LanguageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -837,6 +854,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				31A545E32DD38FCC0051F1C4 /* ru */,
+				314E67F42DDC9AD500EC6E78 /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1000,7 +1018,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = /Users/himynameisartem/Documents/Development/myApp/CommercialApp/FoodAtHome/FoodAtHome/FoodAtHome/Config/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -1032,7 +1050,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = /Users/himynameisartem/Documents/Development/myApp/CommercialApp/FoodAtHome/FoodAtHome/FoodAtHome/Config/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";

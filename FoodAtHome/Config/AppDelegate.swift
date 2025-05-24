@@ -13,12 +13,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     private var localRealm: Realm?
+    
+    func setLanguage() {
+        guard let code = UserDefaults.standard.string(forKey: "selectedLanguageCode") else { return }
+        LanguageManager.shared.currentLanguage = code
+    }
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+    func applySavedTheme() {
+        let index = UserDefaults.standard.integer(forKey: "selectedSwitchIndex")
+        guard let windowScene = UIApplication.shared.connectedScenes
+            .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
+              let window = windowScene.windows.first else {
+            return
+        }
+        switch index {
+        case 0:
+            window.overrideUserInterfaceStyle = .unspecified
+        case 1:
+            window.overrideUserInterfaceStyle = .dark
+        case 2:
+            window.overrideUserInterfaceStyle = .light
+        default:
+            window.overrideUserInterfaceStyle = .unspecified
+        }
+    }
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication .LaunchOptionsKey: Any]?) -> Bool {
         initializeRealm()
         return true
     }
+    
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -35,28 +59,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        applySavedTheme()
+        setLanguage()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
-//    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//        
-//        initializeRealm()
-//
-//        window = UIWindow(frame: UIScreen.main.bounds)
-//        let navController = UINavigationController()
-//        let vc = TabBarViewController()
-//        vc.selectedIndex = 1
-//        navController.viewControllers = [vc]
-//        window?.rootViewController = vc
-//        window?.makeKeyAndVisible()
-//        
-//        
-//        return true
-//    }
     
     private func initializeRealm() {
         let config = Realm.Configuration(schemaVersion: 3)

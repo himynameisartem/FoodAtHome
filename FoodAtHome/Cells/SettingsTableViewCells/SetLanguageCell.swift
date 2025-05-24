@@ -14,12 +14,13 @@ struct SetLanguageCellViewModel {
 
 class SetLanguageCell: UITableViewCell {
     
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .left
-        label.numberOfLines = 1
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    var buttonTappedAction: (() -> Void)?
+    
+    let titleButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.black, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     let languageLabel: UILabel = {
@@ -30,15 +31,10 @@ class SetLanguageCell: UITableViewCell {
         return label
     }()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        configureUI()
-        setupConstraints()
-    }
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+        configureUI()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -48,22 +44,27 @@ class SetLanguageCell: UITableViewCell {
 
 extension SetLanguageCell {
     func configure(with viewModel: SetLanguageCellViewModel) {
-        titleLabel.text = viewModel.title
+        titleButton.setTitle(viewModel.title, for: .normal)
         languageLabel.text = viewModel.language
     }
     
     func configureUI() {
-        self.addSubview(titleLabel)
-        self.addSubview(languageLabel)
+        contentView.addSubview(titleButton)
+        contentView.addSubview(languageLabel)
+        titleButton.addTarget(self, action: #selector(setLanguageButtonTapped), for: .touchUpInside)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
+            titleButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+            titleButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
             languageLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             languageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
+    }
+    
+    @objc func setLanguageButtonTapped() {
+        buttonTappedAction?()
     }
     
 }
