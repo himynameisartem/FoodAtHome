@@ -12,6 +12,7 @@ protocol MyFoodBusinessLogic {
     func fetchMyFood(request: MyFoodModel.FetchFoodList.Request)
     func fetchSharedFoodList(request: MyFoodModel.FetchSharedFood.Request)
     func fetchFoodDetails(request: MyFoodModel.FetchFoodDetails.Request)
+    func setNotifications(request: MyFoodModel.SetNotification.Request)
     func prepareEditingFood(request: MyFoodModel.PrepareEditing.Request)
     func deleteFood(request: MyFoodModel.DeleteFood.Request)
     func removeAllMyFood(request: MyFoodModel.RemoveAllMyFood.Request)
@@ -52,6 +53,13 @@ class MyFoodInteractor: MyFoodBusinessLogic, MyFoodDataStore {
     func fetchFoodDetails(request: MyFoodModel.FetchFoodDetails.Request) {
         let response = MyFoodModel.FetchFoodDetails.Response(foodDetails: myFood[request.indexPath.row])
         presenter?.presentFoodDetails(response: response)
+    }
+    
+    func setNotifications(request: MyFoodModel.SetNotification.Request) {
+        worker.scheduleNotificationForEnding()
+        worker.scheduleNotificationForExpired()
+        let response = MyFoodModel.SetNotification.Response()
+        presenter?.presentNotifications(response: response)
     }
     
     func prepareEditingFood(request: MyFoodModel.PrepareEditing.Request) {

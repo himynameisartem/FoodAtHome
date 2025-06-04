@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_72" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,21 +19,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="80" height="120"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W4Z-gO-GoX">
-                        <rect key="frame" x="2" y="2" width="76" height="83"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W4Z-gO-GoX">
+                        <rect key="frame" x="0.0" y="0.0" width="80" height="87.333333333333329"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="W4Z-gO-GoX" secondAttribute="height" multiplier="76:83" id="hnj-mN-3Yb"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                <integer key="value" value="10"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ed-VS-c8q">
-                        <rect key="frame" x="2" y="87" width="76" height="31"/>
+                        <rect key="frame" x="2" y="87.333333333333329" width="76" height="30.666666666666671"/>
                         <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="12"/>
-                        <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ow8-c5-T8C">
@@ -57,15 +52,15 @@
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" name="backgroundCardColor"/>
             <constraints>
-                <constraint firstItem="W4Z-gO-GoX" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="N9z-cL-Ytn"/>
-                <constraint firstAttribute="trailing" secondItem="W4Z-gO-GoX" secondAttribute="trailing" constant="2" id="Oly-Oi-e0W"/>
-                <constraint firstItem="W4Z-gO-GoX" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="2" id="Or4-mj-SRZ"/>
+                <constraint firstItem="W4Z-gO-GoX" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="N9z-cL-Ytn"/>
+                <constraint firstAttribute="trailing" secondItem="W4Z-gO-GoX" secondAttribute="trailing" id="Oly-Oi-e0W"/>
+                <constraint firstItem="W4Z-gO-GoX" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Or4-mj-SRZ"/>
                 <constraint firstAttribute="trailing" secondItem="0Ed-VS-c8q" secondAttribute="trailing" constant="2" id="d5Q-oA-dwS"/>
                 <constraint firstItem="0Ed-VS-c8q" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="hBr-wV-yW3"/>
                 <constraint firstAttribute="bottom" secondItem="0Ed-VS-c8q" secondAttribute="bottom" constant="2" id="rpH-fv-rPY"/>
-                <constraint firstItem="0Ed-VS-c8q" firstAttribute="top" secondItem="W4Z-gO-GoX" secondAttribute="bottom" constant="2" id="rvo-bI-PtJ"/>
+                <constraint firstItem="0Ed-VS-c8q" firstAttribute="top" secondItem="W4Z-gO-GoX" secondAttribute="bottom" id="rvo-bI-PtJ"/>
             </constraints>
             <size key="customSize" width="80" height="120"/>
             <userDefinedRuntimeAttributes>
@@ -90,12 +85,15 @@
                 <outlet property="foodName" destination="0Ed-VS-c8q" id="vm4-U0-QLM"/>
                 <outlet property="indicatorView" destination="Ow8-c5-T8C" id="t1p-aa-p5h"/>
             </connections>
-            <point key="canvasLocation" x="159.06976744186048" y="43.776824034334766"/>
+            <point key="canvasLocation" x="158.77862595419847" y="43.661971830985919"/>
         </collectionViewCell>
     </objects>
     <resources>
+        <namedColor name="backgroundCardColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

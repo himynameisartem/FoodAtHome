@@ -16,13 +16,9 @@ protocol SettingsDisplayLogic: AnyObject {
 
 class SettingsViewController: UIViewController {
     
-    private var modes: [String] = []
-    private var switchStates: [Bool] = []
-    private var language = String()
-    
     var interactor: SettingsBusinessLogic?
     var router: (NSObjectProtocol & SettingsRoutingLogic)?
-    
+
     // MARK: Setup
     
     private func setup() {
@@ -50,6 +46,10 @@ class SettingsViewController: UIViewController {
     
     @IBOutlet weak var tabBarTitle: UILabel!
     @IBOutlet weak var settingsTableView: UITableView!
+    
+    private var modes: [String] = []
+    private var switchStates: [Bool] = []
+    private var language = String()
     
     private func fetchData() {
         let request = SettingsModel.FetchData.Request()
@@ -79,25 +79,22 @@ class SettingsViewController: UIViewController {
         settingsTableView.register(SetAppearanceCell.self, forCellReuseIdentifier: "SetAppearanceCell")
         settingsTableView.register(InformationCell.self, forCellReuseIdentifier: "InformationCell")
     }
-    
-    
 }
 
 //MARK: - UITableViewDelegate
 
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         3
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "Language"
+            return "Language".localized()
         } else if section == 1 {
-            return "Appearance"
+            return "Appearance".localized()
         } else {
-            return "Information"
+            return "Information".localized()
         }
     }
     
@@ -116,7 +113,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         switch indexPath.section {
         case 0:
             let setLanguageCell = tableView.dequeueReusableCell(withIdentifier: "SetLanguageCell", for: indexPath) as! SetLanguageCell
-            let viewModel = SetLanguageCellViewModel(title: "Set Language", language: language)
+            let viewModel = SetLanguageCellViewModel(title: "Set Language".localized(), language: language)
             setLanguageCell.configure(with: viewModel)
             setLanguageCell.selectionStyle = .none
             setLanguageCell.buttonTappedAction = { [weak self] in
@@ -137,7 +134,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             return setAppearanceCell
         case 2 :
             let informationCell = tableView.dequeueReusableCell(withIdentifier: "InformationCell", for: indexPath) as! InformationCell
-            let viewModel = InformationCellViewModel(title: "Version", value: "1.0.0")
+            let viewModel = InformationCellViewModel(title: "Version".localized(), value: "1.1")
             informationCell.configure(with: viewModel)
             informationCell.awakeFromNib()
             return informationCell
@@ -150,7 +147,6 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
 //MARK: - SettingsDisplayLogic
 
 extension SettingsViewController: SettingsDisplayLogic {
-    
     func displayData(viewModel: SettingsModel.FetchData.ViewModel) {
         modes = viewModel.modes
         switchStates = viewModel.states

@@ -8,7 +8,6 @@
 import UIKit
 
 enum SettingsModel {
-    
     enum FetchData {
         struct Request {}
         struct Response {

@@ -159,9 +159,9 @@ class ChoiseFoodViewController: UIViewController {
     }
     
     private func configureNavigationView() {
-        backButton.tintColor = .black
+        backButton.tintColor = .text
         backButton.image = UIImage(systemName: "chevron.backward")
-        searchButton.tintColor = .black
+        searchButton.tintColor = .text
         searchButton.image = UIImage(systemName: "magnifyingglass")
         navigationItem.hidesBackButton = true
         navigationItem.leftBarButtonItem = backButton
@@ -183,7 +183,7 @@ class ChoiseFoodViewController: UIViewController {
         searchController.searchBar.showsCancelButton = true
         searchController.searchBar.placeholder = "Search".localized()
         searchController.searchBar.setValue("Cancel".localized(), forKey: "cancelButtonText")
-        searchController.searchBar.tintColor = .black
+        searchController.searchBar.tintColor = .text
     }
     
     private func configureCollectionView() {

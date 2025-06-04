@@ -24,7 +24,7 @@ class SettingsInteractor: SettingsBusinessLogic, SettingsDataStore {
     
     var presenter: SettingsPresentationLogic?
     var worker: SettingsWorkerProtocol
-    var modes: [String] = ["System Mode", "Dark Mode", "Light Mode"]
+    var modes: [String] = ["System mode".localized(), "Dark mode".localized(), "Light mode".localized()]
     private let userDefaultsKey = "selectedSwitchIndex"
     private let languageKey = "selectedLanguageCode"
     var selectedSwitchIndex: Int {

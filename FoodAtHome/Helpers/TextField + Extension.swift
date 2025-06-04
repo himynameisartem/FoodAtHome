@@ -36,7 +36,7 @@ extension UITextField {
             target: self,
             action: #selector(self.doneButtonAction)
         )
-        done.tintColor = .black
+        done.tintColor = .text
         
         var items = [UIBarButtonItem]()
         items.append(flexSpace)

@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  FoodAtHome
+
+  Created by Артем Кудрявцев on 04.06.2025.
+  
+*/
+CFBundleDisplayName = "Еда Дома";

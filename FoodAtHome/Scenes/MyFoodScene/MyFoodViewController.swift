@@ -10,6 +10,7 @@ import UIKit
 protocol MyFoodDisplayLogic: AnyObject {
     func displayCategories(viewModel: MyFoodModel.FetchCategories.ViewModel)
     func displayFoodList(viewModel: MyFoodModel.FetchFoodList.ViewModel)
+    func displayNotifications(viewModel: MyFoodModel.SetNotification.ViewModel)
     func displayFoodDetails(viewModel: MyFoodModel.FetchFoodDetails.ViewModel)
     func displayEditingFood(viewModel: MyFoodModel.PrepareEditing.ViewModel)
     func displaySharedFood(viewModel: MyFoodModel.FetchSharedFood.ViewModel)
@@ -22,14 +23,12 @@ class MyFoodViewController: UIViewController {
     
     var interactor: MyFoodBusinessLogic?
     var router: (NSObjectProtocol & MyFoodRoutingLogic & MyFoodDataPassing)?
-    
-    
-    
+ 
     // MARK: Setup
     
     private func setup() {
         let viewController = self
-        let interactor = MyFoodInteractor(worker: MyFoodWorker())
+        let interactor = MyFoodInteractor(worker: MyFoodWorker(notification: NotificationManager()))
         let presenter = MyFoodPresenter(dateManager: DateManager())
         let router = MyFoodRouter()
         viewController.interactor = interactor
@@ -55,6 +54,7 @@ class MyFoodViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         fetchMyFood()
+        setNotifications()
     }
     
     override func viewDidLoad() {
@@ -103,6 +103,11 @@ class MyFoodViewController: UIViewController {
     private func fetchDetailsFood(at indexPath: IndexPath) {
         let request = MyFoodModel.FetchFoodDetails.Request(indexPath: indexPath)
         interactor?.fetchFoodDetails(request: request)
+    }
+    
+    private func setNotifications() {
+        let request = MyFoodModel.SetNotification.Request()
+        interactor?.setNotifications(request: request)
     }
     
     private func handleEditAction(at indexPath: IndexPath) {
@@ -285,6 +290,7 @@ extension MyFoodViewController: MyFoodDisplayLogic {
     }
     
     func displayEditingFood(viewModel: MyFoodModel.PrepareEditing.ViewModel) {}
+    func displayNotifications(viewModel: MyFoodModel.SetNotification.ViewModel) {}
     
     func displayFoodDetails(viewModel: MyFoodModel.FetchFoodDetails.ViewModel) {
         guard let view = self.navigationController?.tabBarController?.view else { return }

@@ -107,7 +107,7 @@ extension MyFoodDetailsPopupMenu {
         consumeUpIndicator.alpha = 0
         namePropertyStack.alpha = 0
         valuesPropertyStack.alpha = 0
-        arrowView.tintColor = .white
+        arrowView.tintColor = .detailPopupMenu
         dimmingView.alpha = 0.5
         dimmingView.backgroundColor = .black
         contentView.layer.cornerRadius = 8

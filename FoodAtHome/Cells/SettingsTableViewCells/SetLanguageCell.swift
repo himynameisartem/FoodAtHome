@@ -18,7 +18,7 @@ class SetLanguageCell: UITableViewCell {
     
     let titleButton: UIButton = {
         let button = UIButton()
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()

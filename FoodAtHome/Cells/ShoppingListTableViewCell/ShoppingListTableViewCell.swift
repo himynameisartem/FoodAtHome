@@ -28,7 +28,7 @@ class ShoppingListTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
-        containerView.makeShadow(opacity: 0.3)
+        containerView.makeShadow(opacity: 0.4)
         foodNameLabel.font = UIFont(name: "Inter", size: 17)
         caloriesLabel.font = UIFont(name: "Inter-ExtraLight", size: 14)
         weightLabel.font = UIFont(name: "Inter", size: 17)

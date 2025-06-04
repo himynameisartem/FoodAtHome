@@ -6,6 +6,24 @@
   
 */
 
+//MARK: - Settings
+
+"Language" = "Язык";
+"Appearance" = "Оформление";
+"Information" = "Информация";
+"Set Language" = "Выбор языка";
+"Version" = "Версия приложения";
+"System mode" = "Как в системе";
+"Dark mode" = "Темная тема";
+"Light mode" = "Светлая тема";
+
+//MARK: - Notification
+
+"Expired!" = "Срок годности истек!";
+"Some of your products have expired." = "У некоторых из ваших продуктов истек срок годности.";
+"Nearing expiration." = "Срок годности подходит к концу";
+"Some of your products are about to expire." = "У некоторых из ваших продуктов истекает срок годности.";
+
 //MARK: - System
 
 "Back" = "Назад";

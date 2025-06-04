@@ -63,7 +63,7 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-        button.tintColor = .black
+        button.tintColor = .text
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         return button
     }()
@@ -72,6 +72,8 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
         imageView.image = UIImage(named: "Absinthe")
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
+        imageView.backgroundColor = .white
+        imageView.layer.cornerRadius = 8
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -93,12 +95,13 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
     private let weightLabel: UILabel = {
         let label = UILabel()
         label.text = "Weight:".localized()
+        label.textColor = .text
         return label
     }()
     private let weightUnitButton: UIButton = {
         let button = UIButton()
-        button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = .systemGray6
+        button.setTitleColor(.text, for: .normal)
+        button.backgroundColor = .textField
         button.setTitle("kg.".localized(), for: .normal)
         button.layer.cornerRadius = 5
         return button
@@ -107,7 +110,8 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
         let textField = UITextField()
         textField.placeholder = "0.0"
         textField.textAlignment = .center
-        textField.backgroundColor = .systemGray6
+        textField.backgroundColor = .textField
+        textField.textColor = .text
         textField.layer.cornerRadius = 5
         textField.keyboardType = .decimalPad
         textField.addDoneButtonToKeyboard()
@@ -131,9 +135,10 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
     }
     
     private func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .foodCardCell
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
+        self.view.makeShadow(opacity: 0.3)
         closeButton.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
         weightUnitButton.addTarget(self, action: #selector(showMenu), for: .touchUpInside)
         addButton.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
@@ -156,7 +161,7 @@ class AddShoppingListViewController: UIViewController, AddShoppingListDisplayLog
             closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             
             foodImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            foodImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
+            foodImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
             foodImageView.widthAnchor.constraint(equalToConstant: view.frame.width / 2),
             foodImageView.heightAnchor.constraint(equalToConstant: view.frame.width / 2),
             
@@ -243,32 +248,32 @@ extension AddShoppingListViewController: UIPopoverPresentationControllerDelegate
         let kgOption = UIButton(type: .system)
         kgOption.setTitle("kg.".localized(), for: .normal)
         kgOption.addTarget(self, action: #selector(kgOptionTapped), for: .touchUpInside)
-        kgOption.tintColor = .black
+        kgOption.tintColor = .text
         
         let gOption = UIButton(type: .system)
         gOption.setTitle("g.".localized(), for: .normal)
         gOption.addTarget(self, action: #selector(gOptionTapped), for: .touchUpInside)
-        gOption.tintColor = .black
+        gOption.tintColor = .text
         
         let lOption = UIButton(type: .system)
         lOption.setTitle("l.".localized(), for: .normal)
         lOption.addTarget(self, action: #selector(lOptionTapped), for: .touchUpInside)
-        lOption.tintColor = .black
+        lOption.tintColor = .text
         
         let mlOption = UIButton(type: .system)
         mlOption.setTitle("ml.".localized(), for: .normal)
         mlOption.addTarget(self, action: #selector(mlOptionTapped), for: .touchUpInside)
-        mlOption.tintColor = .black
+        mlOption.tintColor = .text
         
         let pkOption = UIButton(type: .system)
         pkOption.setTitle("pk.".localized(), for: .normal)
         pkOption.addTarget(self, action: #selector(pkOptionTapped), for: .touchUpInside)
-        pkOption.tintColor = .black
+        pkOption.tintColor = .text
         
         let pcsOption = UIButton(type: .system)
         pcsOption.setTitle("pcs.".localized(), for: .normal)
         pcsOption.addTarget(self, action: #selector(pcsOptionTapped), for: .touchUpInside)
-        pcsOption.tintColor = .black
+        pcsOption.tintColor = .text
         
         stackView.addArrangedSubview(kgOption)
         stackView.addArrangedSubview(gOption)

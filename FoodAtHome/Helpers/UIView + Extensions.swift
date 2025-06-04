@@ -38,7 +38,7 @@ extension UIView {
                 self?.isUserInteractionEnabled = true
                 if color == .withColor {
                     if let button = self as? UIButton {
-                        button.configuration?.background.backgroundColor = .white
+                        button.configuration?.background.backgroundColor = .backgroundCard
                     } else {
                         self?.backgroundColor = .white
                     }
@@ -51,7 +51,7 @@ extension UIView {
         layer.masksToBounds = false
         layer.shadowColor = UIColor.gray.cgColor
         layer.shadowOpacity = opacity
-        layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-        layer.shadowRadius = 5
+        layer.shadowOffset = CGSize.zero
+        layer.shadowRadius = 3
     }
 }

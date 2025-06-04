@@ -68,6 +68,9 @@ extension DataManager {
         let shoppingList = fetchMyShoppingList()
         try! localRealm.write {
             if let shoppingListItem = shoppingList.first(where: {$0.name == food.name}) {
+                shoppingListItem.expirationDate = food.expirationDate
+                shoppingListItem.productionDate = food.productionDate
+                shoppingListItem.consumeUp = food.consumeUp
                 shoppingListItem.isShoppingList.toggle()
             } else {
                 localRealm.add(food)

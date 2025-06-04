@@ -59,6 +59,12 @@ enum MyFoodModel {
         }
     }
     
+    enum SetNotification {
+        struct Request {}
+        struct Response {}
+        struct ViewModel {}
+    }
+    
     enum DeleteFood {
         struct Request{
             let indexPath: IndexPath

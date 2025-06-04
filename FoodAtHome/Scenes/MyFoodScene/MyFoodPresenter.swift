@@ -10,6 +10,7 @@ import UIKit
 protocol MyFoodPresentationLogic {
     func presentCategories(response: MyFoodModel.FetchCategories.Response)
     func presentMyFood(response: MyFoodModel.FetchFoodList.Response)
+    func presentNotifications(response: MyFoodModel.SetNotification.Response)
     func presentEditingFood(response: MyFoodModel.PrepareEditing.Response)
     func presentFoodDetails(response: MyFoodModel.FetchFoodDetails.Response)
     func presentSharedFood(response: MyFoodModel.FetchSharedFood.Response)
@@ -47,6 +48,11 @@ class MyFoodPresenter: MyFoodPresentationLogic {
         }
         let viewModel = MyFoodModel.FetchFoodList.ViewModel(displayedMyFood: displayedMyFood)
         viewController?.displayFoodList(viewModel: viewModel)
+    }
+    
+    func presentNotifications(response: MyFoodModel.SetNotification.Response) {
+        let viewModel = MyFoodModel.SetNotification.ViewModel()
+        viewController?.displayNotifications(viewModel: viewModel)
     }
     
     func presentFoodDetails(response: MyFoodModel.FetchFoodDetails.Response) {

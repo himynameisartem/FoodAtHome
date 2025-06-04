@@ -16,12 +16,13 @@ class MyFoodCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         indicatorView.isHidden = true
-        makeShadow(opacity: 0.1)
-        configureText()
+        configureUI()
     }
 
-    private func configureText() {
+    private func configureUI() {
+        makeShadow(opacity: 0.3)
         foodName.font = UIFont(name: "Inter-ExtraLight", size: 12)
+        layer.masksToBounds = true
     }
     
     func setData(viewModel: MyFoodModel.FetchFoodList.ViewModel.DisplayedMyFood) {

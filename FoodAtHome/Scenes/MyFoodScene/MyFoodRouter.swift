@@ -20,8 +20,7 @@ class MyFoodRouter: NSObject, MyFoodRoutingLogic, MyFoodDataPassing {
     
     weak var viewController: MyFoodViewController?
     var dataStore: MyFoodDataStore?
-    var worker = MyFoodWorker()
-    var addFoodMenu = AddFoodMenu()
+    var worker = MyFoodWorker(notification: NotificationManager())
     
     // MARK: Routing
     

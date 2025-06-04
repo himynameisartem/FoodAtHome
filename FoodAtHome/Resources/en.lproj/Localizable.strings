@@ -5,6 +5,23 @@
   Created by Артем Кудрявцев on 13.05.2025.
   
 */
+//MARK: - Settings
+
+"Language" = "Language";
+"Appearance" = "Appearance";
+"Information" = "Information";
+"Set Language" = "Set Language";
+"Version" = "Version";
+"System mode" = "System mode";
+"Dark mode" = "Dark mode";
+"Light mode" = "Light mode";
+
+//MARK: - Notification
+
+"Expired!" = "Expired!";
+"Some of your products have expired." = "Some of your products have expired.";
+"Nearing expiration." = "Nearing expiration.";
+"Some of your products are about to expire." = "Some of your products are about to expire.";
 
 //MARK: - System
 
